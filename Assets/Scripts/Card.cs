@@ -25,16 +25,17 @@ namespace CCGCard
         public Sprite cardSprite;
         public string skill;
         public string skillContents;
-        public CardType? cardColor;
+        public int cost;
+        public CardType cardColor;
         public Animator spriteAnimator;
 
-
-        public Card(string name, int frontDamage, int backDamage, bool left)
+        public Card(string name, int frontDamage, int backDamage, CardType cardType, int cost = 0, bool left = false)
         {
             this.name = name;
             this.frontDamage = frontDamage;
             this.backDamage = backDamage;
             this.lookingLeft = left;
+            this.cardColor = cardType;
         }
     }
 }
