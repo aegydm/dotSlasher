@@ -4,6 +4,7 @@ using UnityEngine;
 using CCGCard;
 using System;
 using TMPro;
+using UnityEngine.UI;
 
 public class HandCard : MonoBehaviour
 {
@@ -15,17 +16,20 @@ public class HandCard : MonoBehaviour
     public TMP_Text frontDamageText;
     public TMP_Text BackDamageText;
 
+    private GameObject canvas;
     private SpriteRenderer rend;
     public bool isSelected;
 
     private void Awake()
     {
         rend = GetComponent<SpriteRenderer>();
+        canvas = GetComponentInChildren<Canvas>().gameObject;
     }
 
     private void Start()
     {
         DrawCardData();
+        RemoveCard();
     }
     private void Update()
     {
@@ -46,6 +50,7 @@ public class HandCard : MonoBehaviour
     {
         card = null;
         isEmpty = true;
+        canvas.SetActive(false);
         frontDamageText.text = "";
         BackDamageText.text = "";
         rend.sprite = null;
@@ -53,6 +58,7 @@ public class HandCard : MonoBehaviour
 
     void DrawCardData()
     {
+        canvas.SetActive(true);
         frontDamageText.text = card.frontDamage.ToString();
         BackDamageText.text = card.backDamage.ToString();
 

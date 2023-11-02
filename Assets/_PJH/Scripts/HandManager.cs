@@ -115,8 +115,9 @@ public class HandManager : MonoBehaviour
         handCard.isSelected = !handCard.isSelected;
     }
 
-    public void DrawCard(Card newCard)
+    public void DrawCard(Card drawCard)
     {
+        Card newCard = drawCard;
         foreach(HandCard card in cards)
         {
             if (card.isEmpty)
