@@ -5,8 +5,8 @@ using UnityEngine;
 public class Deck : MonoBehaviour
 {
     [SerializeField] List<GameObject> deck = new List<GameObject>();
-    [SerializeField] List<GameObject> sortedDeck;
     [SerializeField] int countOfDeck;
+    [SerializeField] public List<int> sortedDeck;
 
     /// <summary>
     /// 덱 셔플 기능
@@ -78,15 +78,29 @@ public class Deck : MonoBehaviour
         countOfDeck = deck.Count;
     }
 
-    ///<summary>
-    /// 덱에 남은 카드를 확인하기 위해 한번 정렬해주는 함수
+    /// <summary>
+    /// 정렬된 카드의 아이디가 나와서 덱의 순서와 상관없이 덱에 남은 카드의 종류를 알 수 있다.
+    /// 이를 활용해서 묘지에 있는 카드 리스트를 받아 똑같은 코드를 진행한다해도 결과를 얻을 수 있다.
+    /// 순서까지 알고 싶다면 Sort 함수를 제거하고 진행하면 된다.
     /// </summary>
+    /// <param name="deck"></param>
+    /// <returns></returns>
     public void SortDeck()
     {
-        sortedDeck = deck;
+        List<int> idList = new List<int>();
+        foreach (GameObject card in deck)
+        {
+            TestCardScript cardScript = card.GetComponent<TestCardScript>(); // TestCardScript 실제 스크립트 이름으로 변경해야 합니다.
+            if (cardScript != null)
+            {
+                idList.Add(cardScript.id);
+            }
+        }
+        idList.Sort();
+        //return idList;
 
-        sortedDeck.Sort();
+        for (int i = 0;i < idList.Count;i++)
+            Debug.Log(idList[i]);
 
-        sortedDeck.Reverse();
     }
 }
