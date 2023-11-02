@@ -1,39 +1,35 @@
+using CCGCard;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CCGCard;
-using System;
 
 [System.Serializable]
-public class Unit : MonoBehaviour
+public class Unit : Card
 {
-    public Card cardData;
-    public SpriteRenderer spriteRenderer;
-    public Animator animator;
+    public int frontDamage;
+    public int backDamage;
 
     public Unit()
     {
-        this.cardData = new Card();
+        this.cardName = string.Empty;
+        this.frontDamage = 0;
+        this.backDamage = 0;
+        this.skill = string.Empty;
+        this.skillContents = string.Empty;
+        this.cost = 0;
+        this.cardColor = CardType.Neutral;
     }
 
-    public void CardChange(Card newCard)
+    public Unit(string name, int frontDamage, int backDamage, CardType cardType, int cost = 0, bool left = false)
     {
-        cardData = newCard;
-        OnCardDataChanged?.Invoke(newCard);
+        this.cardName = name;
+        this.frontDamage = frontDamage;
+        this.backDamage = backDamage;
+        this.cardColor = cardType;
     }
 
-    public event Action<Card> OnCardDataChanged;
-
-    private void Awake()
+    public virtual void GetDamage(int damageVal)
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
-        OnCardDataChanged = null;
-        OnCardDataChanged += Setting;
-    }
-
-    public void Setting(Card card)
-    {
-        spriteRenderer.sprite = card.cardSprite;
+        Debug.Log("GETDAMAGE");
     }
 }
