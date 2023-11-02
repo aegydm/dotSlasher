@@ -27,7 +27,18 @@ namespace CCGCard
         public string skillContents;
         public int cost;
         public CardType cardColor;
-        public Animator spriteAnimator;
+
+        public Card()
+        {
+            this.name = string.Empty;
+            this.frontDamage = 0;
+            this.backDamage = 0;
+            this.lookingLeft = false;
+            this.skill = string.Empty;
+            this.skillContents = string.Empty;
+            this.cost = 0;
+            this.cardColor = CardType.Neutral;
+        }
 
         public Card(string name, int frontDamage, int backDamage, CardType cardType, int cost = 0, bool left = false)
         {
