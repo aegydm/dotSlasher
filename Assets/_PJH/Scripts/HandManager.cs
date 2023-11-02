@@ -9,6 +9,34 @@ public class HandManager : MonoBehaviour
     [HideInInspector] public HandCard selectedHand;
     public static HandManager Instance;
 
+    private Vector2 startPos;
+
+    //private void OnMouseDown()
+    //{
+    //    startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+    //}
+
+    //private void OnMouseDrag()
+    //{
+    //    Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //    RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
+    //    Debug.Log(1);
+    //    if(rayhit.collider.GetComponent<HandCard>() != null )
+    //    {
+    //        Debug.Log(2);
+    //        rayhit.transform.position = mousePos;
+    //        rayhit.collider.GetComponent<HandCard>().isSelected = true;
+    //        selectedHand = rayhit.collider.GetComponent<HandCard>();
+    //    }
+    //}
+
+    //private void OnMouseUp()
+    //{
+    //    selectedHand.transform.position = startPos;
+    //    selectedHand = null;
+    //}
+
     private void Awake()
     {
         if(Instance == null)
@@ -37,9 +65,9 @@ public class HandManager : MonoBehaviour
             RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
             if (rayhit.collider != null)
             {
-                if(rayhit.collider.GetComponent<HandCard>() != null)
+                if (rayhit.collider.GetComponent<HandCard>() != null)
                 {
-                    if(selectedHand == null)
+                    if (selectedHand == null)
                     {
                         SelectCard(rayhit.collider.gameObject);
                     }
@@ -91,7 +119,11 @@ public class HandManager : MonoBehaviour
     {
         foreach(HandCard card in cards)
         {
-            if (card.isEmpty) card.SetCard(newCard);
+            if (card.isEmpty)
+            {
+                card.SetCard(newCard);
+                break;
+            }
         }
     }
 }
