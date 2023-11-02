@@ -1,10 +1,11 @@
+using CCGCard;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    [SerializeField] List<GameObject> deck = new List<GameObject>();
+    [SerializeField] List<Card> deck = new List<Card>();
     [SerializeField] int countOfDeck;
     [SerializeField] public List<int> sortedDeck;
 
@@ -13,7 +14,7 @@ public class Deck : MonoBehaviour
     /// </summary>
     public void Shuffle()
     {
-        List<GameObject> list = new List<GameObject>();
+        List<Card> list = new List<Card>();
         int listCount = deck.Count;
         for (int i = 0; i < listCount; i++)
         {
@@ -38,6 +39,8 @@ public class Deck : MonoBehaviour
             {
                 //먼저 패에서 덱의 카드를 호출하고 난 다음 덱의 카드를 제거하도록 순서를 주의한다.
 
+                HandManager.Instance.DrawCard(deck[0]);
+
                 deck.Remove(deck[0]);
             }
             else
@@ -52,8 +55,9 @@ public class Deck : MonoBehaviour
     /// <summary>
     /// 필드의 몬스터를 덱으로 되돌리는 기능
     /// </summary>
-    public void Refill(GameObject card)
+    public void Refill(Card card)
     {
+
         deck.Add(card);
 
         RefreshDeckCount();
@@ -88,12 +92,12 @@ public class Deck : MonoBehaviour
     public void SortDeck()
     {
         List<int> idList = new List<int>();
-        foreach (GameObject card in deck)
+        foreach (Card card in deck)
         {
-            TestCardScript cardScript = card.GetComponent<TestCardScript>(); // TestCardScript 실제 스크립트 이름으로 변경해야 합니다.
+            Card cardScript = card;
             if (cardScript != null)
             {
-                idList.Add(cardScript.id);
+                idList.Add(cardScript.frontDamage);
             }
         }
         idList.Sort();
