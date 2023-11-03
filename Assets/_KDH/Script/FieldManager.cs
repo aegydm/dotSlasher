@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+<<<<<<< Updated upstream
+=======
+using CCGCard;
+using System;
+>>>>>>> Stashed changes
 
 public class FieldManager : MonoBehaviour
 {
@@ -51,8 +56,11 @@ public class FieldManager : MonoBehaviour
         }
         else
         {
+            if (IsFieldFull()) return;
+            fields.Add(field.gameObject);
             GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
             newField.GetComponent<Field>().SetCard(HandManager.Instance.selectedHand.card);
+<<<<<<< Updated upstream
             newField.GetComponent<Field>().prevField = field.prevField;
             newField.GetComponent<Field>().nextField = field;
             field.prevField.nextField = newField.GetComponent<Field>();
@@ -61,6 +69,30 @@ public class FieldManager : MonoBehaviour
             {
                 field.transform.position = new Vector3(field.transform.position.x + 20, field.transform.position.y);
                 field = field.nextField;
+=======
+            //newField.GetComponent<Field>().Prev = field.Prev;
+            //newField.GetComponent<Field>().Next = field;
+            //field.Prev.Next = newField.GetComponent<Field>();
+            //field.Prev = newField.GetComponent<Field>();  
+            battleFields.AddBefore(field, newField);
+            Field tmpField = battleFields.First;
+            fields.Clear();
+            while (tmpField != null)
+            {
+                fields.Add(tmpField.gameObject);
+                tmpField = tmpField.Next;
+            }
+            for(int pos = (fields.Count-1) * -9, i = 0; ; pos+=18, i++)
+            {
+                try
+                {
+                    fields[i].transform.position = new Vector3(pos, 0, 0);
+                }
+                catch(Exception e)
+                {
+                    break;
+                }
+>>>>>>> Stashed changes
             }
         }
         HandManager.Instance.RemoveHand();
@@ -68,13 +100,6 @@ public class FieldManager : MonoBehaviour
 
     bool IsFieldFull()
     {
-        if(fields.Count == FULL_FIELD_COUNT)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return fields.Count == FULL_FIELD_COUNT;
     }
 }

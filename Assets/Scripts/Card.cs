@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,26 +16,44 @@ namespace CCGCard
         Neutral,
     }
 
-    [System.Serializable]
-    public class Card
+    public enum CardCategory
     {
-        public string name;
-        public int frontDamage;
-        public int backDamage;
-        public bool lookingLeft;
+        Hero,
+        Follower,
+        Equip,
+    }
+
+    [System.Serializable]
+    public class Card : BattleUnit
+    {
+        public string cardName;
         public Sprite cardSprite;
         public string skill;
         public string skillContents;
-        public CardType? cardColor;
-        public Animator spriteAnimator;
+        public int cost;
+        public CardType cardColor;
+        public CardCategory cardCategory;
+        public int frontDamage;
+        public int backDamage;
 
-
-        public Card(string name, int frontDamage, int backDamage, bool left)
+        public Card()
         {
-            this.name = name;
-            this.frontDamage = frontDamage;
-            this.backDamage = backDamage;
-            this.lookingLeft = left;
+            this.cardName = string.Empty;
+            this.skill = string.Empty;
+            this.skillContents = string.Empty;
+            this.cost = 0;
+            this.cardColor = CardType.Neutral;
+        }
+
+        public Card(string name, CardType cardType, int cost = 0, bool left = false)
+        {
+            this.cardName = name;
+            this.cardColor = cardType;
+        }
+
+        public virtual void GetDamage(int damageVal)
+        {
+            Debug.Log("GETDAMAGE");
         }
     }
 }
