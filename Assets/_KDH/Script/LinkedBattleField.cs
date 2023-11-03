@@ -7,13 +7,13 @@ using UnityEngine;
 [System.Serializable]
 public class LinkedBattleField
 {
-    public BattleField First => _first;
-    public BattleField Last => _last;
-    private BattleField _first, _last, _tmp;
+    public Field First => _first;
+    public Field Last => _last;
+    private Field _first, _last, _tmp;
 
     public void AddFirst(GameObject gameObject)
     {
-        _tmp = new BattleField(gameObject);
+        _tmp = gameObject.GetComponent<Field>();
 
         if(_first != null)
         {
@@ -30,7 +30,7 @@ public class LinkedBattleField
 
     public void AddLast(GameObject gameObject)
     {
-        _tmp = new BattleField(gameObject);
+        _tmp = gameObject.GetComponent<Field>();
         if(_last != null)
         {
             _tmp.Prev = _last;
@@ -44,9 +44,9 @@ public class LinkedBattleField
         _last = _tmp;
     }
 
-    public void AddBefore(BattleField battleField, GameObject gameObject)
+    public void AddBefore(Field battleField, GameObject gameObject)
     {
-        _tmp = new BattleField(gameObject);
+        _tmp = gameObject.GetComponent<Field>();
 
         if(battleField.Prev != null)
         {
@@ -62,9 +62,9 @@ public class LinkedBattleField
         battleField.Prev = _tmp;
     }
 
-    public void AddAfter(BattleField battlefield,GameObject gameObject)
+    public void AddAfter(Field battlefield,GameObject gameObject)
     {
-        _tmp = new BattleField(gameObject);
+        _tmp = gameObject.GetComponent<Field>();
 
         if(battlefield.Next != null)
         {
@@ -92,7 +92,7 @@ public class LinkedBattleField
         }
     }
 
-    public BattleField Find(GameObject gameObject)
+    public Field Find(GameObject gameObject)
     {
         _tmp = _first;
         while(_tmp.Next != null)
@@ -110,7 +110,7 @@ public class LinkedBattleField
         return null;
     }
 
-    public BattleField FindLast(GameObject gameObject)
+    public Field FindLast(GameObject gameObject)
     {
         _tmp = _last;
         while(_tmp.Prev != null) 
@@ -129,7 +129,7 @@ public class LinkedBattleField
 
     }
 
-    public bool Remove(BattleField battleField)
+    public bool Remove(Field battleField)
     {
         if(battleField == null)
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class BattleUnit
 {
-    public virtual void AttackStart(LinkedBattleField battleFieldInfo, BattleField attackUnitInfo)
+    public virtual void AttackStart(LinkedBattleField battleFieldInfo, Field attackUnitInfo)
     {
         if(battleFieldInfo == null)
         {
@@ -23,9 +23,9 @@ public abstract class BattleUnit
             return;
         } 
 
-        Debug.Log(attackUnitInfo.unit.cardData.cardName + "의 공격");
+        Debug.Log(attackUnitInfo.unitObject.cardData.cardName + "의 공격");
 
-        BattleField enemyUnitInfo;
+        Field enemyUnitInfo;
         enemyUnitInfo = FindEnemy(battleFieldInfo, attackUnitInfo);
         if (enemyUnitInfo == null)
         {
@@ -38,26 +38,26 @@ public abstract class BattleUnit
 
         if(Attack(attackPower, defencePower))
         {
-            Debug.Log(attackUnitInfo.unit.cardData.cardName + "의 공격이 성공했습니다.");
+            Debug.Log(attackUnitInfo.unitObject.cardData.cardName + "의 공격이 성공했습니다.");
             enemyUnitInfo.Damaged(attackPower);
         }
         else
         {
-            Debug.Log(attackUnitInfo.unit.cardData.cardName + "의 공격이 실패했습니다.");
+            Debug.Log(attackUnitInfo.unitObject.cardData.cardName + "의 공격이 실패했습니다.");
         }
         return;
     }
 
-    protected virtual BattleField FindEnemy(LinkedBattleField battelFieldInfo, BattleField attackUnitInfo)
+    protected virtual Field FindEnemy(LinkedBattleField battelFieldInfo, Field attackUnitInfo)
     {
-        BattleField tmp = attackUnitInfo;
-        if (attackUnitInfo.unit.lookingLeft)
+        Field tmp = attackUnitInfo;
+        if (attackUnitInfo.unitObject.lookingLeft)
         {
-            if (tmp.Prev == null || tmp.Prev.unit.cardData.cardName == string.Empty)
+            if (tmp.Prev == null || tmp.Prev.unitObject.cardData.cardName == string.Empty)
             {
                 return null;
             }
-            else if (tmp.Prev.unit.playername != string.Empty)
+            else if (tmp.Prev.unitObject.playername != string.Empty)
             {
                 return tmp.Prev;
             }
@@ -65,11 +65,11 @@ public abstract class BattleUnit
         }
         else
         {
-            if (tmp.Next == null || tmp.Next.unit.cardData.cardName == string.Empty)
+            if (tmp.Next == null || tmp.Next.unitObject.cardData.cardName == string.Empty)
             {
                 return null;
             }
-            else if (tmp.Next.unit.playername != string.Empty)
+            else if (tmp.Next.unitObject.playername != string.Empty)
             {
                 return tmp.Next;
             }
@@ -77,11 +77,11 @@ public abstract class BattleUnit
         }
     }
 
-    protected virtual void CalculatePower(BattleField attacker, BattleField defender, out int attackPower, out int defencePower)
+    protected virtual void CalculatePower(Field attacker, Field defender, out int attackPower, out int defencePower)
     {
-        attackPower = attacker.unit.cardData.frontDamage;
-        defencePower = attacker.unit.lookingLeft != defender.unit.lookingLeft ? defender.unit.cardData.frontDamage : defender.unit.cardData.backDamage;
-        Debug.Log(attacker.unit.cardData.cardName + "의 공격력 : " + attackPower + "\n" + defender.unit.cardData.cardName+"의 공격력 : " + defencePower);
+        attackPower = attacker.unitObject.cardData.frontDamage;
+        defencePower = attacker.unitObject.lookingLeft != defender.unitObject.lookingLeft ? defender.unitObject.cardData.frontDamage : defender.unitObject.cardData.backDamage;
+        Debug.Log(attacker.unitObject.cardData.cardName + "의 공격력 : " + attackPower + "\n" + defender.unitObject.cardData.cardName+"의 공격력 : " + defencePower);
     }
 
     protected virtual bool Attack(int attackPower, int defensePower)

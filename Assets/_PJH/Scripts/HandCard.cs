@@ -8,7 +8,7 @@ using TMPro;
 public class HandCard : MonoBehaviour
 {
     [Header("Ä«µå")]
-    public Card card;
+    [HideInInspector] public Card card;
 
     [Header("")]
     public bool isEmpty = true;
@@ -21,11 +21,12 @@ public class HandCard : MonoBehaviour
     private void Awake()
     {
         rend = GetComponent<SpriteRenderer>();
+        RemoveCard();
     }
 
     private void Start()
     {
-        DrawCardData();
+        //DrawCardData();
     }
     private void Update()
     {

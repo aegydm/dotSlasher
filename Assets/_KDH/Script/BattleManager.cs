@@ -8,11 +8,10 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
-    public LinkedBattleField battleFields;
-    [HideInInspector] public List<BattleField> unitList;
+    public List<Field> unitList;
 
     //Test Code
-    public List<Unit> units;
+    //public List<Unit> units;
     public List<GameObject> gameObjects;
     //Test End
     private void Awake()
@@ -32,26 +31,26 @@ public class BattleManager : MonoBehaviour
         //Test Code
         for (int i = 0; i < gameObjects.Count; i++)
         {
-            battleFields.Add(gameObjects[i]);
+            FieldManager.Instance.battleFields.Add(gameObjects[i]);
         }
 
-        for (int i = 0; i < gameObjects.Count; i++)
-        {
-            AddUnit(gameObjects[i], units[i]);
-            //AddUnit(gameObjects[i], new Card("Å×½ºÆ® À¯´Ö" + i, Random.Range(0, 10), Random.Range(0, 10), CardType.Neutral, 0, Random.Range(0, 100) < 50));
-        }
+        //for (int i = 0; i < gameObjects.Count; i++)
+        //{
+        //    AddUnit(gameObjects[i], units[i]);
+        //    //AddUnit(gameObjects[i], new Card("Å×½ºÆ® À¯´Ö" + i, Random.Range(0, 10), Random.Range(0, 10), CardType.Neutral, 0, Random.Range(0, 100) < 50));
+        //}
         //Test End
     }
 
-    public void AddUnit(GameObject GO, Unit cardData)
-    {
-        battleFields.Find(GO).unit.CardChange(cardData);
-        if (cardData.cardName != string.Empty)
-        {
-            battleFields.Find(GO).canBattle = true;
-        }
-        unitList.Add(battleFields.Find(GO));
-    }
+    //public void AddUnit(GameObject GO, Unit cardData)
+    //{
+    //    FieldManager.Instance.battleFields.Find(GO).unit.CardChange(cardData);
+    //    if (cardData.cardName != string.Empty)
+    //    {
+    //        FieldManager.Instance.battleFields.Find(GO).canBattle = true;
+    //    }
+    //    unitList.Add(FieldManager.Instance.battleFields.Find(GO));
+    //}
 
     public void AttackPhase()
     {
@@ -62,10 +61,10 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = 0; i < unitList.Count; i++)
         {
-            BattleField tmp;
-            if (unitList[i].unit.cardData.cardName != string.Empty)
+            Field tmp;
+            if (unitList[i].unitObject.cardData.cardName != string.Empty)
             {
-                if (unitList[i].unit.lookingLeft)
+                if (unitList[i].unitObject.lookingLeft)
                 {
                     tmp = unitList[i].Prev;
                 }
@@ -73,7 +72,7 @@ public class BattleManager : MonoBehaviour
                 {
                     tmp = unitList[i].Next;
                 }
-                unitList[i].Attack(battleFields);
+                unitList[i].Attack(FieldManager.Instance.battleFields);
                 yield return new WaitForSeconds(3);
             }
         }

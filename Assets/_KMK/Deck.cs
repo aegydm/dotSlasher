@@ -39,9 +39,10 @@ public class Deck : MonoBehaviour
             {
                 //먼저 패에서 덱의 카드를 호출하고 난 다음 덱의 카드를 제거하도록 순서를 주의한다.
 
-                HandManager.Instance.DrawCard(deck[0]);
-
-                deck.Remove(deck[0]);
+                if (HandManager.Instance.DrawCard(deck[0]))
+                {
+                    deck.Remove(deck[0]);
+                }
             }
             else
             {

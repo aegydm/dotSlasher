@@ -115,7 +115,7 @@ public class HandManager : MonoBehaviour
         handCard.isSelected = !handCard.isSelected;
     }
 
-    public void DrawCard(Card newCard)
+    public bool DrawCard(Card newCard)
     {
         foreach(HandCard card in cards)
         {
@@ -123,8 +123,10 @@ public class HandManager : MonoBehaviour
             {
                 card.SetCard(newCard);
                 Debug.Log(newCard.cardName);
-                break;
+                return true;
             }
         }
+        return false;
+
     }
 }

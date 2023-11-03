@@ -50,6 +50,11 @@ namespace CCGCard
             this.cardName = name;
             this.cardColor = cardType;
         }
+
+        public virtual void GetDamage(int damageVal)
+        {
+            Debug.Log("GETDAMAGE");
+        }
     }
 }
 

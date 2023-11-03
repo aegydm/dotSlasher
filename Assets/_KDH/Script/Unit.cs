@@ -23,8 +23,16 @@ public class Unit : Card
         this.cardColor = cardType;
     }
 
-    public virtual void GetDamage(int damageVal)
+    public Unit(Card card)
     {
-        Debug.Log("GETDAMAGE");
+        cardName = card.cardName;
+        skill = card.skill;
+        skillContents = card.skillContents;
+        cost = card.cost;
+        cardColor = card.cardColor;
+        cardSprite = card.cardSprite;
+        cardCategory = card.cardCategory;
+        frontDamage = card.frontDamage;
+        backDamage = card.backDamage;
     }
 }
