@@ -68,7 +68,7 @@ public class Deck : MonoBehaviour
     /// 덱에서 카드를 제거하는 기능
     /// </summary>
     /// <param name="idx"></param>
-    public void RemoveCard(int idx)
+    public void RemoveDeckCard(int idx)
     {
         deck.Remove(deck[idx]);
 
@@ -106,6 +106,10 @@ public class Deck : MonoBehaviour
 
         for (int i = 0;i < idList.Count;i++)
             Debug.Log(idList[i]);
+    }
+
+    void Mulligan()
+    {
 
     }
 }
