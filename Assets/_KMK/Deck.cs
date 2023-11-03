@@ -108,8 +108,15 @@ public class Deck : MonoBehaviour
             Debug.Log(idList[i]);
     }
 
-    void Mulligan()
+    void Mulligan(Card[] cards)
     {
 
+        for(int i = 0; i < cards.Length; i++)
+        {
+            HandManager.Instance.RemoveHand();
+            Refill(cards[i]);
+        }
+
+        Draw(cards.Length);
     }
 }
