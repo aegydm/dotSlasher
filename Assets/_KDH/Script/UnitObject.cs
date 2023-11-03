@@ -4,22 +4,34 @@ using UnityEngine;
 using CCGCard;
 using System;
 
+[RequireComponent(typeof(Field))]
 [System.Serializable]
 public class UnitObject : MonoBehaviour
 {
-    public Unit cardData;
+    public Card cardData;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
     public Sprite squareSprite;
-    public bool lookingLeft;
+    public bool lookingLeft
+    {
+        get
+        {
+
+            return _lookingLeft;
+        }
+        set
+        {
+            _lookingLeft = value;
+            OnCardDataChanged?.Invoke(cardData);
+        }
+    }
+    private bool _lookingLeft;
+
+
     public string playername;
 
-    public UnitObject()
-    {
-        this.cardData = new Unit();
-    }
 
-    public void CardChange(Unit newCard)
+    public void CardChange(Card newCard)
     {
         cardData = newCard;
         OnCardDataChanged?.Invoke(newCard);
@@ -29,7 +41,6 @@ public class UnitObject : MonoBehaviour
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         OnCardDataChanged = null;
         OnCardDataChanged += Setting;
@@ -47,7 +58,7 @@ public class UnitObject : MonoBehaviour
         }
         else
         {
-            spriteRenderer.sprite = squareSprite;
+            spriteRenderer.sprite = null;
             spriteRenderer.flipX = false;
         }
     }

@@ -44,7 +44,7 @@ public class FieldManager : MonoBehaviour
         }
     }
 
-    public void AddUnit(GameObject GO, Unit cardData)
+    public void AddUnit(GameObject GO, Card cardData)
     {
         battleFields.Find(GO).unitObject.CardChange(cardData);
         if (cardData.cardName != string.Empty)
@@ -59,7 +59,7 @@ public class FieldManager : MonoBehaviour
         if (HandManager.Instance.selectedHand == null) return;
         if (field.isEmpty)
         {
-            AddUnit(field.gameObject, new Unit(HandManager.Instance.selectedHand.card));
+            AddUnit(field.gameObject, HandManager.Instance.selectedHand.card);
             field.SetCard(HandManager.Instance.selectedHand.card);
         }
         else

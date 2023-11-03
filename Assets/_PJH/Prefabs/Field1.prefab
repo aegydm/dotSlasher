@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3244108844858169479}
   - component: {fileID: 8705370592392951127}
   - component: {fileID: 5261398975689619885}
+  - component: {fileID: 7650042282013144550}
   m_Layer: 0
   m_Name: Field1
   m_TagString: Untagged
@@ -148,6 +149,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEmpty: 1
   card:
+    summonEffects: []
+    attackStartEffects: []
+    findEnemyEffects: []
+    calculateDamageEffects: []
+    attackProcessEffects: []
+    getDamageEffects: []
     cardName: 
     cardSprite: {fileID: 0}
     skill: 
@@ -158,10 +165,44 @@ MonoBehaviour:
     frontDamage: 0
     backDamage: 0
   spriteRenderer: {fileID: 5167814117537082558}
-  prevField: {fileID: 0}
-  nextField: {fileID: 0}
+  Prev: {fileID: 0}
+  Next: {fileID: 0}
+  unitObject: {fileID: 0}
   frontDamageText: {fileID: 6733333447429586734}
   backDamageText: {fileID: 692118745384278820}
+--- !u!114 &7650042282013144550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889213560221228389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c821b59ea04b8845950872dfff304ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    summonEffects: []
+    attackStartEffects: []
+    findEnemyEffects: []
+    calculateDamageEffects: []
+    attackProcessEffects: []
+    getDamageEffects: []
+    cardName: 
+    cardSprite: {fileID: 0}
+    skill: 
+    skillContents: 
+    cost: 0
+    cardColor: 6
+    cardCategory: 0
+    frontDamage: 0
+    backDamage: 0
+  spriteRenderer: {fileID: 0}
+  animator: {fileID: 0}
+  squareSprite: {fileID: 0}
+  lookingLeft: 0
+  playername: 
 --- !u!1 &3018531304895510006
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +353,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 123
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -551,7 +592,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 123
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
