@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+<<<<<<< Updated upstream
+=======
 using CCGCard;
+using System;
+>>>>>>> Stashed changes
 
 public class FieldManager : MonoBehaviour
 {
     public List<GameObject> fields;
     public static FieldManager Instance;
     public GameObject FieldPrefab;
-    public LinkedBattleField battleFields;
 
     private Vector2 instantiatePosition;
 
@@ -44,36 +47,52 @@ public class FieldManager : MonoBehaviour
         }
     }
 
-    public void AddUnit(GameObject GO, Unit cardData)
-    {
-        battleFields.Find(GO).unitObject.CardChange(cardData);
-        if (cardData.cardName != string.Empty)
-        {
-            battleFields.Find(GO).canBattle = true;
-        }
-        BattleManager.instance.unitList.Add(battleFields.Find(GO));
-    }
-
     void PlaceCard(Field field)
     {
         if (HandManager.Instance.selectedHand == null) return;
         if (field.isEmpty)
         {
-            AddUnit(field.gameObject, new Unit(HandManager.Instance.selectedHand.card));
             field.SetCard(HandManager.Instance.selectedHand.card);
         }
         else
         {
+            if (IsFieldFull()) return;
+            fields.Add(field.gameObject);
             GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
             newField.GetComponent<Field>().SetCard(HandManager.Instance.selectedHand.card);
-            newField.GetComponent<Field>().Prev = field.Prev;
-            newField.GetComponent<Field>().Next = field;
-            field.Prev.Next = newField.GetComponent<Field>();
-            field.Prev = newField.GetComponent<Field>();
-            while (field.Next != null)
+<<<<<<< Updated upstream
+            newField.GetComponent<Field>().prevField = field.prevField;
+            newField.GetComponent<Field>().nextField = field;
+            field.prevField.nextField = newField.GetComponent<Field>();
+            field.prevField = newField.GetComponent<Field>();
+            while (field.nextField != null)
             {
                 field.transform.position = new Vector3(field.transform.position.x + 20, field.transform.position.y);
-                field = field.Next;
+                field = field.nextField;
+=======
+            //newField.GetComponent<Field>().Prev = field.Prev;
+            //newField.GetComponent<Field>().Next = field;
+            //field.Prev.Next = newField.GetComponent<Field>();
+            //field.Prev = newField.GetComponent<Field>();  
+            battleFields.AddBefore(field, newField);
+            Field tmpField = battleFields.First;
+            fields.Clear();
+            while (tmpField != null)
+            {
+                fields.Add(tmpField.gameObject);
+                tmpField = tmpField.Next;
+            }
+            for(int pos = (fields.Count-1) * -9, i = 0; ; pos+=18, i++)
+            {
+                try
+                {
+                    fields[i].transform.position = new Vector3(pos, 0, 0);
+                }
+                catch(Exception e)
+                {
+                    break;
+                }
+>>>>>>> Stashed changes
             }
         }
         HandManager.Instance.RemoveHand();
@@ -81,13 +100,6 @@ public class FieldManager : MonoBehaviour
 
     bool IsFieldFull()
     {
-        if(fields.Count == FULL_FIELD_COUNT)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return fields.Count == FULL_FIELD_COUNT;
     }
 }

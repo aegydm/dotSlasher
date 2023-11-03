@@ -39,7 +39,7 @@ public class HandManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -69,16 +69,16 @@ public class HandManager : MonoBehaviour
                 {
                     if (selectedHand == null)
                     {
-                        SelectCard(rayhit.collider.gameObject);
+                        ToggleCardSelection(rayhit.collider.gameObject);
                     }
                     else if (rayhit.collider.gameObject == selectedHand.gameObject)
                     {
-                        SelectCard(rayhit.collider.gameObject);
+                        ToggleCardSelection(rayhit.collider.gameObject);
                     }
                     else
                     {
-                        SelectCard(selectedHand.gameObject, selectedHand);
-                        SelectCard(rayhit.collider.gameObject);
+                        ToggleCardSelection(selectedHand.gameObject, selectedHand);
+                        ToggleCardSelection(rayhit.collider.gameObject);
                     }
                     selectedHand = rayhit.collider.GetComponent<HandCard>();
                 }
@@ -97,36 +97,82 @@ public class HandManager : MonoBehaviour
 
     public void RemoveHand()
     {
+        ToggleCardSelection(selectedHand.gameObject);
         selectedHand.RemoveCard();
         selectedHand = null;
+        SortHand();
     }
 
-    void SelectCard(GameObject card)
+    public void SortHand()
+    {
+        int i = 0;
+        while (cards[i].card != null)
+        {
+            i++;
+            if (i == cards.Length - 1) return;
+        }
+        if (cards[i].card != null) return;
+        Debug.Log($"{i} + {cards.Length}");
+        cards[i].RemoveCard();
+        while (i < cards.Length - 1)
+        {
+            if (cards[i].card == null)
+            {
+                cards[i].SetCard(cards[i + 1].card);
+                cards[i + 1].RemoveCard();
+            }
+            i++;
+
+            Debug.Log(i);
+        }
+        cards[cards.Length - 1].RemoveCard();
+        foreach (HandCard card in cards)
+        {
+            if (card.card == null)
+            {
+                card.RemoveCard();
+            }
+        }
+    }
+
+    void ToggleCardSelection(GameObject card)
     {
         HandCard handCard = card.gameObject.GetComponent<HandCard>();
         Vector3 scale = card.transform.localScale;
         card.transform.localScale = handCard.isSelected ? new Vector3(scale.x, scale.y / 1.1f, scale.z) : new Vector3(scale.x, scale.y * 1.1f, scale.z);
         handCard.isSelected = !handCard.isSelected;
     }
-    void SelectCard(GameObject card, HandCard handCard)
+    void ToggleCardSelection(GameObject card, HandCard handCard)
     {
         Vector3 scale = card.transform.localScale;
         card.transform.localScale = handCard.isSelected ? new Vector3(scale.x, scale.y / 1.1f, scale.z) : new Vector3(scale.x, scale.y * 1.1f, scale.z);
         handCard.isSelected = !handCard.isSelected;
     }
 
-    public bool DrawCard(Card newCard)
+<<<<<<< Updated upstream
+    public void DrawCard(Card drawCard)
     {
+        Card newCard = drawCard;
         foreach(HandCard card in cards)
+=======
+    public bool DrawCard(Card drawCard)
+    {
+        Card newCard = drawCard;
+        foreach (HandCard card in cards)
+>>>>>>> Stashed changes
         {
             if (card.isEmpty)
             {
                 card.SetCard(newCard);
-                Debug.Log(newCard.cardName);
+<<<<<<< Updated upstream
+                break;
+            }
+        }
+=======
                 return true;
             }
         }
         return false;
-
+>>>>>>> Stashed changes
     }
 }
