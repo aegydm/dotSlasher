@@ -5,7 +5,7 @@ using CCGCard;
 
 public class HandManager : MonoBehaviour
 {
-    [SerializeField] HandCard[] cards;
+    [SerializeField] public HandCard[] cards;
     [HideInInspector] public HandCard selectedHand;
     public static HandManager Instance;
 
