@@ -1,0 +1,8 @@
+﻿ID,sprite,name,type,faction,text,F_Atk,B_Atk,cost
+sd01f1h001,f1_hero01,황영웅01,hero,f1,,0,0,0
+sd01f1m001,f1_minion001,황하수인01,minion,f1,가나다라마바사,5,1,0
+sd01f1m002,f1_minion002,황하수인02,minion,f1,가나다라마바사,4,2,0
+sd01f1m003,f1_minion003,황하수인03,minion,f1,가나다라마바사,3,3,0
+sd01f1m004,f1_minion004,황하수인04,minion,f1,가나다라마바사,2,4,0
+sd01f1m005,f1_minion005,황하수인05,minion,f1,가나다라마바사,1,5,0
+sd01f1e001,f1_equip01,황무기01,equipment,f1,가나다라마바사,2,2,0
