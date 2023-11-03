@@ -12,4 +12,109 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c48eb23e57ae2e45a929fdeb6194ecb, type: 3}
   m_Name: CardDataBase
   m_EditorClassIdentifier: 
-  cards: []
+  cards:
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardName: "\uD669\uD558\uC218\uC77801"
+    cardSprite: {fileID: 21300000, guid: ab7fd929a6f9e4d459ff83b6def4345c, type: 3}
+    skill: 
+    skillContents: 
+    cost: 0
+    cardColor: 0
+    cardCategory: 1
+    frontDamage: 5
+    backDamage: 1
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardName: "\uD669\uD558\uC218\uC77802"
+    cardSprite: {fileID: 21300000, guid: c1db3027d975d1c479849b85805e952d, type: 3}
+    skill: 
+    skillContents: 
+    cost: 0
+    cardColor: 0
+    cardCategory: 1
+    frontDamage: 4
+    backDamage: 2
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardName: "\uD669\uD558\uC218\uC77803"
+    cardSprite: {fileID: 21300000, guid: cb89173e8bc26ba4fbc9752779d2e2c4, type: 3}
+    skill: 
+    skillContents: 
+    cost: 0
+    cardColor: 0
+    cardCategory: 1
+    frontDamage: 3
+    backDamage: 3
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardName: "\uD669\uD558\uC218\uC77804"
+    cardSprite: {fileID: 21300000, guid: 674eff09eca1b9d4f9c9d5bf9030e4e1, type: 3}
+    skill: 
+    skillContents: 
+    cost: 0
+    cardColor: 0
+    cardCategory: 1
+    frontDamage: 2
+    backDamage: 4
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ac4a5b6a1b282da4fadcb21a50f358ea, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardName: "\uD669\uD558\uC218\uC77805"
+    cardSprite: {fileID: 21300000, guid: 772156d33e4acd9449c7ff50eaace3ce, type: 3}
+    skill: 
+    skillContents: 
+    cost: 0
+    cardColor: 0
+    cardCategory: 1
+    frontDamage: 1
+    backDamage: 5

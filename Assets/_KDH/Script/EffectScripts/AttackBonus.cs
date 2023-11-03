@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttacBonus : MonoBehaviour
+[CreateAssetMenu(fileName = "AttackBonus", menuName = "Effect/CDEffects/AttackBonusEffect")]
+public class AttackBonus : CalculateDamageEffect
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        caster.card.frontDamage += 10;
+        base.ExecuteEffect(battleFieldInfo, caster, targets);
+        caster.card.frontDamage -= 10;
     }
 }
