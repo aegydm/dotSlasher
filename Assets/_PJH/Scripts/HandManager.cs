@@ -5,7 +5,7 @@ using CCGCard;
 
 public class HandManager : MonoBehaviour
 {
-    [SerializeField] HandCard[] cards;
+    [SerializeField] public HandCard[] cards;
     [HideInInspector] public HandCard selectedHand;
     public static HandManager Instance;
 
@@ -149,30 +149,18 @@ public class HandManager : MonoBehaviour
         handCard.isSelected = !handCard.isSelected;
     }
 
-<<<<<<< Updated upstream
-    public void DrawCard(Card drawCard)
-    {
-        Card newCard = drawCard;
-        foreach(HandCard card in cards)
-=======
+
     public bool DrawCard(Card drawCard)
     {
         Card newCard = drawCard;
         foreach (HandCard card in cards)
->>>>>>> Stashed changes
         {
             if (card.isEmpty)
             {
                 card.SetCard(newCard);
-<<<<<<< Updated upstream
-                break;
-            }
-        }
-=======
                 return true;
             }
         }
         return false;
->>>>>>> Stashed changes
     }
 }
