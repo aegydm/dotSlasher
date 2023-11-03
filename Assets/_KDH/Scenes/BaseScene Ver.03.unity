@@ -212,7 +212,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 82995314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d871e6fc4cba5a448b6de656975d1f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a6ef14051891a7f4891a3dc0fe90bd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   card:
@@ -231,7 +231,7 @@ MonoBehaviour:
     cardCategory: 0
     frontDamage: 0
     backDamage: 0
-  isEmpty: 0
+  isEmpty: 1
   frontDamageText: {fileID: 206532791}
   BackDamageText: {fileID: 164482361}
   isSelected: 0
@@ -968,7 +968,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 225182521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d871e6fc4cba5a448b6de656975d1f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a6ef14051891a7f4891a3dc0fe90bd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   card:
@@ -987,7 +987,7 @@ MonoBehaviour:
     cardCategory: 0
     frontDamage: 0
     backDamage: 0
-  isEmpty: 0
+  isEmpty: 1
   frontDamageText: {fileID: 1035416155}
   BackDamageText: {fileID: 941106135}
   isSelected: 0
@@ -4090,7 +4090,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1828590413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d871e6fc4cba5a448b6de656975d1f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a6ef14051891a7f4891a3dc0fe90bd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   card:
@@ -4109,7 +4109,7 @@ MonoBehaviour:
     cardCategory: 0
     frontDamage: 0
     backDamage: 0
-  isEmpty: 0
+  isEmpty: 1
   frontDamageText: {fileID: 1031620547}
   BackDamageText: {fileID: 1131489686}
   isSelected: 0
@@ -4536,7 +4536,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1937478803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d871e6fc4cba5a448b6de656975d1f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a6ef14051891a7f4891a3dc0fe90bd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   card:
@@ -4555,7 +4555,7 @@ MonoBehaviour:
     cardCategory: 0
     frontDamage: 0
     backDamage: 0
-  isEmpty: 0
+  isEmpty: 1
   frontDamageText: {fileID: 1101087018}
   BackDamageText: {fileID: 1949193495}
   isSelected: 0
