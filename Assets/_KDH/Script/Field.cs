@@ -18,7 +18,6 @@ public class Field : MonoBehaviour
     private void Awake()
     {
     }
-
     public void SetCard(Card newCard)
     {
         if (isEmpty)
