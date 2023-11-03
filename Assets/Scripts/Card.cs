@@ -33,6 +33,8 @@ namespace CCGCard
         public int cost;
         public CardType cardColor;
         public CardCategory cardCategory;
+        public int frontDamage;
+        public int backDamage;
 
         public Card()
         {

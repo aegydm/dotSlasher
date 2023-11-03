@@ -122,7 +122,7 @@ public class HandManager : MonoBehaviour
             if (card.isEmpty)
             {
                 card.SetCard(newCard);
-                Debug.Log(newCard.name);
+                Debug.Log(newCard.cardName);
                 break;
             }
         }

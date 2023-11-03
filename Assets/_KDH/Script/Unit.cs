@@ -6,14 +6,9 @@ using UnityEngine;
 [System.Serializable]
 public class Unit : Card
 {
-    public int frontDamage;
-    public int backDamage;
-
     public Unit()
     {
         this.cardName = string.Empty;
-        this.frontDamage = 0;
-        this.backDamage = 0;
         this.skill = string.Empty;
         this.skillContents = string.Empty;
         this.cost = 0;
