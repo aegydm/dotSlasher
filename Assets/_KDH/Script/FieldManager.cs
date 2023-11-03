@@ -2,18 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-<<<<<<< Updated upstream
-=======
 using CCGCard;
 using System;
->>>>>>> Stashed changes
 
 public class FieldManager : MonoBehaviour
 {
     public List<GameObject> fields;
     public static FieldManager Instance;
     public GameObject FieldPrefab;
-
+    public LinkedBattleField battleFields;
     private Vector2 instantiatePosition;
 
     const int FULL_FIELD_COUNT = 10;
@@ -46,13 +43,23 @@ public class FieldManager : MonoBehaviour
             }
         }
     }
+    public void AddUnit(GameObject GO, Unit cardData)
+    {
+        battleFields.Find(GO).unitObject.CardChange(cardData);
+        if (cardData.cardName != string.Empty)
+        {
+            battleFields.Find(GO).canBattle = true;
+        }
+        BattleManager.instance.unitList.Add(battleFields.Find(GO));
+    }
 
     void PlaceCard(Field field)
     {
         if (HandManager.Instance.selectedHand == null) return;
         if (field.isEmpty)
         {
-            field.SetCard(HandManager.Instance.selectedHand.card);
+            AddUnit(field.gameObject, new Unit(HandManager.Instance.selectedHand.card));
+            field.SetCard(HandManager.Instance.selectedHand.card); 
         }
         else
         {
@@ -60,16 +67,6 @@ public class FieldManager : MonoBehaviour
             fields.Add(field.gameObject);
             GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
             newField.GetComponent<Field>().SetCard(HandManager.Instance.selectedHand.card);
-<<<<<<< Updated upstream
-            newField.GetComponent<Field>().prevField = field.prevField;
-            newField.GetComponent<Field>().nextField = field;
-            field.prevField.nextField = newField.GetComponent<Field>();
-            field.prevField = newField.GetComponent<Field>();
-            while (field.nextField != null)
-            {
-                field.transform.position = new Vector3(field.transform.position.x + 20, field.transform.position.y);
-                field = field.nextField;
-=======
             //newField.GetComponent<Field>().Prev = field.Prev;
             //newField.GetComponent<Field>().Next = field;
             //field.Prev.Next = newField.GetComponent<Field>();
@@ -92,7 +89,6 @@ public class FieldManager : MonoBehaviour
                 {
                     break;
                 }
->>>>>>> Stashed changes
             }
         }
         HandManager.Instance.RemoveHand();
