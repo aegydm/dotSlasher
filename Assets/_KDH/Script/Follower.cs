@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CCGCard;
 
-public class Follower : Unit
+public class Follower : Card
 {
 
 }

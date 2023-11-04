@@ -212,20 +212,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 82995314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d871e6fc4cba5a448b6de656975d1f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a6ef14051891a7f4891a3dc0fe90bd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   card:
-    cardName: aaa
-    cardSprite: {fileID: 21300000, guid: 61dd14bb8a5c53147bce53d8d2ee7bb7, type: 3}
+    summonEffects: []
+    attackStartEffects: []
+    findEnemyEffects: []
+    calculateDamageEffects: []
+    attackProcessEffects: []
+    getDamageEffects: []
+    cardName: 
+    cardSprite: {fileID: 0}
     skill: 
     skillContents: 
     cost: 0
     cardColor: 6
     cardCategory: 0
-    frontDamage: 5
-    backDamage: 5
-  isEmpty: 0
+    frontDamage: 0
+    backDamage: 0
+  isEmpty: 1
   frontDamageText: {fileID: 206532791}
   BackDamageText: {fileID: 164482361}
   isSelected: 0
@@ -962,20 +968,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 225182521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d871e6fc4cba5a448b6de656975d1f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a6ef14051891a7f4891a3dc0fe90bd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   card:
-    cardName: aaa
-    cardSprite: {fileID: 21300000, guid: 61dd14bb8a5c53147bce53d8d2ee7bb7, type: 3}
+    summonEffects: []
+    attackStartEffects: []
+    findEnemyEffects: []
+    calculateDamageEffects: []
+    attackProcessEffects: []
+    getDamageEffects: []
+    cardName: 
+    cardSprite: {fileID: 0}
     skill: 
     skillContents: 
     cost: 0
     cardColor: 6
     cardCategory: 0
-    frontDamage: 5
-    backDamage: 5
-  isEmpty: 0
+    frontDamage: 0
+    backDamage: 0
+  isEmpty: 1
   frontDamageText: {fileID: 1035416155}
   BackDamageText: {fileID: 941106135}
   isSelected: 0
@@ -1114,6 +1126,11 @@ PrefabInstance:
         type: 3}
       propertyPath: playername
       value: Player2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7650042282013144550, guid: 1469ec8e360c2624e98895367e80f51f,
+        type: 3}
+      propertyPath: lookingLeft
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 575880177342712930, guid: 1469ec8e360c2624e98895367e80f51f, type: 3}
@@ -1935,135 +1952,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398a77147ca54824c81917dc3938b31d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deck:
-  - cardName: DuneCaster
-    cardSprite: {fileID: 21300000, guid: 86fe1fc12150b8d47a6fba9e07108d1e, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 2
-    cardCategory: 1
-    frontDamage: 7
-    backDamage: 7
-  - cardName: Miniscarab
-    cardSprite: {fileID: 21300000, guid: 6a91882b6b1cd124994ceac03e7c654e, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 2
-    cardCategory: 1
-    frontDamage: 1
-    backDamage: 1
-  - cardName: DarkSpine
-    cardSprite: {fileID: 21300000, guid: df5c55bd7b8ab604e9792c84e48b70b9, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 3
-    cardCategory: 1
-    frontDamage: 9
-    backDamage: 6
-  - cardName: FreeBlade
-    cardSprite: {fileID: 21300000, guid: 0a4cabad61009204abb64260536b8f70, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 5
-    cardCategory: 1
-    frontDamage: 7
-    backDamage: 7
-  - cardName: BaastChampion
-    cardSprite: {fileID: 21300000, guid: 6768ebf6d54aaaa48959085145de6c2d, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 0
-    cardCategory: 1
-    frontDamage: 5
-    backDamage: 4
-  - cardName: Caster
-    cardSprite: {fileID: 21300000, guid: 5f4fd5c13be08ab4c8a788a310af14c2, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 0
-    cardCategory: 1
-    frontDamage: 9
-    backDamage: 1
-  - cardName: Genesis
-    cardSprite: {fileID: 21300000, guid: a7a8549b28aa83640b97da62cc1e5dee, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 4
-    cardCategory: 1
-    frontDamage: 9
-    backDamage: 9
-  - cardName: Genesis
-    cardSprite: {fileID: 21300000, guid: a7a8549b28aa83640b97da62cc1e5dee, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 4
-    cardCategory: 1
-    frontDamage: 9
-    backDamage: 9
-  - cardName: BeastMaster
-    cardSprite: {fileID: 21300000, guid: 01d53de9a4e8ab24580fee2f0b7e1647, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 4
-    cardCategory: 1
-    frontDamage: 7
-    backDamage: 5
-  - cardName: BeastMaster
-    cardSprite: {fileID: 21300000, guid: 01d53de9a4e8ab24580fee2f0b7e1647, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 4
-    cardCategory: 1
-    frontDamage: 7
-    backDamage: 5
-  - cardName: Melee
-    cardSprite: {fileID: 21300000, guid: d8560bd2f74fea64ca3e6059801f0f73, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 1
-    cardCategory: 1
-    frontDamage: 3
-    backDamage: 5
-  - cardName: Melee
-    cardSprite: {fileID: 21300000, guid: d8560bd2f74fea64ca3e6059801f0f73, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 1
-    cardCategory: 1
-    frontDamage: 3
-    backDamage: 5
-  - cardName: SeenoEvil
-    cardSprite: {fileID: 21300000, guid: 82c42bfc153a8924ea5d758a8d146336, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 1
-    cardCategory: 1
-    frontDamage: 1
-    backDamage: 9
-  - cardName: SeenoEvil
-    cardSprite: {fileID: 21300000, guid: 82c42bfc153a8924ea5d758a8d146336, type: 3}
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 1
-    cardCategory: 1
-    frontDamage: 1
-    backDamage: 9
+  deck: []
   countOfDeck: 0
   sortedDeck: 
+  cardDB: {fileID: 11400000, guid: 7d740c7e38f876640b377b349d0217a0, type: 2}
 --- !u!114 &646230363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2077,7 +1969,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitList: []
-  units: []
   gameObjects:
   - {fileID: 102799011}
   - {fileID: 1550368817}
@@ -4199,20 +4090,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1828590413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d871e6fc4cba5a448b6de656975d1f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a6ef14051891a7f4891a3dc0fe90bd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   card:
-    cardName: aaa
-    cardSprite: {fileID: 21300000, guid: 61dd14bb8a5c53147bce53d8d2ee7bb7, type: 3}
+    summonEffects: []
+    attackStartEffects: []
+    findEnemyEffects: []
+    calculateDamageEffects: []
+    attackProcessEffects: []
+    getDamageEffects: []
+    cardName: 
+    cardSprite: {fileID: 0}
     skill: 
     skillContents: 
     cost: 0
     cardColor: 6
     cardCategory: 0
-    frontDamage: 5
-    backDamage: 5
-  isEmpty: 0
+    frontDamage: 0
+    backDamage: 0
+  isEmpty: 1
   frontDamageText: {fileID: 1031620547}
   BackDamageText: {fileID: 1131489686}
   isSelected: 0
@@ -4639,20 +4536,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1937478803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d871e6fc4cba5a448b6de656975d1f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a6ef14051891a7f4891a3dc0fe90bd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   card:
-    cardName: aaa
-    cardSprite: {fileID: 21300000, guid: 61dd14bb8a5c53147bce53d8d2ee7bb7, type: 3}
+    summonEffects: []
+    attackStartEffects: []
+    findEnemyEffects: []
+    calculateDamageEffects: []
+    attackProcessEffects: []
+    getDamageEffects: []
+    cardName: 
+    cardSprite: {fileID: 0}
     skill: 
     skillContents: 
     cost: 0
     cardColor: 6
     cardCategory: 0
-    frontDamage: 5
-    backDamage: 5
-  isEmpty: 0
+    frontDamage: 0
+    backDamage: 0
+  isEmpty: 1
   frontDamageText: {fileID: 1101087018}
   BackDamageText: {fileID: 1949193495}
   isSelected: 0
