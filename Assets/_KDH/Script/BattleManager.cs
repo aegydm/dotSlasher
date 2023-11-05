@@ -72,7 +72,8 @@ public class BattleManager : MonoBehaviour
                 {
                     tmp = unitList[i].Next;
                 }
-                unitList[i].Attack(FieldManager.Instance.battleFields);
+                //unitList[i].Attack(FieldManager.Instance.battleFields);
+                unitList[i].unitObject.cardData.AttackStart(FieldManager.Instance.battleFields, unitList[i]);
                 yield return new WaitForSeconds(3);
             }
         }

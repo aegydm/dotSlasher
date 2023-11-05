@@ -1,3 +1,4 @@
+using CCGCard;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,20 @@ public class CalculateDamageEffect : CardEffect
                 if (attackPower > defencePower)
                 {
                     Debug.Log(caster.unitObject.cardData.cardName + "의 공격이 성공했습니다.");
-                    targets[i].Damaged(attackPower);
+                    //targets[i].Damaged(attackPower);
+                    if (targets[i].unitObject.cardData.cardCategory == CardCategory.hero)
+                    {
+                        targets[i].unitObject.cardData.GetDamage(ref attackPower);
+                    }
+                    else if (targets[i].unitObject.cardData.cardCategory == CardCategory.minion)
+                    {
+                        targets[i].unitObject.CardChange(new Card());
+                        targets[i].ResetField();
+                    }
+                    else
+                    {
+                        Debug.LogError("아이템을 공격할 수 없습니다");
+                    }
                 }
                 else
                 {

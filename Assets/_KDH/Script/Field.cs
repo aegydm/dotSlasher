@@ -40,27 +40,27 @@ public class Field : MonoBehaviour
         unitObject.spriteRenderer = spriteRenderer;
     }
 
-    public void Attack(LinkedBattleField battleField)
-    {
-        unitObject.cardData.AttackStart(battleField, this);
-    }
+    //public void Attack(LinkedBattleField battleField)
+    //{
+    //    unitObject.cardData.AttackStart(battleField, this);
+    //}
 
-    public void Damaged(int damageVal = 0)
-    {
-        if (unitObject.cardData.cardCategory == CardCategory.hero)
-        {
-            unitObject.cardData.GetDamage(ref damageVal);
-        }
-        else if (unitObject.cardData.cardCategory == CardCategory.minion)
-        {
-            unitObject.CardChange(new Card());
-            ResetField();
-        }
-        else
-        {
-            Debug.LogError("아이템을 공격할 수 없습니다");
-        }
-    }
+    //public void Damaged(int damageVal = 0)
+    //{
+    //    if (unitObject.cardData.cardCategory == CardCategory.hero)
+    //    {
+    //        unitObject.cardData.GetDamage(ref damageVal);
+    //    }
+    //    else if (unitObject.cardData.cardCategory == CardCategory.minion)
+    //    {
+    //        unitObject.CardChange(new Card());
+    //        ResetField();
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("아이템을 공격할 수 없습니다");
+    //    }
+    //}
 
     public void ResetField()
     {
