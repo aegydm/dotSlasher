@@ -18,10 +18,10 @@ public class Deck : MonoBehaviour
 
     private void Start()
     {
-        for(int i = 0; i < cardDB.cards.Count; i++)
+        /*for(int i = 0; i < cardDB.cards.Count; i++)
         {
             deck.Add(cardDB.cards[i]);
-        }
+        }*/
     }
 
     /// <summary>
