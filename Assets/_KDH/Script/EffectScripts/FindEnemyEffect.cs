@@ -18,7 +18,7 @@ public class FindEnemyEffect : CardEffect
                     caster.canBattle = false;
                     return;
                 }
-                else if (tmp.Prev.unitObject.playername != string.Empty)
+                else if (tmp.Prev.unitObject.playername != caster.unitObject.playername)
                 {
                     Debug.Log("공격 대상 : " + tmp.Prev.unitObject.cardData.cardName);
                     targets.Add(tmp.Prev);
@@ -36,7 +36,7 @@ public class FindEnemyEffect : CardEffect
                     caster.canBattle = false;
                     return;
                 }
-                else if (tmp.Next.unitObject.playername != string.Empty)
+                else if (tmp.Next.unitObject.playername != caster.unitObject.playername)
                 {
                     Debug.Log("공격 대상 : " + tmp.Next.unitObject.cardData.cardName);
                     targets.Add(tmp.Next);

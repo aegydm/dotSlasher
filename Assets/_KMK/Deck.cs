@@ -8,13 +8,12 @@ public class Deck : MonoBehaviour
     [SerializeField] List<Card> deck = new List<Card>();
     [SerializeField] int countOfDeck;
     [SerializeField] public List<int> sortedDeck;
-    [SerializeField] CardDB cardDB;
 
     private void Start()
     {
-        for(int i = 0; i < cardDB.cards.Count; i++)
+        for(int i = 0; i < CardDB.instance.cards.Count; i++)
         {
-            deck.Add(cardDB.cards[i]);
+            deck.Add(CardDB.instance.cards[i]);
         }
     }
 

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class BattleManager : MonoBehaviour
 {
@@ -14,6 +16,9 @@ public class BattleManager : MonoBehaviour
     //public List<Unit> units;
     public List<GameObject> gameObjects;
     //Test End
+
+    public bool dirtySet = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -29,16 +34,11 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         //Test Code
-        for (int i = 0; i < gameObjects.Count; i++)
-        {
-            FieldManager.Instance.battleFields.Add(gameObjects[i]);
-        }
-
         //for (int i = 0; i < gameObjects.Count; i++)
         //{
-        //    AddUnit(gameObjects[i], units[i]);
-        //    //AddUnit(gameObjects[i], new Card("테스트 유닛" + i, Random.Range(0, 10), Random.Range(0, 10), CardType.Neutral, 0, Random.Range(0, 100) < 50));
+        //    FieldManager.Instance.battleFields.Add(gameObjects[i]);
         //}
+
         //Test End
     }
 
@@ -52,13 +52,33 @@ public class BattleManager : MonoBehaviour
     //    unitList.Add(FieldManager.Instance.battleFields.Find(GO));
     //}
 
+    public void AttackButton()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            GameManager.Instance.photonView.RPC("AttackPhaseNetwork", RpcTarget.All);
+        }
+        else
+        {
+            if (GameManager.Instance.gamePhase == GamePhase.BattlePhase && dirtySet == false)
+            {
+                AttackPhase();
+            }
+        }
+    }
+
     public void AttackPhase()
     {
-        StartCoroutine(AttackProcess());
+        if (GameManager.Instance.gamePhase == GamePhase.BattlePhase && dirtySet == false)
+        {
+            dirtySet = true;
+            StartCoroutine(AttackProcess());
+        }
     }
 
     private IEnumerator AttackProcess()
     {
+        Debug.LogError("~~~ 배틀 시작~~~");
         for (int i = 0; i < unitList.Count; i++)
         {
             Field tmp;
@@ -77,6 +97,8 @@ public class BattleManager : MonoBehaviour
                 yield return new WaitForSeconds(3);
             }
         }
-        Debug.Log("*** 배틀 종료 ***");
+        dirtySet = false;
+        Debug.LogError("*** 배틀 종료 ***");
+        GameManager.Instance.EndPhase();
     }
 }

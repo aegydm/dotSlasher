@@ -10,12 +10,12 @@ namespace CCGCard
     public enum CardType
     {
         f1,
-        Ninza,
-        Egypt,
-        Ghost,
-        Monster,
-        Ice,
-        Neutral,
+        f2,
+        f3,
+        f4,
+        f5,
+        f6,
+        f7,
     }
 
     public enum CardCategory
@@ -37,9 +37,11 @@ namespace CCGCard
         public List<CardEffect> attackProcessEffects = new();
         public List<CardEffect> getDamageEffects = new();
         #endregion
-        List<Field> enemyUnitInfo;
+        List<Field> enemyUnitInfo = new List<Field>();
+        public int cardID;
         public string cardName;
         public Sprite cardSprite;
+        public Animator animator;
         public string skill;
         public string skillContents;
         public int cost;
@@ -56,7 +58,7 @@ namespace CCGCard
             this.skill = string.Empty;
             this.skillContents = string.Empty;
             this.cost = 0;
-            this.cardColor = CardType.Neutral;
+            this.cardColor = CardType.f7;
         }
 
         public Card(string name, CardType cardType, int cost = 0)
