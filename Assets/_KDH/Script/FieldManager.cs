@@ -11,9 +11,14 @@ public class FieldManager : MonoBehaviour
     public static FieldManager Instance;
     public GameObject FieldPrefab;
     public LinkedBattleField battleFields;
+
+    bool canPlace = true;
     private Vector2 instantiatePosition;
 
     const int FULL_FIELD_COUNT = 10;
+
+    Field tmpField;
+    [SerializeField] GameObject directionCanvas;
 
     private void Awake()
     {
@@ -34,12 +39,20 @@ public class FieldManager : MonoBehaviour
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             instantiatePosition = new Vector3(mousePos.x, 0, 0);
             RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
-            if (rayhit.collider != null)
+            if (canPlace)
             {
-                if (rayhit.collider.GetComponent<Field>() != null)
+                if (rayhit.collider != null)
                 {
-                    PlaceCard(rayhit.collider.GetComponent<Field>());
+                    if (rayhit.collider.GetComponent<Field>() != null)
+                    {
+                        tmpField = rayhit.collider.GetComponent<Field>();
+                        SelectDirection(tmpField);
+                    }
                 }
+            }
+            else
+            {
+                UnitObject unitData = rayhit.collider.GetComponent<Field>().getFieldUnit();
             }
         }
     }
@@ -53,24 +66,27 @@ public class FieldManager : MonoBehaviour
         BattleManager.instance.unitList.Add(battleFields.Find(GO));
     }
 
-    void PlaceCard(Field field)
+    void SelectDirection(Field field)
+    {
+        directionCanvas.transform.position = field.transform.position;
+        directionCanvas.SetActive(true);
+        canPlace = false;
+    }
+
+    void PlaceCard(Field field, bool lookingLeft)
     {
         if (HandManager.Instance.selectedHand == null) return;
         if (field.isEmpty)
         {
             AddUnit(field.gameObject, HandManager.Instance.selectedHand.card);
-            field.SetCard(HandManager.Instance.selectedHand.card); 
+            field.SetCard(HandManager.Instance.selectedHand.card, lookingLeft ); 
         }
         else
         {
             if (IsFieldFull()) return;
             fields.Add(field.gameObject);
             GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
-            newField.GetComponent<Field>().SetCard(HandManager.Instance.selectedHand.card);
-            //newField.GetComponent<Field>().Prev = field.Prev;
-            //newField.GetComponent<Field>().Next = field;
-            //field.Prev.Next = newField.GetComponent<Field>();
-            //field.Prev = newField.GetComponent<Field>();  
+            newField.GetComponent<Field>().SetCard(HandManager.Instance.selectedHand.card, lookingLeft);
             battleFields.AddBefore(field, newField);
             Field tmpField = battleFields.First;
             fields.Clear();
@@ -87,15 +103,45 @@ public class FieldManager : MonoBehaviour
                 }
                 catch(Exception e)
                 {
+                    Debug.LogError(e.Message);
                     break;
                 }
             }
         }
+        directionCanvas.SetActive(false);
+        canPlace = true;
         HandManager.Instance.RemoveHand();
     }
 
     bool IsFieldFull()
     {
         return fields.Count == FULL_FIELD_COUNT;
+    }
+
+    public void ResetAllField()
+    {
+        int i = 0;
+        Field tmpField = battleFields.First;
+
+        for (; i<5; i++)
+        {
+            tmpField = tmpField.Next;
+        }
+        while(tmpField != null)
+        {
+            battleFields.Remove(tmpField);
+            fields.Remove(tmpField.gameObject);
+            Destroy(tmpField.gameObject);
+            tmpField = tmpField.Next;
+        }
+    }
+
+    /// <summary>
+    /// OnClick용도의 함수
+    /// </summary>
+    /// <param name="lookingLeft"></param>
+    public void SelectDirection(bool lookingLeft)
+    {
+        PlaceCard(tmpField, lookingLeft);
     }
 }
