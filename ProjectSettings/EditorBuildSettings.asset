@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/MyAssets/UIprefabsTest.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/_KDH/Scenes/ServerLoadScene.unity
+    guid: ff8fe787b056370458e9e841a39da6f7
+  - enabled: 1
+    path: Assets/_KDH/Scenes/BaseScene Ver.05.unity
+    guid: ab306eee6add5ce49a8abd4f546e0599
   m_configObjects: {}

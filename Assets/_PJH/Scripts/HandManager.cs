@@ -58,39 +58,41 @@ public class HandManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetMouseButtonDown(0))
+        if(GameManager.Instance.gamePhase == GamePhase.ActionPhase)
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
-            if (rayhit.collider != null)
+            if (Input.GetMouseButtonDown(0))
             {
-                if (rayhit.collider.GetComponent<HandCard>() != null)
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
+                if (rayhit.collider != null)
                 {
-                    if (selectedHand == null)
+                    if (rayhit.collider.GetComponent<HandCard>() != null)
                     {
-                        ToggleCardSelection(rayhit.collider.gameObject);
+                        if (selectedHand == null)
+                        {
+                            ToggleCardSelection(rayhit.collider.gameObject);
+                        }
+                        else if (rayhit.collider.gameObject == selectedHand.gameObject)
+                        {
+                            ToggleCardSelection(rayhit.collider.gameObject);
+                        }
+                        else
+                        {
+                            ToggleCardSelection(selectedHand.gameObject, selectedHand);
+                            ToggleCardSelection(rayhit.collider.gameObject);
+                        }
+                        selectedHand = rayhit.collider.GetComponent<HandCard>();
                     }
-                    else if (rayhit.collider.gameObject == selectedHand.gameObject)
-                    {
-                        ToggleCardSelection(rayhit.collider.gameObject);
-                    }
-                    else
-                    {
-                        ToggleCardSelection(selectedHand.gameObject, selectedHand);
-                        ToggleCardSelection(rayhit.collider.gameObject);
-                    }
-                    selectedHand = rayhit.collider.GetComponent<HandCard>();
                 }
             }
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
-            if (rayhit.collider != null)
+            else if (Input.GetMouseButtonDown(1))
             {
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
+                if (rayhit.collider != null)
+                {
 
+                }
             }
         }
     }

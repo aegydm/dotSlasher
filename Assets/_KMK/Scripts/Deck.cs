@@ -8,8 +8,6 @@ public class Deck : MonoBehaviour
     [SerializeField] List<Card> deck = new List<Card>();
     [SerializeField] int countOfDeck;
     [SerializeField] public List<int> sortedDeck;
-    [SerializeField] CardDB cardDB;
-    [SerializeField] GameManager gameManager;
 
     private void Awake()
     {
@@ -18,9 +16,9 @@ public class Deck : MonoBehaviour
 
     private void Start()
     {
-        /*for(int i = 0; i < cardDB.cards.Count; i++)
+        for(int i = 0; i < CardDB.instance.cards.Count; i++)
         {
-            deck.Add(cardDB.cards[i]);
+            deck.Add(CardDB.instance.cards[i]);
         }*/
     }
 
@@ -144,7 +142,7 @@ public class Deck : MonoBehaviour
     /// </summary>
     void OneDraw()
     {
-        switch (gameManager.gamePhase)
+        switch (GameManager.Instance.gamePhase)
         {
             case GamePhase.DrawPhase:
                 Draw(1);
