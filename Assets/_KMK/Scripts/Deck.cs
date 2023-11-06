@@ -123,18 +123,25 @@ public class Deck : MonoBehaviour
             Debug.Log(idList[i]);
     }
 
+    /// <summary>
+    /// 시작패 교체 기능
+    /// </summary>
+    /// <param name="cards"></param>
     void Mulligan(Card[] cards)
     {
 
         for(int i = 0; i < cards.Length; i++)
         {
-            HandManager.Instance.RemoveHand();
             Refill(cards[i]);
+            HandManager.Instance.RemoveHand();
         }
 
         Draw(cards.Length);
     }
 
+    /// <summary>
+    /// 드로우 페이즈에만 드로우가 가능한 기능
+    /// </summary>
     void OneDraw()
     {
         switch (gameManager.gamePhase)
