@@ -19,7 +19,7 @@ public class Deck : MonoBehaviour
         for(int i = 0; i < CardDB.instance.cards.Count; i++)
         {
             deck.Add(CardDB.instance.cards[i]);
-        }*/
+        }
     }
 
     /// <summary>
