@@ -11,6 +11,19 @@ public class FieldManager : MonoBehaviour
     public static FieldManager Instance;
     public GameObject FieldPrefab;
     public LinkedBattleField battleFields;
+    public int enemyCardNum
+    {
+        get
+        {
+            return _enemyCardNum;
+        }
+        set
+        {
+            _enemyCardNum = value;
+        }
+    }
+
+    private int _enemyCardNum;
     private Vector2 instantiatePosition;
 
     const int FULL_FIELD_COUNT = 10;

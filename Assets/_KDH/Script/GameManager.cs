@@ -22,6 +22,16 @@ public class GameManager : MonoBehaviour
             return _gamePhase;
         }
     }
+
+    public bool myTurn
+    {
+        get
+        {
+            return _myTurn;
+        }
+    }
+
+    private bool _myTurn;
     
     private Deck deck;
 
