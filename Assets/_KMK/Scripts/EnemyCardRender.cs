@@ -77,8 +77,8 @@ public class EnemyCardRender : MonoBehaviour
 
     public void RemoveCard()
     {
-        Destroy(enemyCards[count-1]);
-        enemyCards.Remove(enemyCards[count - 1]);
+        Destroy(enemyCards[enemyCards.Count- 1]);
+        enemyCards.RemoveAt(enemyCards.Count - 1);
         count = enemyCards.Count;
     }
 }
