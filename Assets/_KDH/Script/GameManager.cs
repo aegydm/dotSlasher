@@ -2,11 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GamePhase
+{
+    DrawPhase,
+    ActionPhase,
+    BattlePhase,
+    ExecutionPhase,
+    EndPhase,
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    public GamePhase gamePhase
+    {
+        get
+        {
+            return _gamePhase;
+        }
+    }
     
     private Deck deck;
+
+    private GamePhase _gamePhase;
 
     private void Awake()
     {
