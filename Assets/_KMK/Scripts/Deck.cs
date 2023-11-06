@@ -8,8 +8,6 @@ public class Deck : MonoBehaviour
     [SerializeField] List<Card> deck = new List<Card>();
     [SerializeField] int countOfDeck;
     [SerializeField] public List<int> sortedDeck;
-    [SerializeField] CardDB cardDB;
-    [SerializeField] GameManager gameManager;
 
     private void Awake()
     {
@@ -18,10 +16,10 @@ public class Deck : MonoBehaviour
 
     private void Start()
     {
-        /*for(int i = 0; i < cardDB.cards.Count; i++)
+        for(int i = 0; i < CardDB.instance.cards.Count; i++)
         {
-            deck.Add(cardDB.cards[i]);
-        }*/
+            deck.Add(CardDB.instance.cards[i]);
+        }
     }
 
     /// <summary>
@@ -123,21 +121,28 @@ public class Deck : MonoBehaviour
             Debug.Log(idList[i]);
     }
 
+    /// <summary>
+    /// 시작패 교체 기능
+    /// </summary>
+    /// <param name="cards"></param>
     void Mulligan(Card[] cards)
     {
 
         for(int i = 0; i < cards.Length; i++)
         {
-            HandManager.Instance.RemoveHand();
             Refill(cards[i]);
+            HandManager.Instance.RemoveHand();
         }
 
         Draw(cards.Length);
     }
 
+    /// <summary>
+    /// 드로우 페이즈에만 드로우가 가능한 기능
+    /// </summary>
     void OneDraw()
     {
-        switch (gameManager.gamePhase)
+        switch (GameManager.Instance.gamePhase)
         {
             case GamePhase.DrawPhase:
                 Draw(1);

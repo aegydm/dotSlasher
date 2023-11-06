@@ -72,14 +72,15 @@ public class Field : MonoBehaviour
         backDamageText.text = string.Empty;
     }
 
-    public void SetCard(Card newCard)
+    public void SetCard(Card newCard, bool lookLeft = false)
     {
         if (isEmpty)
         {
             card = newCard;
             isEmpty = false;
-            unitObject.lookingLeft = Random.Range(0, 100) < 50 ? true : false;
+            //unitObject.lookingLeft;
             unitObject.Setting(newCard);
+            unitObject.lookingLeft = lookLeft;
             spriteRenderer.sprite = card.cardSprite;
             frontDamageText.text = card.frontDamage.ToString();
             backDamageText.text = card.backDamage.ToString();

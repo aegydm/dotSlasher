@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +11,18 @@ public class EnemyCardRender : MonoBehaviour
     [SerializeField] List<GameObject> enemyCards;
     [SerializeField] Text enemyCardText;
     [SerializeField] public bool isShow = false;
-    [SerializeField] public GameObject cardBackprefab;
+    [SerializeField] public GameObject cardBackPrefab;
+    [SerializeField] private Transform cardTransform;
+    [SerializeField] public int count;
+    [SerializeField] public float xPos;
+    [SerializeField] public float yPos;
 
-    public int enemyCard;
     FieldManager fieldManager;
+
+    private void Start()
+    {
+        fieldManager = FindObjectOfType<FieldManager>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -41,7 +50,7 @@ public class EnemyCardRender : MonoBehaviour
     {
         if (isShow)
         {
-            enemyCardText.text = enemyCard.ToString();
+            enemyCardText.text = count.ToString();
         }
         else
         {
@@ -49,23 +58,27 @@ public class EnemyCardRender : MonoBehaviour
         }
     }
 
-    private void BackwordCardSet()
+    public void BackwordCardAdd()
     {
-        //기본 카드 세팅
-        for (int i = 0; i < enemyCard; i++)
-        {
-            //enemyCards[i].SetActive(true);
-        }
+        count = enemyCards.Count;
+
+        Vector3 spawnPos = new Vector3(count * xPos, count * yPos, 0);
+
+        Vector3 vector3 = cardTransform.position;
+
+        Vector3 newVector = vector3 + spawnPos;
+
+        GameObject instansceObj = Instantiate(cardBackPrefab, newVector, Quaternion.identity);
+
+        enemyCards.Add(instansceObj);
+
+        count = enemyCards.Count;
     }
 
-    void AddBackwordCard()
+    public void RemoveCard()
     {
-        enemyCards.Add(cardBackprefab);
-    }
-
-    void RemoveBackwordCard()
-    {
-        int i = enemyCards.Count;
-        enemyCards.Remove(enemyCards[i]);
+        Destroy(enemyCards[enemyCards.Count- 1]);
+        enemyCards.RemoveAt(enemyCards.Count - 1);
+        count = enemyCards.Count;
     }
 }
