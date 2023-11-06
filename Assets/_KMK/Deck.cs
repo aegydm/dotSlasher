@@ -9,6 +9,12 @@ public class Deck : MonoBehaviour
     [SerializeField] int countOfDeck;
     [SerializeField] public List<int> sortedDeck;
     [SerializeField] CardDB cardDB;
+    [SerializeField] GameManager gameManager;
+
+    private void Awake()
+    {
+        
+    }
 
     private void Start()
     {
@@ -127,5 +133,19 @@ public class Deck : MonoBehaviour
         }
 
         Draw(cards.Length);
+    }
+
+    void OneDraw()
+    {
+        switch (gameManager.gamePhase)
+        {
+            case GamePhase.DrawPhase:
+                Draw(1);
+                break;
+
+            default:
+                
+                break;
+        }
     }
 }
