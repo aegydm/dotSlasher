@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CCGCard;
 using TMPro;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(UnitObject))]
 public class Field : MonoBehaviour
@@ -32,6 +33,7 @@ public class Field : MonoBehaviour
     [SerializeField] TMP_Text frontDamageText;
     [SerializeField] TMP_Text backDamageText;
     [SerializeField] TMP_Text orderText;
+    public Image playerColor;
 
     private void Awake()
     {
@@ -67,6 +69,7 @@ public class Field : MonoBehaviour
 
     public void ResetField()
     {
+        unitObject.playerName = "-1";
         isEmpty = true;
         card = new Card();
         spriteRenderer.sprite = null;

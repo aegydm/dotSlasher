@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public TMP_Text text;
+    public TMP_Text turnText;
 
     //2인 플레이 테스트 용 임시 코드
     public string playerID
@@ -30,7 +31,6 @@ public class GameManager : MonoBehaviour
         set
         {
             _playerID = value;
-            //photonView.ViewID = int.Parse(value);
         }
     }
 
@@ -57,24 +57,73 @@ public class GameManager : MonoBehaviour
         set
         {
             _currentTurn = value;
+            turnText.text = "Turn : " + _currentTurn.ToString();
         }
     }
 
-    public bool myTurn
+    public bool playerEnd
     {
         get
         {
-            return _myTurn;
+            return _playerEnd;
         }
         set
         {
-            _myTurn = value;
+            _playerEnd = value;
+            if (_playerEnd)
+            {
+                photonView.RPC("CallActionEnd", RpcTarget.Others);
+            }
+            CheckPhaseEnd();
         }
     }
 
-    private int _currentTurn;
+    public bool enemyEnd
+    {
+        get
+        {
+            return _enemyEnd;
+        }
+        set
+        {
+            _enemyEnd = value;
+            CheckPhaseEnd();
+        }
+    }
 
-    private bool _myTurn;
+    public bool canAct
+    {
+        get
+        {
+            return _canAct;
+        }
+        set
+        {
+            _canAct = value;
+            if (_canAct == false && gamePhase == GamePhase.ActionPhase)
+            {
+                currentTurn++;
+                photonView.RPC("MatchTurnNum", RpcTarget.Others, currentTurn);
+                photonView.RPC("CallSummonEnd", RpcTarget.Others);
+            }
+        }
+    }
+
+    [SerializeField] private bool _canAct;
+
+    private void CheckPhaseEnd()
+    {
+        if (playerEnd && enemyEnd)
+        {
+            EndPhase();
+        }
+    }
+
+    [SerializeField] private int _currentTurn;
+
+    [SerializeField] private bool _playerEnd;
+
+    [SerializeField] private bool _enemyEnd;
 
     private Deck deck;
 
@@ -94,9 +143,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //photonView = GetComponent<PhotonView>();
-        //playerID = photonView.ViewID.ToString();
-        //Debug.LogError(photonView.ViewID);
+        ResetState();
     }
 
     private void Update()
@@ -105,20 +152,17 @@ public class GameManager : MonoBehaviour
         {
             text.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
         }
+    }
 
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
-        //{
-        //    playerID = "1";
-        //}
-        //else if (Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-        //    playerID = "2";
-        //}
+    private void ResetState()
+    {
+        playerEnd = false;
+        enemyEnd = false;
     }
 
     public void StartSetting()
     {
-        if(deck == null)
+        if (deck == null)
         {
             deck = GetComponent<Deck>();
         }
@@ -127,7 +171,7 @@ public class GameManager : MonoBehaviour
         {
             deck.Shuffle();
             deck.Draw(4);
-            EndPhase();
+            playerEnd = true;
         }
         else
         {
@@ -137,13 +181,26 @@ public class GameManager : MonoBehaviour
 
     public void EndPhase()
     {
+        ResetState();
         switch (gamePhase)
         {
             case GamePhase.DrawPhase:
+                //가위바위보 결과로 대체 할 코드
+                if (int.Parse(playerID) % 2 == 0)
+                {
+                    canAct = true;
+                }
+                else
+                {
+                    canAct = false;
+                }
+                //
+                currentTurn = 0;
                 gamePhase = GamePhase.ActionPhase;
                 break;
             case GamePhase.ActionPhase:
                 gamePhase = GamePhase.BattlePhase;
+                BattleManager.instance.AttackButton();
                 break;
             case GamePhase.BattlePhase:
                 gamePhase = GamePhase.ExecutionPhase;
@@ -161,12 +218,38 @@ public class GameManager : MonoBehaviour
 
     private void EndGame()
     {
-
+        Field tmp = FieldManager.Instance.battleFields.First;
+        while (tmp.Next != null)
+        {
+            if (tmp.unitObject.playerName == playerID)
+            {
+                deck.Refill(tmp.unitObject.cardData);
+                tmp.ResetField();
+            }
+            else
+            {
+                tmp.ResetField();
+            }
+            tmp = tmp.Next;
+        }
+        if (tmp.unitObject.playerName == playerID)
+        {
+            deck.Refill(tmp.unitObject.cardData);
+            tmp.ResetField();
+        }
+        else
+        {
+            tmp.ResetField();
+        }
+        BattleManager.instance.unitList.Clear();
+        EndPhase();
     }
 
     private void ExecuteGame()
     {
-
+        Debug.LogError("처리 페이즈에 진입했습니다.");
+        Debug.LogError("영웅 처리가 마무리 되지 않았으므로 3초 뒤 자동으로 페이즈를 넘깁니다.");
+        Invoke("EndPhase", 3f);
     }
 
     [PunRPC]
@@ -174,9 +257,9 @@ public class GameManager : MonoBehaviour
     {
         Debug.LogError("TestPlaceCard");
         Vector2 mousePos = pos;
-        Vector3 newPosition = new Vector3(mousePos.x, 0, 0);
+        FieldManager.Instance.instantiatePosition = new Vector3(mousePos.x, 0, 0);
         RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
-        if(cardID != 0)
+        if (cardID != 0)
         {
             Card summonCard = FindCardFromID(cardID);
             FieldManager.Instance.PlaceCard(rayhit.collider.GetComponent<Field>(), summonCard, playerID, lookLeft);
@@ -189,15 +272,41 @@ public class GameManager : MonoBehaviour
         BattleManager.instance.AttackPhase();
     }
 
+    [PunRPC]
+    public void MatchTurnNum(int turnNum)
+    {
+        currentTurn = turnNum;
+    }
+
     public Card FindCardFromID(int id)
     {
-        foreach(var data in CardDB.instance.cards)
+        foreach (var data in CardDB.instance.cards)
         {
-            if(data.cardID == id)
+            if (data.cardID == id)
             {
                 return data;
             }
         }
         return null;
+    }
+
+    [PunRPC]
+    public void CallActionEnd()
+    {
+        enemyEnd = true;
+    }
+
+    [PunRPC]
+    public void CallSummonEnd()
+    {
+        if (playerEnd)
+        {
+            canAct = false;
+            photonView.RPC("CallSummonEnd", RpcTarget.Others);
+        }
+        else
+        {
+            canAct = true;
+        }
     }
 }

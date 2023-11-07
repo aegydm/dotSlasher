@@ -35,7 +35,7 @@ Transform:
   - {fileID: 4070759202810733254}
   - {fileID: 2707936998720518894}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3244108844858169479
 SpriteRenderer:
@@ -156,8 +156,10 @@ MonoBehaviour:
     calculateDamageEffects: []
     attackProcessEffects: []
     getDamageEffects: []
+    cardID: 0
     cardName: 
     cardSprite: {fileID: 0}
+    animator: {fileID: 0}
     skill: 
     skillContents: 
     cost: 0
@@ -168,11 +170,11 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5167814117537082558}
   Prev: {fileID: 0}
   Next: {fileID: 0}
-  directionCanvas: {fileID: 0}
   unitObject: {fileID: 0}
   frontDamageText: {fileID: 6733333447429586734}
   backDamageText: {fileID: 692118745384278820}
   orderText: {fileID: 5328525396186526446}
+  playerColor: {fileID: 234254404882330702}
 --- !u!114 &7650042282013144550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,8 +194,10 @@ MonoBehaviour:
     calculateDamageEffects: []
     attackProcessEffects: []
     getDamageEffects: []
+    cardID: 0
     cardName: 
     cardSprite: {fileID: 0}
+    animator: {fileID: 0}
     skill: 
     skillContents: 
     cost: 0
@@ -204,7 +208,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
   squareSprite: {fileID: 0}
-  playername: Player1
 --- !u!1 &3018531304895510006
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +461,7 @@ RectTransform:
   - {fileID: 7618834985754775640}
   - {fileID: 3683766724062403986}
   - {fileID: 2651006258289981585}
+  - {fileID: 433323504772540485}
   m_Father: {fileID: 4347433554433433691}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -930,6 +934,82 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6669497934350442177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &7362762830676748614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 433323504772540485}
+  - component: {fileID: 1054003791203270550}
+  - component: {fileID: 234254404882330702}
+  m_Layer: 5
+  m_Name: PlayerNameColor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &433323504772540485
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362762830676748614}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2707936998720518894}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 10.5}
+  m_SizeDelta: {x: 12, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1054003791203270550
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362762830676748614}
+  m_CullTransparentMesh: 1
+--- !u!114 &234254404882330702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362762830676748614}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}

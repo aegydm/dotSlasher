@@ -58,7 +58,7 @@ public class HandManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.Instance.gamePhase == GamePhase.ActionPhase)
+        if(GameManager.Instance.gamePhase == GamePhase.ActionPhase && GameManager.Instance.canAct)
         {
             if (Input.GetMouseButtonDown(0))
             {
