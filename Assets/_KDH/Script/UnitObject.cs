@@ -48,7 +48,7 @@ public class UnitObject : MonoBehaviour
         }
     }
 
-    private string _playerName;
+    [SerializeField] private string _playerName;
 
     public void CardChange(Card newCard)
     {

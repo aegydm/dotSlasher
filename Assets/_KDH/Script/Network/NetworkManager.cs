@@ -10,6 +10,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager instance;
     public TMP_Text userCount;
+    public bool first;
 
     private void Awake()
     {
@@ -26,7 +27,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if(PhotonNetwork.IsConnected == false)
+        if (PhotonNetwork.IsConnected == false)
         {
             PhotonNetwork.ConnectUsingSettings();
         }
@@ -34,7 +35,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        userCount.text = PhotonNetwork.CountOfPlayers.ToString();
+        if (PhotonNetwork.InRoom == false)
+        {
+            userCount.text = PhotonNetwork.CountOfPlayers.ToString();
+        }
     }
 
     public void CreateRoom(string roomName)
@@ -46,17 +50,24 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void CreateAndJoinRoom()
     {
-        SceneManager.LoadScene(1);
-        PhotonNetwork.JoinRandomRoom();
+        if (PhotonNetwork.IsConnected)
+        {
+            SceneManager.LoadScene(1);
+            PhotonNetwork.JoinRandomRoom();
+        }
     }
 
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+    }
+
+    public void SetPlayerID()
+    {
         int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
         Player[] sortedPlayers = PhotonNetwork.PlayerList;
 
-        for(int i = 0; i < sortedPlayers.Length; i++)
+        for (int i = 0; i < sortedPlayers.Length; i++)
         {
             if (sortedPlayers[i].ActorNumber == actorNumber)
             {
@@ -68,7 +79,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        PhotonNetwork.LeaveRoom();        
+        PhotonNetwork.LeaveRoom();
     }
 
     public override void OnLeftRoom()
@@ -81,5 +92,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         RoomOptions opt = new();
         opt.MaxPlayers = 2;
         PhotonNetwork.CreateRoom(null, opt, null);
+    }
+
+    public void StartGame(bool first)
+    {
+        this.first = first;
+        Invoke("GameLoad", 5);
+    }
+
+    public void GameLoad()
+    {
+        SceneManager.LoadScene(2);
     }
 }
