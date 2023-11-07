@@ -125,7 +125,7 @@ public class FieldManager : MonoBehaviour
             GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
 
             battleFields.AddBefore(field, newField);
-            AddUnit(newField.gameObject, card);
+            AddUnit(newField.gameObject, card, id);
             newField.GetComponent<Field>().SetCard(card, lookLeft);
 
             Field tmpField = battleFields.First;
