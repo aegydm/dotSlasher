@@ -84,10 +84,13 @@ public class FieldManager : MonoBehaviour
         else
         {
             if (IsFieldFull()) return;
+
             fields.Add(field.gameObject);
             GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
-            newField.GetComponent<Field>().SetCard(HandManager.Instance.selectedHand.card, lookingLeft);
             battleFields.AddBefore(field, newField);
+            AddUnit(newField.gameObject, HandManager.Instance.selectedHand.card);
+            newField.GetComponent<Field>().SetCard(HandManager.Instance.selectedHand.card, lookingLeft);
+
             Field tmpField = battleFields.First;
             fields.Clear();
             while (tmpField != null)
