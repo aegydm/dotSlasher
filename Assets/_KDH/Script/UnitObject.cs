@@ -48,6 +48,7 @@ public class UnitObject : MonoBehaviour
 
     public void Setting(Card card)
     {
+        cardData = card;
         if(card.cardName != string.Empty || card.cardSprite == null)
         {
             spriteRenderer.sprite = card.cardSprite;

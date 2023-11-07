@@ -114,7 +114,6 @@ public class HandManager : MonoBehaviour
             if (i == cards.Length - 1) return;
         }
         if (cards[i].card != null) return;
-        Debug.Log($"{i} + {cards.Length}");
         cards[i].RemoveCard();
         while (i < cards.Length - 1)
         {
@@ -124,8 +123,6 @@ public class HandManager : MonoBehaviour
                 cards[i + 1].RemoveCard();
             }
             i++;
-
-            Debug.Log(i);
         }
         cards[cards.Length - 1].RemoveCard();
         foreach (HandCard card in cards)

@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
     }
 
     [PunRPC]
-    public void PlaceCardForPun(Vector3 pos, int cardID, int playerID)
+    public void PlaceCardForPun(Vector2 pos, int cardID, int playerID, bool lookLeft)
     {
         Debug.LogError("TestPlaceCard");
         Vector2 mousePos = pos;
@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
         if(cardID != 0)
         {
             Card summonCard = FindCardFromID(cardID);
-            FieldManager.Instance.PlaceCard(rayhit.collider.GetComponent<Field>(), summonCard, playerID);
+            FieldManager.Instance.PlaceCard(rayhit.collider.GetComponent<Field>(), summonCard, playerID, lookLeft);
         }
     }
 

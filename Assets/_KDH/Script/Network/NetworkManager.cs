@@ -60,7 +60,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             if (sortedPlayers[i].ActorNumber == actorNumber)
             {
                 GameManager.Instance.playerID = i.ToString();
-                Debug.LogError(GameManager.Instance.playerID);
+                //Debug.LogError(GameManager.Instance.playerID);
                 break;
             }
         }

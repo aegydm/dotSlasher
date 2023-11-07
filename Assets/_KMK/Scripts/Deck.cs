@@ -20,6 +20,7 @@ public class Deck : MonoBehaviour
         {
             deck.Add(CardDB.instance.cards[i]);
         }
+        RefreshDeckCount();
     }
 
     /// <summary>
@@ -59,6 +60,7 @@ public class Deck : MonoBehaviour
             }
             else
             {
+                Debug.Log(deck.Count);
                 Debug.Log("카드가 없습니다");
             }
         }
