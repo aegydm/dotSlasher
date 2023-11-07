@@ -121,6 +121,7 @@ public class FieldManager : MonoBehaviour
     }
     void SelectDirection(Field field)
     {
+        if (HandManager.Instance.selectedHand == null) return;
         directionCanvas.transform.position = field.transform.position;
         directionCanvas.SetActive(true);
         canPlace = false;
@@ -198,9 +199,10 @@ public class FieldManager : MonoBehaviour
     /// <param name="lookingLeft"></param>
     public void SelectDirection(bool lookingLeft)
     {
+        GameManager.Instance.PlaceCardForPun(tmpField.transform.position, HandManager.Instance.selectedHand.card.cardID, 0, lookingLeft);
         //PlaceCard(tmpField, lookingLeft);
         //GameManager.Instance.PlaceCardForPun(mousePos, HandManager.Instance.selectedHand.card.cardID, int.Parse(GameManager.Instance.playerID), lookingLeft);
-        GameManager.Instance.photonView.RPC("PlaceCardForPun", RpcTarget.All, mousePos, HandManager.Instance.selectedHand.card.cardID, int.Parse(GameManager.Instance.playerID), lookingLeft);
+        //GameManager.Instance.photonView.RPC("PlaceCardForPun", RpcTarget.All, mousePos, HandManager.Instance.selectedHand.card.cardID, int.Parse(GameManager.Instance.playerID), lookingLeft);
         HandManager.Instance.RemoveHand();
     }
 
