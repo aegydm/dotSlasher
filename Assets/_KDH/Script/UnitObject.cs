@@ -28,8 +28,27 @@ public class UnitObject : MonoBehaviour
     private bool _lookingLeft;
 
 
-    public string playername;
+    public string playerName
+    {
+        get
+        {
+            return _playerName;
+        }
+        set
+        {
+            _playerName = value;
+            if(_playerName != "-1")
+            {
+                GetComponent<Field>().playerColor.color = new Color(255 - (255 * int.Parse(playerName)), 255 * int.Parse(playerName), 0);
+            }
+            else
+            {
+                GetComponent<Field>().playerColor.color = new Color(255, 255, 255);
+            }
+        }
+    }
 
+    private string _playerName;
 
     public void CardChange(Card newCard)
     {
@@ -48,6 +67,7 @@ public class UnitObject : MonoBehaviour
 
     public void Setting(Card card)
     {
+        cardData = card;
         if(card.cardName != string.Empty || card.cardSprite == null)
         {
             spriteRenderer.sprite = card.cardSprite;

@@ -26,7 +26,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        if(PhotonNetwork.IsConnected == false)
+        {
+            PhotonNetwork.ConnectUsingSettings();
+        }
     }
 
     private void Update()
@@ -44,14 +47,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void CreateAndJoinRoom()
     {
         SceneManager.LoadScene(1);
-        PhotonNetwork.JoinRandomOrCreateRoom();
-        //PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 2 }, null);
+        PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        //GameManager.Instance.photonView = PhotonNetwork.Instantiate("player",Vector3.zero,Quaternion.identity).GetComponent<PhotonView>();
         int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
         Player[] sortedPlayers = PhotonNetwork.PlayerList;
 
@@ -60,9 +61,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             if (sortedPlayers[i].ActorNumber == actorNumber)
             {
                 GameManager.Instance.playerID = i.ToString();
-                Debug.LogError(GameManager.Instance.playerID);
                 break;
             }
         }
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        PhotonNetwork.LeaveRoom();        
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom(); SceneManager.LoadScene(0);
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        RoomOptions opt = new();
+        opt.MaxPlayers = 2;
+        PhotonNetwork.CreateRoom(null, opt, null);
     }
 }

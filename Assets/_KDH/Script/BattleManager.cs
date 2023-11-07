@@ -14,7 +14,7 @@ public class BattleManager : MonoBehaviour
 
     //Test Code
     //public List<Unit> units;
-    public List<GameObject> gameObjects;
+    //public List<GameObject> gameObjects;
     //Test End
 
     public bool dirtySet = false;
@@ -31,38 +31,28 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        //Test Code
-        //for (int i = 0; i < gameObjects.Count; i++)
-        //{
-        //    FieldManager.Instance.battleFields.Add(gameObjects[i]);
-        //}
-
-        //Test End
-    }
-
-    //public void AddUnit(GameObject GO, Unit cardData)
-    //{
-    //    FieldManager.Instance.battleFields.Find(GO).unit.CardChange(cardData);
-    //    if (cardData.cardName != string.Empty)
-    //    {
-    //        FieldManager.Instance.battleFields.Find(GO).canBattle = true;
-    //    }
-    //    unitList.Add(FieldManager.Instance.battleFields.Find(GO));
-    //}
-
     public void AttackButton()
     {
         if (PhotonNetwork.InRoom)
         {
-            GameManager.Instance.photonView.RPC("AttackPhaseNetwork", RpcTarget.All);
+            if(GameManager.Instance.gamePhase == GamePhase.BattlePhase)
+            {
+                GameManager.Instance.photonView.RPC("AttackPhaseNetwork", RpcTarget.All);
+            }
+            else
+            {
+                Debug.LogWarning("배틀 페이즈가 아닙니다.");
+            }
         }
         else
         {
             if (GameManager.Instance.gamePhase == GamePhase.BattlePhase && dirtySet == false)
             {
                 AttackPhase();
+            }
+            else
+            {
+                Debug.LogWarning("배틀 페이즈가 아닙니다. -single");
             }
         }
     }

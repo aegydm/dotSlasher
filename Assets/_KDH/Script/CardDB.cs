@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CCGCard;
 using System;
+using UnityEditor;
 
 [CreateAssetMenu]
 public class CardDB : ScriptableObject
@@ -44,6 +45,9 @@ public class CardDB : ScriptableObject
     public void LoadDataAll()
     {
         ReadCharData("CardDataBase", cards);
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+#endif
     }
 
     private void ReadCharData(string v, List<Card> cards)

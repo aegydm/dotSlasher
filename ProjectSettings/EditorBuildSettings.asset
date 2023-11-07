@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/_KDH/Scenes/ServerLoadScene.unity
     guid: ff8fe787b056370458e9e841a39da6f7
   - enabled: 1
-    path: Assets/_KDH/Scenes/BaseScene Ver.05.unity
-    guid: ab306eee6add5ce49a8abd4f546e0599
+    path: Assets/_KDH/Scenes/TurnTest.unity
+    guid: 4711e2957e9cd614f940337ec1184235
   m_configObjects: {}

@@ -20,6 +20,7 @@ public class Deck : MonoBehaviour
         {
             deck.Add(CardDB.instance.cards[i]);
         }
+        RefreshDeckCount();
     }
 
     /// <summary>
@@ -46,9 +47,10 @@ public class Deck : MonoBehaviour
     /// </summary>
     public void Draw(int drawCard)
     {
+
         for (int i = 0; i < drawCard; i++)
         {
-            if (deck.Count > 0)
+            if (countOfDeck > 0)
             {
                 //먼저 패에서 덱의 카드를 호출하고 난 다음 덱의 카드를 제거하도록 순서를 주의한다.
 
@@ -56,13 +58,17 @@ public class Deck : MonoBehaviour
                 {
                     deck.Remove(deck[0]);
                 }
+                else
+                {
+                    Debug.LogError("손패가 가득 찼습니다.");
+                }
             }
             else
             {
+                Debug.Log(countOfDeck);
                 Debug.Log("카드가 없습니다");
             }
         }
-
         RefreshDeckCount();
     }
 
