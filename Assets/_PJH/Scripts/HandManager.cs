@@ -14,6 +14,7 @@ public class HandManager : MonoBehaviour
     GameObject draggingObject;
 
     Vector3 startPos;
+    bool usingSelectedCard = true;
 
     private void Awake()
     {
@@ -36,45 +37,54 @@ public class HandManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (selectedHand == null) usingSelectedCard = false;
         if(GameManager.Instance.gamePhase == GamePhase.ActionPhase)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (usingSelectedCard == false)
             {
-                isDragging = true;
-                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
-                if (rayhit.collider != null)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    if (rayhit.collider.gameObject.layer == 6)
+                    isDragging = true;
+                    Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
+                    if (rayhit.collider != null)
                     {
-                        startPos = rayhit.transform.position;
-                        draggingObject = rayhit.collider.gameObject;
-                        ToggleCardSelection(rayhit.collider.gameObject);
-                        selectedHand = rayhit.collider.GetComponent<HandCard>();
+                        if (rayhit.collider.gameObject.layer == 6)
+                        {
+                            startPos = rayhit.transform.position;
+                            draggingObject = rayhit.collider.gameObject;
+                            ToggleCardSelection(rayhit.collider.gameObject);
+                        }
                     }
                 }
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, 6);
-                if (draggingObject != null)
+                if (Input.GetMouseButtonUp(0))
                 {
-                    draggingObject.transform.position = startPos;
-                    ToggleCardSelection(selectedHand.gameObject,selectedHand);
+                    Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
+                    if (draggingObject != null)
+                    {
+                        foreach (Collider2D collider in colliders)
+                        {
+                            if (collider.gameObject.layer == 7)
+                            {
+                                usingSelectedCard =  FieldManager.Instance.SelectField(collider.GetComponent<Field>());
+                            }
+                        }
+                        draggingObject.transform.position = startPos;
+                        if(usingSelectedCard == false)
+                            ToggleCardSelection(selectedHand);
+                    }
+                    isDragging = false;
+                    draggingObject = null;
                 }
-                selectedHand = null;
-                isDragging = false;
-                draggingObject = null;
-            }
 
-            if (isDragging)
-            {
-                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
-                if(draggingObject != null)
+                if (isDragging)
                 {
-                    draggingObject.transform.position = mousePos;
+                    Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    if (draggingObject != null)
+                    {
+                        draggingObject.transform.position = mousePos;
+                    }
                 }
             }
         }
@@ -82,8 +92,8 @@ public class HandManager : MonoBehaviour
 
     public void RemoveHand()
     {
-        ToggleCardSelection(selectedHand.gameObject);
         selectedHand.RemoveCard();
+        ToggleCardSelection(selectedHand.gameObject);
         selectedHand = null;
         SortHand();
     }
@@ -120,15 +130,13 @@ public class HandManager : MonoBehaviour
     void ToggleCardSelection(GameObject card)
     {
         HandCard handCard = card.gameObject.GetComponent<HandCard>();
-        Vector3 scale = card.transform.localScale;
-        card.transform.localScale = handCard.isSelected ? new Vector3(scale.x, scale.y / 1.1f, scale.z) : new Vector3(scale.x, scale.y * 1.1f, scale.z);
         handCard.isSelected = !handCard.isSelected;
+        selectedHand = handCard.isSelected ? handCard : null;
     }
-    void ToggleCardSelection(GameObject card, HandCard handCard)
+    void ToggleCardSelection(HandCard handCard)
     {
-        Vector3 scale = card.transform.localScale;
-        card.transform.localScale = handCard.isSelected ? new Vector3(scale.x, scale.y / 1.1f, scale.z) : new Vector3(scale.x, scale.y * 1.1f, scale.z);
         handCard.isSelected = !handCard.isSelected;
+        selectedHand = handCard.isSelected ? handCard : null;
     }
 
 
