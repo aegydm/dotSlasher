@@ -9,8 +9,8 @@ using UnityEngine.UI;
 public class EnemyCardRender : MonoBehaviour
 {
     [SerializeField] List<GameObject> enemyCards;
-    [SerializeField] Text enemyCardText;
-    [SerializeField] public bool isShow = false;
+    [SerializeField] TMP_Text enemyCardText;
+    //[SerializeField] public bool isShow = false;
     [SerializeField] public GameObject cardBackPrefab;
     [SerializeField] private Transform cardTransform;
     [SerializeField] public int count;
@@ -21,40 +21,47 @@ public class EnemyCardRender : MonoBehaviour
 
     private void Start()
     {
-        fieldManager = FindObjectOfType<FieldManager>();
+        fieldManager = FieldManager.Instance;
+        fieldManager.OnEnemyHandChanged += ShowNumber;
+        fieldManager.OnEnemyHandChanged += RenderEnemyCard;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //enemyCard = fieldManager.enemyCardNum;
+    //public void BoolChange()
+    //{
+    //    if (isShow)
+    //    {
+    //        isShow = false;
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        isShow = true;
+    //        return;
+    //    }
+    //}
 
-        ShowNumber();
-    }
-
-    public void BoolChange()
+    private void ShowNumber(int cardNum)
     {
-        if (isShow)
+        if (cardNum >= 0)
         {
-            isShow = false;
-            return;
-        }
-        else
-        {
-            isShow = true;
-            return;
-        }
-    }
-
-    private void ShowNumber()
-    {
-        if (isShow)
-        {
-            enemyCardText.text = count.ToString();
+            enemyCardText.text = cardNum.ToString();
         }
         else
         {
             enemyCardText.text = "";
+            Debug.LogError("EnemyCard can't down under 0");
+        }
+    }
+
+    public void RenderEnemyCard(int cardNum)
+    {
+        while(cardNum > count)
+        {
+            BackwordCardAdd();
+        }
+        while(cardNum < count)
+        {
+            RemoveCard();
         }
     }
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -38,8 +39,20 @@ public class RSP : MonoBehaviour
         }
         set
         {
-            _myHand = value;
-            CheckHand();
+            if (_myHand != value)
+            {
+                _myHand = value;
+                if (_myHand != Hand.Null)
+                {
+                    Debug.LogError(myHand + "," + enemyHand);
+                    CheckHand();
+                }
+                else
+                {
+                    trigger = true;
+                }
+                match.photonView.RPC("SetEnemyHand", RpcTarget.Others, myHand);
+            }
         }
     }
 
@@ -49,10 +62,11 @@ public class RSP : MonoBehaviour
         {
             Debug.Log("Check");
             Result result = RockScissorPaper(myHand, enemyHand);
+            Debug.Log(result);
             if (result == Result.Draw)
             {
-                myHand = Hand.Null;
-                enemyHand = Hand.Null;
+                resultText.text = "Draw";
+                Invoke("Draw", 3f);
             }
             else if (result == Result.Win)
             {
@@ -67,6 +81,13 @@ public class RSP : MonoBehaviour
         }
     }
 
+    private void Draw()
+    {
+        resultText.text = "Select";
+        myHand = Hand.Null;
+        enemyHand = Hand.Null;
+    }
+
     public Hand enemyHand
     {
         get
@@ -75,8 +96,15 @@ public class RSP : MonoBehaviour
         }
         set
         {
-            _enemyHand = value;
-            CheckHand();
+            if (_enemyHand != value)
+            {
+                _enemyHand = value;
+                if (_enemyHand != Hand.Null)
+                {
+                    Debug.LogError(myHand + "," + enemyHand);
+                    CheckHand();
+                }
+            }
         }
     }
 
@@ -89,7 +117,7 @@ public class RSP : MonoBehaviour
     [SerializeField] GameObject choose;
     public TMP_Text chooseText;
 
-    private void Awake()
+    private void OnEnable()
     {
         if (instance == null)
         {
@@ -99,10 +127,6 @@ public class RSP : MonoBehaviour
         {
             Destroy(this);
         }
-    }
-
-    private void OnEnable()
-    {
         startFirst = false;
         trigger = true;
         myHand = Hand.Null;
@@ -168,8 +192,8 @@ public class RSP : MonoBehaviour
         {
             Debug.Log("ROCK");
             myHand = Hand.Rock;
-            match.photonView.RPC("SetEnemyHand", RpcTarget.Others, myHand);
             trigger = false;
+            resultText.text = "You Choose Rock";
         }
     }
 
@@ -178,8 +202,8 @@ public class RSP : MonoBehaviour
         if (trigger)
         {
             myHand = Hand.Scissor;
-            match.photonView.RPC("SetEnemyHand", RpcTarget.Others, myHand);
             trigger = false;
+            resultText.text = "You Choose Scissor";
         }
     }
 
@@ -188,8 +212,8 @@ public class RSP : MonoBehaviour
         if (trigger)
         {
             myHand = Hand.Paper;
-            match.photonView.RPC("SetEnemyHand", RpcTarget.Others, myHand);
             trigger = false;
+            resultText.text = "You Choose Paper";
         }
     }
 

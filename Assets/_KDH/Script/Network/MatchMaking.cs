@@ -38,6 +38,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SetEnemyHand(Hand hand)
     {
+        Debug.LogError("EnemyHandSet");
         RSP.instance.enemyHand = hand;
     }
 

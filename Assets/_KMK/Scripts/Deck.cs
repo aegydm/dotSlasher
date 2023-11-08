@@ -1,4 +1,5 @@
 using CCGCard;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,12 +12,12 @@ public class Deck : MonoBehaviour
 
     private void Awake()
     {
-        
+
     }
 
     private void Start()
     {
-        for(int i = 0; i < CardDB.instance.cards.Count; i++)
+        for (int i = 0; i < CardDB.instance.cards.Count; i++)
         {
             deck.Add(CardDB.instance.cards[i]);
         }
@@ -32,7 +33,7 @@ public class Deck : MonoBehaviour
         int listCount = deck.Count;
         for (int i = 0; i < listCount; i++)
         {
-            int rand =Random.Range(0, deck.Count);
+            int rand = Random.Range(0, deck.Count);
             list.Add(deck[rand]);
             deck.RemoveAt(rand);
         }
@@ -57,6 +58,7 @@ public class Deck : MonoBehaviour
                 if (HandManager.Instance.DrawCard(deck[0]))
                 {
                     deck.Remove(deck[0]);
+                    GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
                 }
                 else
                 {
@@ -123,7 +125,7 @@ public class Deck : MonoBehaviour
         idList.Sort();
         //return idList;
 
-        for (int i = 0;i < idList.Count;i++)
+        for (int i = 0; i < idList.Count; i++)
             Debug.Log(idList[i]);
     }
 
@@ -134,7 +136,7 @@ public class Deck : MonoBehaviour
     void Mulligan(Card[] cards)
     {
 
-        for(int i = 0; i < cards.Length; i++)
+        for (int i = 0; i < cards.Length; i++)
         {
             Refill(cards[i]);
             HandManager.Instance.RemoveHand();
@@ -155,7 +157,7 @@ public class Deck : MonoBehaviour
                 break;
 
             default:
-                
+
                 break;
         }
     }

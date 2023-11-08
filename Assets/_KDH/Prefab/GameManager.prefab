@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5207098261038665007}
   - component: {fileID: 2027963766313992369}
   - component: {fileID: 4970475883086378209}
+  - component: {fileID: 8655641205670721249}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1369465017379345213
 MonoBehaviour:
@@ -63,14 +64,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitList: []
-  gameObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   dirtySet: 0
 --- !u!114 &2027963766313992369
 MonoBehaviour:
@@ -85,8 +78,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 0}
+  turnText: {fileID: 0}
   _playerID: -1
   photonView: {fileID: 4970475883086378209}
+  startFirst: 0
+  _canAct: 0
+  _currentTurn: 0
+  _playerEnd: 0
+  _enemyEnd: 0
   _gamePhase: 0
 --- !u!114 &4970475883086378209
 MonoBehaviour:
@@ -110,3 +109,22 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8655641205670721249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150808645461756086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6dd0319d2ab56e43b083420a2fb4c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyCards: []
+  enemyCardText: {fileID: 0}
+  cardBackPrefab: {fileID: 0}
+  cardTransform: {fileID: 0}
+  count: 0
+  xPos: 0
+  yPos: 0

@@ -22,12 +22,15 @@ public class FieldManager : MonoBehaviour
         set
         {
             _enemyCardNum = value;
+            OnEnemyHandChanged?.Invoke(enemyCardNum);
         }
     }
 
     private int _enemyCardNum;
     public Vector2 instantiatePosition;
     private Vector2 mousePos;
+
+    public event Action<int> OnEnemyHandChanged;
 
     const int FULL_FIELD_COUNT = 10;
 

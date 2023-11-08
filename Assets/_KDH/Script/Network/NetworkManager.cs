@@ -84,7 +84,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        base.OnLeftRoom(); SceneManager.LoadScene(0);
+        base.OnLeftRoom();
+        SceneManager.LoadScene(0);
+        userCount = FindObjectOfType<TMP_Text>();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)

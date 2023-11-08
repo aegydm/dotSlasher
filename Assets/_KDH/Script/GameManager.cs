@@ -169,18 +169,26 @@ public class GameManager : MonoBehaviour
         if (deck == null)
         {
             deck = GetComponent<Deck>();
+            deck.Shuffle();
         }
 
         if (gamePhase == GamePhase.DrawPhase)
         {
-            deck.Shuffle();
+            //deck.Shuffle();
             deck.Draw(4);
+            photonView.RPC("EnemyCardChange", RpcTarget.Others, 4);
             playerEnd = true;
         }
         else
         {
             Debug.Log("드로우 페이즈에만 작동합니다.");
         }
+    }
+
+    [PunRPC]
+    public void EnemyCardChange(int num)
+    {
+        FieldManager.Instance.enemyCardNum = num;
     }
 
     public void EndPhase()

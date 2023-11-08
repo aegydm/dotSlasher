@@ -2,40 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CCGCard;
+using Photon.Pun;
 
 public class HandManager : MonoBehaviour
 {
     [SerializeField] public HandCard[] cards;
     [HideInInspector] public HandCard selectedHand;
     public static HandManager Instance;
-
     private Vector2 startPos;
-
-    //private void OnMouseDown()
-    //{
-    //    startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-    //}
-
-    //private void OnMouseDrag()
-    //{
-    //    Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //    RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
-    //    Debug.Log(1);
-    //    if(rayhit.collider.GetComponent<HandCard>() != null )
-    //    {
-    //        Debug.Log(2);
-    //        rayhit.transform.position = mousePos;
-    //        rayhit.collider.GetComponent<HandCard>().isSelected = true;
-    //        selectedHand = rayhit.collider.GetComponent<HandCard>();
-    //    }
-    //}
-
-    //private void OnMouseUp()
-    //{
-    //    selectedHand.transform.position = startPos;
-    //    selectedHand = null;
-    //}
 
     private void Awake()
     {
@@ -58,7 +32,7 @@ public class HandManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.Instance.gamePhase == GamePhase.ActionPhase && GameManager.Instance.canAct)
+        if (GameManager.Instance.gamePhase == GamePhase.ActionPhase && GameManager.Instance.canAct)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -103,6 +77,24 @@ public class HandManager : MonoBehaviour
         selectedHand.RemoveCard();
         selectedHand = null;
         SortHand();
+        GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, GetHandCardNum());
+    }
+
+    public int GetHandCardNum()
+    {
+        int count = 0;
+        for(int i = 0; i < cards.Length; i++)
+        {
+            if (cards[i].card != null)
+            {
+                count++;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return count;
     }
 
     public void SortHand()
