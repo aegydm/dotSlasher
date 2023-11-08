@@ -17,7 +17,7 @@ public class EnemyCardRender : MonoBehaviour
     [SerializeField] public float xPos;
     [SerializeField] public float yPos;
 
-    FieldManager fieldManager;
+    FieldManager fieldManager = FieldManager.Instance;
 
     private void Start()
     {
