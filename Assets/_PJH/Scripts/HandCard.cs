@@ -39,7 +39,6 @@ public class HandCard : MonoBehaviour
     {
         if (card == null)
         {
-            Debug.Log("Error");
             return;
         }
         if (isEmpty)

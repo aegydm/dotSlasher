@@ -1,4 +1,5 @@
 using CCGCard;
+using JetBrains.Annotations;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -290,6 +291,21 @@ public class GameManager : MonoBehaviour
         {
             Card summonCard = FindCardFromID(cardID);
             FieldManager.Instance.PlaceCard(rayhit.collider.GetComponent<Field>(), summonCard, playerID, lookLeft);
+        }
+    }
+
+    [PunRPC]
+    public void SelectFieldForPun(Vector2 pos)
+    {
+        Vector2 mousePos = pos;
+        Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
+        bool usingSelectedCard;
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.gameObject.layer == 7)
+            {
+                usingSelectedCard = FieldManager.Instance.SelectField(collider.GetComponent<Field>());
+            }
         }
     }
 

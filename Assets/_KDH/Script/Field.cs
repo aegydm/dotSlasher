@@ -85,7 +85,6 @@ public class Field : MonoBehaviour
         {
             card = newCard;
             isEmpty = false;
-            //unitObject.lookingLeft = Random.Range(0, 100) < 50 ? true : false;
             unitObject.lookingLeft = lookLeft;
             unitObject.Setting(newCard);
             spriteRenderer.sprite = card.cardSprite;
