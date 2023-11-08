@@ -11,6 +11,11 @@ public class CalculateDamageEffect : CardEffect
         Debug.Log(targets.Count);
         if (caster.canBattle)
         {
+            caster.animator.Play("Attack");
+            while ((caster.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && caster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) == false)
+            {
+
+            }
             for (int i = 0; i < targets.Count; i++)
             {
                 int attackPower = caster.unitObject.cardData.frontDamage;
@@ -27,6 +32,7 @@ public class CalculateDamageEffect : CardEffect
                     }
                     else if (targets[i].unitObject.cardData.cardCategory == CardCategory.minion)
                     {
+                        targets[i].unitObject.cardData.GetDamage(ref attackPower);
                         targets[i].unitObject.CardChange(new Card());
                         targets[i].ResetField();
                     }

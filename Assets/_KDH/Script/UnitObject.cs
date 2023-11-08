@@ -10,7 +10,7 @@ public class UnitObject : MonoBehaviour
 {
     public Card cardData;
     [HideInInspector] public SpriteRenderer spriteRenderer;
-    [HideInInspector] public Animator animator;
+    public Animator animator;
     public Sprite squareSprite;
     public bool lookingLeft
     {
@@ -60,7 +60,6 @@ public class UnitObject : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
         OnCardDataChanged = null;
         OnCardDataChanged += Setting;
     }
@@ -75,9 +74,11 @@ public class UnitObject : MonoBehaviour
             {
                 spriteRenderer.flipX = true;
             }
+            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(card.animator);
         }
         else
         {
+            animator = null;
             spriteRenderer.sprite = null;
             spriteRenderer.flipX = false;
         }

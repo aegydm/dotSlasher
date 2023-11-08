@@ -12,6 +12,7 @@ public class Field : MonoBehaviour
     public int fieldOrder;
     public Card card;
     public SpriteRenderer spriteRenderer;
+    public Animator animator;
     public Field Prev;
     public Field Next;
 
@@ -39,10 +40,7 @@ public class Field : MonoBehaviour
     {
         unitObject = GetComponent<UnitObject>();
         unitObject.spriteRenderer = spriteRenderer;
-    }
-
-    private void Start()
-    {
+        unitObject.animator = animator;
     }
 
     //public void Attack(LinkedBattleField battleField)

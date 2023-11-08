@@ -14,10 +14,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/2. PlayScene.unity
     guid: 4711e2957e9cd614f940337ec1184235
-  - enabled: 0
-    path: Assets/_KDH/Scenes/WinScene.unity
-    guid: c9a41bb1dc602944789352ab10e52b36
-  - enabled: 0
-    path: Assets/_KDH/Scenes/LoseScene.unity
-    guid: 97f7d0b58879e43499348f4918506306
   m_configObjects: {}
