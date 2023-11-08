@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GamePhase
 {
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public TMP_Text text;
     public TMP_Text turnText;
+    [SerializeField] GameObject endScene;
+    public bool isGameEnd = false;
 
     //2인 플레이 테스트 용 임시 코드
     public string playerID
@@ -57,7 +60,10 @@ public class GameManager : MonoBehaviour
         set
         {
             _currentTurn = value;
-            turnText.text = "Turn : " + _currentTurn.ToString();
+            if(gamePhase == GamePhase.ActionPhase)
+            {
+                turnText.text = "Turn : " + _currentTurn.ToString();
+            }
         }
     }
 
@@ -328,6 +334,56 @@ public class GameManager : MonoBehaviour
         else
         {
             canAct = true;
+        }
+    }
+
+    [PunRPC]
+    public void GameSet()
+    {
+        if (isGameEnd == false)
+        {
+            WinnerProcess();
+        }
+    }
+
+    private void LoserProcess()
+    {
+        if (isGameEnd == false)
+        {
+
+            StopAllCoroutines();
+            endScene.SetActive(true);
+            endScene.GetComponentInChildren<TMP_Text>().text = "Lose";
+        }
+    }
+
+    private void WinnerProcess()
+    {
+        if (isGameEnd == false)
+        {
+
+            StopAllCoroutines();
+            endScene.SetActive(true);
+            endScene.GetComponentInChildren<TMP_Text>().text = "WIN";
+        }
+    }
+
+    public void Lose()
+    {
+        if (isGameEnd == false)
+        {
+            photonView.RPC("GameSet", RpcTarget.Others);
+            LoserProcess();
+
+        }
+    }
+
+    public void ExitGame()
+    {
+        if (isGameEnd)
+        {
+            PhotonNetwork.LeaveRoom();
+
         }
     }
 }

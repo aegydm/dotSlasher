@@ -92,6 +92,7 @@ public class Deck : MonoBehaviour
             {
                 Debug.Log(countOfDeck);
                 Debug.Log("카드가 없습니다");
+                GameManager.Instance.Lose();
             }
         }
         RefreshDeckCount();

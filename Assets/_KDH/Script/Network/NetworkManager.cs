@@ -79,7 +79,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        PhotonNetwork.LeaveRoom();
+        if(GameManager.Instance == null)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        else
+        {
+            if(GameManager.Instance.isGameEnd == false)
+            {
+                GameManager.Instance.GameSet();
+            }
+        }
     }
 
     public override void OnLeftRoom()

@@ -15,6 +15,7 @@ public class FieldManager : MonoBehaviour
     public GameObject FieldPrefab;
     public LinkedBattleField battleFields;
     bool canPlace = true;
+
     public int enemyCardNum
     {
         get
@@ -76,9 +77,6 @@ public class FieldManager : MonoBehaviour
                 RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
                 if (canPlace)
                 {
-                    //mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    //instantiatePosition = new Vector3(mousePos.x, 0, 0);
-                    //RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
                     if (rayhit.collider != null)
                     {
                         if (rayhit.collider.GetComponent<Field>() != null)
@@ -90,7 +88,6 @@ public class FieldManager : MonoBehaviour
                 }
                 else
                 {
-                    //UnitObject unitData = rayhit.collider.GetComponent<Field>().getFieldUnit();
                 }
             }
         }
