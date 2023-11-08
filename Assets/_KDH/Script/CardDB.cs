@@ -65,6 +65,7 @@ public class CardDB : ScriptableObject
             card.cardCategory = (CardCategory)Enum.Parse(typeof(CardCategory), dicList[i]["type"].ToString());
             card.frontDamage = int.Parse(dicList[i]["F_Atk"].ToString());
             card.backDamage = int.Parse(dicList[i]["B_Atk"].ToString());
+            card.animator = ("Sprites/" + dicList[i]["faction"].ToString() + "/" + dicList[i]["faction"].ToString() + "_" + dicList[i]["type"].ToString() + "/" + dicList[i]["sprite"].ToString() + "/" + dicList[i]["sprite"].ToString());
             card.cardSprite = Resources.Load<Sprite>("Sprites/" + dicList[i]["faction"].ToString() + "/" + dicList[i]["faction"].ToString() + "_" + dicList[i]["type"].ToString() + "/" + dicList[i]["sprite"].ToString() + "/" + dicList[i]["sprite"].ToString());
             card.summonEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/SummonEffect"));
             card.attackStartEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/AttackStartEffect"));

@@ -68,6 +68,13 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator AttackProcess()
     {
+        for(int i = 0; i < unitList.Count; i++)
+        {
+            if (unitList[i].canBattle)
+            {
+                unitList[i].animator.Play("Idle");
+            }
+        }
         Debug.LogError("~~~ 배틀 시작~~~");
         for (int i = 0; i < unitList.Count; i++)
         {

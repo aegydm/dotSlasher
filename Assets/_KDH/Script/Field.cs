@@ -12,6 +12,7 @@ public class Field : MonoBehaviour
     public int fieldOrder;
     public Card card;
     public SpriteRenderer spriteRenderer;
+    public Animator animator;
     public Field Prev;
     public Field Next;
 
@@ -24,6 +25,13 @@ public class Field : MonoBehaviour
         set
         {
             _canBattle = value;
+            if(canBattle == false)
+            {
+                if (animator.runtimeAnimatorController != null)
+                {
+                    animator.Play("Idle");
+                }
+            }
         }
     }
     public UnitObject unitObject;
@@ -39,10 +47,7 @@ public class Field : MonoBehaviour
     {
         unitObject = GetComponent<UnitObject>();
         unitObject.spriteRenderer = spriteRenderer;
-    }
-
-    private void Start()
-    {
+        unitObject.animator = animator;
     }
 
     //public void Attack(LinkedBattleField battleField)
@@ -76,6 +81,7 @@ public class Field : MonoBehaviour
         canBattle = false;
         frontDamageText.text = string.Empty;
         backDamageText.text = string.Empty;
+        animator = null;
     }
 
     public void SetCard(Card newCard, bool lookLeft = false)

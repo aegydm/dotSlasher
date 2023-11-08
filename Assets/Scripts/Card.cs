@@ -41,7 +41,7 @@ namespace CCGCard
         public int cardID;
         public string cardName;
         public Sprite cardSprite;
-        public Animator animator;
+        public string animator;
         public string skill;
         public string skillContents;
         public int cost;
@@ -103,9 +103,9 @@ namespace CCGCard
             return;
         }
 
-        public void GetDamage(ref int damageVal)
+        public void GetDamage(Field thisCard, ref int damageVal)
         {
-            ActiveEffect(getDamageEffects, null, null, null);
+            ActiveEffect(getDamageEffects, null, thisCard, null);
         }
         #endregion
     }
