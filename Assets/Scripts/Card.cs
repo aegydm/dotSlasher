@@ -103,9 +103,9 @@ namespace CCGCard
             return;
         }
 
-        public void GetDamage(ref int damageVal)
+        public void GetDamage(Field thisCard, ref int damageVal)
         {
-            ActiveEffect(getDamageEffects, null, null, null);
+            ActiveEffect(getDamageEffects, null, thisCard, null);
         }
         #endregion
     }

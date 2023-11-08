@@ -25,6 +25,13 @@ public class Field : MonoBehaviour
         set
         {
             _canBattle = value;
+            if(canBattle == false)
+            {
+                if (animator.runtimeAnimatorController != null)
+                {
+                    animator.Play("Idle");
+                }
+            }
         }
     }
     public UnitObject unitObject;
@@ -74,6 +81,7 @@ public class Field : MonoBehaviour
         canBattle = false;
         frontDamageText.text = string.Empty;
         backDamageText.text = string.Empty;
+        animator = null;
     }
 
     public void SetCard(Card newCard, bool lookLeft = false)

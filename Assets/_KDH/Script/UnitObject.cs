@@ -58,6 +58,28 @@ public class UnitObject : MonoBehaviour
 
     public event Action<Card> OnCardDataChanged;
 
+    public void Func1()
+    {
+        Func2();
+        Func3();
+        Func4();
+    }
+
+    public void Func2()
+    {
+
+    }
+
+    public void Func3()
+    {
+
+    }
+
+    public void Func4()
+    {
+
+    }
+
     private void Awake()
     {
         OnCardDataChanged = null;

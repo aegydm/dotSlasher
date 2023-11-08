@@ -12,9 +12,13 @@ public class CalculateDamageEffect : CardEffect
         if (caster.canBattle)
         {
             caster.animator.Play("Attack");
-            while ((caster.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && caster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) == false)
+            while (caster.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             {
-
+                Debug.Log(1);
+                if (caster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+                {
+                    break;
+                }
             }
             for (int i = 0; i < targets.Count; i++)
             {
@@ -28,13 +32,11 @@ public class CalculateDamageEffect : CardEffect
                     //targets[i].Damaged(attackPower);
                     if (targets[i].unitObject.cardData.cardCategory == CardCategory.hero)
                     {
-                        targets[i].unitObject.cardData.GetDamage(ref attackPower);
+                        targets[i].unitObject.cardData.GetDamage(targets[i], ref attackPower);
                     }
                     else if (targets[i].unitObject.cardData.cardCategory == CardCategory.minion)
                     {
-                        targets[i].unitObject.cardData.GetDamage(ref attackPower);
-                        targets[i].unitObject.CardChange(new Card());
-                        targets[i].ResetField();
+                        targets[i].unitObject.cardData.GetDamage(targets[i], ref attackPower);
                     }
                     else
                     {
@@ -44,6 +46,22 @@ public class CalculateDamageEffect : CardEffect
                 else
                 {
                     Debug.Log(caster.unitObject.cardData.cardName + "의 공격이 실패했습니다.");
+                    targets[i].animator.Play("Hit");
+                    while (caster.animator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+                    {
+                        if (caster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+                        {
+                            break;
+                        }
+                    }
+                    if (targets[i].canBattle)
+                    {
+                        targets[i].animator.Play("Idle");
+                    }
+                    else
+                    {
+                        targets[i].animator.Play("Breath");
+                    }
                 }
             }
             caster.canBattle = false;

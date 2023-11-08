@@ -679,6 +679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userCount: {fileID: 682972902}
+  first: 0
 --- !u!1 &1043719708
 GameObject:
   m_ObjectHideFlags: 0

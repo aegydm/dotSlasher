@@ -1,3 +1,4 @@
+using CCGCard;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,16 @@ public class GetDamageEffect : CardEffect
 {
     public override void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
     {
+        //Debug.Log("Death");
         caster.animator.Play("Death");
-        while ((caster.animator.GetCurrentAnimatorStateInfo(0).IsName("Death") && caster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) == false)
+        while (caster.animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
         {
-
+            if (caster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            {
+                break;
+            }
         }
+        caster.unitObject.CardChange(new Card());
+        caster.ResetField();
     }
 }
