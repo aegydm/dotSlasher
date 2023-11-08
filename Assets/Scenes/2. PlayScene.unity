@@ -6318,6 +6318,7 @@ MonoBehaviour:
     type: 3}
   instantiatePosition: {x: 0, y: 0}
   directionCanvas: {fileID: 1215941782}
+  enemyHandCount: {fileID: 120832628}
 --- !u!1 &2076175892
 GameObject:
   m_ObjectHideFlags: 0

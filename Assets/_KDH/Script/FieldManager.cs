@@ -6,6 +6,8 @@ using CCGCard;
 using System;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
+
 public class FieldManager : MonoBehaviour
 {
     public List<GameObject> fields;
@@ -36,7 +38,7 @@ public class FieldManager : MonoBehaviour
 
     Field tmpField;
     [SerializeField] GameObject directionCanvas;
-
+    [SerializeField] TMP_Text enemyHandCount;
     private void Awake()
     {
         if (Instance == null)
@@ -47,6 +49,12 @@ public class FieldManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        OnEnemyHandChanged += EnemyHandCountRender;
+    }
+
+    void EnemyHandCountRender(int count)
+    {
+        enemyHandCount.text = $"EnemyHand : {count}";
     }
 
     private void Start()
