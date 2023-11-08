@@ -109,6 +109,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool startFirst = false;
+
     [SerializeField] private bool _canAct;
 
     private void CheckPhaseEnd()
@@ -143,6 +145,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        startFirst = NetworkManager.instance.first;
+        NetworkManager.instance.SetPlayerID();
         ResetState();
     }
 
@@ -185,8 +189,7 @@ public class GameManager : MonoBehaviour
         switch (gamePhase)
         {
             case GamePhase.DrawPhase:
-                //가위바위보 결과로 대체 할 코드
-                if (int.Parse(playerID) % 2 == 0)
+                if (startFirst)
                 {
                     canAct = true;
                 }
@@ -194,6 +197,15 @@ public class GameManager : MonoBehaviour
                 {
                     canAct = false;
                 }
+                //가위바위보 결과로 대체 할 코드
+                //if (int.Parse(playerID) % 2 == 0)
+                //{
+                //    canAct = true;
+                //}
+                //else
+                //{
+                //    canAct = false;
+                //}
                 //
                 currentTurn = 0;
                 gamePhase = GamePhase.ActionPhase;
@@ -214,6 +226,7 @@ public class GameManager : MonoBehaviour
                 gamePhase = GamePhase.DrawPhase;
                 break;
         }
+        turnText.text = gamePhase.ToString();
     }
 
     private void EndGame()

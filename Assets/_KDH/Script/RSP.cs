@@ -1,6 +1,10 @@
+using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum Result
@@ -11,6 +15,7 @@ public enum Result
 }
 public enum Hand
 {
+    Null,
     Rock,
     Scissor,
     Paper
@@ -18,169 +23,153 @@ public enum Hand
 
 public class RSP : MonoBehaviour
 {
+    public static RSP instance;
     public Result result;
-    public Hand[] hands;
-    public int playerNum;
-    public bool solo;
+    public readonly int PLAYERNUM = 2;
     public bool trigger;
-    public bool trigger2;
     public bool startFirst;
-    [SerializeField] Text resultText;
-    [SerializeField] Text cheatText;
-    [SerializeField] GameObject choose;
+    [SerializeField] MatchMaking match;
+
+    public Hand myHand
+    {
+        get
+        {
+            return _myHand;
+        }
+        set
+        {
+            _myHand = value;
+            CheckHand();
+        }
+    }
+
+    private void CheckHand()
+    {
+        if (myHand != Hand.Null && enemyHand != Hand.Null)
+        {
+            Debug.Log("Check");
+            Result result = RockScissorPaper(myHand, enemyHand);
+            if (result == Result.Draw)
+            {
+                myHand = Hand.Null;
+                enemyHand = Hand.Null;
+            }
+            else if (result == Result.Win)
+            {
+                rspObject.SetActive(false);
+                Win();
+            }
+            else if (result == Result.Lose)
+            {
+                rspObject.SetActive(false);
+                Lose();
+            }
+        }
+    }
+
+    public Hand enemyHand
+    {
+        get
+        {
+            return _enemyHand;
+        }
+        set
+        {
+            _enemyHand = value;
+            CheckHand();
+        }
+    }
+
+    [SerializeField] private Hand _myHand = new Hand();
+    [SerializeField] private Hand _enemyHand = new Hand();
+
+    [SerializeField] GameObject rspObject;
     [SerializeField] Button[] buttons;
-    [SerializeField] Text chooseText;
-    [SerializeField] Text cheatText2;
+    [SerializeField] TMP_Text resultText;
+    [SerializeField] GameObject choose;
+    public TMP_Text chooseText;
 
-    private void Start()
+    private void Awake()
     {
-        startFirst = true;
-        solo = true;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    private void OnEnable()
+    {
+        startFirst = false;
         trigger = true;
-        hands = new Hand[playerNum];
-        trigger2 = Random.Range(0, 100) <= 49 ? true : false;
-        if (trigger2)
-        {
-            cheatText2.text = "선공";
-        }
-        else
-        {
-            cheatText2.text = "후공";
-        }
-
-        if (solo)
-        {
-            int randNum = Random.Range(0, 99);
-            if (randNum < 33)
-            {
-                for (int i = 1; i < playerNum; i++)
-                {
-                    hands[i] = Hand.Rock;
-                }
-                cheatText.text = "바위";
-            }
-            else if (randNum < 66)
-            {
-                for (int i = 1; i < playerNum; i++)
-                {
-                    hands[i] = Hand.Scissor;
-                }
-                cheatText.text = "가위";
-            }
-            else
-            {
-                for (int i = 1; i < playerNum; i++)
-                {
-                    hands[i] = Hand.Paper;
-                }
-                cheatText.text = "보";
-            }
-        }
+        myHand = Hand.Null;
+        enemyHand = Hand.Null;
     }
 
-    private void Update()
+    public Result RockScissorPaper(Hand _myHand, Hand _enemHand)
     {
-        if (solo)
+        Result result = new Result();
+        switch (_myHand)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                for(int i = 1; i < playerNum; i++)
+            case Hand.Rock:
+                if (_enemHand == Hand.Rock)
                 {
-                    hands[i] = Hand.Rock;
+                    result = Result.Draw;
                 }
-                cheatText.text = "바위";
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                for (int i = 1; i < playerNum; i++)
+                else if (_enemHand == Hand.Scissor)
                 {
-                    hands[i] = Hand.Scissor;
+                    result = Result.Win;
                 }
-                cheatText.text = "가위";
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                for (int i = 1; i < playerNum; i++)
+                else if (_enemHand == Hand.Paper)
                 {
-                    hands[i] = Hand.Paper;
+                    result = Result.Lose;
                 }
-                cheatText.text = "보";
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha9))
-            {
-                trigger2 = true;
-                cheatText2.text = "선공";
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha0))
-            {
-                trigger2 = false;
-                cheatText2.text = "후공";
-            }
+                break;
+            case Hand.Scissor:
+                if (_enemHand == Hand.Rock)
+                {
+                    result = Result.Lose;
+                }
+                else if (_enemHand == Hand.Scissor)
+                {
+                    result = Result.Draw;
+                }
+                else if (_enemHand == Hand.Paper)
+                {
+                    result = Result.Win;
+                }
+                break;
+            case Hand.Paper:
+                if (_enemHand == Hand.Rock)
+                {
+                    result = Result.Win;
+                }
+                else if (_enemHand == Hand.Scissor)
+                {
+                    result = Result.Lose;
+                }
+                else if (_enemHand == Hand.Paper)
+                {
+                    result = Result.Draw;
+                }
+                break;
+            default:
+                break;
         }
-    }
-
-    public Result RockScissorPaper()
-    {
-        int rCount = 0;
-        int sCount = 0;
-        int pCount = 0;
-        foreach(Hand hand in hands)
-        {
-            if(hand == Hand.Rock)
-            {
-                rCount++;
-            }
-            else if(hand == Hand.Scissor)
-            {
-                sCount++;
-            }
-            else if( hand == Hand.Paper)
-            {
-                pCount++;
-            }
-        }
-
-        if (rCount != 0 && sCount != 0 && pCount != 0)
-        {
-            return Result.Draw;
-        }
-        else if ((rCount != 0 && sCount == 0 && pCount == 0) || (sCount != 0 && rCount == 0 && pCount == 0) || (pCount != 0 && rCount == 0 && sCount == 0))
-        {
-            return Result.Draw;
-        }
-        else if ((hands[0] == Hand.Rock && sCount != 0) || (hands[0] == Hand.Scissor && pCount != 0) || (hands[0] == Hand.Paper && rCount != 0))
-        {
-            return Result.Win;
-        }
-        else
-        {
-            return Result.Lose;
-        }
+        return result;
     }
 
     public void Rock()
     {
         if (trigger)
         {
-            hands[0] = Hand.Rock;
-            Result result = RockScissorPaper();
-            if (result == Result.Draw)
-            {
-                resultText.text = "무승부";
-            }
-            else if (result == Result.Win)
-            {
-                resultText.text = "승리";
-                trigger = false;
-                Win();
-            }
-            else
-            {
-                resultText.text = "패배";
-                trigger = false;
-                Lose();
-            }
+            Debug.Log("ROCK");
+            myHand = Hand.Rock;
+            match.photonView.RPC("SetEnemyHand", RpcTarget.Others, myHand);
+            trigger = false;
         }
     }
 
@@ -188,24 +177,9 @@ public class RSP : MonoBehaviour
     {
         if (trigger)
         {
-            hands[0] = Hand.Scissor;
-            Result result = RockScissorPaper();
-            if (result == Result.Draw)
-            {
-                resultText.text = "무승부";
-            }
-            else if (result == Result.Win)
-            {
-                resultText.text = "승리";
-                trigger = false;
-                Win();
-            }
-            else
-            {
-                resultText.text = "패배";
-                trigger = false;
-                Lose();
-            }
+            myHand = Hand.Scissor;
+            match.photonView.RPC("SetEnemyHand", RpcTarget.Others, myHand);
+            trigger = false;
         }
     }
 
@@ -213,78 +187,53 @@ public class RSP : MonoBehaviour
     {
         if (trigger)
         {
-            hands[0] = Hand.Paper;
-            Result result = RockScissorPaper();
-            if (result == Result.Draw)
-            {
-                resultText.text = "무승부";
-            }
-            else if (result == Result.Win)
-            {
-                resultText.text = "승리";
-                trigger = false;
-                Win();
-            }
-            else
-            {
-                resultText.text = "패배";
-                trigger = false;
-                Lose();
-            }
+            myHand = Hand.Paper;
+            match.photonView.RPC("SetEnemyHand", RpcTarget.Others, myHand);
+            trigger = false;
         }
     }
 
     public void Win()
     {
         choose.SetActive(true);
-        foreach(var button in buttons)
+        foreach (var button in buttons)
         {
             button.gameObject.SetActive(true);
         }
+        chooseText.text = "You Win! Select";
     }
 
     public void Lose()
     {
         choose.SetActive(true);
         chooseText.gameObject.SetActive(true);
-        chooseText.text = "상대방이 선택 중 입니다.";
-        StartCoroutine(WaitPC());
-    }
-
-    IEnumerator WaitPC()
-    {
-        yield return new WaitForSeconds(5);
-        if (trigger2)
-        {
-            startFirst = true;
-            chooseText.text = "선공으로 시작합니다.";
-        }
-        else
-        {
-            startFirst = false;
-            chooseText.text = "후공으로 시작합니다.";
-        }
+        chooseText.text = "You Lose. Wait...";
     }
 
     public void StartFirst()
     {
         startFirst = true;
-        foreach (var button in buttons) 
-        {
-            button.gameObject.SetActive(false);
-        }
-        chooseText.gameObject.SetActive(true);
-        chooseText.text = "선공으로 시작합니다";
-    }
-
-    public void StartLast()
-    {
-        startFirst = false;
+        match.photonView.RPC("SetFirst", RpcTarget.Others, false);
         foreach (var button in buttons)
         {
             button.gameObject.SetActive(false);
         }
         chooseText.gameObject.SetActive(true);
-        chooseText.text = "후공으로 시작합니다";
+        chooseText.text = "Start First";
+        NetworkManager.instance.StartGame(RSP.instance.startFirst);
+    }
+
+    public void StartLast()
+    {
+        startFirst = false;
+        match.photonView.RPC("SetFirst", RpcTarget.Others, true);
+        foreach (var button in buttons)
+        {
+            button.gameObject.SetActive(false);
+        }
+        chooseText.gameObject.SetActive(true);
+        chooseText.text = "Start Last";
+        NetworkManager.instance.StartGame(RSP.instance.startFirst);
+        Instantiate(gameObject, Vector3.zero, Quaternion.identity);
     }
 }
