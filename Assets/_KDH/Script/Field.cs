@@ -27,7 +27,7 @@ public class Field : MonoBehaviour
             _canBattle = value;
             if(canBattle == false)
             {
-                if (animator.runtimeAnimatorController != null)
+                if (animator != null && animator.runtimeAnimatorController != null)
                 {
                     animator.Play("Idle");
                 }
@@ -76,12 +76,12 @@ public class Field : MonoBehaviour
     {
         unitObject.playerName = "-1";
         isEmpty = true;
-        card = new Card();
+        animator.runtimeAnimatorController = null;
         spriteRenderer.sprite = null;
         canBattle = false;
         frontDamageText.text = string.Empty;
         backDamageText.text = string.Empty;
-        animator = null;
+        unitObject.cardData = card = new Card();
     }
 
     public void SetCard(Card newCard, bool lookLeft = false)

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.DebugUI;
 
 public enum GamePhase
 {
@@ -247,7 +248,7 @@ public class GameManager : MonoBehaviour
     private void EndGame()
     {
         Field tmp = FieldManager.Instance.battleFields.First;
-        while (tmp.Next != null)
+        while (tmp != null)
         {
             if (tmp.unitObject.playerName == playerID)
             {
@@ -259,15 +260,6 @@ public class GameManager : MonoBehaviour
                 tmp.ResetField();
             }
             tmp = tmp.Next;
-        }
-        if (tmp.unitObject.playerName == playerID)
-        {
-            deck.Refill(tmp.unitObject.cardData);
-            tmp.ResetField();
-        }
-        else
-        {
-            tmp.ResetField();
         }
         BattleManager.instance.unitList.Clear();
         EndPhase();
@@ -285,7 +277,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.LogError("TestPlaceCard");
         Vector2 mousePos = pos;
-        FieldManager.Instance.instantiatePosition = new Vector3(mousePos.x, 0, 0);
+        //FieldManager.Instance.instantiatePosition = new Vector3(mousePos.x, 0, 0);
         RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
         if (cardID != 0)
         {
@@ -294,17 +286,42 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creat Tile By Pun
+    /// </summary>
+    /// <param name="mousePos"></param>
+    /// <param name="pos"></param>
     [PunRPC]
-    public void SelectFieldForPun(Vector2 pos)
+    public void SelectFieldForPun(Vector2 mousePos, Vector2 pos)
     {
-        Vector2 mousePos = pos;
         Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
-        bool usingSelectedCard;
-        foreach (Collider2D collider in colliders)
+        foreach(Collider2D collider in colliders)
         {
-            if (collider.gameObject.layer == 7)
+            if(collider.gameObject.layer == 7)
             {
-                usingSelectedCard = FieldManager.Instance.SelectField(collider.GetComponent<Field>());
+                Field field = collider.gameObject.GetComponent<Field>();
+                GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
+                FieldManager.Instance.battleFields.AddBefore(field, newField);
+                Field tmp = FieldManager.Instance.battleFields.First;
+                FieldManager.Instance.fields.Clear();
+                while (tmp != null)
+                {
+                    FieldManager.Instance.fields.Add(tmp.gameObject);
+                    tmp = tmp.Next;
+                }
+                for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
+                {
+                    try
+                    {
+                        FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError(e.Message);
+                        break;
+                    }
+                }
+                return;
             }
         }
     }

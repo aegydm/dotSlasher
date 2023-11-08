@@ -89,7 +89,7 @@ public class UnitObject : MonoBehaviour
     public void Setting(Card card)
     {
         cardData = card;
-        if(card.cardName != string.Empty || card.cardSprite == null)
+        if(card.cardName != string.Empty)
         {
             spriteRenderer.sprite = card.cardSprite;
             if (lookingLeft)
@@ -100,7 +100,7 @@ public class UnitObject : MonoBehaviour
         }
         else
         {
-            animator = null;
+            animator.runtimeAnimatorController = null;
             spriteRenderer.sprite = null;
             spriteRenderer.flipX = false;
         }

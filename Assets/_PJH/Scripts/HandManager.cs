@@ -41,7 +41,7 @@ public class HandManager : MonoBehaviour
         {
             usingSelectedCard = false;
         }
-        if(GameManager.Instance.gamePhase == GamePhase.ActionPhase&& GameManager.Instance.canAct)
+        if (GameManager.Instance.gamePhase == GamePhase.ActionPhase && GameManager.Instance.canAct)
         {
             if (usingSelectedCard == false)
             {
@@ -63,6 +63,7 @@ public class HandManager : MonoBehaviour
                 if (Input.GetMouseButtonUp(0))
                 {
                     Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    FieldManager.Instance.mousePos = mousePos;
                     Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
                     if (draggingObject != null)
                     {
@@ -70,12 +71,12 @@ public class HandManager : MonoBehaviour
                         {
                             if (collider.gameObject.layer == 7)
                             {
-                                usingSelectedCard =  FieldManager.Instance.SelectField(collider.GetComponent<Field>());
-                                GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos);
+                                usingSelectedCard = FieldManager.Instance.SelectField(collider.GetComponent<Field>());
+                                //GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos);
                             }
                         }
                         draggingObject.transform.position = startPos;
-                        if(usingSelectedCard == false)
+                        if (usingSelectedCard == false)
                             ToggleCardSelection(selectedHand);
                     }
                     isDragging = false;
@@ -106,7 +107,7 @@ public class HandManager : MonoBehaviour
     public int GetHandCardNum()
     {
         int count = 0;
-        for(int i = 0; i < cards.Length; i++)
+        for (int i = 0; i < cards.Length; i++)
         {
             if (cards[i].card != null)
             {
