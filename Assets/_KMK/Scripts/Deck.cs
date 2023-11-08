@@ -1,27 +1,50 @@
 using CCGCard;
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Deck : MonoBehaviour
 {
     [SerializeField] List<Card> deck = new List<Card>();
-    [SerializeField] int countOfDeck;
-    [SerializeField] public List<int> sortedDeck;
-
-    private void Awake()
+    int countOfDeck
     {
-
+        get
+        {
+            return _countOfDeck;
+        }
+        set
+        {
+            if( _countOfDeck != value )
+            {
+                _countOfDeck = value;
+                OnDeckCountChanged?.Invoke();
+            }
+        }
     }
+    [SerializeField] int _countOfDeck;
+    [SerializeField] public List<int> sortedDeck;
+    [SerializeField] TMP_Text deckCountUI;
+
+    public event Action OnDeckCountChanged;
 
     private void Start()
     {
+        OnDeckCountChanged = null;
+        OnDeckCountChanged += RenderDeckCount;
         for (int i = 0; i < CardDB.instance.cards.Count; i++)
         {
             deck.Add(CardDB.instance.cards[i]);
         }
         RefreshDeckCount();
+    }
+
+    void RenderDeckCount()
+    {
+        deckCountUI.text = countOfDeck.ToString();
     }
 
     /// <summary>

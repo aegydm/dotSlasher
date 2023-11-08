@@ -44,7 +44,6 @@ public class RSP : MonoBehaviour
                 _myHand = value;
                 if (_myHand != Hand.Null)
                 {
-                    Debug.LogError(myHand + "," + enemyHand);
                     CheckHand();
                 }
                 else
@@ -60,9 +59,7 @@ public class RSP : MonoBehaviour
     {
         if (myHand != Hand.Null && enemyHand != Hand.Null)
         {
-            Debug.Log("Check");
             Result result = RockScissorPaper(myHand, enemyHand);
-            Debug.Log(result);
             if (result == Result.Draw)
             {
                 resultText.text = "Draw";
@@ -101,7 +98,6 @@ public class RSP : MonoBehaviour
                 _enemyHand = value;
                 if (_enemyHand != Hand.Null)
                 {
-                    Debug.LogError(myHand + "," + enemyHand);
                     CheckHand();
                 }
             }
@@ -190,7 +186,6 @@ public class RSP : MonoBehaviour
     {
         if (trigger)
         {
-            Debug.Log("ROCK");
             myHand = Hand.Rock;
             trigger = false;
             resultText.text = "You Choose Rock";
