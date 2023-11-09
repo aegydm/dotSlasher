@@ -10,7 +10,7 @@ public class UIScript : MonoBehaviour
     public GameObject optionUIBackGround;
     public GameObject blank;
     public bool windowOn = false;
-    public bool soundWindowOn;
+    public bool soundWindowOn = false;
     [Header("Ã¢ ´Ý±â")]
     public Button soundMenuCloseButton;
     public Button optionMenuCloseButton;
@@ -45,14 +45,16 @@ public class UIScript : MonoBehaviour
             {
                 if (soundWindowOn)
                 {
-                    BoolChange();
                     soundUIBackGround.SetActive(false);
+                    soundWindowOn = false;
                 }
+                soundUIBackGround.SetActive(false );
                 blank.SetActive(false);
                 windowOn = false;
             }
             else if(!windowOn)
             {
+                
                 blank.SetActive(true); 
                 windowOn = true;
             }
@@ -104,15 +106,27 @@ public class UIScript : MonoBehaviour
         bgmPlayer.Play();
     }
 
-    public void BoolChange()
+    public void SoundBoolChange(bool isOn)
     {
-        if (soundWindowOn)
+        if (isOn)
         {
-            soundWindowOn = false;
+            isOn = false;
         }
-        else if (!soundWindowOn)
+        else
         {
-            soundWindowOn = true;
+            isOn = true;
+        }
+    }
+
+    public void OptionBoolChange()
+    {
+        if (windowOn)
+        {
+            windowOn = false;
+        }
+        else if (!windowOn)
+        {
+            windowOn = true;
         }
     }
 }
