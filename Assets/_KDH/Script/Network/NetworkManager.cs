@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager instance;
     public TMP_Text userCount;
     public bool first;
+    [SerializeField] TMP_Dropdown dropdown;
+    public string deckName;
 
     private void Awake()
     {
@@ -52,6 +55,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected)
         {
+            deckName = dropdown.options[dropdown.value].text;
+            Debug.Log(deckName);
             SceneManager.LoadScene(1);
             PhotonNetwork.JoinRandomRoom();
         }
@@ -97,6 +102,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         base.OnLeftRoom();
         SceneManager.LoadScene(0);
         userCount = FindObjectOfType<TMP_Text>();
+        dropdown = FindObjectOfType<TMP_Dropdown>();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)

@@ -40,7 +40,17 @@ public class CardDB : ScriptableObject
 
     private CardDB() { }
 
-    
+    public Card FindCardFromID(int id)
+    {
+        foreach (var data in cards)
+        {
+            if (data.cardID == id)
+            {
+                return data;
+            }
+        }
+        return null;
+    }
 
     public void LoadDataAll()
     {

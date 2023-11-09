@@ -282,7 +282,7 @@ public class GameManager : MonoBehaviour
         RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
         if (cardID != 0)
         {
-            Card summonCard = FindCardFromID(cardID);
+            Card summonCard = CardDB.instance.FindCardFromID(cardID);
             FieldManager.Instance.PlaceCard(rayhit.collider.GetComponent<Field>(), summonCard, playerID, lookLeft);
         }
     }
@@ -337,18 +337,6 @@ public class GameManager : MonoBehaviour
     public void MatchTurnNum(int turnNum)
     {
         currentTurn = turnNum;
-    }
-
-    public Card FindCardFromID(int id)
-    {
-        foreach (var data in CardDB.instance.cards)
-        {
-            if (data.cardID == id)
-            {
-                return data;
-            }
-        }
-        return null;
     }
 
     [PunRPC]

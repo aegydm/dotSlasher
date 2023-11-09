@@ -15,8 +15,19 @@ public class FieldManager : MonoBehaviour
     public GameObject FieldPrefab;
     public LinkedBattleField battleFields;
 
+    public bool canPlace
+    {
+        get
+        {
+            return _canPlace;
+        }
+        set
+        {
+            _canPlace = value;
+        }
+    }
 
-    bool canPlace = true;
+    private bool _canPlace;
 
     public int enemyCardNum
     {
@@ -66,6 +77,7 @@ public class FieldManager : MonoBehaviour
         {
             battleFields.Add(fields[i]);
         }
+        canPlace = true;
     }
 
     //private void Update()

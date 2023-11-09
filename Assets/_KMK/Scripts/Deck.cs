@@ -18,7 +18,7 @@ public class Deck : MonoBehaviour
         }
         set
         {
-            if( _countOfDeck != value )
+            if (_countOfDeck != value)
             {
                 _countOfDeck = value;
                 OnDeckCountChanged?.Invoke();
@@ -35,10 +35,14 @@ public class Deck : MonoBehaviour
     {
         OnDeckCountChanged = null;
         OnDeckCountChanged += RenderDeckCount;
-        for (int i = 0; i < CardDB.instance.cards.Count; i++)
+        if(BuildManager.instance.Load(NetworkManager.instance.deckName, out deck) == false)
         {
-            deck.Add(CardDB.instance.cards[i]);
+            GameManager.Instance.Lose();
         }
+        //for (int i = 0; i < CardDB.instance.cards.Count; i++)
+        //{
+        //    deck.Add(CardDB.instance.cards[i]);
+        //}
         RefreshDeckCount();
     }
 

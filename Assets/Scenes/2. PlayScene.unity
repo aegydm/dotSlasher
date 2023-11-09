@@ -3496,7 +3496,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1150808645461756086, guid: bff28281831808343a1e87134a104dc8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1463409376}
   m_SourcePrefab: {fileID: 100100000, guid: bff28281831808343a1e87134a104dc8, type: 3}
 --- !u!114 &1463409373 stripped
 MonoBehaviour:
@@ -3504,7 +3508,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1463409372}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1463409375}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2cda7608d805eb4bbebee1692addf9d, type: 3}
@@ -3516,12 +3520,32 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1463409372}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1463409375}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 398a77147ca54824c81917dc3938b31d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1463409375 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1150808645461756086, guid: bff28281831808343a1e87134a104dc8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1463409372}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1463409376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463409375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6088c9f73bf6344ca02c956a52e4e70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deck: []
+  deckName: 
 --- !u!1001 &1466479189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4370,6 +4394,7 @@ MonoBehaviour:
   FieldPrefab: {fileID: 1889213560221228389, guid: 1469ec8e360c2624e98895367e80f51f,
     type: 3}
   instantiatePosition: {x: 0, y: 0}
+  mousePos: {x: 0, y: 0}
   directionCanvas: {fileID: 1215941782}
   enemyHandCount: {fileID: 120832628}
 --- !u!1 &2076175892
