@@ -19,40 +19,66 @@ public class UIScript : MonoBehaviour
     public Toggle mToggle;
     public Toggle bgmToggle;
     public Toggle effToggle;
+    [Header("오디오 소스")]
+    public AudioSource bgmPlayer;
+    public AudioSource effPlayer;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        bgmPlayer.clip = SoundManager.instance.BGM;
+        effPlayer.clip = SoundManager.instance.effectSound;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        BGMVolChanger();
+        EffVolChanger();
     }
 
-    private void BGMVolChanger()
+    public void BGMVolChanger()
     {
         if (mToggle.isOn)
         {
             if (bgmToggle.isOn)
             {
-
-                SoundManager.instance.BGM.volume = bgmVol.value;
+                bgmPlayer.volume = bgmVol.value * mVol.value;
             }
+            else
+            {
+                bgmPlayer.volume = 0;
+            }
+        }
+        else
+        {
+            mVol.value = 0;
+            bgmPlayer.volume = 0;
         }
     }
 
-    private void EffVolChanger()
+    public void EffVolChanger()
     {
         if (mToggle.isOn)
         {
             if (bgmToggle.isOn)
             {
-
-                SoundManager.instance.effectSound.volume = effVol.value;
+                effPlayer.volume = effVol.value * mVol.value;
+            }
+            else
+            {
+                effPlayer.volume = 0;
             }
         }
+        else
+        {
+            mVol.value = 0;
+            bgmPlayer.volume = 0;
+        }
+    }
+
+    public void BgmPlay()
+    {
+        bgmPlayer.Play();
     }
 }
