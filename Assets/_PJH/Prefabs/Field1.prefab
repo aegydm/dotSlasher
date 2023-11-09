@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8705370592392951127}
   - component: {fileID: 5261398975689619885}
   - component: {fileID: 7650042282013144550}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Field1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ MonoBehaviour:
     cardID: 0
     cardName: 
     cardSprite: {fileID: 0}
-    animator: {fileID: 0}
+    animator: 
     skill: 
     skillContents: 
     cost: 0
@@ -168,6 +168,7 @@ MonoBehaviour:
     frontDamage: 0
     backDamage: 0
   spriteRenderer: {fileID: 5167814117537082558}
+  animator: {fileID: 3723966101817268681}
   Prev: {fileID: 0}
   Next: {fileID: 0}
   unitObject: {fileID: 0}
@@ -197,7 +198,7 @@ MonoBehaviour:
     cardID: 0
     cardName: 
     cardSprite: {fileID: 0}
-    animator: {fileID: 0}
+    animator: 
     skill: 
     skillContents: 
     cost: 0
@@ -208,6 +209,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
   squareSprite: {fileID: 0}
+  _playerName: 
 --- !u!1 &3018531304895510006
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,6 +220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4070759202810733254}
   - component: {fileID: 5167814117537082558}
+  - component: {fileID: 3723966101817268681}
   m_Layer: 0
   m_Name: SummonPos
   m_TagString: Untagged
@@ -292,6 +295,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &3723966101817268681
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3018531304895510006}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3083560136833913621
 GameObject:
   m_ObjectHideFlags: 0

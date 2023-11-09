@@ -10,7 +10,7 @@ public class UnitObject : MonoBehaviour
 {
     public Card cardData;
     [HideInInspector] public SpriteRenderer spriteRenderer;
-    [HideInInspector] public Animator animator;
+    public Animator animator;
     public Sprite squareSprite;
     public bool lookingLeft
     {
@@ -58,9 +58,30 @@ public class UnitObject : MonoBehaviour
 
     public event Action<Card> OnCardDataChanged;
 
+    public void Func1()
+    {
+        Func2();
+        Func3();
+        Func4();
+    }
+
+    public void Func2()
+    {
+
+    }
+
+    public void Func3()
+    {
+
+    }
+
+    public void Func4()
+    {
+
+    }
+
     private void Awake()
     {
-        animator = GetComponent<Animator>();
         OnCardDataChanged = null;
         OnCardDataChanged += Setting;
     }
@@ -68,16 +89,18 @@ public class UnitObject : MonoBehaviour
     public void Setting(Card card)
     {
         cardData = card;
-        if(card.cardName != string.Empty || card.cardSprite == null)
+        if(card.cardName != string.Empty)
         {
             spriteRenderer.sprite = card.cardSprite;
             if (lookingLeft)
             {
                 spriteRenderer.flipX = true;
             }
+            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(card.animator);
         }
         else
         {
+            animator.runtimeAnimatorController = null;
             spriteRenderer.sprite = null;
             spriteRenderer.flipX = false;
         }

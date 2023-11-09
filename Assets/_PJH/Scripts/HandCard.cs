@@ -15,6 +15,7 @@ public class HandCard : MonoBehaviour
     public bool isEmpty = true;
     public TMP_Text frontDamageText;
     public TMP_Text BackDamageText;
+    private Animator backAnimator;
 
     private GameObject canvas;
     private SpriteRenderer rend;
@@ -24,6 +25,7 @@ public class HandCard : MonoBehaviour
     {
         rend = GetComponent<SpriteRenderer>();
         canvas = GetComponentInChildren<Canvas>().gameObject;
+        backAnimator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -39,7 +41,6 @@ public class HandCard : MonoBehaviour
     {
         if (card == null)
         {
-            Debug.Log("Error");
             return;
         }
         if (isEmpty)
@@ -52,6 +53,7 @@ public class HandCard : MonoBehaviour
 
     public void RemoveCard()
     {
+        backAnimator.runtimeAnimatorController = null;
         card = null;
         isEmpty = true;
         canvas.SetActive(false);
@@ -68,6 +70,7 @@ public class HandCard : MonoBehaviour
         if(rend != null)
         {
             rend.sprite = card.cardSprite;
+            backAnimator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(card.animator);
         }
     }
 }

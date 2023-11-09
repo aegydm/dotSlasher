@@ -1,26 +1,50 @@
 using CCGCard;
+using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Deck : MonoBehaviour
 {
     [SerializeField] List<Card> deck = new List<Card>();
-    [SerializeField] int countOfDeck;
-    [SerializeField] public List<int> sortedDeck;
-
-    private void Awake()
+    int countOfDeck
     {
-        
+        get
+        {
+            return _countOfDeck;
+        }
+        set
+        {
+            if( _countOfDeck != value )
+            {
+                _countOfDeck = value;
+                OnDeckCountChanged?.Invoke();
+            }
+        }
     }
+    [SerializeField] int _countOfDeck;
+    [SerializeField] public List<int> sortedDeck;
+    [SerializeField] TMP_Text deckCountUI;
+
+    public event Action OnDeckCountChanged;
 
     private void Start()
     {
-        for(int i = 0; i < CardDB.instance.cards.Count; i++)
+        OnDeckCountChanged = null;
+        OnDeckCountChanged += RenderDeckCount;
+        for (int i = 0; i < CardDB.instance.cards.Count; i++)
         {
             deck.Add(CardDB.instance.cards[i]);
         }
         RefreshDeckCount();
+    }
+
+    void RenderDeckCount()
+    {
+        deckCountUI.text = countOfDeck.ToString();
     }
 
     /// <summary>
@@ -32,7 +56,7 @@ public class Deck : MonoBehaviour
         int listCount = deck.Count;
         for (int i = 0; i < listCount; i++)
         {
-            int rand =Random.Range(0, deck.Count);
+            int rand = Random.Range(0, deck.Count);
             list.Add(deck[rand]);
             deck.RemoveAt(rand);
         }
@@ -57,6 +81,7 @@ public class Deck : MonoBehaviour
                 if (HandManager.Instance.DrawCard(deck[0]))
                 {
                     deck.Remove(deck[0]);
+                    GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
                 }
                 else
                 {
@@ -67,6 +92,7 @@ public class Deck : MonoBehaviour
             {
                 Debug.Log(countOfDeck);
                 Debug.Log("카드가 없습니다");
+                GameManager.Instance.Lose();
             }
         }
         RefreshDeckCount();
@@ -123,7 +149,7 @@ public class Deck : MonoBehaviour
         idList.Sort();
         //return idList;
 
-        for (int i = 0;i < idList.Count;i++)
+        for (int i = 0; i < idList.Count; i++)
             Debug.Log(idList[i]);
     }
 
@@ -134,7 +160,7 @@ public class Deck : MonoBehaviour
     void Mulligan(Card[] cards)
     {
 
-        for(int i = 0; i < cards.Length; i++)
+        for (int i = 0; i < cards.Length; i++)
         {
             Refill(cards[i]);
             HandManager.Instance.RemoveHand();
@@ -155,7 +181,7 @@ public class Deck : MonoBehaviour
                 break;
 
             default:
-                
+
                 break;
         }
     }
