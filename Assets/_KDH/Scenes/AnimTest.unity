@@ -453,7 +453,7 @@ Animator:
   m_GameObject: {fileID: 495354345}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e07a7cc1d0273984bb0926f45e80da5d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7d39f4df6166a6143bc73fca78c1395c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -890,7 +890,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 495354349}
         m_TargetAssemblyTypeName: TestScript, Assembly-CSharp
-        m_MethodName: StartAnim
+        m_MethodName: Attack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

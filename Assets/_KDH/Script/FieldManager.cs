@@ -122,7 +122,7 @@ public class FieldManager : MonoBehaviour
         }
         else
         {
-            if (field.Prev.isEmpty)
+            if (field.Prev != null && field.Prev.isEmpty)
             {
                 return false;
             }
@@ -132,7 +132,7 @@ public class FieldManager : MonoBehaviour
                 {
                     return false;
                 }
-                GameManager.Instance.photonView.RPC("SelectFieldForPun",RpcTarget.Others,mousePos,instantiatePosition);
+                GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition);
                 GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
                 battleFields.AddBefore(field, newField);
                 this.tmpField = battleFields.Find(newField);
@@ -232,10 +232,10 @@ public class FieldManager : MonoBehaviour
 
     public void ResetAllField()
     {
-        int i = 0;
+        
         Field tmpField = battleFields.First;
 
-        for (; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             tmpField = tmpField.Next;
         }
@@ -245,6 +245,19 @@ public class FieldManager : MonoBehaviour
             fields.Remove(tmpField.gameObject);
             Destroy(tmpField.gameObject);
             tmpField = tmpField.Next;
+        }
+
+        for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
+        {
+            try
+            {
+                fields[i].transform.position = new Vector3(pos, 0, 0);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+                break;
+            }
         }
     }
 

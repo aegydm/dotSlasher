@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         set
         {
             _currentTurn = value;
-            if(gamePhase == GamePhase.ActionPhase)
+            if (gamePhase == GamePhase.ActionPhase)
             {
                 turnText.text = "Turn : " + _currentTurn.ToString();
             }
@@ -262,6 +262,7 @@ public class GameManager : MonoBehaviour
             tmp = tmp.Next;
         }
         BattleManager.instance.unitList.Clear();
+        FieldManager.Instance.ResetAllField();
         EndPhase();
     }
 
@@ -275,7 +276,7 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     public void PlaceCardForPun(Vector2 pos, int cardID, int playerID, bool lookLeft)
     {
-        Debug.LogError("TestPlaceCard");
+
         Vector2 mousePos = pos;
         //FieldManager.Instance.instantiatePosition = new Vector3(mousePos.x, 0, 0);
         RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -295,9 +296,9 @@ public class GameManager : MonoBehaviour
     public void SelectFieldForPun(Vector2 mousePos, Vector2 pos)
     {
         Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
-        foreach(Collider2D collider in colliders)
+        foreach (Collider2D collider in colliders)
         {
-            if(collider.gameObject.layer == 7)
+            if (collider.gameObject.layer == 7)
             {
                 Field field = collider.gameObject.GetComponent<Field>();
                 GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
@@ -416,6 +417,23 @@ public class GameManager : MonoBehaviour
         {
             PhotonNetwork.LeaveRoom();
 
+        }
+    }
+
+    public async System.Threading.Tasks.Task CheckAnim(Animator animator, string aniName)
+    {
+        if (animator == null)
+        {
+            Debug.LogError("Á×Àº À¯´Ö ÀÔ´Ï´Ù");
+            return;
+        }
+        while (animator != null && animator.runtimeAnimatorController != null && !animator.GetCurrentAnimatorStateInfo(0).IsName(aniName))
+        {
+            await System.Threading.Tasks.Task.Delay((int)(Time.deltaTime * 1000));
+        }
+        while (animator != null && animator.runtimeAnimatorController != null && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            await System.Threading.Tasks.Task.Delay((int)(Time.deltaTime * 1000));
         }
     }
 }
