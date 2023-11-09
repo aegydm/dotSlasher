@@ -124,7 +124,7 @@ public class UIScript : MonoBehaviour
         {
             windowOn = false;
         }
-        else if (!windowOn)
+        else
         {
             windowOn = true;
         }
