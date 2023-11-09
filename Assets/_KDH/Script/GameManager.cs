@@ -383,7 +383,7 @@ public class GameManager : MonoBehaviour
     {
         if (isGameEnd == false)
         {
-
+            isGameEnd = true;
             StopAllCoroutines();
             endScene.SetActive(true);
             endScene.GetComponentInChildren<TMP_Text>().text = "Lose";
@@ -394,7 +394,7 @@ public class GameManager : MonoBehaviour
     {
         if (isGameEnd == false)
         {
-
+            isGameEnd = true;
             StopAllCoroutines();
             endScene.SetActive(true);
             endScene.GetComponentInChildren<TMP_Text>().text = "WIN";
@@ -407,7 +407,6 @@ public class GameManager : MonoBehaviour
         {
             photonView.RPC("GameSet", RpcTarget.Others);
             LoserProcess();
-
         }
     }
 
