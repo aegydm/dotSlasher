@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class UIScript : MonoBehaviour
 {
     [Header("메뉴 창")]
-    public Image soundUIBackGround;
-    public Image optionUIBackGround;
+    public GameObject soundUIBackGround;
+    public GameObject optionUIBackGround;
+    public GameObject blank;
+    public bool windowOn = false;
+    public bool soundWindowOn;
     [Header("창 닫기")]
     public Button soundMenuCloseButton;
     public Button optionMenuCloseButton;
@@ -35,6 +38,25 @@ public class UIScript : MonoBehaviour
     {
         BGMVolChanger();
         EffVolChanger();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (windowOn)
+            {
+                if (soundWindowOn)
+                {
+                    BoolChange();
+                    soundUIBackGround.SetActive(false);
+                }
+                blank.SetActive(false);
+                windowOn = false;
+            }
+            else if(!windowOn)
+            {
+                blank.SetActive(true); 
+                windowOn = true;
+            }
+        }
     }
 
     public void BGMVolChanger()
@@ -80,5 +102,17 @@ public class UIScript : MonoBehaviour
     public void BgmPlay()
     {
         bgmPlayer.Play();
+    }
+
+    public void BoolChange()
+    {
+        if (soundWindowOn)
+        {
+            soundWindowOn = false;
+        }
+        else if (!soundWindowOn)
+        {
+            soundWindowOn = true;
+        }
     }
 }
