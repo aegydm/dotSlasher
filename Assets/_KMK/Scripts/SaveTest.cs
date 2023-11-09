@@ -24,7 +24,7 @@ public class SaveTest : MonoBehaviour
         path = Path.Combine(Application.dataPath, "ID.data");
         binaryFormatter = new BinaryFormatter();
 
-        if (bildManager == null)
+        if(bildManager == null)
         {
             print("빌드 매니저 초기화");
             return;
@@ -50,13 +50,13 @@ public class SaveTest : MonoBehaviour
         catch (Exception e)
         {
             Debug.Log(e.ToString());
-        }
+        }        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public DataFrame LoadData(string path)
