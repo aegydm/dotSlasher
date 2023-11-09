@@ -11,6 +11,7 @@ public class SaveTest : MonoBehaviour
     public string path;
     public BinaryFormatter binaryFormatter;
     public BildManager bildManager;
+    public DataFrame saveData;
     public DataFrame loadDeck;
 
     private void Awake()
@@ -33,18 +34,18 @@ public class SaveTest : MonoBehaviour
         DataFrame dataFrame = new DataFrame();
         dataFrame.ID = bildManager.myDeck;
 
-        OnSave(dataFrame);
+        OnSave();
 
         LoadData(path);
     }
 
-    private void OnSave(DataFrame dataFrame)
+    private void OnSave()
     {
         try
         {
             using (Stream ws = new FileStream(path, FileMode.Create))
             {
-                binaryFormatter.Serialize(ws, dataFrame);
+                binaryFormatter.Serialize(ws, saveData);
             }
         }
         catch (Exception e)
