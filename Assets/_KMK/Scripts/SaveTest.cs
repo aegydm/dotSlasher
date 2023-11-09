@@ -24,7 +24,7 @@ public class SaveTest : MonoBehaviour
         path = Path.Combine(Application.dataPath, "ID.data");
         binaryFormatter = new BinaryFormatter();
 
-        if(bildManager == null)
+        if (bildManager == null)
         {
             print("빌드 매니저 초기화");
             return;
@@ -38,25 +38,25 @@ public class SaveTest : MonoBehaviour
         LoadData(path);
     }
 
-    public void OnSave(DataFrame frame)
+    public void OnSave(DataFrame dataFrame)
     {
         try
         {
             using (Stream ws = new FileStream(path, FileMode.Create))
             {
-                binaryFormatter.Serialize(ws, frame);
+                binaryFormatter.Serialize(ws, dataFrame);
             }
         }
         catch (Exception e)
         {
             Debug.Log(e.ToString());
-        }        
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public DataFrame LoadData(string path)
@@ -72,7 +72,7 @@ public class SaveTest : MonoBehaviour
 
             Debug.Log(loadDeck.ToString());
         }
-        catch (Exception)
+        catch (Exception e)
         {
             Debug.Log("Loaded data:" + string.Join(",", loadDeck.ID));
         }

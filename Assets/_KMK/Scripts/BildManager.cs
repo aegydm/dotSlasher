@@ -10,12 +10,11 @@ public class BildManager : MonoBehaviour
     [SerializeField] CardDB cardDB;
     [SerializeField] Camera cam;
     public List<int> myDeck = new List<int>(); //최종적으로 사용할 덱
-    public List<int> IDList = new List<int>();
     Card clickedCard;
     public SaveTest saveData;
-    public DataFrame list;
     public DataFrame deckID = new DataFrame();
-    
+    public string path;
+
 
     public static BildManager instance;
 
@@ -96,16 +95,5 @@ public class BildManager : MonoBehaviour
     public void DeckLoad()
     {
         deckID = saveData.LoadData(saveData.path.ToString());
-        deckID = list;
-        List<int> IDList = list.ID;
-        Debug.Log(IDList.Count);
-        Debug.Log(list.ID.Count);
-        IDList.Sort();
-
-        for(int i = 0; i < IDList.Count; i++)
-        {
-            Debug.Log(IDList[i]);
-            break;
-        }
     }
 }
