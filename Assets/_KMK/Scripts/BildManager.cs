@@ -11,6 +11,9 @@ public class BildManager : MonoBehaviour
     [SerializeField] Camera cam;
     public List<int> myDeck = new List<int>(); //최종적으로 사용할 덱
     Card clickedCard;
+    public SaveTest saveData;
+    public DataFrame deckID = new DataFrame();
+    public string path;
     
 
     public static BildManager instance;
@@ -27,6 +30,10 @@ public class BildManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        saveData = GameObject.FindObjectOfType<SaveTest>();
+    }
 
     /*private void Update()
     {
@@ -83,5 +90,10 @@ public class BildManager : MonoBehaviour
         {
             print("더 이상 카드가 존재하지 않습니다");
         }
+    }
+
+    public void DeckLoad()
+    {
+        deckID = saveData.LoadData(saveData.path.ToString());
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -417,7 +417,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardDB: {fileID: 11400000, guid: 5b48dbfe9f2c63f41b8c66c47a53ed65, type: 2}
   cam: {fileID: 910867579}
-  myDeck: 01000000020000000500000005000000000000000900000007000000
+  myDeck: 01000000020000000500000005000000000000000900000007000000090000000100000001000000
+  saveData: {fileID: 0}
+  deckID:
+    ID: 
+  path: 
 --- !u!4 &1454449787
 Transform:
   m_ObjectHideFlags: 0
@@ -635,9 +639,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2088629822}
-        m_TargetAssemblyTypeName: Json, Assembly-CSharp
-        m_MethodName: JsonSave
+      - m_Target: {fileID: 1454449786}
+        m_TargetAssemblyTypeName: BildManager, Assembly-CSharp
+        m_MethodName: DeckLoad
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -726,14 +730,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2088629820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a05f93531644cec48b9da0ff6379aec5, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d0290f1cee09dd438d3f3c70cd9d0a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    myDeck: 01000000020000000300000009000000070000000700000005000000
-  path: 
-  IDList: 
-  myDeck: 
+  path: C:/Unity/DotSlasher/Assets\ID.data
+  bildManager: {fileID: 1454449786}
+  loadDeck:
+    ID: 
 --- !u!1 &2146290542
 GameObject:
   m_ObjectHideFlags: 0
