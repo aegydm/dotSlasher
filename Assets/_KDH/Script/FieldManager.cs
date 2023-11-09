@@ -157,6 +157,7 @@ public class FieldManager : MonoBehaviour
                     }
                 }
                 SelectDirection(this.tmpField);
+                mousePos = this.tmpField.transform.position;
                 return true;
             }
         }
