@@ -1,4 +1,5 @@
 ﻿ID,sprite,name,type,faction,text,F_Atk,B_Atk,cost
+110001,f1_hero_01,황영웅01,hero,f1,이것은 영웅이다,0,0,0
 111001,f1_minion_001,황하수인01,minion,f1,가나다라마바사,5,1,0
 111002,f1_minion_002,황하수인02,minion,f1,가나다라마바사,4,2,0
 111003,f1_minion_003,황하수인03,minion,f1,가나다라마바사,3,3,0

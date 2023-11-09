@@ -89,6 +89,7 @@ public class BuildManager : MonoBehaviour
                 deck.Add(CardDB.instance.cards[i]);
             }
             Save("1");
+            trigger = true;
             //빌드용 임시 스타터덱 코드
             //trigger = false;
             Debug.Log(e);

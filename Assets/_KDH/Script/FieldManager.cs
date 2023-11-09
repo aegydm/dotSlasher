@@ -14,6 +14,7 @@ public class FieldManager : MonoBehaviour
     public static FieldManager Instance;
     public GameObject FieldPrefab;
     public LinkedBattleField battleFields;
+    public List<GameObject> newFields;
 
     public bool canPlace
     {
@@ -150,6 +151,7 @@ public class FieldManager : MonoBehaviour
                     Debug.LogError("謝難" + (isLeft ? "謝難" : "辦難"));
                     GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition, isLeft);
                     GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
+                    newFields.Add(newField);
                     battleFields.AddBefore(field, newField);
                     this.tmpField = battleFields.Find(newField);
 
@@ -193,6 +195,7 @@ public class FieldManager : MonoBehaviour
                     Debug.LogError("辦難" + (isLeft ? "謝難" : "辦難"));
                     GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition, isLeft);
                     GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
+                    newFields.Add(newField);
                     battleFields.AddAfter(field, newField);
                     this.tmpField = battleFields.Find(newField);
 
@@ -332,20 +335,34 @@ public class FieldManager : MonoBehaviour
 
     public void ResetAllField()
     {
-
         Field tmpField = battleFields.First;
+        for (int i = 0; i < newFields.Count; i++)
+        {
+            if (newFields.Count > 0 && newFields[i] != null)
+            {
+                battleFields.Remove(newFields[i]);
+                fields.Remove(newFields[i]);
+                Destroy(newFields[i]);
+            }
+            else
+            {
+                break;
+            }
+        }
+        newFields.Clear();
 
-        for (int i = 0; i < 5; i++)
-        {
-            tmpField = tmpField.Next;
-        }
-        while (tmpField != null)
-        {
-            battleFields.Remove(tmpField);
-            fields.Remove(tmpField.gameObject);
-            Destroy(tmpField.gameObject);
-            tmpField = tmpField.Next;
-        }
+
+        //for (int i = 0; i < 5; i++)
+        //{
+        //    tmpField = tmpField.Next;
+        //}
+        //while (tmpField != null)
+        //{
+        //    battleFields.Remove(tmpField);
+        //    fields.Remove(tmpField.gameObject);
+        //    Destroy(tmpField.gameObject);
+        //    tmpField = tmpField.Next;
+        //}
 
         for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
         {

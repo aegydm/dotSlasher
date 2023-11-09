@@ -19,7 +19,7 @@ public class CardDB : ScriptableObject
                 {
                     throw new Exception($"Could not find any singleton scriptable object instance in the resources.");
                 }
-                else if(asset.Length > 1) 
+                else if (asset.Length > 1)
                 {
                     Debug.LogWarning("Multiple Instance of the singleton scriptable object found in resource.");
                 }
@@ -46,7 +46,8 @@ public class CardDB : ScriptableObject
         {
             if (data.cardID == id)
             {
-                return data;
+                Card outCard = data;
+                return outCard;
             }
         }
         return null;
@@ -68,7 +69,17 @@ public class CardDB : ScriptableObject
         dicList = CSVReader.Read(v);
         for (int i = 0; i < dicList.Count; i++)
         {
-            Card card = new Card();
+            Card card;
+            if ((CardCategory)Enum.Parse(typeof(CardCategory), dicList[i]["type"].ToString()) == CardCategory.hero)
+            {
+                card = new Hero();
+                card.getDamageEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Hero/HeroGetDamageEffect"));
+            }
+            else
+            {
+                card = new Card();
+                card.getDamageEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/GetDamageEffect"));
+            }
             card.cardID = int.Parse(dicList[i]["ID"].ToString());
             card.cardName = dicList[i]["name"].ToString();
             card.cardColor = (CardType)Enum.Parse(typeof(CardType), dicList[i]["faction"].ToString());
@@ -82,7 +93,6 @@ public class CardDB : ScriptableObject
             card.findEnemyEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/FindEnemyEffect"));
             card.calculateDamageEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/CalculateDamageEffect"));
             card.attackProcessEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/AttackProcessEffect"));
-            card.getDamageEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/GetDamageEffect"));
             cards.Add(card);
         }
     }

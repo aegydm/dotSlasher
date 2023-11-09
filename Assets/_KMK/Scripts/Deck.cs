@@ -10,6 +10,9 @@ using Random = UnityEngine.Random;
 public class Deck : MonoBehaviour
 {
     [SerializeField] List<Card> deck = new List<Card>();
+    public List<Card> originDeck = new List<Card>();
+    public Card myHero = new Hero();
+
     int countOfDeck
     {
         get
@@ -35,9 +38,20 @@ public class Deck : MonoBehaviour
     {
         OnDeckCountChanged = null;
         OnDeckCountChanged += RenderDeckCount;
-        if(BuildManager.instance.Load(NetworkManager.instance.deckName, out deck) == false)
+        if(BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
         {
             GameManager.Instance.Lose();
+        }
+        foreach(var card in originDeck)
+        {
+            if(card.cardCategory != CardCategory.hero)
+            {
+                deck.Add(card);
+            }
+            else
+            {
+                myHero = card;
+            }
         }
         //for (int i = 0; i < CardDB.instance.cards.Count; i++)
         //{

@@ -178,6 +178,8 @@ public class GameManager : MonoBehaviour
         {
             deck = GetComponent<Deck>();
             deck.Shuffle();
+            FieldManager.Instance.ResetAllField();
+            SummonHero();
         }
 
         if (gamePhase == GamePhase.DrawPhase)
@@ -190,6 +192,32 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("드로우 페이즈에만 작동합니다.");
+        }
+    }
+
+    private void SummonHero()
+    {
+        if(int.Parse(playerID)%2 == 0)
+        {
+            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.First,deck.myHero,int.Parse(playerID),false);
+        }
+        else
+        {
+            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.Last, deck.myHero, int.Parse(playerID), true);
+        }
+        photonView.RPC("SummonHeroForPun", RpcTarget.Others, int.Parse(playerID), deck.myHero.cardID);
+    }
+
+    [PunRPC]
+    public void SummonHeroForPun(int id, int cardID)
+    {
+        if (id % 2 == 0)
+        {
+            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.First, CardDB.instance.FindCardFromID(cardID), id, false);
+        }
+        else
+        {
+            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.Last, CardDB.instance.FindCardFromID(cardID), id, true);
         }
     }
 
@@ -250,14 +278,17 @@ public class GameManager : MonoBehaviour
         Field tmp = FieldManager.Instance.battleFields.First;
         while (tmp != null)
         {
-            if (tmp.unitObject.playerName == playerID)
+            if (tmp.card.cardCategory != CardCategory.hero)
             {
-                deck.Refill(tmp.unitObject.cardData);
-                tmp.ResetField();
-            }
-            else
-            {
-                tmp.ResetField();
+                if (tmp.unitObject.playerName == playerID)
+                {
+                    deck.Refill(tmp.unitObject.cardData);
+                    tmp.ResetField();
+                }
+                else
+                {
+                    tmp.ResetField();
+                }
             }
             tmp = tmp.Next;
         }
@@ -305,6 +336,7 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.LogError("좌측" + (temp ? "좌측" : "우측"));
                     GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
+                    FieldManager.Instance.newFields.Add(newField);
                     FieldManager.Instance.battleFields.AddBefore(field, newField);
                     Field tmp = FieldManager.Instance.battleFields.First;
                     FieldManager.Instance.fields.Clear();
@@ -331,8 +363,8 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.LogError("우측" + (temp ? "좌측" : "우측"));
                     GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
+                    FieldManager.Instance.newFields.Add(newField);
                     FieldManager.Instance.battleFields.AddAfter(field, newField);
-
                     Field tmp = FieldManager.Instance.battleFields.First;
                     FieldManager.Instance.fields.Clear();
                     while (tmp != null)

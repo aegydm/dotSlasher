@@ -24,6 +24,29 @@ MonoBehaviour:
     attackProcessEffects:
     - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
     getDamageEffects:
+    - {fileID: 11400000, guid: 170574b85e79bc84182a84dc21cd86a0, type: 2}
+    cardID: 110001
+    cardName: "\uD669\uC601\uC6C501"
+    cardSprite: {fileID: 21300000, guid: de537fdbccd417440ac700a95868c548, type: 3}
+    animator: Sprites/f1/f1_hero/f1_hero_01/f1_hero_01
+    skill: 
+    skillContents: 
+    cost: 0
+    cardColor: 0
+    cardCategory: 0
+    frontDamage: 0
+    backDamage: 0
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111001
     cardName: "\uD669\uD558\uC218\uC77801"
