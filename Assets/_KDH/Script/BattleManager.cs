@@ -91,7 +91,8 @@ public class BattleManager : MonoBehaviour
                 }
                 //unitList[i].Attack(FieldManager.Instance.battleFields);
                 unitList[i].unitObject.cardData.AttackStart(FieldManager.Instance.battleFields, unitList[i]);
-                yield return new WaitForSeconds(3);
+                yield return new WaitForSeconds(5);
+                unitList[i].orderText.color = Color.red;
             }
         }
         dirtySet = false;

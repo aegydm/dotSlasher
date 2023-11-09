@@ -7,6 +7,6 @@ public class AttackProcessEffect : CardEffect
 {
     public override void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
     {
-        
+
     }
 }

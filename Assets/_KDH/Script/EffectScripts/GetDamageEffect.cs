@@ -6,17 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GetDamageEffect", menuName = "Effect/BaseEffect/GetDamageEffect")]
 public class GetDamageEffect : CardEffect
 {
-    public override void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
+    public override async void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
     {
-        //Debug.Log("Death");
         caster.animator.Play("Death");
-        while (caster.animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
-        {
-            if (caster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-            {
-                break;
-            }
-        }
+        System.Threading.Tasks.Task deathTask = GameManager.Instance.CheckAnim(caster.animator, "Death");
+        await deathTask;
         caster.unitObject.CardChange(new Card());
         caster.ResetField();
     }

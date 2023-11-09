@@ -6,20 +6,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CalculateDamageEffect", menuName = "Effect/BaseEffect/CalculateDamageEffect")]
 public class CalculateDamageEffect : CardEffect
 {
-    public override void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
+    public override async void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
     {
         Debug.Log(targets.Count);
         if (caster.canBattle)
         {
+            System.Threading.Tasks.Task atkTask = GameManager.Instance.CheckAnim(caster.animator, "Attack");
+
             caster.animator.Play("Attack");
-            while (caster.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            {
-                Debug.Log(1);
-                if (caster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-                {
-                    break;
-                }
-            }
+            await atkTask;
+            caster.canBattle = false;
             for (int i = 0; i < targets.Count; i++)
             {
                 int attackPower = caster.unitObject.cardData.frontDamage;
@@ -37,6 +33,8 @@ public class CalculateDamageEffect : CardEffect
                     else if (targets[i].unitObject.cardData.cardCategory == CardCategory.minion)
                     {
                         targets[i].unitObject.cardData.GetDamage(targets[i], ref attackPower);
+                        System.Threading.Tasks.Task deathTask = GameManager.Instance.CheckAnim(caster.animator, "Death");
+                        await deathTask;
                     }
                     else
                     {
@@ -46,25 +44,28 @@ public class CalculateDamageEffect : CardEffect
                 else
                 {
                     Debug.Log(caster.unitObject.cardData.cardName + "의 공격이 실패했습니다.");
+
+                    Debug.Log("HitStart");
+                    System.Threading.Tasks.Task hitTask = GameManager.Instance.CheckAnim(targets[i].animator, "Hit");
                     targets[i].animator.Play("Hit");
-                    while (caster.animator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+                    Debug.Log("HitAnimation");
+                    await hitTask;
+                    Debug.Log("HitEnd");
+                    if (targets[i].animator.runtimeAnimatorController != null) 
                     {
-                        if (caster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+                        if (targets[i].canBattle)
                         {
-                            break;
+                            Debug.Log("Hit Can Battle");
+                            targets[i].animator.Play("Idle");
                         }
-                    }
-                    if (targets[i].canBattle)
-                    {
-                        targets[i].animator.Play("Idle");
-                    }
-                    else
-                    {
-                        targets[i].animator.Play("Breath");
+                        else
+                        {
+                            Debug.Log("Hit Can't Battle");
+                            targets[i].animator.Play("Breath");
+                        }
                     }
                 }
             }
-            caster.canBattle = false;
         }
     }
 }
