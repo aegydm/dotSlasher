@@ -4,6 +4,7 @@ using UnityEngine;
 using CCGCard;
 using Photon.Pun;
 using Unity.VisualScripting;
+using System.Linq;
 
 public class HandManager : MonoBehaviour
 {
@@ -65,13 +66,16 @@ public class HandManager : MonoBehaviour
                     Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     FieldManager.Instance.mousePos = mousePos;
                     Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
+                    colliders.Reverse();
                     if (draggingObject != null)
                     {
                         foreach (Collider2D collider in colliders)
                         {
                             if (collider.gameObject.layer == 7)
                             {
-                                usingSelectedCard = FieldManager.Instance.SelectField(collider.GetComponent<Field>());
+                                Debug.Log(collider.name);
+                                usingSelectedCard = FieldManager.Instance.SelectField(collider.GetComponent<Field>(), mousePos.x <= collider.transform.position.x);
+                                break;
                                 //GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos);
                             }
                         }

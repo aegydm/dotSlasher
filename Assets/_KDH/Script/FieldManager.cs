@@ -112,7 +112,7 @@ public class FieldManager : MonoBehaviour
         canPlace = false;
     }
 
-    public bool SelectField(Field field)
+    public bool SelectField(Field field, bool isLeft)
     {
         if (field.isEmpty)
         {
@@ -122,44 +122,129 @@ public class FieldManager : MonoBehaviour
         }
         else
         {
-            if (field.Prev != null && field.Prev.isEmpty)
+            if (isLeft)
             {
-                return false;
-            }
-            else
-            {
-                if (IsFieldFull())
+                if (field.Prev != null && field.Prev.isEmpty)
                 {
                     return false;
                 }
-                GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition);
-                GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
-                battleFields.AddBefore(field, newField);
-                this.tmpField = battleFields.Find(newField);
-                // Draw field in screen
-                Field tmpField = battleFields.First;
-                fields.Clear();
-                while (tmpField != null)
+                else
                 {
-                    fields.Add(tmpField.gameObject);
-                    tmpField = tmpField.Next;
-                }
-                for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
-                {
-                    try
+                    if (IsFieldFull())
                     {
-                        fields[i].transform.position = new Vector3(pos, 0, 0);
+                        return false;
                     }
-                    catch (Exception e)
+                    GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition);
+                    GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
+                    battleFields.AddBefore(field, newField);
+                    this.tmpField = battleFields.Find(newField);
+
+                    // Draw field in screen
+                    Field tmpField = battleFields.First;
+                    fields.Clear();
+                    while (tmpField != null)
                     {
-                        Debug.LogError(e.Message);
-                        break;
+                        fields.Add(tmpField.gameObject);
+                        tmpField = tmpField.Next;
                     }
+                    for (int pos = (fields.Count - 2) * -9, i = 0; i < fields.Count; pos += 18, i++)
+                    {
+                        try
+                        {
+                            fields[i].transform.position = new Vector3(pos, 0, 0);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogError(e.Message);
+                            break;
+                        }
+                    }
+                    SelectDirection(this.tmpField);
+                    mousePos = this.tmpField.transform.position;
+                    return true;
                 }
-                SelectDirection(this.tmpField);
-                mousePos = this.tmpField.transform.position;
-                return true;
             }
+            else
+            {
+                if(field.Next != null && field.Next.isEmpty)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (IsFieldFull())
+                    {
+                        return false;
+                    }
+                    GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition);
+                    GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
+                    battleFields.AddAfter(field, newField);
+                    this.tmpField = battleFields.Find(newField);
+
+                    // Draw field in screen
+                    Field tmpField = battleFields.First;
+                    fields.Clear();
+                    while (tmpField != null)
+                    {
+                        fields.Add(tmpField.gameObject);
+                        tmpField = tmpField.Next;
+                    }
+                    for (int pos = (fields.Count - 2) * -9, i = 0; i < fields.Count; pos += 18, i++)
+                    {
+                        try
+                        {
+                            fields[i].transform.position = new Vector3(pos, 0, 0);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogError(e.Message);
+                            break;
+                        }
+                    }
+                    SelectDirection(this.tmpField);
+                    mousePos = this.tmpField.transform.position;
+                    return true;
+                }
+            }
+            //if (field.Prev != null && field.Prev.isEmpty)
+            //{
+            //    return false;
+            //}
+            //else
+            //{
+            //    if (IsFieldFull())
+            //    {
+            //        return false;
+            //    }
+            //    GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition);
+            //    GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
+            //    battleFields.AddBefore(field, newField);
+            //    this.tmpField = battleFields.Find(newField);
+
+            //    // Draw field in screen
+            //    Field tmpField = battleFields.First;
+            //    fields.Clear();
+            //    while (tmpField != null)
+            //    {
+            //        fields.Add(tmpField.gameObject);
+            //        tmpField = tmpField.Next;
+            //    }
+            //    for (int pos = (fields.Count - 2) * -9, i = 0; i < fields.Count; pos += 18, i++)
+            //    {
+            //        try
+            //        {
+            //            fields[i].transform.position = new Vector3(pos, 0, 0);
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            Debug.LogError(e.Message);
+            //            break;
+            //        }
+            //    }
+            //    SelectDirection(this.tmpField);
+            //    mousePos = this.tmpField.transform.position;
+            //    return true;
+            //}
         }
     }
 
@@ -227,7 +312,7 @@ public class FieldManager : MonoBehaviour
 
     bool IsFieldFull()
     {
-        return fields.Count == FULL_FIELD_COUNT;
+        return fields.Count == FULL_FIELD_COUNT + 1;
     }
 
     public void ResetAllField()
