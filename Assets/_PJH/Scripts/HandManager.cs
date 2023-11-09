@@ -75,8 +75,8 @@ public class HandManager : MonoBehaviour
                             {
                                 Debug.Log(collider.name);
                                 usingSelectedCard = FieldManager.Instance.SelectField(collider.GetComponent<Field>(), mousePos.x <= collider.transform.position.x);
+                                //GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, mousePos.x <= collider.transform.position.x);
                                 break;
-                                //GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos);
                             }
                         }
                         draggingObject.transform.position = startPos;

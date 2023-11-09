@@ -293,37 +293,95 @@ public class GameManager : MonoBehaviour
     /// <param name="mousePos"></param>
     /// <param name="pos"></param>
     [PunRPC]
-    public void SelectFieldForPun(Vector2 mousePos, Vector2 pos)
+    public void SelectFieldForPun(Vector2 mousePos, Vector2 pos, bool temp)
     {
         Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
         foreach (Collider2D collider in colliders)
         {
-            if (collider.gameObject.layer == 7)
+            if (temp == mousePos.x <= collider.transform.position.x)
             {
                 Field field = collider.gameObject.GetComponent<Field>();
-                GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
-                FieldManager.Instance.battleFields.AddBefore(field, newField);
-                Field tmp = FieldManager.Instance.battleFields.First;
-                FieldManager.Instance.fields.Clear();
-                while (tmp != null)
+                if (temp)
                 {
-                    FieldManager.Instance.fields.Add(tmp.gameObject);
-                    tmp = tmp.Next;
+                    Debug.LogError("謝難" + (temp ? "謝難" : "辦難"));
+                    GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
+                    FieldManager.Instance.battleFields.AddBefore(field, newField);
+                    Field tmp = FieldManager.Instance.battleFields.First;
+                    FieldManager.Instance.fields.Clear();
+                    while (tmp != null)
+                    {
+                        FieldManager.Instance.fields.Add(tmp.gameObject);
+                        tmp = tmp.Next;
+                    }
+                    for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
+                    {
+                        try
+                        {
+                            FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogError(e.Message);
+                            break;
+                        }
+                    }
+                    return;
                 }
-                for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
+                else
                 {
-                    try
+                    Debug.LogError("辦難" + (temp ? "謝難" : "辦難"));
+                    GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
+                    FieldManager.Instance.battleFields.AddAfter(field, newField);
+
+                    Field tmp = FieldManager.Instance.battleFields.First;
+                    FieldManager.Instance.fields.Clear();
+                    while (tmp != null)
                     {
-                        FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
+                        FieldManager.Instance.fields.Add(tmp.gameObject);
+                        tmp = tmp.Next;
                     }
-                    catch (Exception e)
+                    for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
                     {
-                        Debug.LogError(e.Message);
-                        break;
+                        try
+                        {
+                            FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogException(e);
+                            break;
+                        }
                     }
+                    return;
                 }
-                return;
+
             }
+            //if (collider.gameObject.layer == 7)
+            //{
+
+            //    GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
+            //    FieldManager.Instance.battleFields.AddBefore(field, newField);
+            //    Field tmp = FieldManager.Instance.battleFields.First;
+            //    FieldManager.Instance.fields.Clear();
+            //    while (tmp != null)
+            //    {
+            //        FieldManager.Instance.fields.Add(tmp.gameObject);
+            //        tmp = tmp.Next;
+            //    }
+            //    for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
+            //    {
+            //        try
+            //        {
+            //            FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            Debug.LogError(e.Message);
+            //            break;
+            //        }
+            //    }
+            //    return;
+            //}
         }
     }
 

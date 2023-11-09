@@ -30,6 +30,7 @@ public class Field : MonoBehaviour
             {
                 if (animator != null && animator.runtimeAnimatorController != null)
                 {
+                    Debug.Log("Idle");
                     animator.Play("Idle");
                 }
             }

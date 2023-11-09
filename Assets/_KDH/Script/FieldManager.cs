@@ -146,7 +146,9 @@ public class FieldManager : MonoBehaviour
                     {
                         return false;
                     }
-                    GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition);
+                    mousePos = field.transform.position;
+                    Debug.LogError("謝難" + (isLeft ? "謝難" : "辦難"));
+                    GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition, isLeft);
                     GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
                     battleFields.AddBefore(field, newField);
                     this.tmpField = battleFields.Find(newField);
@@ -159,7 +161,7 @@ public class FieldManager : MonoBehaviour
                         fields.Add(tmpField.gameObject);
                         tmpField = tmpField.Next;
                     }
-                    for (int pos = (fields.Count - 2) * -9, i = 0; i < fields.Count; pos += 18, i++)
+                    for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
                     {
                         try
                         {
@@ -178,7 +180,7 @@ public class FieldManager : MonoBehaviour
             }
             else
             {
-                if(field.Next != null && field.Next.isEmpty)
+                if (field.Next != null && field.Next.isEmpty)
                 {
                     return false;
                 }
@@ -188,7 +190,8 @@ public class FieldManager : MonoBehaviour
                     {
                         return false;
                     }
-                    GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition);
+                    Debug.LogError("辦難" + (isLeft ? "謝難" : "辦難"));
+                    GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition, isLeft);
                     GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
                     battleFields.AddAfter(field, newField);
                     this.tmpField = battleFields.Find(newField);
@@ -201,7 +204,7 @@ public class FieldManager : MonoBehaviour
                         fields.Add(tmpField.gameObject);
                         tmpField = tmpField.Next;
                     }
-                    for (int pos = (fields.Count - 2) * -9, i = 0; i < fields.Count; pos += 18, i++)
+                    for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
                     {
                         try
                         {
@@ -322,14 +325,14 @@ public class FieldManager : MonoBehaviour
         canPlace = true;
     }
 
-    bool IsFieldFull()
+    public bool IsFieldFull()
     {
-        return fields.Count == FULL_FIELD_COUNT + 1;
+        return fields.Count >= FULL_FIELD_COUNT;
     }
 
     public void ResetAllField()
     {
-        
+
         Field tmpField = battleFields.First;
 
         for (int i = 0; i < 5; i++)
