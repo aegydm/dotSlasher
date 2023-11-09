@@ -11,7 +11,6 @@ public class SaveTest : MonoBehaviour
     public string path;
     public BinaryFormatter binaryFormatter;
     public BildManager bildManager;
-    public DataFrame saveData;
     public DataFrame loadDeck;
 
     private void Awake()
@@ -20,7 +19,7 @@ public class SaveTest : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         path = Path.Combine(Application.dataPath, "ID.data");
         binaryFormatter = new BinaryFormatter();
@@ -34,18 +33,18 @@ public class SaveTest : MonoBehaviour
         DataFrame dataFrame = new DataFrame();
         dataFrame.ID = bildManager.myDeck;
 
-        OnSave();
+        OnSave(dataFrame);
 
         LoadData(path);
     }
 
-    private void OnSave()
+    public void OnSave(DataFrame frame)
     {
         try
         {
             using (Stream ws = new FileStream(path, FileMode.Create))
             {
-                binaryFormatter.Serialize(ws, saveData);
+                binaryFormatter.Serialize(ws, frame);
             }
         }
         catch (Exception e)
@@ -73,7 +72,7 @@ public class SaveTest : MonoBehaviour
 
             Debug.Log(loadDeck.ToString());
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Debug.Log("Loaded data:" + string.Join(",", loadDeck.ID));
         }
