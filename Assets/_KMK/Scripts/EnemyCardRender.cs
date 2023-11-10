@@ -26,7 +26,7 @@ public class EnemyCardRender : MonoBehaviour
         fieldManager.OnEnemyHandChanged += RenderEnemyCard;
     }
 
-    //public void BoolChange()
+    //public void SoundBoolChange()
     //{
     //    if (isShow)
     //    {

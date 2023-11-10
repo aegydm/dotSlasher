@@ -114,8 +114,13 @@ public class GameManager : MonoBehaviour
                 photonView.RPC("MatchTurnNum", RpcTarget.Others, currentTurn);
                 photonView.RPC("CallSummonEnd", RpcTarget.Others);
             }
+            else
+            {
+                TurnStart?.Invoke();
+            }
         }
     }
+    public event Action TurnStart;
 
     public bool startFirst = false;
 
