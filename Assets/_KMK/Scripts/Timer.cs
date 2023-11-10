@@ -23,6 +23,12 @@ public class Timer : MonoBehaviour
         StartCoroutine(TurnTimer());
     }
 
+    public void StopTimer()
+    {
+        timerObj.SetActive(false);
+        StopCoroutine(TurnTimer());
+    }
+
     private IEnumerator TurnTimer()
     {
         timerObj.SetActive(true);

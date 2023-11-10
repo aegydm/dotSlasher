@@ -15,6 +15,7 @@ public class FieldManager : MonoBehaviour
     public GameObject FieldPrefab;
     public LinkedBattleField battleFields;
     public List<GameObject> newFields;
+    public Timer timer;
 
     public bool canPlace
     {
@@ -400,5 +401,7 @@ public class FieldManager : MonoBehaviour
             GameManager.Instance.canAct = false;
         }
         GameManager.Instance.playerEnd = true;
+
+        timer.StopTimer();
     }
 }
