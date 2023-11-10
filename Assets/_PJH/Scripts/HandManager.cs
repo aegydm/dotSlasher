@@ -5,17 +5,21 @@ using CCGCard;
 using Photon.Pun;
 using Unity.VisualScripting;
 using System.Linq;
+using UnityEngine.UIElements;
 
 public class HandManager : MonoBehaviour
 {
-    [SerializeField] public HandCard[] cards;
+    [SerializeField] public List<HandCard> hands = new List<HandCard>();
     [HideInInspector] public HandCard selectedHand;
+    public GameObject HandPrefab;
+    public bool isDraggingOnField = false;
     public static HandManager Instance;
     bool isDragging = false;
     GameObject draggingObject;
 
     Vector3 startPos;
     bool usingSelectedCard = true;
+    [SerializeField] HandCard tmpHand;
 
     private void Awake()
     {
@@ -29,11 +33,7 @@ public class HandManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        cards = GetComponentsInChildren<HandCard>();
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -84,6 +84,7 @@ public class HandManager : MonoBehaviour
                             ToggleCardSelection(selectedHand);
                     }
                     isDragging = false;
+                    isDraggingOnField = false;
                     draggingObject = null;
                 }
 
@@ -93,6 +94,15 @@ public class HandManager : MonoBehaviour
                     if (draggingObject != null)
                     {
                         draggingObject.transform.position = mousePos;
+                        Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
+                        foreach(Collider2D collider in colliders)
+                        {
+                            if(collider.gameObject.layer == 7)
+                            {
+                                isDraggingOnField = true;
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -103,7 +113,16 @@ public class HandManager : MonoBehaviour
     {
         selectedHand.RemoveCard();
         ToggleCardSelection(selectedHand.gameObject);
+        hands.Remove(selectedHand);
         selectedHand = null;
+        SortHand();
+        GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, GetHandCardNum());
+    }
+
+    public void RemoveHand(HandCard hand)
+    {
+        hand.RemoveCard();
+        Destroy(hand.gameObject);
         SortHand();
         GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, GetHandCardNum());
     }
@@ -111,9 +130,9 @@ public class HandManager : MonoBehaviour
     public int GetHandCardNum()
     {
         int count = 0;
-        for (int i = 0; i < cards.Length; i++)
+        for (int i = 0; i < hands.Count; i++)
         {
-            if (cards[i].card != null)
+            if (hands[i].card != null)
             {
                 count++;
             }
@@ -127,30 +146,20 @@ public class HandManager : MonoBehaviour
 
     public void SortHand()
     {
+        hands.RemoveAll(hand =>
+        {
+            if (hand.card == null)
+            {
+                Destroy(hand.gameObject);
+                return true;
+            }
+            return false;
+        });
         int i = 0;
-        while (cards[i].card != null)
+        foreach (HandCard hand in hands)
         {
-            i++;
-            if (i == cards.Length - 1) return;
-        }
-        if (cards[i].card != null) return;
-        cards[i].RemoveCard();
-        while (i < cards.Length - 1)
-        {
-            if (cards[i].card == null)
-            {
-                cards[i].SetCard(cards[i + 1].card);
-                cards[i + 1].RemoveCard();
-            }
-            i++;
-        }
-        cards[cards.Length - 1].RemoveCard();
-        foreach (HandCard card in cards)
-        {
-            if (card.card == null)
-            {
-                card.RemoveCard();
-            }
+            hand.gameObject.transform.position = new Vector3(-75+i, -30);
+            i += 20;
         }
     }
 
@@ -169,14 +178,16 @@ public class HandManager : MonoBehaviour
 
     public bool DrawCard(Card drawCard)
     {
-        Card newCard = drawCard;
-        foreach (HandCard card in cards)
+        if (drawCard != null)
         {
-            if (card.isEmpty)
-            {
-                card.SetCard(newCard);
-                return true;
-            }
+            tmpHand = Instantiate(HandPrefab, transform).GetComponent<HandCard>();
+            tmpHand.name = "HandCard" + hands.Count;
+            tmpHand.SetCard(drawCard);
+            //이 시점까진 데이터 정상
+            hands.Add(tmpHand);
+            Debug.Log(tmpHand.card.cardName);
+            SortHand();
+            return true;
         }
         return false;
     }
