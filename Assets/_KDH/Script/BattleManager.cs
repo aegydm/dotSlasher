@@ -19,6 +19,24 @@ public class BattleManager : MonoBehaviour
 
     public bool dirtySet = false;
 
+    public int damageSum
+    {
+        get
+        {
+            return _damageSum;
+        }
+        set
+        {
+            _damageSum = value;
+            if (_damageSum < 0)
+            {
+                Debug.LogError("데미지는 0보다 커야 합니다.");
+            }
+        }
+    }
+
+    [SerializeField] private int _damageSum;
+
     private void Awake()
     {
         if (instance == null)
@@ -35,7 +53,7 @@ public class BattleManager : MonoBehaviour
     {
         if (PhotonNetwork.InRoom)
         {
-            if(GameManager.Instance.gamePhase == GamePhase.BattlePhase)
+            if (GameManager.Instance.gamePhase == GamePhase.BattlePhase)
             {
                 GameManager.Instance.photonView.RPC("AttackPhaseNetwork", RpcTarget.All);
             }
@@ -70,11 +88,20 @@ public class BattleManager : MonoBehaviour
     {
         for(int i = 0; i < unitList.Count; i++)
         {
+            if (unitList[i].card.cardCategory == CardCategory.hero)
+            {
+                unitList[i].canBattle = ((Hero)unitList[i].card).canAttack;
+            }
+        }
+
+        for (int i = 0; i < unitList.Count; i++)
+        {
             if (unitList[i].canBattle)
             {
                 unitList[i].animator.Play("Idle");
             }
         }
+
         Debug.LogError("~~~ 배틀 시작~~~");
         for (int i = 0; i < unitList.Count; i++)
         {
@@ -89,11 +116,11 @@ public class BattleManager : MonoBehaviour
                 {
                     tmp = unitList[i].Next;
                 }
-                //unitList[i].Attack(FieldManager.Instance.battleFields);
                 unitList[i].unitObject.cardData.AttackStart(FieldManager.Instance.battleFields, unitList[i]);
                 yield return new WaitForSeconds(5);
                 unitList[i].orderText.color = Color.red;
             }
+
         }
         dirtySet = false;
         Debug.LogError("*** 배틀 종료 ***");

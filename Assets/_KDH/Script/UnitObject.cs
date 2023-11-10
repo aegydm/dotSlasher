@@ -4,14 +4,13 @@ using UnityEngine;
 using CCGCard;
 using System;
 
-[RequireComponent(typeof(Field))]
+//[RequireComponent(typeof(Field))]
 [System.Serializable]
 public class UnitObject : MonoBehaviour
 {
     public Card cardData;
-    [HideInInspector] public SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
     public Animator animator;
-    public Sprite squareSprite;
     public bool lookingLeft
     {
         get
@@ -27,19 +26,18 @@ public class UnitObject : MonoBehaviour
     }
     private bool _lookingLeft;
 
-
-    public string playerName
+    public string playerID
     {
         get
         {
-            return _playerName;
+            return _playerID;
         }
         set
         {
-            _playerName = value;
-            if(_playerName != "-1")
+            _playerID = value;
+            if(_playerID != "-1")
             {
-                GetComponent<Field>().playerColor.color = new Color(255 - (255 * int.Parse(playerName)), 255 * int.Parse(playerName), 0);
+                GetComponent<Field>().playerColor.color = new Color(255 - (255 * int.Parse(playerID)), 255 * int.Parse(playerID), 0);
             }
             else
             {
@@ -48,7 +46,7 @@ public class UnitObject : MonoBehaviour
         }
     }
 
-    [SerializeField] private string _playerName;
+    [SerializeField] private string _playerID;
 
     public void CardChange(Card newCard)
     {
@@ -58,34 +56,11 @@ public class UnitObject : MonoBehaviour
 
     public event Action<Card> OnCardDataChanged;
 
-    public void Func1()
-    {
-        Func2();
-        Func3();
-        Func4();
-    }
-
-    public void Func2()
-    {
-
-    }
-
-    public void Func3()
-    {
-
-    }
-
-    public void Func4()
-    {
-
-    }
-
     private void Awake()
     {
         OnCardDataChanged = null;
         OnCardDataChanged += Setting;
     }
-
     public void Setting(Card card)
     {
         cardData = card;
@@ -96,7 +71,10 @@ public class UnitObject : MonoBehaviour
             {
                 spriteRenderer.flipX = true;
             }
-            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(card.animator);
+            if(animator != null)
+            {
+                animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(card.animator);
+            }
         }
         else
         {

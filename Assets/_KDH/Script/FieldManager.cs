@@ -110,11 +110,11 @@ public class FieldManager : MonoBehaviour
         BattleManager.instance.unitList.Add(battleFields.Find(GO));
         if (id == -1)
         {
-            battleFields.Find(GO).unitObject.playerName = GameManager.Instance.playerID;
+            battleFields.Find(GO).unitObject.playerID = GameManager.Instance.playerID;
         }
         else
         {
-            battleFields.Find(GO).unitObject.playerName = id.ToString();
+            battleFields.Find(GO).unitObject.playerID = id.ToString();
         }
     }
     void SelectDirection(Field field)

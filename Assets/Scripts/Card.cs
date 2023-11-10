@@ -105,9 +105,32 @@ namespace CCGCard
 
         public void GetDamage(Field thisCard, ref int damageVal)
         {
+            if(thisCard.card.cardCategory == CardCategory.hero && thisCard.unitObject.playerID == GameManager.Instance.playerID)
+            {
+                BattleManager.instance.damageSum += damageVal;
+            }
             ActiveEffect(getDamageEffects, null, thisCard, null);
         }
         #endregion
+
+        public virtual Card Copy()
+        {
+            Card tmp = new Card();
+            tmp.cardID = cardID;
+            tmp.cardName = cardName;
+            tmp.cardColor = cardColor;
+            tmp.cardCategory = cardCategory;
+            tmp.frontDamage = frontDamage;
+            tmp.backDamage = backDamage;
+            tmp.animator = animator;
+            tmp.cardSprite = cardSprite;
+            tmp.summonEffects = summonEffects;
+            tmp.attackStartEffects = attackStartEffects;
+            tmp.findEnemyEffects = findEnemyEffects;
+            tmp.calculateDamageEffects = calculateDamageEffects;
+            tmp.attackProcessEffects = attackProcessEffects;
+            return tmp;
+        }
     }
 }
 

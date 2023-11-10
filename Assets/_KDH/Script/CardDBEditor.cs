@@ -17,6 +17,11 @@ public class CardDBEditor : Editor
         {
             myDB.LoadDataAll();
         }
+
+        if(GUILayout.Button("Hero Check"))
+        {
+            myDB.CheckHero();
+        }
     }
 }
 #endif

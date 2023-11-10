@@ -259,6 +259,7 @@ public class GameManager : MonoBehaviour
                 BattleManager.instance.AttackButton();
                 break;
             case GamePhase.BattlePhase:
+                ResetState();
                 gamePhase = GamePhase.ExecutionPhase;
                 ExecuteGame();
                 break;
@@ -280,7 +281,7 @@ public class GameManager : MonoBehaviour
         {
             if (tmp.card.cardCategory != CardCategory.hero)
             {
-                if (tmp.unitObject.playerName == playerID)
+                if (tmp.unitObject.playerID == playerID)
                 {
                     deck.Refill(tmp.unitObject.cardData);
                     tmp.ResetField();
@@ -300,8 +301,31 @@ public class GameManager : MonoBehaviour
     private void ExecuteGame()
     {
         Debug.LogError("처리 페이즈에 진입했습니다.");
-        Debug.LogError("영웅 처리가 마무리 되지 않았으므로 3초 뒤 자동으로 페이즈를 넘깁니다.");
-        Invoke("EndPhase", 3f);
+        StartCoroutine(DiscardByDamage());
+    }
+
+    IEnumerator DiscardByDamage()
+    {
+        Debug.LogError($"{BattleManager.instance.damageSum}장 버려야 합니다.");
+        UIManager.Instance.PopupCard(deck.useDeck);
+        UIManager.Instance.selectCardChanged += Discard;
+        while(BattleManager.instance.damageSum > 0)
+        {
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        UIManager.Instance.selectCardChanged -= Discard;
+        UIManager.Instance.ClosePopup();
+        Debug.LogError("카드를 전부 버렸습니다");
+        playerEnd = true;
+    }
+
+    public void Discard(Card card)
+    {
+        if (deck.RemoveDeckCard(card))
+        {
+            BattleManager.instance.damageSum--;
+            UIManager.Instance.RemoveSelectObject();
+        }
     }
 
     [PunRPC]

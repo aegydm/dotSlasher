@@ -76,7 +76,7 @@ public class Field : MonoBehaviour
 
     public void ResetField()
     {
-        unitObject.playerName = "-1";
+        unitObject.playerID = "-1";
         isEmpty = true;
         animator.runtimeAnimatorController = null;
         spriteRenderer.sprite = null;

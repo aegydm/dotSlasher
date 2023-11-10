@@ -46,11 +46,29 @@ public class CardDB : ScriptableObject
         {
             if (data.cardID == id)
             {
-                Card outCard = data;
-                return outCard;
+                if (data.cardCategory != CardCategory.hero)
+                {
+                    Card outCard = data.Copy();
+                    return outCard;
+                }
+                else
+                {
+                    Card outCard = Hero.ChangeToHero(data);
+                    Debug.Log(outCard is Hero);
+                    return outCard;
+                }
             }
         }
         return null;
+    }
+
+    public void CheckHero()
+    {
+
+        foreach (var data in cards)
+        {
+            Debug.Log(data is Hero);
+        }
     }
 
     public void LoadDataAll()
@@ -95,5 +113,6 @@ public class CardDB : ScriptableObject
             card.attackProcessEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/AttackProcessEffect"));
             cards.Add(card);
         }
+
     }
 }

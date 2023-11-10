@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 public class Deck : MonoBehaviour
 {
-    [SerializeField] List<Card> deck = new List<Card>();
+    public List<Card> useDeck = new List<Card>();
     public List<Card> originDeck = new List<Card>();
     public Card myHero = new Hero();
 
@@ -44,9 +44,10 @@ public class Deck : MonoBehaviour
         }
         foreach(var card in originDeck)
         {
+            Debug.Log(card.cardName);
             if(card.cardCategory != CardCategory.hero)
             {
-                deck.Add(card);
+                useDeck.Add(card);
             }
             else
             {
@@ -71,14 +72,14 @@ public class Deck : MonoBehaviour
     public void Shuffle()
     {
         List<Card> list = new List<Card>();
-        int listCount = deck.Count;
+        int listCount = useDeck.Count;
         for (int i = 0; i < listCount; i++)
         {
-            int rand = Random.Range(0, deck.Count);
-            list.Add(deck[rand]);
-            deck.RemoveAt(rand);
+            int rand = Random.Range(0, useDeck.Count);
+            list.Add(useDeck[rand]);
+            useDeck.RemoveAt(rand);
         }
-        deck = list;
+        useDeck = list;
 
         RefreshDeckCount();
     }
@@ -96,9 +97,9 @@ public class Deck : MonoBehaviour
             {
                 //먼저 패에서 덱의 카드를 호출하고 난 다음 덱의 카드를 제거하도록 순서를 주의한다.
 
-                if (HandManager.Instance.DrawCard(deck[0]))
+                if (HandManager.Instance.DrawCard(useDeck[0]))
                 {
-                    deck.Remove(deck[0]);
+                    useDeck.Remove(useDeck[0]);
                     GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
                 }
                 else
@@ -122,20 +123,25 @@ public class Deck : MonoBehaviour
     public void Refill(Card card)
     {
 
-        deck.Add(card);
+        useDeck.Add(card);
 
         RefreshDeckCount();
     }
 
-    /// <summary>
-    /// 덱에서 카드를 제거하는 기능
-    /// </summary>
-    /// <param name="idx"></param>
-    public void RemoveDeckCard(int idx)
+    public bool RemoveDeckCard(Card card)
     {
-        deck.Remove(deck[idx]);
-
+        for(int i  = 0; i < useDeck.Count; i++)
+        {
+            if (useDeck[i] == card)
+            {
+                useDeck.RemoveAt(i);
+                RefreshDeckCount();
+                return true;
+            }
+        }
+        Debug.LogError("덱에 없는 카드를 제거하려고 했습니다.");
         RefreshDeckCount();
+        return false;
     }
 
     /// <summary>
@@ -143,7 +149,7 @@ public class Deck : MonoBehaviour
     /// </summary>
     public void RefreshDeckCount()
     {
-        countOfDeck = deck.Count;
+        countOfDeck = useDeck.Count;
     }
 
     /// <summary>
@@ -156,7 +162,7 @@ public class Deck : MonoBehaviour
     public void SortDeck()
     {
         List<int> idList = new List<int>();
-        foreach (Card card in deck)
+        foreach (Card card in useDeck)
         {
             Card cardScript = card;
             if (cardScript != null)
