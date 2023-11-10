@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 public class HandManager : MonoBehaviour
 {
     [SerializeField] public List<HandCard> hands = new List<HandCard>();
-    [HideInInspector] public HandCard selectedHand;
+    public HandCard selectedHand;
     public GameObject HandPrefab;
     public bool isDraggingOnField = false;
     public static HandManager Instance;
@@ -73,8 +73,8 @@ public class HandManager : MonoBehaviour
                         {
                             if (collider.gameObject.layer == 7)
                             {
-                                Debug.Log(collider.name);
                                 usingSelectedCard = FieldManager.Instance.SelectField(collider.GetComponent<Field>(), mousePos.x <= collider.transform.position.x);
+                                FieldManager.Instance.mousePos = mousePos;
                                 //GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, mousePos.x <= collider.transform.position.x);
                                 break;
                             }

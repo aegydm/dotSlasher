@@ -44,6 +44,7 @@ public class Field : MonoBehaviour
     [SerializeField] TMP_Text frontDamageText;
     [SerializeField] TMP_Text backDamageText;
     public TMP_Text orderText;
+    public Image orderIMG;
     public Image playerColor;
 
     private void Awake()
@@ -87,6 +88,7 @@ public class Field : MonoBehaviour
         unitObject.cardData = card = new Card();
         orderText.text = string.Empty;
         orderText.color = Color.black;
+        orderIMG.color = Color.white;
     }
 
     public void SetCard(Card newCard, bool lookLeft = false)

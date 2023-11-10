@@ -51,7 +51,8 @@ public class CalculateDamageEffect : CardEffect
                     Debug.Log("HitAnimation");
                     await hitTask;
                     Debug.Log("HitEnd");
-                    if (targets[i].animator.runtimeAnimatorController != null) 
+                    //targets[i].unitObject.lookingLeft = !targets[i].unitObject.lookingLeft;
+                    if (targets[i].animator.runtimeAnimatorController != null)
                     {
                         if (targets[i].canBattle)
                         {
