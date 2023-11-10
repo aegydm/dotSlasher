@@ -136,6 +136,7 @@ public class FieldManager : MonoBehaviour
                     }
                     GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition);
                     GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
+                    newField.GetComponent<Field>().isNewField = true;
                     battleFields.AddBefore(field, newField);
                     this.tmpField = battleFields.Find(newField);
 
@@ -178,6 +179,7 @@ public class FieldManager : MonoBehaviour
                     }
                     GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition);
                     GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
+                    newField.GetComponent<Field>().isNewField = true;
                     battleFields.AddAfter(field, newField);
                     this.tmpField = battleFields.Find(newField);
 
@@ -280,17 +282,16 @@ public class FieldManager : MonoBehaviour
     {
         
         Field tmpField = battleFields.First;
-
-        for (int i = 0; i < 5; i++)
-        {
-            tmpField = tmpField.Next;
-        }
+        
         while (tmpField != null)
         {
-            battleFields.Remove(tmpField);
-            fields.Remove(tmpField.gameObject);
-            Destroy(tmpField.gameObject);
-            tmpField = tmpField.Next;
+            if (tmpField.isNewField)
+            {
+                battleFields.Remove(tmpField);
+                fields.Remove(tmpField.gameObject);
+                Destroy(tmpField.gameObject);
+                tmpField = tmpField.Next;
+            }
         }
 
         for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
@@ -317,6 +318,35 @@ public class FieldManager : MonoBehaviour
         GameManager.Instance.canAct = false;
         GameManager.Instance.photonView.RPC("PlaceCardForPun", RpcTarget.All, mousePos, HandManager.Instance.selectedHand.card.cardID, int.Parse(GameManager.Instance.playerID), lookingLeft);
         HandManager.Instance.RemoveHand();
+    }
+
+    /// <summary>
+    /// 필드 선택 취소
+    /// </summary>
+    public void Cancel()
+    {
+        Debug.Log("Canceling");
+        if (tmpField.isNewField)
+        {
+            battleFields.Remove(tmpField);
+            fields.Remove(tmpField.gameObject);
+            Destroy(tmpField.gameObject);
+        }
+        
+        for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
+        {
+            try
+            {
+                fields[i].transform.position = new Vector3(pos, 0, 0);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+                break;
+            }
+        }
+        canPlace = true;
+        directionCanvas.SetActive(false);
     }
 
     public void TurnEnd()
