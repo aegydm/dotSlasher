@@ -204,10 +204,10 @@ public class GameManager : MonoBehaviour
         if (gameStart == false)
         {
             gameStart = true;
-            List<Card> handList = new();
+            List<HandCard> handList = new();
             for (int i = 0; i < HandManager.Instance.hands.Count; i++)
             {
-                handList.Add(HandManager.Instance.hands[i].card);
+                handList.Add(HandManager.Instance.hands[i]);
             }
             UIManager.Instance.PopupCard(handList);
         }

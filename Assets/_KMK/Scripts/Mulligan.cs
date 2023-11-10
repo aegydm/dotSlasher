@@ -20,14 +20,13 @@ public class Mulligan : MonoBehaviour
         //if (GameManager.Instance.gamePhase != GamePhase.DrawPhase) return;
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-
-            DoMulligan(hit);
+            DoMulligan();
         }
     }
 
-    List<HandCard> DoMulligan(RaycastHit2D hit)
+    List<HandCard> DoMulligan()
     {
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
         if (hit.collider != null)
         {
             HandCard clickedHand = hit.collider.gameObject.GetComponent<HandCard>();

@@ -100,6 +100,8 @@ public class UIManager : MonoBehaviour
     //    }
     //}
 
+    
+
     public void PopupCard(List<Card> cardList)
     {
         if (isPopUI == false)
@@ -112,6 +114,23 @@ public class UIManager : MonoBehaviour
                 go = Instantiate(cardObject, gridLayout.transform);
                 go.GetComponent<UnitObject>().Setting(card);
                 go.GetComponent<Image>().sprite = go.GetComponent<SpriteRenderer>().sprite;
+            }
+        }
+    }
+
+    public void PopupCard(List<HandCard> handList)
+    {
+        if (isPopUI == false)
+        {
+            popUpUi.SetActive(true);
+            isPopUI = true;
+            GameObject go;
+            foreach (HandCard hand in handList)
+            {
+                go = Instantiate(cardObject, gridLayout.transform);
+                go.GetComponent<UnitObject>().Setting(hand.card);
+                go.GetComponent<Image>().sprite = go.GetComponent<SpriteRenderer>().sprite;
+                go.GetComponent<UICard>().connectedHand = hand;
             }
         }
     }
