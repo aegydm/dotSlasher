@@ -10,7 +10,7 @@ public class UIScript : MonoBehaviour
     public GameObject optionUIBackGround;
     public GameObject blank;
     public bool windowOn = false;
-    public bool soundWindowOn = false;
+    bool soundWindowOn = false;
     [Header("Ã¢ ´Ý±â")]
     public Button soundMenuCloseButton;
     public Button optionMenuCloseButton;
