@@ -44,7 +44,6 @@ public class Deck : MonoBehaviour
         }
         foreach(var card in originDeck)
         {
-            Debug.Log(card.cardName);
             if(card.cardCategory != CardCategory.hero)
             {
                 useDeck.Add(card);
@@ -99,6 +98,7 @@ public class Deck : MonoBehaviour
 
                 if (HandManager.Instance.DrawCard(useDeck[0]))
                 {
+                    Debug.LogError("CallDrawCardDeck");
                     useDeck.Remove(useDeck[0]);
                     GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
                 }

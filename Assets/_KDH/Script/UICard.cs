@@ -19,5 +19,6 @@ public class UICard : MonoBehaviour
     {
         UIManager.Instance.selectObject = gameObject;
         UIManager.Instance.selectCard = GetComponent<UnitObject>().cardData;
+
     }
 }

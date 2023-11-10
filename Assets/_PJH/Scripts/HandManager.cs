@@ -178,6 +178,7 @@ public class HandManager : MonoBehaviour
 
     public bool DrawCard(Card drawCard)
     {
+        Debug.LogError("Call DrawCard");
         if (drawCard != null)
         {
             tmpHand = Instantiate(HandPrefab, transform).GetComponent<HandCard>();

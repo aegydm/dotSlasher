@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text turnText;
     [SerializeField] GameObject endScene;
     public bool isGameEnd = false;
+    bool gameStart = false;
 
     //2인 플레이 테스트 용 임시 코드
     public string playerID
@@ -161,6 +162,7 @@ public class GameManager : MonoBehaviour
         startFirst = NetworkManager.instance.first;
         NetworkManager.instance.SetPlayerID();
         ResetState();
+
     }
 
     private void Update()
@@ -197,6 +199,17 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("드로우 페이즈에만 작동합니다.");
+        }
+
+        if (gameStart == false)
+        {
+            gameStart = true;
+            List<Card> handList = new();
+            for (int i = 0; i < HandManager.Instance.hands.Count; i++)
+            {
+                handList.Add(HandManager.Instance.hands[i].card);
+            }
+            UIManager.Instance.PopupCard(handList);
         }
     }
 
