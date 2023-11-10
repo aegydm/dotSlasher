@@ -8,6 +8,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(UnitObject))]
 public class Field : MonoBehaviour
 {
+    public bool isNewField = false;
     public bool blankField = false;
     public bool isEmpty = true;
     public int fieldOrder;

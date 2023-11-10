@@ -151,6 +151,7 @@ public class FieldManager : MonoBehaviour
                     Debug.LogError("謝難" + (isLeft ? "謝難" : "辦難"));
                     GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition, isLeft);
                     GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
+                    newField.GetComponent<Field>().isNewField = true;
                     newFields.Add(newField);
                     battleFields.AddBefore(field, newField);
                     this.tmpField = battleFields.Find(newField);
@@ -195,6 +196,7 @@ public class FieldManager : MonoBehaviour
                     Debug.LogError("辦難" + (isLeft ? "謝難" : "辦難"));
                     GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition, isLeft);
                     GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
+                    newField.GetComponent<Field>().isNewField = true;
                     newFields.Add(newField);
                     battleFields.AddAfter(field, newField);
                     this.tmpField = battleFields.Find(newField);
@@ -224,45 +226,6 @@ public class FieldManager : MonoBehaviour
                     return true;
                 }
             }
-            //if (field.Prev != null && field.Prev.isEmpty)
-            //{
-            //    return false;
-            //}
-            //else
-            //{
-            //    if (IsFieldFull())
-            //    {
-            //        return false;
-            //    }
-            //    GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, instantiatePosition);
-            //    GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
-            //    battleFields.AddBefore(field, newField);
-            //    this.tmpField = battleFields.Find(newField);
-
-            //    // Draw field in screen
-            //    Field tmpField = battleFields.First;
-            //    fields.Clear();
-            //    while (tmpField != null)
-            //    {
-            //        fields.Add(tmpField.gameObject);
-            //        tmpField = tmpField.Next;
-            //    }
-            //    for (int pos = (fields.Count - 2) * -9, i = 0; i < fields.Count; pos += 18, i++)
-            //    {
-            //        try
-            //        {
-            //            fields[i].transform.position = new Vector3(pos, 0, 0);
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            Debug.LogError(e.Message);
-            //            break;
-            //        }
-            //    }
-            //    SelectDirection(this.tmpField);
-            //    mousePos = this.tmpField.transform.position;
-            //    return true;
-            //}
         }
     }
 
@@ -336,6 +299,10 @@ public class FieldManager : MonoBehaviour
     public void ResetAllField()
     {
         Field tmpField = battleFields.First;
+        //for (int i = 0; i < 5; i++)
+        //{
+        //    tmpField = tmpField.Next;
+        //}
         for (int i = 0; i < newFields.Count; i++)
         {
             if (newFields.Count > 0 && newFields[i] != null)
@@ -349,6 +316,13 @@ public class FieldManager : MonoBehaviour
                 break;
             }
         }
+        //while (tmpField != null)
+        //{
+        //    battleFields.Remove(tmpField);
+        //    fields.Remove(tmpField.gameObject);
+        //    Destroy(tmpField.gameObject);
+        //    tmpField = tmpField.Next;
+        //}
         newFields.Clear();
 
 
@@ -388,6 +362,35 @@ public class FieldManager : MonoBehaviour
         GameManager.Instance.canAct = false;
         GameManager.Instance.photonView.RPC("PlaceCardForPun", RpcTarget.All, mousePos, HandManager.Instance.selectedHand.card.cardID, int.Parse(GameManager.Instance.playerID), lookingLeft);
         HandManager.Instance.RemoveHand();
+    }
+
+    /// <summary>
+    /// в萄 摹鷗 鏃模
+    /// </summary>
+    public void Cancel()
+    {
+        Debug.Log("Canceling");
+        if (tmpField.isNewField)
+        {
+            battleFields.Remove(tmpField);
+            fields.Remove(tmpField.gameObject);
+            Destroy(tmpField.gameObject);
+        }
+        
+        for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
+        {
+            try
+            {
+                fields[i].transform.position = new Vector3(pos, 0, 0);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+                break;
+            }
+        }
+        canPlace = true;
+        directionCanvas.SetActive(false);
     }
 
     public void TurnEnd()

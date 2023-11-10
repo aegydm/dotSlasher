@@ -205,7 +205,6 @@ public class Deck : MonoBehaviour
                 break;
 
             default:
-
                 break;
         }
     }

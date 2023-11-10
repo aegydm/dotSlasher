@@ -30,7 +30,7 @@ public class HandCard : MonoBehaviour
 
     private void Start()
     {
-        RemoveCard();
+
     }
     private void Update()
     {
@@ -41,11 +41,13 @@ public class HandCard : MonoBehaviour
     {
         if (card == null)
         {
+            Debug.Log("카드가널이래");
             return;
         }
         if (isEmpty)
         {
             this.card = card;
+            Debug.Log($"{gameObject.name}: {this.card.cardName}");
             isEmpty = false;
             DrawCardData();
         }
@@ -63,6 +65,7 @@ public class HandCard : MonoBehaviour
 
     void DrawCardData()
     {
+        Debug.Log($"Drawing {gameObject.name}: {this.card.cardName}");
         canvas.SetActive(true);
         frontDamageText.text = card.frontDamage.ToString();
         BackDamageText.text = card.backDamage.ToString();

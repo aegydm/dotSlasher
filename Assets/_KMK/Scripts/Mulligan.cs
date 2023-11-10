@@ -6,9 +6,9 @@ using CCGCard;
 public class Mulligan : MonoBehaviour
 {
     [SerializeField] Camera cam;
-    [SerializeField] List<Card> selectedCard;
+    [SerializeField] List<HandCard> selectedHand;
     [SerializeField] Deck deck;
-    [SerializeField] HandManager handManager;
+    [SerializeField] HandManager handManager = HandManager.Instance;
 
     private void Awake()
     {
@@ -17,52 +17,75 @@ public class Mulligan : MonoBehaviour
 
     private void Update()
     {
-        //ray 와 raycast 선언
-        RaycastHit hit = new RaycastHit();
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        //if (GameManager.Instance.gamePhase != GamePhase.DrawPhase) return;
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-        DoMulligan(hit, ray);
+            DoMulligan(hit);
+        }
     }
 
-    List<Card> DoMulligan(RaycastHit hit , Ray ray)
+    List<HandCard> DoMulligan(RaycastHit2D hit)
     {
-        if (Physics.Raycast(ray, out hit))
+        if (hit.collider != null)
         {
-            //오브젝트에서 card 컴포넌트 추출
-            Card clickedCard = hit.collider.gameObject.GetComponent<Card>();
+            HandCard clickedHand = hit.collider.gameObject.GetComponent<HandCard>();
 
-            foreach (Card card in selectedCard)
+            if (selectedHand.Contains(clickedHand))
             {
-                if (clickedCard == card)
-                {
-                    //배열에 카드 추가
-                    selectedCard.Remove(clickedCard);
-                }
-                else if ( clickedCard != card)
-                {
-                    selectedCard.Add(clickedCard);
-                }
+                selectedHand.Remove(clickedHand);
+            }
+            else
+            {
+                selectedHand.Add(clickedHand);
             }
         }
-        return selectedCard;
+
+        return selectedHand;
+        //if (Physics.Raycast(ray, out hit))
+        //{
+        //    //오브젝트에서 card 컴포넌트 추출
+        //    Card clickedCard = hit.collider.gameObject.GetComponent<Card>();
+
+        //    foreach (Card card in selectedCard)
+        //    {
+        //        if (clickedCard == card)
+        //        {
+        //            //배열에 카드 추가
+        //            selectedCard.Remove(clickedCard);
+        //        }
+        //        else if ( clickedCard != card)
+        //        {
+        //            selectedCard.Add(clickedCard);
+        //        }
+        //    }
+        //}
+        //return selectedCard;
     }
-
-    void DoProcess(List<Card> selectedCard)
+    
+    public void DoProcess()
     {
-
-        for ( int i = 0; i < selectedCard.Count; i++)
+        for ( int i = 0; i < selectedHand.Count; i++)
         {
             //패의 카드를 덱 밑으로 돌린다.
-            deck.Refill(selectedCard[i]);
+            deck.Refill(selectedHand[i].card);
 
             //여기서 패의 카드를 제거하는 함수를 수행하여야 한다.
-            handManager.RemoveHand();
+            handManager.RemoveHand(selectedHand[i]);
             
             //돌린 만큼 덱에서 카드를 뽑는다.
-            if( i == selectedCard.Count)
+            if( i == selectedHand.Count)
             {
                 deck.Draw(i);
             }
         }
+        deck.Draw(selectedHand.Count);
+        EndProcess();
+    }
+
+    void EndProcess()
+    {
+        selectedHand.Clear();
     }
 }
