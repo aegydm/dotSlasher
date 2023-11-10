@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
     private float baseTimer = 30.0f;
     private float runTime;
 
-    private void Start()
+    private void Awake()
     {
         timer = timerObj.GetComponent<TMP_Text>();
         GameManager.Instance.TurnStart += PlayerTimer;
@@ -34,7 +34,7 @@ public class Timer : MonoBehaviour
             runTime = Time.deltaTime;
             baseTimer -= runTime;
 
-            timer.text = baseTimer.ToString();
+            timer.text = baseTimer.ToString("F0");
 
             yield return null;
         }
