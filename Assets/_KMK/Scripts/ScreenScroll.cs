@@ -8,18 +8,24 @@ public class ScreenScroll : MonoBehaviour
 
     public float distance;
 
+    public int distanceRange = 50;
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("LeftArrow"))
         {
-            distance++;
-
+            if(distance >= distanceRange)
+            {
+                distance--;
+            }
         }
         else if (Input.GetButtonDown("RightArrow"))
         {
-            distance--;
-             
+            if(distance <= distanceRange)
+            {
+                distance++;
+            }             
         }
     }
 }

@@ -13,7 +13,7 @@ public class Deck : MonoBehaviour
     public List<Card> originDeck = new List<Card>();
     public Card myHero = new Hero();
 
-    int countOfDeck
+    public int countOfDeck
     {
         get
         {
