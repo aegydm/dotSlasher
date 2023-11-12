@@ -39,17 +39,23 @@ public class Hero : Card
         Hero tmp = new Hero();
         tmp.cardID = card.cardID;
         tmp.cardName = card.cardName;
+        tmp.cardSprite = card.cardSprite;
+        tmp.animator = card.animator;
+        tmp.skill = card.skill;
+        tmp.skillContents = card.skillContents;
+        tmp.cost = card.cost;
         tmp.cardColor = card.cardColor;
         tmp.cardCategory = card.cardCategory;
         tmp.frontDamage = card.frontDamage;
         tmp.backDamage = card.backDamage;
-        tmp.animator = card.animator;
-        tmp.cardSprite = card.cardSprite;
+
         tmp.summonEffects = card.summonEffects;
         tmp.attackStartEffects = card.attackStartEffects;
         tmp.findEnemyEffects = card.findEnemyEffects;
         tmp.calculateDamageEffects = card.calculateDamageEffects;
         tmp.attackProcessEffects = card.attackProcessEffects;
+        tmp.getDamageEffects = card.getDamageEffects;
+
         return tmp;
     }
 }

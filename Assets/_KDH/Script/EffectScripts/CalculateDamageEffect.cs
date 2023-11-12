@@ -1,17 +1,18 @@
 using CCGCard;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CalculateDamageEffect", menuName = "Effect/BaseEffect/CalculateDamageEffect")]
 public class CalculateDamageEffect : CardEffect
 {
-    public override async void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
     {
         Debug.Log(targets.Count);
         if (caster.canBattle)
         {
-            System.Threading.Tasks.Task atkTask = GameManager.Instance.CheckAnim(caster.animator, "Attack");
+            Task atkTask = GameManager.Instance.CheckAnim(caster.animator, "Attack");
 
             caster.animator.Play("Attack");
             await atkTask;
@@ -28,12 +29,12 @@ public class CalculateDamageEffect : CardEffect
                     //targets[i].Damaged(attackPower);
                     if (targets[i].unitObject.cardData.cardCategory == CardCategory.hero)
                     {
-                        targets[i].unitObject.cardData.GetDamage(targets[i], ref attackPower);
+                        targets[i].unitObject.cardData.GetDamage(targets[i], attackPower);
                     }
                     else if (targets[i].unitObject.cardData.cardCategory == CardCategory.minion)
                     {
-                        targets[i].unitObject.cardData.GetDamage(targets[i], ref attackPower);
-                        System.Threading.Tasks.Task deathTask = GameManager.Instance.CheckAnim(caster.animator, "Death");
+                        targets[i].unitObject.cardData.GetDamage(targets[i], attackPower);
+                        Task deathTask = GameManager.Instance.CheckAnim(caster.animator, "Death");
                         await deathTask;
                     }
                     else
@@ -44,14 +45,12 @@ public class CalculateDamageEffect : CardEffect
                 else
                 {
                     Debug.Log(caster.unitObject.cardData.cardName + "의 공격이 실패했습니다.");
-
                     Debug.Log("HitStart");
-                    System.Threading.Tasks.Task hitTask = GameManager.Instance.CheckAnim(targets[i].animator, "Hit");
+                    Task hitTask = GameManager.Instance.CheckAnim(targets[i].animator, "Hit");
                     targets[i].animator.Play("Hit");
                     Debug.Log("HitAnimation");
                     await hitTask;
                     Debug.Log("HitEnd");
-                    //targets[i].unitObject.lookingLeft = !targets[i].unitObject.lookingLeft;
                     if (targets[i].animator.runtimeAnimatorController != null)
                     {
                         if (targets[i].canBattle)
@@ -68,5 +67,6 @@ public class CalculateDamageEffect : CardEffect
                 }
             }
         }
+        return;
     }
 }

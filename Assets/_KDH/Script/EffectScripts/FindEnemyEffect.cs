@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "FindEnemyEffect", menuName = "Effect/BaseEffect/FindEnemyEffect")]
 public class FindEnemyEffect : CardEffect
 {
-    public override void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
     {
         if (caster.canBattle)
         {
@@ -16,16 +17,19 @@ public class FindEnemyEffect : CardEffect
                 {
                     Debug.Log("공격 대상이 없습니다. 공격을 종료합니다");
                     caster.canBattle = false;
+                    await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }
                 else if (tmp.Prev.unitObject.playerID != caster.unitObject.playerID)
                 {
                     Debug.Log("공격 대상 : " + tmp.Prev.unitObject.cardData.cardName);
                     targets.Add(tmp.Prev);
+                    await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }
                 Debug.Log("공격 대상이 없습니다. 공격을 종료합니다");
                 caster.canBattle = false;
+                await Task.Delay((int)(Time.deltaTime * 1000));
                 return;
             }
             else
@@ -34,16 +38,19 @@ public class FindEnemyEffect : CardEffect
                 {
                     Debug.Log("공격 대상이 없습니다. 공격을 종료합니다");
                     caster.canBattle = false;
+                    await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }
                 else if (tmp.Next.unitObject.playerID != caster.unitObject.playerID)
                 {
                     Debug.Log("공격 대상 : " + tmp.Next.unitObject.cardData.cardName);
                     targets.Add(tmp.Next);
+                    await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }
                 Debug.Log("공격 대상이 없습니다. 공격을 종료합니다");
                 caster.canBattle = false;
+                await Task.Delay((int)(Time.deltaTime * 1000));
                 return;
             }
         }

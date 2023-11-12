@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,8 +21,8 @@ namespace CCGCard
 
     public enum CardCategory
     {
-        hero,
         minion,
+        hero,
         equipment,
     }
 
@@ -54,11 +55,17 @@ namespace CCGCard
         #region 积己磊
         public Card()
         {
+            this.cardID = 0;
             this.cardName = string.Empty;
+            this.cardSprite = null;
+            this.animator = string.Empty;
             this.skill = string.Empty;
             this.skillContents = string.Empty;
             this.cost = 0;
             this.cardColor = CardType.f7;
+            this.cardCategory = CardCategory.minion;
+            this.frontDamage = -1;
+            this.backDamage = -1;
         }
 
         public Card(string name, CardType cardType, int cost = 0)
@@ -78,38 +85,39 @@ namespace CCGCard
 
         #region 鉴瞒利 贸府
 
-        private void ActiveEffect(List<CardEffect> cardEffects, LinkedBattleField battleFieldInfo, Field casterInfo, List<Field> targetInfos)
+        private async Task ActiveEffect(List<CardEffect> cardEffects, LinkedBattleField battleFieldInfo, Field casterInfo, List<Field> targetInfos)
         {
             for (int i = 0; i < cardEffects.Count; i++)
             {
-                cardEffects[i].ExecuteEffect(battleFieldInfo, casterInfo, targetInfos);
+                Task effectTask = cardEffects[i].ExecuteEffect(battleFieldInfo, casterInfo, targetInfos);
+                await effectTask;
             }
         }
 
-        public void Summon(LinkedBattleField battleFieldInfo, Field casterInfo)
+        public async void Summon(LinkedBattleField battleFieldInfo, Field casterInfo)
         {
-            ActiveEffect(summonEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
+            await ActiveEffect(summonEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
         }
 
-        public void AttackStart(LinkedBattleField battleFieldInfo, Field casterInfo)
+        public async void AttackStart(LinkedBattleField battleFieldInfo, Field casterInfo)
         {
-            ActiveEffect(attackStartEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
+            await ActiveEffect(attackStartEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
 
-            ActiveEffect(findEnemyEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
+            await ActiveEffect(findEnemyEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
 
-            ActiveEffect(calculateDamageEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
+            await ActiveEffect(calculateDamageEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
 
-            ActiveEffect(attackProcessEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
+            await ActiveEffect(attackProcessEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
             return;
         }
 
-        public void GetDamage(Field thisCard, ref int damageVal)
+        public async void GetDamage(Field thisCard, int damageVal)
         {
-            if(thisCard.card.cardCategory == CardCategory.hero && thisCard.unitObject.playerID == GameManager.Instance.playerID)
+            if (thisCard.card.cardCategory == CardCategory.hero && thisCard.unitObject.playerID == GameManager.Instance.playerID)
             {
                 BattleManager.instance.damageSum += damageVal;
             }
-            ActiveEffect(getDamageEffects, null, thisCard, null);
+            await ActiveEffect(getDamageEffects, null, thisCard, null);
         }
         #endregion
 
@@ -118,17 +126,22 @@ namespace CCGCard
             Card tmp = new Card();
             tmp.cardID = cardID;
             tmp.cardName = cardName;
+            tmp.cardSprite = cardSprite;
+            tmp.animator = animator;
+            tmp.skill = skill;
+            tmp.skillContents = skillContents;
+            tmp.cost = cost;
             tmp.cardColor = cardColor;
             tmp.cardCategory = cardCategory;
             tmp.frontDamage = frontDamage;
             tmp.backDamage = backDamage;
-            tmp.animator = animator;
-            tmp.cardSprite = cardSprite;
+
             tmp.summonEffects = summonEffects;
             tmp.attackStartEffects = attackStartEffects;
             tmp.findEnemyEffects = findEnemyEffects;
             tmp.calculateDamageEffects = calculateDamageEffects;
             tmp.attackProcessEffects = attackProcessEffects;
+            tmp.getDamageEffects = getDamageEffects;
             return tmp;
         }
     }

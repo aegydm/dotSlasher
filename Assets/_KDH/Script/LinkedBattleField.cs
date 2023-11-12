@@ -10,6 +10,52 @@ public class LinkedBattleField
     public Field Last => _last;
     private Field _first, _last, _tmp;
 
+    public Field this[int index]
+    {
+        get
+        {
+            Field temp = First;
+            for(int i = 0; i < index; i++)
+            {
+                temp = temp.Next;
+            }
+            if(temp == null)
+            {
+                Debug.LogError("IndexOutOfRange!");
+            }
+            return temp;
+        }
+        set
+        {
+            Field temp = First;
+            for(int i = 0; i < index; i++)
+            {
+                temp = temp.Next;
+            }
+            if(temp == null)
+            {
+                Debug.LogError("IndexOutOfRange!");
+            }
+            temp = value;
+        }
+    }
+
+    public int FindIndex(Field field)
+    {
+        Field tmp = First;
+        int i = 0;
+        for (; tmp != field; i++)
+        {
+            if (tmp == null)
+            {
+                Debug.LogError("There is no Field in LinkedBattleField");
+                return -1;
+            }
+            tmp = tmp.Next;
+        }
+        return i;
+    }
+
     public void AddFirst(GameObject gameObject)
     {
         _tmp = gameObject.GetComponent<Field>();

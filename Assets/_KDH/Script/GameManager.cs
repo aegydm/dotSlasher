@@ -1,19 +1,16 @@
 using CCGCard;
-using JetBrains.Annotations;
 using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static Unity.Burst.Intrinsics.X86.Avx;
-using static UnityEngine.Rendering.DebugUI;
+using System.Threading.Tasks;
 
 public enum GamePhase
 {
+    None,
     DrawPhase,
     ActionPhase,
     BattlePhase,
@@ -23,14 +20,64 @@ public enum GamePhase
 
 public class GameManager : MonoBehaviour
 {
+    #region Event
+    public event Action TurnStart;
+    #endregion
+    #region public member
     public static GameManager Instance;
-    public TMP_Text text;
+    public bool startFirst;
+    public bool isGameEnd;
     public TMP_Text turnText;
-    [SerializeField] GameObject endScene;
-    public bool isGameEnd = false;
-    bool gameStart = false;
-    [SerializeField] Image personalColor;
-    //2인 플레이 테스트 용 임시 코드
+    public PhotonView photonView;
+    public bool playerEnd
+    {
+        get
+        {
+            return _playerEnd;
+        }
+        set
+        {
+            _playerEnd = value;
+            if (_playerEnd && (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase))
+            {
+                photonView.RPC("CallActionEnd", RpcTarget.Others);
+            }
+            CheckPhaseEnd();
+        }
+    }
+    public bool enemyEnd
+    {
+        get
+        {
+            return _enemyEnd;
+        }
+        set
+        {
+            _enemyEnd = value;
+            CheckPhaseEnd();
+        }
+    }
+    public bool canAct
+    {
+        get
+        {
+            return _canAct;
+        }
+        set
+        {
+            _canAct = value;
+            if (_canAct == false && (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase))
+            {
+                currentTurn++;
+                photonView.RPC("MatchTurnNum", RpcTarget.Others, currentTurn);
+                photonView.RPC("CallSummonEnd", RpcTarget.Others);
+            }
+            else if (canAct == true && gamePhase == GamePhase.ActionPhase)
+            {
+                TurnStart?.Invoke();
+            }
+        }
+    }
     public string playerID
     {
         get
@@ -42,21 +89,6 @@ public class GameManager : MonoBehaviour
             _playerID = value;
         }
     }
-
-    [SerializeField] private string _playerID = "-1";
-
-    public PhotonView photonView;
-    //End
-
-    public GamePhase gamePhase
-    {
-        get
-        {
-            return _gamePhase;
-        }
-        private set { _gamePhase = value; }
-    }
-
     public int currentTurn
     {
         get
@@ -76,67 +108,37 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    public bool playerEnd
+    public GamePhase gamePhase
     {
         get
         {
-            return _playerEnd;
+            return _gamePhase;
         }
-        set
+        private set 
         {
-            Debug.LogError("playerEnd is " + value);
-            _playerEnd = value;
-            if (_playerEnd)
-            {
-                photonView.RPC("CallActionEnd", RpcTarget.Others);
-            }
-            CheckPhaseEnd();
+            _gamePhase = value;
         }
     }
+    #endregion
 
-    public bool enemyEnd
-    {
-        get
-        {
-            return _enemyEnd;
-        }
-        set
-        {
-            Debug.LogError("enemyEnd is " + value);
-            _enemyEnd = value;
-            CheckPhaseEnd();
-        }
-    }
+    #region SerializeField Members
+    [SerializeField] GameObject endScene;
+    [SerializeField] Image personalColor;
+    #endregion
 
-    public bool canAct
-    {
-        get
-        {
-            return _canAct;
-        }
-        set
-        {
-            Debug.LogError("canAct is " + value);
-            _canAct = value;
-            if (_canAct == false && (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase))
-            {
-                currentTurn++;
-                photonView.RPC("MatchTurnNum", RpcTarget.Others, currentTurn);
-                photonView.RPC("CallSummonEnd", RpcTarget.Others);
-            }
-            else if (canAct == true && gamePhase == GamePhase.ActionPhase)
-            {
-                TurnStart?.Invoke();
-            }
-        }
-    }
-
-    public event Action TurnStart;
-
-    public bool startFirst = false;
-
+    #region private Members
+    private bool gameStart;
+    [SerializeField] private bool _playerEnd;
+    [SerializeField] private bool _enemyEnd;
     [SerializeField] private bool _canAct;
+    [SerializeField] private string _playerID = "-1";
+    [SerializeField] private int _currentTurn;
+    [SerializeField] private GamePhase _gamePhase;
+    private Deck deck;
+    #endregion
+
+
+    private GameObject tmpField = null;
 
     private void CheckPhaseEnd()
     {
@@ -145,19 +147,6 @@ public class GameManager : MonoBehaviour
             EndPhase();
         }
     }
-
-    [SerializeField] private int _currentTurn;
-
-    [SerializeField] private bool _playerEnd;
-
-    [SerializeField] private bool _enemyEnd;
-
-    private Deck deck;
-
-    [SerializeField] private GamePhase _gamePhase;
-
-    private GameObject tmpField = null;
-
     private void Awake()
     {
         if (Instance == null)
@@ -178,54 +167,13 @@ public class GameManager : MonoBehaviour
         personalColor.color = new Color(255 - (255 * int.Parse(playerID)), 255 * int.Parse(playerID), 0);
     }
 
-    private void Update()
-    {
-        if (PhotonNetwork.InRoom)
-        {
-            text.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
-        }
-    }
-
     private void ResetState()
     {
         _playerEnd = false;
         _enemyEnd = false;
     }
 
-    public void StartSetting()
-    {
-        if (deck == null)
-        {
-            deck = GetComponent<Deck>();
-            deck.Shuffle();
-            FieldManager.Instance.ResetAllField();
-            SummonHero();
-        }
 
-        if (gamePhase == GamePhase.DrawPhase)
-        {
-            //deck.Shuffle();
-            deck.Draw(4);
-            photonView.RPC("EnemyCardChange", RpcTarget.Others, 4);
-            playerEnd = true;
-        }
-        else
-        {
-            Debug.Log("드로우 페이즈에만 작동합니다.");
-        }
-
-        if (gameStart == false)
-        {
-            //MulliganHandCard();
-            gameStart = true;
-            //List<Card> handList = new();
-            //for (int i = 0; i < HandManager.Instance.hands.Count; i++)
-            //{
-            //    handList.Add(HandManager.Instance.hands[i].card);
-            //}
-            //UIManager.Instance.PopupCard(handList);
-        }
-    }
 
     public void MulliganHandCard()
     {
@@ -439,11 +387,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Creat Tile By Pun
-    /// </summary>
-    /// <param name="mousePos"></param>
-    /// <param name="pos"></param>
     [PunRPC]
     public void SelectFieldForPun(Vector2 mousePos, Vector2 pos, bool temp)
     {
@@ -598,11 +541,16 @@ public class GameManager : MonoBehaviour
         if (isGameEnd)
         {
             PhotonNetwork.LeaveRoom();
-
         }
     }
 
-    public async System.Threading.Tasks.Task CheckAnim(Animator animator, string aniName)
+    /// <summary>
+    /// Function for check animation is end with async
+    /// </summary>
+    /// <param name="animator"></param>
+    /// <param name="aniName"></param>
+    /// <returns>return when animation is end</returns>
+    public async Task CheckAnim(Animator animator, string aniName)
     {
         if (animator == null)
         {
@@ -611,11 +559,74 @@ public class GameManager : MonoBehaviour
         }
         while (animator != null && animator.runtimeAnimatorController != null && !animator.GetCurrentAnimatorStateInfo(0).IsName(aniName))
         {
-            await System.Threading.Tasks.Task.Delay((int)(Time.deltaTime * 1000));
+            await Task.Delay((int)(Time.deltaTime * 1000));
         }
         while (animator != null && animator.runtimeAnimatorController != null && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
-            await System.Threading.Tasks.Task.Delay((int)(Time.deltaTime * 1000));
+            await Task.Delay((int)(Time.deltaTime * 1000));
         }
+    }
+
+    /// <summary>
+    /// Function for setting when game is start
+    /// </summary>
+    public void StartGameSetting()
+    {
+        StartUISetting();
+        StartComponentSetting();
+        StartGame();
+    }
+
+    public void StartSetting()
+    {
+        if (deck == null)
+        {
+            deck = GetComponent<Deck>();
+            deck.Shuffle();
+            FieldManager.Instance.ResetAllField();
+            SummonHero();
+        }
+
+        if (gamePhase == GamePhase.DrawPhase)
+        {
+            //deck.Shuffle();
+            deck.Draw(4);
+            photonView.RPC("EnemyCardChange", RpcTarget.Others, 4);
+            playerEnd = true;
+        }
+        else
+        {
+            Debug.Log("드로우 페이즈에만 작동합니다.");
+        }
+
+        if (gameStart == false)
+        {
+            gameStart = true;
+        }
+    }
+
+    /// <summary>
+    /// Funcion for UI Setting when game is start
+    /// </summary>
+    private void StartUISetting()
+    {
+        return;
+    }
+
+    /// <summary>
+    /// Function for Set Components
+    /// </summary>
+    private void StartComponentSetting()
+    {
+        if(deck == null)
+        {
+            deck = GetComponent<Deck>();
+        }
+        return;
+    }
+
+    private void StartGame()
+    {
+        return;
     }
 }
