@@ -37,10 +37,12 @@ public class Deck : MonoBehaviour
     private void Start()
     {
         OnDeckCountChanged = null;
-        OnDeckCountChanged += RenderDeckCount;
-        if(BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
+        //OnDeckCountChanged += RenderDeckCount;
+        if(BuildManager.instance.Load("1",out originDeck) == false)
+        //if(BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
         {
-            GameManager.Instance.Lose();
+            Debug.Log("Fail to Load Deck");
+            //GameManager.Instance.Lose();
         }
         foreach(var card in originDeck)
         {
@@ -53,10 +55,6 @@ public class Deck : MonoBehaviour
                 myHero = card;
             }
         }
-        //for (int i = 0; i < CardDB.instance.cards.Count; i++)
-        //{
-        //    deck.Add(CardDB.instance.cards[i]);
-        //}
         RefreshDeckCount();
     }
 
@@ -66,7 +64,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// µ¦ ¼ÅÇÃ ±â´É
+    /// ë± ì…”í”Œ ê¸°ëŠ¥
     /// </summary>
     public void Shuffle()
     {
@@ -84,8 +82,8 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// Ä«µå µå·Î¿ì ±â´É
-    /// ¸îÀå µå·Î¿ì ÇÒÁö ¼³Á¤ÇØ¼­ µå·Î¿ì ÇÒ ¼ö ÀÖÀ½
+    /// ì¹´ë“œ ë“œë¡œìš° ê¸°ëŠ¥
+    /// ëª‡ì¥ ë“œë¡œìš° í• ì§€ ì„¤ì •í•´ì„œ ë“œë¡œìš° í•  ìˆ˜ ìˆìŒ
     /// </summary>
     public void Draw(int drawCard)
     {
@@ -94,31 +92,32 @@ public class Deck : MonoBehaviour
         {
             if (countOfDeck > 0)
             {
-                //¸ÕÀú ÆĞ¿¡¼­ µ¦ÀÇ Ä«µå¸¦ È£ÃâÇÏ°í ³­ ´ÙÀ½ µ¦ÀÇ Ä«µå¸¦ Á¦°ÅÇÏµµ·Ï ¼ø¼­¸¦ ÁÖÀÇÇÑ´Ù.
+                //ë¨¼ì € íŒ¨ì—ì„œ ë±ì˜ ì¹´ë“œë¥¼ í˜¸ì¶œí•˜ê³  ë‚œ ë‹¤ìŒ ë±ì˜ ì¹´ë“œë¥¼ ì œê±°í•˜ë„ë¡ ìˆœì„œë¥¼ ì£¼ì˜í•œë‹¤.
 
-                if (HandManager.Instance.DrawCard(useDeck[0]))
+                //if (HandManager.Instance.DrawCard(useDeck[0]))
+                if (PlayerActionManager.instance.AddHandCard(useDeck[0]))
                 {
-                    Debug.LogError("CallDrawCardDeck");
+                    Debug.Log(useDeck[0].cardName);
                     useDeck.Remove(useDeck[0]);
-                    GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
+                    //GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
                 }
                 else
                 {
-                    Debug.LogError("¼ÕÆĞ°¡ °¡µæ Ã¡½À´Ï´Ù.");
+                    Debug.LogError("ì†íŒ¨ê°€ ê°€ë“ ì°¼ìŠµë‹ˆë‹¤.");
                 }
             }
             else
             {
                 Debug.Log(countOfDeck);
-                Debug.Log("Ä«µå°¡ ¾ø½À´Ï´Ù");
-                GameManager.Instance.Lose();
+                Debug.Log("ì¹´ë“œê°€ ì—†ìŠµë‹ˆë‹¤");
+                //GameManager.Instance.Lose();
             }
         }
         RefreshDeckCount();
     }
 
     /// <summary>
-    /// ÇÊµåÀÇ ¸ó½ºÅÍ¸¦ µ¦À¸·Î µÇµ¹¸®´Â ±â´É
+    /// í•„ë“œì˜ ëª¬ìŠ¤í„°ë¥¼ ë±ìœ¼ë¡œ ë˜ëŒë¦¬ëŠ” ê¸°ëŠ¥
     /// </summary>
     public void Refill(Card card)
     {
@@ -139,13 +138,13 @@ public class Deck : MonoBehaviour
                 return true;
             }
         }
-        Debug.LogError("µ¦¿¡ ¾ø´Â Ä«µå¸¦ Á¦°ÅÇÏ·Á°í Çß½À´Ï´Ù.");
+        Debug.LogError("ë±ì— ì—†ëŠ” ì¹´ë“œë¥¼ ì œê±°í•˜ë ¤ê³  í–ˆìŠµë‹ˆë‹¤.");
         RefreshDeckCount();
         return false;
     }
 
     /// <summary>
-    /// µ¦¿¡ ³²Àº Ä«µå¼ö È®ÀÎ¿ë ÇÔ¼ö
+    /// ë±ì— ë‚¨ì€ ì¹´ë“œìˆ˜ í™•ì¸ìš© í•¨ìˆ˜
     /// </summary>
     public void RefreshDeckCount()
     {
@@ -153,9 +152,9 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// Á¤·ÄµÈ Ä«µåÀÇ ¾ÆÀÌµğ°¡ ³ª¿Í¼­ µ¦ÀÇ ¼ø¼­¿Í »ó°ü¾øÀÌ µ¦¿¡ ³²Àº Ä«µåÀÇ Á¾·ù¸¦ ¾Ë ¼ö ÀÖ´Ù.
-    /// ÀÌ¸¦ È°¿ëÇØ¼­ ¹¦Áö¿¡ ÀÖ´Â Ä«µå ¸®½ºÆ®¸¦ ¹Ş¾Æ ¶È°°Àº ÄÚµå¸¦ ÁøÇàÇÑ´ÙÇØµµ °á°ú¸¦ ¾òÀ» ¼ö ÀÖ´Ù.
-    /// ¼ø¼­±îÁö ¾Ë°í ½Í´Ù¸é Sort ÇÔ¼ö¸¦ Á¦°ÅÇÏ°í ÁøÇàÇÏ¸é µÈ´Ù.
+    /// ì •ë ¬ëœ ì¹´ë“œì˜ ì•„ì´ë””ê°€ ë‚˜ì™€ì„œ ë±ì˜ ìˆœì„œì™€ ìƒê´€ì—†ì´ ë±ì— ë‚¨ì€ ì¹´ë“œì˜ ì¢…ë¥˜ë¥¼ ì•Œ ìˆ˜ ìˆë‹¤.
+    /// ì´ë¥¼ í™œìš©í•´ì„œ ë¬˜ì§€ì— ìˆëŠ” ì¹´ë“œ ë¦¬ìŠ¤íŠ¸ë¥¼ ë°›ì•„ ë˜‘ê°™ì€ ì½”ë“œë¥¼ ì§„í–‰í•œë‹¤í•´ë„ ê²°ê³¼ë¥¼ ì–»ì„ ìˆ˜ ìˆë‹¤.
+    /// ìˆœì„œê¹Œì§€ ì•Œê³  ì‹¶ë‹¤ë©´ Sort í•¨ìˆ˜ë¥¼ ì œê±°í•˜ê³  ì§„í–‰í•˜ë©´ ëœë‹¤.
     /// </summary>
     /// <param name="deck"></param>
     /// <returns></returns>
@@ -178,7 +177,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// ½ÃÀÛÆĞ ±³Ã¼ ±â´É
+    /// ì‹œì‘íŒ¨ êµì²´ ê¸°ëŠ¥
     /// </summary>
     /// <param name="cards"></param>
     void Mulligan(Card[] cards)
@@ -194,7 +193,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// µå·Î¿ì ÆäÀÌÁî¿¡¸¸ µå·Î¿ì°¡ °¡´ÉÇÑ ±â´É
+    /// ë“œë¡œìš° í˜ì´ì¦ˆì—ë§Œ ë“œë¡œìš°ê°€ ê°€ëŠ¥í•œ ê¸°ëŠ¥
     /// </summary>
     void OneDraw()
     {

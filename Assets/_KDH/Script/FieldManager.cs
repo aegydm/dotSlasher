@@ -93,20 +93,20 @@ public class FieldManager : MonoBehaviour
 
     public void AddUnit(GameObject GO, Card cardData, int id = -1)
     {
-        battleFields.Find(GO).unitObject.CardChange(cardData);
-        if (cardData.cardName != string.Empty)
-        {
-            battleFields.Find(GO).canBattle = true;
-        }
-        BattleManager.instance.unitList.Add(battleFields.Find(GO));
-        if (id == -1)
-        {
-            battleFields.Find(GO).unitObject.playerID = GameManager.Instance.playerID;
-        }
-        else
-        {
-            battleFields.Find(GO).unitObject.playerID = id.ToString();
-        }
+        //battleFields.Find(GO).unitObject.CardChange(cardData);
+        //if (cardData.cardName != string.Empty)
+        //{
+        //    battleFields.Find(GO).canBattle = true;
+        //}
+        //BattleManager.instance.unitList.Add(battleFields.Find(GO));
+        //if (id == -1)
+        //{
+        //    battleFields.Find(GO).unitObject.playerID = GameManager.Instance.playerID;
+        //}
+        //else
+        //{
+        //    battleFields.Find(GO).unitObject.playerID = id.ToString();
+        //}
     }
     void SelectDirection(Field field)
     {
@@ -119,111 +119,112 @@ public class FieldManager : MonoBehaviour
 
     public bool SelectField(Field field, bool isLeft)
     {
-        if (field.isEmpty)
-        {
-            tmpField = field;
-            cancelTrigger = true;
-            SelectDirection(field);
-            mousePos = field.transform.position;
-            tilePos = field.transform.position;
-            return true;
-        }
-        else
-        {
-            if (isLeft)
-            {
-                if (field.Prev != null && field.Prev.isEmpty)
-                {
-                    return false;
-                }
-                else
-                {
-                    if (IsFieldFull())
-                    {
-                        return false;
-                    }
-                    isLeftForPun = isLeft;
-                    Debug.LogError(field.name + "¡¬√¯" + (isLeft ? "¡¬√¯" : "øÏ√¯"));
+        //if (field.isEmpty)
+        //{
+        //    tmpField = field;
+        //    cancelTrigger = true;
+        //    SelectDirection(field);
+        //    mousePos = field.transform.position;
+        //    tilePos = field.transform.position;
+        //    return true;
+        //}
+        //else
+        //{
+        //    if (isLeft)
+        //    {
+        //        if (field.Prev != null && field.Prev.isEmpty)
+        //        {
+        //            return false;
+        //        }
+        //        else
+        //        {
+        //            if (IsFieldFull())
+        //            {
+        //                return false;
+        //            }
+        //            isLeftForPun = isLeft;
+        //            Debug.LogError(field.name + "Ï¢åÏ∏°" + (isLeft ? "Ï¢åÏ∏°" : "Ïö∞Ï∏°"));
 
-                    GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
-                    newField.GetComponent<Field>().isNewField = true;
-                    newFields.Add(newField);
-                    battleFields.AddBefore(field, newField);
-                    this.tmpField = battleFields.Find(newField);
+        //            GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
+        //            newField.GetComponent<Field>().isNewField = true;
+        //            newFields.Add(newField);
+        //            battleFields.AddBefore(field, newField);
+        //            this.tmpField = battleFields.Find(newField);
 
-                    // Draw field in screen
-                    Field tmpField = battleFields.First;
-                    fields.Clear();
-                    while (tmpField != null)
-                    {
-                        fields.Add(tmpField.gameObject);
-                        tmpField = tmpField.Next;
-                    }
-                    for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
-                    {
-                        try
-                        {
-                            fields[i].transform.position = new Vector3(pos, 0, 0);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogError(e.Message);
-                            break;
-                        }
-                    }
-                    cancelTrigger = true;
-                    tilePos = newField.transform.position;
-                    SelectDirection(this.tmpField);
-                    return true;
-                }
-            }
-            else
-            {
-                if (field.Next != null && field.Next.isEmpty)
-                {
-                    return false;
-                }
-                else
-                {
-                    if (IsFieldFull())
-                    {
-                        return false;
-                    }
-                    Debug.LogError("øÏ√¯" + (isLeft ? "¡¬√¯" : "øÏ√¯"));
+        //            // Draw field in screen
+        //            Field tmpField = battleFields.First;
+        //            fields.Clear();
+        //            while (tmpField != null)
+        //            {
+        //                fields.Add(tmpField.gameObject);
+        //                tmpField = tmpField.Next;
+        //            }
+        //            for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
+        //            {
+        //                try
+        //                {
+        //                    fields[i].transform.position = new Vector3(pos, 0, 0);
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    Debug.LogError(e.Message);
+        //                    break;
+        //                }
+        //            }
+        //            cancelTrigger = true;
+        //            tilePos = newField.transform.position;
+        //            SelectDirection(this.tmpField);
+        //            return true;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (field.Next != null && field.Next.isEmpty)
+        //        {
+        //            return false;
+        //        }
+        //        else
+        //        {
+        //            if (IsFieldFull())
+        //            {
+        //                return false;
+        //            }
+        //            Debug.LogError("Ïö∞Ï∏°" + (isLeft ? "Ï¢åÏ∏°" : "Ïö∞Ï∏°"));
 
-                    GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
-                    newField.GetComponent<Field>().isNewField = true;
-                    newFields.Add(newField);
-                    battleFields.AddAfter(field, newField);
-                    this.tmpField = battleFields.Find(newField);
+        //            GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
+        //            newField.GetComponent<Field>().isNewField = true;
+        //            newFields.Add(newField);
+        //            battleFields.AddAfter(field, newField);
+        //            this.tmpField = battleFields.Find(newField);
 
-                    // Draw field in screen
-                    Field tmpField = battleFields.First;
-                    fields.Clear();
-                    while (tmpField != null)
-                    {
-                        fields.Add(tmpField.gameObject);
-                        tmpField = tmpField.Next;
-                    }
-                    for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
-                    {
-                        try
-                        {
-                            fields[i].transform.position = new Vector3(pos, 0, 0);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogError(e.Message);
-                            break;
-                        }
-                    }
-                    cancelTrigger = true;
-                    tilePos = newField.transform.position;
-                    SelectDirection(this.tmpField);
-                    return true;
-                }
-            }
-        }
+        //            // Draw field in screen
+        //            Field tmpField = battleFields.First;
+        //            fields.Clear();
+        //            while (tmpField != null)
+        //            {
+        //                fields.Add(tmpField.gameObject);
+        //                tmpField = tmpField.Next;
+        //            }
+        //            for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
+        //            {
+        //                try
+        //                {
+        //                    fields[i].transform.position = new Vector3(pos, 0, 0);
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    Debug.LogError(e.Message);
+        //                    break;
+        //                }
+        //            }
+        //            cancelTrigger = true;
+        //            tilePos = newField.transform.position;
+        //            SelectDirection(this.tmpField);
+        //            return true;
+        //        }
+        //    }
+        //}
+        return true;
     }
 
     public void PlaceCard(Field field, Card card, int id, bool lookLeft)
@@ -245,44 +246,44 @@ public class FieldManager : MonoBehaviour
 
     public void ResetAllField()
     {
-        Field tmpField = battleFields.First;
-        //for (int i = 0; i < 5; i++)
+        //Field tmpField = battleFields.First;
+        ////for (int i = 0; i < 5; i++)
+        ////{
+        ////    tmpField = tmpField.Next;
+        ////}
+        //for (int i = 0; i < newFields.Count; i++)
         //{
-        //    tmpField = tmpField.Next;
+        //    if (newFields.Count > 0 && newFields[i] != null)
+        //    {
+        //        battleFields.Remove(newFields[i]);
+        //        fields.Remove(newFields[i]);
+        //        Destroy(newFields[i]);
+        //    }
+        //    else
+        //    {
+        //        break;
+        //    }
         //}
-        for (int i = 0; i < newFields.Count; i++)
-        {
-            if (newFields.Count > 0 && newFields[i] != null)
-            {
-                battleFields.Remove(newFields[i]);
-                fields.Remove(newFields[i]);
-                Destroy(newFields[i]);
-            }
-            else
-            {
-                break;
-            }
-        }
 
-        newFields.Clear();
+        //newFields.Clear();
 
 
-        for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
-        {
-            try
-            {
-                fields[i].transform.position = new Vector3(pos, 0, 0);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
-                break;
-            }
-        }
+        //for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
+        //{
+        //    try
+        //    {
+        //        fields[i].transform.position = new Vector3(pos, 0, 0);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Debug.LogError(e.Message);
+        //        break;
+        //    }
+        //}
     }
 
     /// <summary>
-    /// OnClickøÎµµ¿« «‘ºˆ
+    /// OnClickÏö©ÎèÑÏùò Ìï®Ïàò
     /// </summary>
     /// <param name="lookingLeft"></param>
     public void SelectDirection(bool lookingLeft)
@@ -295,38 +296,38 @@ public class FieldManager : MonoBehaviour
     }
 
     /// <summary>
-    /// « µÂ º±≈√ √Îº“
+    /// ÌïÑÎìú ÏÑ†ÌÉù Ï∑®ÏÜå
     /// </summary>
     public void Cancel()
     {
-        if (cancelTrigger)
-        {
-            Debug.Log("Canceling");
-            if (tmpField.isNewField)
-            {
-                battleFields.Remove(tmpField);
-                fields.Remove(tmpField.gameObject);
-                Destroy(tmpField.gameObject);
-            }
+        //if (cancelTrigger)
+        //{
+        //    Debug.Log("Canceling");
+        //    if (tmpField.isNewField)
+        //    {
+        //        battleFields.Remove(tmpField);
+        //        fields.Remove(tmpField.gameObject);
+        //        Destroy(tmpField.gameObject);
+        //    }
 
-            for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
-            {
-                try
-                {
-                    fields[i].transform.position = new Vector3(pos, 0, 0);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError(e.Message);
-                    break;
-                }
-            }
-            canPlace = true;
-            directionCanvas.SetActive(false);
-            cancelTrigger = false;
-            HandManager.Instance.selectedHand.isSelected = !HandManager.Instance.selectedHand.isSelected;
-            HandManager.Instance.selectedHand = null;
-        }
+        //    for (int pos = (fields.Count - 1) * -9, i = 0; i < fields.Count; pos += 18, i++)
+        //    {
+        //        try
+        //        {
+        //            fields[i].transform.position = new Vector3(pos, 0, 0);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Debug.LogError(e.Message);
+        //            break;
+        //        }
+        //    }
+        //    canPlace = true;
+        //    directionCanvas.SetActive(false);
+        //    cancelTrigger = false;
+        //    HandManager.Instance.selectedHand.isSelected = !HandManager.Instance.selectedHand.isSelected;
+        //    HandManager.Instance.selectedHand = null;
+        //}
     }
 
     public void TurnEnd()

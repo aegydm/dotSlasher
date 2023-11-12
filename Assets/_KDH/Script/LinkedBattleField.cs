@@ -6,15 +6,15 @@ using UnityEngine;
 [System.Serializable]
 public class LinkedBattleField
 {
-    public Field First => _first;
-    public Field Last => _last;
-    private Field _first, _last, _tmp;
+    public FieldCardObjectTest First => _first;
+    public FieldCardObjectTest Last => _last;
+    private FieldCardObjectTest _first, _last, _tmp;
 
-    public Field this[int index]
+    public FieldCardObjectTest this[int index]
     {
         get
         {
-            Field temp = First;
+            FieldCardObjectTest temp = First;
             for(int i = 0; i < index; i++)
             {
                 temp = temp.Next;
@@ -27,7 +27,7 @@ public class LinkedBattleField
         }
         set
         {
-            Field temp = First;
+            FieldCardObjectTest temp = First;
             for(int i = 0; i < index; i++)
             {
                 temp = temp.Next;
@@ -40,9 +40,9 @@ public class LinkedBattleField
         }
     }
 
-    public int FindIndex(Field field)
+    public int FindIndex(FieldCardObjectTest field)
     {
-        Field tmp = First;
+        FieldCardObjectTest tmp = First;
         int i = 0;
         for (; tmp != field; i++)
         {
@@ -58,7 +58,7 @@ public class LinkedBattleField
 
     public void AddFirst(GameObject gameObject)
     {
-        _tmp = gameObject.GetComponent<Field>();
+        _tmp = gameObject.GetComponent<FieldCardObjectTest>();
 
         if(_first != null)
         {
@@ -75,7 +75,7 @@ public class LinkedBattleField
 
     public void AddLast(GameObject gameObject)
     {
-        _tmp = gameObject.GetComponent<Field>();
+        _tmp = gameObject.GetComponent<FieldCardObjectTest>();
         if(_last != null)
         {
             _tmp.Prev = _last;
@@ -89,9 +89,9 @@ public class LinkedBattleField
         _last = _tmp;
     }
 
-    public void AddBefore(Field battleField, GameObject gameObject)
+    public void AddBefore(FieldCardObjectTest battleField, GameObject gameObject)
     {
-        _tmp = gameObject.GetComponent<Field>();
+        _tmp = gameObject.GetComponent<FieldCardObjectTest>();
 
         if(battleField.Prev != null)
         {
@@ -107,9 +107,9 @@ public class LinkedBattleField
         battleField.Prev = _tmp;
     }
 
-    public void AddAfter(Field battlefield,GameObject gameObject)
+    public void AddAfter(FieldCardObjectTest battlefield,GameObject gameObject)
     {
-        _tmp = gameObject.GetComponent<Field>();
+        _tmp = gameObject.GetComponent<FieldCardObjectTest>();
 
         if(battlefield.Next != null)
         {
@@ -137,7 +137,7 @@ public class LinkedBattleField
         }
     }
 
-    public Field Find(GameObject gameObject)
+    public FieldCardObjectTest Find(GameObject gameObject)
     {
         _tmp = _first;
         while(_tmp.Next != null)
@@ -155,7 +155,7 @@ public class LinkedBattleField
         return null;
     }
 
-    public Field FindLast(GameObject gameObject)
+    public FieldCardObjectTest FindLast(GameObject gameObject)
     {
         _tmp = _last;
         while(_tmp.Prev != null) 
@@ -174,7 +174,7 @@ public class LinkedBattleField
 
     }
 
-    public bool Remove(Field battleField)
+    public bool Remove(FieldCardObjectTest battleField)
     {
         if(battleField == null)
         {

@@ -188,28 +188,28 @@ public class GameManager : MonoBehaviour
 
     private void SummonHero()
     {
-        if (int.Parse(playerID) % 2 == 0)
-        {
-            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.First, deck.myHero, int.Parse(playerID), false);
-        }
-        else
-        {
-            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.Last, deck.myHero, int.Parse(playerID), true);
-        }
-        photonView.RPC("SummonHeroForPun", RpcTarget.Others, int.Parse(playerID), deck.myHero.cardID);
+        //if (int.Parse(playerID) % 2 == 0)
+        //{
+        //    FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.First, deck.myHero, int.Parse(playerID), false);
+        //}
+        //else
+        //{
+        //    FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.Last, deck.myHero, int.Parse(playerID), true);
+        //}
+        //photonView.RPC("SummonHeroForPun", RpcTarget.Others, int.Parse(playerID), deck.myHero.cardID);
     }
 
     [PunRPC]
     public void SummonHeroForPun(int id, int cardID)
     {
-        if (id % 2 == 0)
-        {
-            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.First, CardDB.instance.FindCardFromID(cardID), id, false);
-        }
-        else
-        {
-            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.Last, CardDB.instance.FindCardFromID(cardID), id, true);
-        }
+        //if (id % 2 == 0)
+        //{
+        //    FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.First, CardDB.instance.FindCardFromID(cardID), id, false);
+        //}
+        //else
+        //{
+        //    FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.Last, CardDB.instance.FindCardFromID(cardID), id, true);
+        //}
     }
 
     [PunRPC]
@@ -284,47 +284,47 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Á¤»óÀûÀÌÁö ¾ÊÀº ÇÊµå¸¦ °ø°Ý½ÃÅ°·Á Çß½À´Ï´Ù.");
+            Debug.LogError("ì •ìƒì ì´ì§€ ì•Šì€ í•„ë“œë¥¼ ê³µê²©ì‹œí‚¤ë ¤ í–ˆìŠµë‹ˆë‹¤.");
         }
     }
 
     private void EndGame()
     {
-        Field tmp = FieldManager.Instance.battleFields.First;
-        while (tmp != null)
-        {
-            if (tmp.card.cardCategory != CardCategory.hero)
-            {
-                if (tmp.unitObject.playerID == playerID)
-                {
-                    deck.Refill(tmp.unitObject.cardData);
-                    tmp.ResetField();
-                }
-                else
-                {
-                    tmp.ResetField();
-                }
-            }
-            tmp = tmp.Next;
-        }
-        Field tmp1 = BattleManager.instance.unitList[0];
-        Field tmp2 = BattleManager.instance.unitList[1];
+        //Field tmp = FieldManager.Instance.battleFields.First;
+        //while (tmp != null)
+        //{
+        //    if (tmp.card.cardCategory != CardCategory.hero)
+        //    {
+        //        if (tmp.unitObject.playerID == playerID)
+        //        {
+        //            deck.Refill(tmp.unitObject.cardData);
+        //            tmp.ResetField();
+        //        }
+        //        else
+        //        {
+        //            tmp.ResetField();
+        //        }
+        //    }
+        //    tmp = tmp.Next;
+        //}
+        //Field tmp1 = BattleManager.instance.unitList[0];
+        //Field tmp2 = BattleManager.instance.unitList[1];
 
-        BattleManager.instance.unitList.Clear();
+        //BattleManager.instance.unitList.Clear();
 
-        BattleManager.instance.unitList.Add(tmp1);
-        BattleManager.instance.unitList.Add(tmp2);
+        //BattleManager.instance.unitList.Add(tmp1);
+        //BattleManager.instance.unitList.Add(tmp2);
 
-        FieldManager.Instance.ResetAllField();
-        EndPhase();
+        //FieldManager.Instance.ResetAllField();
+        //EndPhase();
     }
 
     private void ExecuteGame()
     {
-        Debug.LogError("Ã³¸® ÆäÀÌÁî¿¡ ÁøÀÔÇß½À´Ï´Ù.");
+        Debug.LogError("ì²˜ë¦¬ íŽ˜ì´ì¦ˆì— ì§„ìž…í–ˆìŠµë‹ˆë‹¤.");
         if (BattleManager.instance.damageSum == 0)
         {
-            Debug.LogError("¹ö¸± Ä«µå°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogError("ë²„ë¦´ ì¹´ë“œê°€ ì—†ìŠµë‹ˆë‹¤.");
             playerEnd = true;
         }
         StartCoroutine(DiscardByDamage());
@@ -332,7 +332,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DiscardByDamage()
     {
-        Debug.LogError($"{BattleManager.instance.damageSum}Àå ¹ö·Á¾ß ÇÕ´Ï´Ù.");
+        Debug.LogError($"{BattleManager.instance.damageSum}ìž¥ ë²„ë ¤ì•¼ í•©ë‹ˆë‹¤.");
         UIManager.Instance.PopupCard(deck.useDeck);
         UIManager.Instance.selectCardChanged += Discard;
         while (BattleManager.instance.damageSum > 0)
@@ -341,7 +341,7 @@ public class GameManager : MonoBehaviour
         }
         UIManager.Instance.selectCardChanged -= Discard;
         UIManager.Instance.ClosePopup();
-        Debug.LogError("Ä«µå¸¦ ÀüºÎ ¹ö·È½À´Ï´Ù");
+        Debug.LogError("ì¹´ë“œë¥¼ ì „ë¶€ ë²„ë ¸ìŠµë‹ˆë‹¤");
         playerEnd = true;
     }
 
@@ -390,79 +390,79 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     public void SelectFieldForPun(Vector2 mousePos, Vector2 pos, bool temp)
     {
-        Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
-        foreach (Collider2D collider in colliders)
-        {
-            Field field = collider.gameObject.GetComponent<Field>();
-            if (field.isEmpty)
-            {
-                tmpField = field.gameObject;
-                return;
-            }
-            if (temp == mousePos.x <= collider.transform.position.x)
-            {
-                if (temp)
-                {
-                    Debug.LogError(field.name + "ÁÂÃø" + (temp ? "ÁÂÃø" : "¿ìÃø"));
-                    GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
-                    FieldManager.Instance.newFields.Add(newField);
-                    FieldManager.Instance.battleFields.AddBefore(field, newField);
-                    Field tmp = FieldManager.Instance.battleFields.First;
-                    FieldManager.Instance.fields.Clear();
+        //Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
+        //foreach (Collider2D collider in colliders)
+        //{
+        //    Field field = collider.gameObject.GetComponent<Field>();
+        //    if (field.isEmpty)
+        //    {
+        //        tmpField = field.gameObject;
+        //        return;
+        //    }
+        //    if (temp == mousePos.x <= collider.transform.position.x)
+        //    {
+        //        if (temp)
+        //        {
+        //            Debug.LogError(field.name + "ì¢Œì¸¡" + (temp ? "ì¢Œì¸¡" : "ìš°ì¸¡"));
+        //            GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
+        //            FieldManager.Instance.newFields.Add(newField);
+        //            FieldManager.Instance.battleFields.AddBefore(field, newField);
+        //            Field tmp = FieldManager.Instance.battleFields.First;
+        //            FieldManager.Instance.fields.Clear();
 
-                    while (tmp != null)
-                    {
-                        FieldManager.Instance.fields.Add(tmp.gameObject);
-                        tmp = tmp.Next;
-                    }
-                    for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
-                    {
-                        try
-                        {
-                            FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogError(e.Message);
-                            break;
-                        }
-                    }
-                    tmpField = newField;
-                    Debug.LogError(tmpField.name);
-                    return;
-                }
-                else
-                {
-                    Debug.LogError("¿ìÃø" + (temp ? "ÁÂÃø" : "¿ìÃø"));
-                    GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
-                    FieldManager.Instance.newFields.Add(newField);
-                    FieldManager.Instance.battleFields.AddAfter(field, newField);
-                    Field tmp = FieldManager.Instance.battleFields.First;
-                    FieldManager.Instance.fields.Clear();
-                    while (tmp != null)
-                    {
-                        FieldManager.Instance.fields.Add(tmp.gameObject);
-                        tmp = tmp.Next;
-                    }
-                    for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
-                    {
-                        try
-                        {
-                            FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogException(e);
-                            break;
-                        }
-                    }
-                    tmpField = newField;
-                    Debug.LogError(tmpField.name);
-                    return;
-                }
+        //            while (tmp != null)
+        //            {
+        //                FieldManager.Instance.fields.Add(tmp.gameObject);
+        //                tmp = tmp.Next;
+        //            }
+        //            for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
+        //            {
+        //                try
+        //                {
+        //                    FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    Debug.LogError(e.Message);
+        //                    break;
+        //                }
+        //            }
+        //            tmpField = newField;
+        //            Debug.LogError(tmpField.name);
+        //            return;
+        //        }
+        //        else
+        //        {
+        //            Debug.LogError("ìš°ì¸¡" + (temp ? "ì¢Œì¸¡" : "ìš°ì¸¡"));
+        //            GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
+        //            FieldManager.Instance.newFields.Add(newField);
+        //            FieldManager.Instance.battleFields.AddAfter(field, newField);
+        //            Field tmp = FieldManager.Instance.battleFields.First;
+        //            FieldManager.Instance.fields.Clear();
+        //            while (tmp != null)
+        //            {
+        //                FieldManager.Instance.fields.Add(tmp.gameObject);
+        //                tmp = tmp.Next;
+        //            }
+        //            for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
+        //            {
+        //                try
+        //                {
+        //                    FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    Debug.LogException(e);
+        //                    break;
+        //                }
+        //            }
+        //            tmpField = newField;
+        //            Debug.LogError(tmpField.name);
+        //            return;
+        //        }
 
-            }
-        }
+        //    }
+        //}
     }
 
     [PunRPC]
@@ -554,7 +554,7 @@ public class GameManager : MonoBehaviour
     {
         if (animator == null)
         {
-            Debug.LogError("Á×Àº À¯´Ö ÀÔ´Ï´Ù");
+            Debug.LogError("ì£½ì€ ìœ ë‹› ìž…ë‹ˆë‹¤");
             return;
         }
         while (animator != null && animator.runtimeAnimatorController != null && !animator.GetCurrentAnimatorStateInfo(0).IsName(aniName))
@@ -596,7 +596,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("µå·Î¿ì ÆäÀÌÁî¿¡¸¸ ÀÛµ¿ÇÕ´Ï´Ù.");
+            Debug.Log("ë“œë¡œìš° íŽ˜ì´ì¦ˆì—ë§Œ ìž‘ë™í•©ë‹ˆë‹¤.");
         }
 
         if (gameStart == false)
