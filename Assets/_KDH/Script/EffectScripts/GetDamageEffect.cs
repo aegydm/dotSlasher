@@ -12,6 +12,14 @@ public class GetDamageEffect : CardEffect
         caster.animator.Play("Death");
         Task deathTask = TestManager.instance.CheckAnim(caster.animator, "Death");
         await deathTask;
+        if(caster.playerID.ToString() == TestManager.instance.playerID)
+        {
+            TestManager.instance.deck.grave.Add(caster.cardData);
+        }
+        else
+        {
+            TestManager.instance.deck.enemyGrave.Add(caster.cardData);
+        }
         caster.cardData = null;
         return;
     }

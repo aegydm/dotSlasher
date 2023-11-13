@@ -31,6 +31,10 @@ public class FieldCardObjectTest : MonoBehaviour
                 GetComponent<BoxCollider2D>().enabled = false;
                 RenderCard();
             }
+            if(cardData != null && cardData != new Card())
+            {
+                this.playerID = int.Parse(TestManager.instance.playerID);
+            }
         }
     }
 
@@ -158,12 +162,9 @@ public class FieldCardObjectTest : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (cardData != null && cardData.cardID != 0 && canBattle && TestManager.instance.isBattle && TestManager.instance.canAct && UIManager.Instance.isPopUI == false)
+        if (cardData != null && cardData.cardID != 0 && canBattle && TestManager.instance.gamePhase == GamePhase.BattlePhase && TestManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
-            Debug.Log("전투 시작");
-            TestManager.instance.isBattle = false;
             cardData.AttackStart(FieldManagerTest.instance.battleField, this);
-            Debug.Log("마우스가 눌렸다.");
         }
     }
 }

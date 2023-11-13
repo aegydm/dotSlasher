@@ -12,6 +12,7 @@ public class Deck : MonoBehaviour
     public List<Card> useDeck = new List<Card>();
     public List<Card> originDeck = new List<Card>();
     public List<Card> grave =new List<Card>();
+    public List<Card> enemyGrave = new List<Card>();
     public Card myHero = new Hero();
 
     public int countOfDeck
@@ -43,6 +44,22 @@ public class Deck : MonoBehaviour
             }
         }
     }
+
+    public int countOfEnemyGrave
+    {
+        get
+        {
+            return _countOfEnemyGrave;
+        }
+        set
+        {
+            if(_countOfEnemyGrave != value)
+            {
+                _countOfEnemyGrave = value;
+            }
+        }
+    }
+    [SerializeField] int _countOfEnemyGrave;
     [SerializeField] int _countOfGrave;
     [SerializeField] int _countOfDeck;
     [SerializeField] public List<int> sortedDeck;
