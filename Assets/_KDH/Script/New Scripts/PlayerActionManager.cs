@@ -15,8 +15,11 @@ public class PlayerActionManager : MonoBehaviour
     public FieldCardObjectTest field;
     [Header("손패 오브젝트를 5개 넣어주세요")]
     public HandCardObject[] handCardObjectArray = new HandCardObject[5];
+    [Header("좌우 방향을 정하는 용도의 캔버스")]
+    public GameObject selectUI;
 
-    public bool dirtyForInter 
+
+    public bool dirtyForInter
     {
         get
         {
@@ -27,10 +30,12 @@ public class PlayerActionManager : MonoBehaviour
             _dirtyForInter = value;
         }
     }
-    private bool _dirtyForInter = false;
+    [SerializeField] private bool _dirtyForInter = false;
 
     public event Action CancelAction;
     public event Action NewFieldAction;
+    public event Action CancelSelect;
+
     public int handCardCount
     {
         get
@@ -39,17 +44,18 @@ public class PlayerActionManager : MonoBehaviour
         }
         set
         {
-            if(_handCardCount != value )
+            if (_handCardCount != value)
             {
                 _handCardCount = value;
             }
         }
     }
+
     [Header("현재 손패에 있는 카드의 수")]
     public int _handCardCount;
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
             instance = this;
         else
         {
@@ -60,10 +66,15 @@ public class PlayerActionManager : MonoBehaviour
 
     private void Update()
     {
-        if (isDrag)
+        if (Input.GetMouseButtonDown(1))
         {
-            if (Input.GetMouseButtonDown(1))
+            if (isDrag)
             {
+                CancelAll();
+            }
+            else if (CancelSelect != null)
+            {
+                Debug.Log("CancelSelect111");
                 CancelAll();
             }
         }
@@ -71,6 +82,7 @@ public class PlayerActionManager : MonoBehaviour
 
     public void CancelWithNewField()
     {
+        CancelSelect = null;
         NewFieldAction?.Invoke();
         NewFieldAction = null;
         CancelAction = null;
@@ -81,17 +93,22 @@ public class PlayerActionManager : MonoBehaviour
 
     public void CancelAll()
     {
+        CancelSelect?.Invoke();
         CancelAction?.Invoke();
+        NewFieldAction = null;
+        CancelSelect = null;
         CancelAction = null;
         NewFieldAction = null;
         if (field != null)
             field.CancelFieldSelect();
-        dragCardGO.CancelDrag();
+        if (dragCardGO != null)
+            dragCardGO.CancelDrag();
+        FieldManagerTest.instance.isOpenDirection = false;
     }
 
     public bool AddHandCard(Card card)
     {
-        for(int i = 0; i < handCardObjectArray.Length; i++)
+        for (int i = 0; i < handCardObjectArray.Length; i++)
         {
             if (handCardObjectArray[i].isEmpty)
             {
@@ -105,12 +122,12 @@ public class PlayerActionManager : MonoBehaviour
 
     public bool RemoveHandCard(HandCardObject handCardObject)
     {
-        if(handCardObject == null)
+        if (handCardObject == null)
         {
             Debug.LogError("RemoveHandCard에는 null을 넣을 수 없습니다.");
             return false;
         }
-        for(int i = 0; i < handCardObjectArray.Length; i++)
+        for (int i = 0; i < handCardObjectArray.Length; i++)
         {
             if (handCardObjectArray[i] == handCardObject)
             {
@@ -129,7 +146,7 @@ public class PlayerActionManager : MonoBehaviour
             Debug.LogError("RemoveHandCard에는 null을 넣을 수 없습니다.");
             return false;
         }
-        for(int i = 0; i < handCardObjectArray.Length; i++)
+        for (int i = 0; i < handCardObjectArray.Length; i++)
         {
             if (handCardObjectArray[i].cardData == card)
             {
@@ -143,7 +160,7 @@ public class PlayerActionManager : MonoBehaviour
 
     public void ResetHandCard()
     {
-        for(int i = 0; i < handCardObjectArray.Length; i++)
+        for (int i = 0; i < handCardObjectArray.Length; i++)
         {
             handCardObjectArray[i].cardData = null;
         }
@@ -151,9 +168,9 @@ public class PlayerActionManager : MonoBehaviour
 
     private void SortHandCard()
     {
-        for(int i = handCardObjectArray.Length-1; i > 0; i--)
+        for (int i = handCardObjectArray.Length - 1; i > 0; i--)
         {
-            for(int j = i-1; j >= 0; j--)
+            for (int j = i - 1; j >= 0; j--)
             {
                 if (handCardObjectArray[i].isEmpty == false && handCardObjectArray[j].isEmpty)
                 {
@@ -167,9 +184,9 @@ public class PlayerActionManager : MonoBehaviour
     private void CountHandCard()
     {
         int count = 0;
-        for(int i = 0; i < handCardObjectArray.Length; i++)
+        for (int i = 0; i < handCardObjectArray.Length; i++)
         {
-            if (!handCardObjectArray[i].isEmpty == false) 
+            if (!handCardObjectArray[i].isEmpty == false)
             {
                 count++;
             }

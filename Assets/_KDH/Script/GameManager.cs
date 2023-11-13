@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 
-public enum GamePhase
+public enum GamePhaseOld
 {
     None,
     DrawPhase,
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         set
         {
             _playerEnd = value;
-            if (_playerEnd && (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase))
+            if (_playerEnd && (gamePhase == GamePhaseOld.ActionPhase || gamePhase == GamePhaseOld.BattlePhase))
             {
                 photonView.RPC("CallActionEnd", RpcTarget.Others);
             }
@@ -66,13 +66,13 @@ public class GameManager : MonoBehaviour
         set
         {
             _canAct = value;
-            if (_canAct == false && (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase))
+            if (_canAct == false && (gamePhase == GamePhaseOld.ActionPhase || gamePhase == GamePhaseOld.BattlePhase))
             {
                 currentTurn++;
                 photonView.RPC("MatchTurnNum", RpcTarget.Others, currentTurn);
                 photonView.RPC("CallSummonEnd", RpcTarget.Others);
             }
-            else if (canAct == true && gamePhase == GamePhase.ActionPhase)
+            else if (canAct == true && gamePhase == GamePhaseOld.ActionPhase)
             {
                 TurnStart?.Invoke();
             }
@@ -98,17 +98,17 @@ public class GameManager : MonoBehaviour
         set
         {
             _currentTurn = value;
-            if (gamePhase == GamePhase.ActionPhase)
+            if (gamePhase == GamePhaseOld.ActionPhase)
             {
                 turnText.text = "Action Turn : " + (_currentTurn + 1).ToString();
             }
-            else if (gamePhase == GamePhase.BattlePhase)
+            else if (gamePhase == GamePhaseOld.BattlePhase)
             {
                 turnText.text = "Battle Turn : " + (_currentTurn + 1).ToString();
             }
         }
     }
-    public GamePhase gamePhase
+    public GamePhaseOld gamePhase
     {
         get
         {
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool _canAct;
     [SerializeField] private string _playerID = "-1";
     [SerializeField] private int _currentTurn;
-    [SerializeField] private GamePhase _gamePhase;
+    [SerializeField] private GamePhaseOld _gamePhase;
     private Deck deck;
     #endregion
 
@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckPhaseEnd()
     {
-        if (playerEnd && enemyEnd && gamePhase != GamePhase.BattlePhase)
+        if (playerEnd && enemyEnd && gamePhase != GamePhaseOld.BattlePhase)
         {
             EndPhase();
         }
@@ -223,7 +223,7 @@ public class GameManager : MonoBehaviour
         ResetState();
         switch (gamePhase)
         {
-            case GamePhase.DrawPhase:
+            case GamePhaseOld.DrawPhase:
                 if (startFirst)
                 {
                     canAct = true;
@@ -233,12 +233,12 @@ public class GameManager : MonoBehaviour
                     canAct = false;
                 }
                 currentTurn = 0;
-                gamePhase = GamePhase.ActionPhase;
+                gamePhase = GamePhaseOld.ActionPhase;
                 break;
-            case GamePhase.ActionPhase:
+            case GamePhaseOld.ActionPhase:
                 currentTurn = 0;
                 ResetState();
-                gamePhase = GamePhase.BattlePhase;
+                gamePhase = GamePhaseOld.BattlePhase;
                 //if (startFirst)
                 //{
                 //    Debug.Log("StartFirst Can Act");
@@ -250,16 +250,16 @@ public class GameManager : MonoBehaviour
                 //}
                 BattleManager.instance.AttackButton();
                 break;
-            case GamePhase.BattlePhase:
-                gamePhase = GamePhase.ExecutionPhase;
+            case GamePhaseOld.BattlePhase:
+                gamePhase = GamePhaseOld.ExecutionPhase;
                 ExecuteGame();
                 break;
-            case GamePhase.ExecutionPhase:
-                gamePhase = GamePhase.EndPhase;
+            case GamePhaseOld.ExecutionPhase:
+                gamePhase = GamePhaseOld.EndPhase;
                 EndGame();
                 break;
-            case GamePhase.EndPhase:
-                gamePhase = GamePhase.DrawPhase;
+            case GamePhaseOld.EndPhase:
+                gamePhase = GamePhaseOld.DrawPhase;
                 break;
         }
         turnText.text = gamePhase.ToString();
@@ -587,7 +587,7 @@ public class GameManager : MonoBehaviour
             SummonHero();
         }
 
-        if (gamePhase == GamePhase.DrawPhase)
+        if (gamePhase == GamePhaseOld.DrawPhase)
         {
             //deck.Shuffle();
             deck.Draw(4);

@@ -11,12 +11,11 @@ GameObject:
   - component: {fileID: 6269054326430797982}
   - component: {fileID: 4972436225307026765}
   - component: {fileID: 4628373084919206051}
-  - component: {fileID: 8371476644532930264}
   - component: {fileID: 2694565133905233938}
   - component: {fileID: 3747277800117414042}
   - component: {fileID: 6977461598359715923}
   m_Layer: 5
-  m_Name: TestCard
+  m_Name: UICard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,39 +79,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8371476644532930264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4475879479727289877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c821b59ea04b8845950872dfff304ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData:
-    summonEffects: []
-    attackStartEffects: []
-    findEnemyEffects: []
-    calculateDamageEffects: []
-    attackProcessEffects: []
-    getDamageEffects: []
-    cardID: 0
-    cardName: 
-    cardSprite: {fileID: 0}
-    animator: 
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 6
-    cardCategory: 0
-    frontDamage: 0
-    backDamage: 0
-  spriteRenderer: {fileID: 2694565133905233938}
-  animator: {fileID: 0}
-  _playerID: 
 --- !u!212 &2694565133905233938
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -177,6 +143,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15a021e8a7fa0647ace17bf70760288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardData:
+    summonEffects: []
+    attackStartEffects: []
+    findEnemyEffects: []
+    calculateDamageEffects: []
+    attackProcessEffects: []
+    getDamageEffects: []
+    cardID: 0
+    cardName: 
+    cardSprite: {fileID: 0}
+    animator: 
+    skill: 
+    skillContents: 
+    cost: 0
+    cardColor: 6
+    cardCategory: 0
+    frontDamage: -1
+    backDamage: -1
+  handCardObject: {fileID: 0}
+  isSelected: 0
+  spriteRenderer: {fileID: 2694565133905233938}
 --- !u!61 &6977461598359715923
 BoxCollider2D:
   m_ObjectHideFlags: 0

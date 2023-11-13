@@ -3,9 +3,32 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
+public enum GamePhase
+{
+    None,
+    DrawPhase,
+    ActionPhase,
+    BattlePhase,
+    ExecutionPhase,
+    EndPhase,
+}
+
 public class TestManager : MonoBehaviour
 {
     public static TestManager instance;
+
+    public bool canAct
+    {
+        get
+        {
+            return _canAct;
+        }
+        set
+        {
+            _canAct = value;
+        }
+    }
+    [SerializeField] private bool _canAct;
     public bool isBattle;
     [SerializeField] Deck deck;
 

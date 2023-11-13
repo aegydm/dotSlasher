@@ -211,6 +211,11 @@ public class Deck : MonoBehaviour
         Draw(cards.Length);
     }
 
+    public void Mulligan(HandCardObject[] handCardList)
+    {
+
+    }
+
     /// <summary>
     /// ?쒕줈???섏씠利덉뿉留??쒕줈?곌? 媛?ν븳 湲곕뒫
     /// </summary>
@@ -218,7 +223,7 @@ public class Deck : MonoBehaviour
     {
         switch (GameManager.Instance.gamePhase)
         {
-            case GamePhase.DrawPhase:
+            case GamePhaseOld.DrawPhase:
                 Draw(1);
                 break;
 
