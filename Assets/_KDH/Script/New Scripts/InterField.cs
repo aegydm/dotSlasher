@@ -10,16 +10,29 @@ public class InterField : MonoBehaviour
     [SerializeField] GameObject interLine;
     GameObject additionalGO;
     bool trigger = false;
+    float distanceX;
+
+    private void Start()
+    {
+        if (originField != null)
+            distanceX = transform.position.x - originField.transform.position.x;
+    }
 
     private void OnMouseEnter()
     {
         //Debug.Log("Enter");
         if (trigger == false && PlayerActionManager.instance.isDrag & PlayerActionManager.instance.dirtyForInter == false)
         {
+            if(FieldManagerTest.instance.GetAdditionalField() == null)
+            {
+                Debug.Log("모든 필드를 사용했습니다.");
+                return;
+            }
+            PlayerActionManager.instance.NewFieldAction += CancelInterWithNewField;
+            PlayerActionManager.instance.CancelAction += CancelInter;
             Vector3 pos = transform.position;
             PlayerActionManager.instance.dirtyForInter = true;
             trigger = true;
-            PlayerActionManager.instance.CancelAction += OnMouseExit;
             if (originField == null)
             {
                 additionalGO = FieldManagerTest.instance.GetAdditionalField().gameObject;
@@ -72,29 +85,59 @@ public class InterField : MonoBehaviour
 
     private void OnMouseExit()
     {
+        CancelInter();
+    }
+
+    public void CancelInterWithNewField()
+    {
         if (trigger == true && PlayerActionManager.instance.isDrag && additionalGO != null && PlayerActionManager.instance.dirtyForInter == true)
         {
             PlayerActionManager.instance.dirtyForInter = false;
             trigger = false;
-            PlayerActionManager.instance.CancelAction -= OnMouseExit;
             if (originField == null)
             {
+                interLine.SetActive(true);
+                FieldCardObjectTest temp = FieldManagerTest.instance.battleField.First;
+                this.transform.localPosition = new Vector3(-0.55f, 0, 0);
+                PlayerActionManager.instance.field = null;
+                additionalGO = null;
+            }
+            else
+            {
+                interLine.SetActive(true);
+                FieldCardObjectTest temp = FieldManagerTest.instance.battleField.First;
+                this.transform.localPosition = new Vector3(0.55f, 0, 0);
+                PlayerActionManager.instance.field = null;
+                additionalGO = null;
+            }
+        }
+    }
+
+    public void CancelInter()
+    {
+        if (trigger == true && PlayerActionManager.instance.isDrag && additionalGO != null && PlayerActionManager.instance.dirtyForInter == true)
+        {
+            PlayerActionManager.instance.dirtyForInter = false;
+            trigger = false;
+            if (originField == null)
+            {
+                interLine.SetActive(true);
                 FieldCardObjectTest temp = FieldManagerTest.instance.battleField.First;
                 while (temp != null)
                 {
                     temp.gameObject.transform.position -= new Vector3(0.825f, 0, 0);
                     temp = temp.Next;
                 }
-                this.transform.position -= new Vector3(0.825f, 0, 0);
+                this.transform.localPosition = new Vector3(-0.55f, 0, 0);
                 PlayerActionManager.instance.field = null;
                 additionalGO.GetComponent<FieldCardObjectTest>().Prev = null;
                 additionalGO.GetComponent<FieldCardObjectTest>().Next = null;
                 additionalGO.SetActive(false);
-                interLine.SetActive(true);
                 additionalGO = null;
             }
             else
             {
+                interLine.SetActive(true);
                 FieldCardObjectTest temp = FieldManagerTest.instance.battleField.First;
                 for (int i = 0; i <= FieldManagerTest.instance.battleField.FindIndex(originField); i++)
                 {
@@ -106,14 +149,11 @@ public class InterField : MonoBehaviour
                     temp.gameObject.transform.position -= new Vector3(0.825f, 0, 0);
                     temp = temp.Next;
                 }
-                Debug.Log(transform.position);
-                this.transform.position -= new Vector3(0.825f, 0, 0);
-                Debug.Log(transform.position);
+                this.transform.localPosition = new Vector3(0.55f, 0, 0);
                 PlayerActionManager.instance.field = null;
                 additionalGO.GetComponent<FieldCardObjectTest>().Prev = null;
                 additionalGO.GetComponent<FieldCardObjectTest>().Next = null;
                 additionalGO.SetActive(false);
-                interLine.SetActive(true);
                 additionalGO = null;
             }
         }

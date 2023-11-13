@@ -7,46 +7,47 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CalculateDamageEffect", menuName = "Effect/BaseEffect/CalculateDamageEffect")]
 public class CalculateDamageEffect : CardEffect
 {
-    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObjectTest caster, List<FieldCardObjectTest> targets)
     {
         Debug.Log(targets.Count);
         if (caster.canBattle)
         {
-            Task atkTask = GameManager.Instance.CheckAnim(caster.animator, "Attack");
+            Task atkTask = TestManager.instance.CheckAnim(caster.animator, "Attack");
 
             caster.animator.Play("Attack");
             await atkTask;
             caster.canBattle = false;
+            caster.animator.Play("Breath");
             for (int i = 0; i < targets.Count; i++)
             {
-                int attackPower = caster.unitObject.cardData.frontDamage;
-                int defencePower = caster.unitObject.lookingLeft != targets[i].unitObject.lookingLeft ? targets[i].unitObject.cardData.frontDamage : targets[i].unitObject.cardData.backDamage;
-                Debug.Log(caster.unitObject.cardData.cardName + "ÀÇ °ø°İ·Â : " + attackPower + "\n" + targets[i].unitObject.cardData.cardName + "ÀÇ °ø°İ·Â : " + defencePower);
+                int attackPower = caster.cardData.frontDamage;
+                int defencePower = caster.lookingLeft != targets[i].lookingLeft ? targets[i].cardData.frontDamage : targets[i].cardData.backDamage;
+                Debug.Log(caster.cardData.cardName + "ì˜ ê³µê²©ë ¥ : " + attackPower + "\n" + targets[i].cardData.cardName + "ì˜ ê³µê²©ë ¥ : " + defencePower);
 
                 if (attackPower > defencePower)
                 {
-                    Debug.Log(caster.unitObject.cardData.cardName + "ÀÇ °ø°İÀÌ ¼º°øÇß½À´Ï´Ù.");
+                    Debug.Log(caster.cardData.cardName + "ì˜ ê³µê²©ì´ ì„±ê³µí–ˆìŠµë‹ˆë‹¤.");
                     //targets[i].Damaged(attackPower);
-                    if (targets[i].unitObject.cardData.cardCategory == CardCategory.hero)
+                    if (targets[i].cardData.cardCategory == CardCategory.hero)
                     {
-                        targets[i].unitObject.cardData.GetDamage(targets[i], attackPower);
+                        targets[i].cardData.GetDamage(targets[i], attackPower);
                     }
-                    else if (targets[i].unitObject.cardData.cardCategory == CardCategory.minion)
+                    else if (targets[i].cardData.cardCategory == CardCategory.minion)
                     {
-                        targets[i].unitObject.cardData.GetDamage(targets[i], attackPower);
-                        Task deathTask = GameManager.Instance.CheckAnim(caster.animator, "Death");
+                        targets[i].cardData.GetDamage(targets[i], attackPower);
+                        Task deathTask = TestManager.instance.CheckAnim(caster.animator, "Death");
                         await deathTask;
                     }
                     else
                     {
-                        Debug.LogError("¾ÆÀÌÅÛÀ» °ø°İÇÒ ¼ö ¾ø½À´Ï´Ù");
+                        Debug.LogError("ì•„ì´í…œì„ ê³µê²©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
                     }
                 }
                 else
                 {
-                    Debug.Log(caster.unitObject.cardData.cardName + "ÀÇ °ø°İÀÌ ½ÇÆĞÇß½À´Ï´Ù.");
+                    Debug.Log(caster.cardData.cardName + "ì˜ ê³µê²©ì´ ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
                     Debug.Log("HitStart");
-                    Task hitTask = GameManager.Instance.CheckAnim(targets[i].animator, "Hit");
+                    Task hitTask = TestManager.instance.CheckAnim(targets[i].animator, "Hit");
                     targets[i].animator.Play("Hit");
                     Debug.Log("HitAnimation");
                     await hitTask;

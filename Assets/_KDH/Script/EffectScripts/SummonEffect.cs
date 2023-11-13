@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SummonEffect", menuName = "Effect/BaseEffect/SummonEffect")]
 public class SummonEffect : CardEffect
 {
-    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObjectTest caster, List<FieldCardObjectTest> targets)
     {
         await Task.Delay((int)(Time.deltaTime*1000));
         return;

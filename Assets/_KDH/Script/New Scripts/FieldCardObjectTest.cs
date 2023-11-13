@@ -21,7 +21,7 @@ public class FieldCardObjectTest : MonoBehaviour
                 _cardData = value;
                 isEmpty = true;
                 GetComponent<BoxCollider2D>().enabled = true;
-                rightInter.SetActive(false);
+                //rightInter.SetActive(false);
                 ResetRender();
             }
             else if (cardData != value && value != null && value != new Card())
@@ -29,14 +29,13 @@ public class FieldCardObjectTest : MonoBehaviour
                 _cardData = value;
                 isEmpty = false;
                 GetComponent<BoxCollider2D>().enabled = false;
-                FieldManagerTest.instance.CheckInterAll();
                 RenderCard();
             }
         }
     }
 
     [Header("필드에 들어있는 카드의 정보")]
-    private Card _cardData;
+    [SerializeField] private Card _cardData;
     [Header("필드가 비어있는지 체크하는 변수")]
     public bool isEmpty = true;
     [Header("필드 전체 틀 스프라이트")]
@@ -90,8 +89,23 @@ public class FieldCardObjectTest : MonoBehaviour
     [Header("카드의 소유자 표시용 이미지")]
     public Image ownerColor;
 
+    public bool canBattle
+    {
+        get
+        {
+            return _canBattle;
+        }
+        set
+        {
+            if(animator.runtimeAnimatorController != null && value == true)
+            {
+                animator.Play("Idle");
+            }
+            _canBattle = value;
+        }
+    }
     [Header("해당 필드의 공격 가능 여부")]
-    public bool canBattle;
+    [SerializeField] private bool _canBattle;
     [Header("공격 가능 여부 표시용 이미지")]
     public Image canBattleImage;
     [Header("좌측 끼어들기 용 - First일 때만 활성화 예정")]
@@ -137,5 +151,16 @@ public class FieldCardObjectTest : MonoBehaviour
         {
             PlayerActionManager.instance.field = null;
         }
+    }
+
+    private void OnMouseDown()
+    {
+        if (cardData != null && cardData.cardID != 0 && canBattle && TestManager.instance.isBattle)
+        {
+            Debug.Log("전투 시작");
+            TestManager.instance.isBattle = false;
+            cardData.AttackStart(FieldManagerTest.instance.battleField, this);
+        }
+        Debug.Log("마우스가 눌렸다.");
     }
 }

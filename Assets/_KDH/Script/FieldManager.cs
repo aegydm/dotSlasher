@@ -53,7 +53,7 @@ public class FieldManager : MonoBehaviour
 
     const int FULL_FIELD_COUNT = 10;
 
-    Field tmpField;
+    FieldCardObjectTest tmpField;
     [SerializeField] GameObject directionCanvas;
     [SerializeField] TMP_Text enemyHandCount;
     private void Awake()
@@ -108,7 +108,7 @@ public class FieldManager : MonoBehaviour
         //    battleFields.Find(GO).unitObject.playerID = id.ToString();
         //}
     }
-    void SelectDirection(Field field)
+    void SelectDirection(FieldCardObjectTest field)
     {
         if (HandManager.Instance.selectedHand == null) return;
         directionCanvas.transform.position = field.transform.position;
@@ -117,7 +117,7 @@ public class FieldManager : MonoBehaviour
         canPlace = false;
     }
 
-    public bool SelectField(Field field, bool isLeft)
+    public bool SelectField(FieldCardObjectTest field, bool isLeft)
     {
         //if (field.isEmpty)
         //{
@@ -227,13 +227,13 @@ public class FieldManager : MonoBehaviour
         return true;
     }
 
-    public void PlaceCard(Field field, Card card, int id, bool lookLeft)
+    public void PlaceCard(FieldCardObjectTest field, Card card, int id, bool lookLeft)
     {
         if (card == null) return;
         if (field.isEmpty)
         {
             AddUnit(field.gameObject, card, id);
-            field.SetCard(card, lookLeft);
+            //field.SetCard(card, lookLeft);
         }
         directionCanvas.SetActive(false);
         canPlace = true;

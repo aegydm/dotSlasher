@@ -35,14 +35,14 @@ public class UnitObject : MonoBehaviour
         set
         {
             _playerID = value;
-            if(_playerID != "-1")
-            {
-                GetComponent<Field>().playerColor.color = new Color(255 - (255 * int.Parse(playerID)), 255 * int.Parse(playerID), 0);
-            }
-            else
-            {
-                GetComponent<Field>().playerColor.color = new Color(255, 255, 255);
-            }
+            //if(_playerID != "-1")
+            //{
+            //    GetComponent<FieldCardObjectTest>().playerColor.color = new Color(255 - (255 * int.Parse(playerID)), 255 * int.Parse(playerID), 0);
+            //}
+            //else
+            //{
+            //    GetComponent<FieldCardObjectTest>().playerColor.color = new Color(255, 255, 255);
+            //}
         }
     }
 

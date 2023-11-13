@@ -97,7 +97,6 @@ public class Deck : MonoBehaviour
                 //if (HandManager.Instance.DrawCard(useDeck[0]))
                 if (PlayerActionManager.instance.AddHandCard(useDeck[0]))
                 {
-                    Debug.Log(useDeck[0].cardName);
                     useDeck.Remove(useDeck[0]);
                     //GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
                 }

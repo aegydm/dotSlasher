@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_KDH/Scenes/HandTest.unity
+    path: Assets/Scenes/Solo Test Scene.unity
     guid: ee484571e6babd54e955e34342d56bc0
   - enabled: 1
     path: Assets/Scenes/0. StartScene.unity

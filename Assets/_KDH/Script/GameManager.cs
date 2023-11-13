@@ -268,8 +268,8 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     public void AttackStartForPun(Vector3 fieldPos)
     {
-        Field tempFIeld = null;
-        foreach (Field field in BattleManager.instance.battleList)
+        FieldCardObjectTest tempFIeld = null;
+        foreach (FieldCardObjectTest field in BattleManager.instance.battleList)
         {
             if (field.transform.position == fieldPos)
             {
@@ -279,7 +279,7 @@ public class GameManager : MonoBehaviour
         }
         if (tempFIeld != null)
         {
-            tempFIeld.unitObject.cardData.AttackStart(FieldManager.Instance.battleFields, tempFIeld);
+            tempFIeld.cardData.AttackStart(FieldManager.Instance.battleFields, tempFIeld);
             StartCoroutine(BattleManager.instance.AttackProcess(tempFIeld));
         }
         else
@@ -361,7 +361,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("MAKE");
         SelectFieldForPun(mousePos, fieldPos, isLeft);
         Card summonCard = CardDB.instance.FindCardFromID(cardID);
-        FieldManager.Instance.PlaceCard(tmpField.GetComponent<Field>(), summonCard, playerID, lookLeft);
+        FieldManager.Instance.PlaceCard(tmpField.GetComponent<FieldCardObjectTest>(), summonCard, playerID, lookLeft);
     }
 
 
@@ -373,14 +373,14 @@ public class GameManager : MonoBehaviour
         foreach (Collider2D collider in colliders)
         {
 
-            Field field = collider.gameObject.GetComponent<Field>();
+            FieldCardObjectTest field = collider.gameObject.GetComponent<FieldCardObjectTest>();
             if ((Vector2)field.transform.position == pos)
             {
                 if (cardID != 0)
                 {
 
                     Card summonCard = CardDB.instance.FindCardFromID(cardID);
-                    FieldManager.Instance.PlaceCard(collider.GetComponent<Field>(), summonCard, playerID, lookLeft);
+                    FieldManager.Instance.PlaceCard(collider.GetComponent<FieldCardObjectTest>(), summonCard, playerID, lookLeft);
                     return;
                 }
             }

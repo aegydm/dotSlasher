@@ -122,29 +122,28 @@ public class HandCardObject : MonoBehaviour
             {
                 if(PlayerActionManager.instance.field.Next == null)
                 {
+                    Debug.Log("ADD1");
                     PlayerActionManager.instance.field.gameObject.GetComponent<BoxCollider2D>().enabled = true;
                     FieldManagerTest.instance.battleField.AddAfter(PlayerActionManager.instance.field.Prev, PlayerActionManager.instance.field.gameObject);
-                    //PlayerActionManager.instance.transform.position -= new Vector3(0.825f, 0, 0);
-                    PlayerActionManager.instance.dirtyForInter = false;
-                    FieldManagerTest.instance.CheckInterAll();
                 }
                 else
                 {
+                    Debug.Log("Add2");
                     PlayerActionManager.instance.field.gameObject.GetComponent<BoxCollider2D>().enabled = true;
                     FieldManagerTest.instance.battleField.AddBefore(PlayerActionManager.instance.field.Next, PlayerActionManager.instance.field.gameObject);
-                    //PlayerActionManager.instance.transform.position -= new Vector3(0.825f, 0, 0);
-                    PlayerActionManager.instance.dirtyForInter = false;
-                    FieldManagerTest.instance.CheckInterAll();
+
                 }
             }
             PlayerActionManager.instance.field.cardData = cardData;
-            PlayerActionManager.instance.CancelAll();
+            PlayerActionManager.instance.CancelWithNewField();
+            PlayerActionManager.instance.dirtyForInter = false;
             PlayerActionManager.instance.RemoveHandCard(this);
         }
         else
         {
             CancelDrag();
         }
+        FieldManagerTest.instance.CheckInterAll();
     }
 
     private void RenderCard()

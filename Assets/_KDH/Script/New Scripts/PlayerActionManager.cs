@@ -30,6 +30,7 @@ public class PlayerActionManager : MonoBehaviour
     private bool _dirtyForInter = false;
 
     public event Action CancelAction;
+    public event Action NewFieldAction;
     public int handCardCount
     {
         get
@@ -68,10 +69,22 @@ public class PlayerActionManager : MonoBehaviour
         }
     }
 
+    public void CancelWithNewField()
+    {
+        NewFieldAction?.Invoke();
+        NewFieldAction = null;
+        CancelAction = null;
+        if (field != null)
+            field.CancelFieldSelect();
+        dragCardGO.CancelDrag();
+    }
+
     public void CancelAll()
     {
         CancelAction?.Invoke();
-        if(field != null)
+        CancelAction = null;
+        NewFieldAction = null;
+        if (field != null)
             field.CancelFieldSelect();
         dragCardGO.CancelDrag();
     }
@@ -83,7 +96,6 @@ public class PlayerActionManager : MonoBehaviour
             if (handCardObjectArray[i].isEmpty)
             {
                 handCardObjectArray[i].cardData = card;
-                Debug.Log(card.cardName);
                 SortHandCard();
                 return true;
             }

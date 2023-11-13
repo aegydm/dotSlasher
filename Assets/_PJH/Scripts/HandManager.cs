@@ -73,7 +73,7 @@ public class HandManager : MonoBehaviour
                         {
                             if (collider.gameObject.layer == 7)
                             {
-                                usingSelectedCard = FieldManager.Instance.SelectField(collider.GetComponent<Field>(), mousePos.x <= collider.transform.position.x);
+                                usingSelectedCard = FieldManager.Instance.SelectField(collider.GetComponent<FieldCardObjectTest>(), mousePos.x <= collider.transform.position.x);
                                 FieldManager.Instance.mousePos = mousePos;
                                 //GameManager.Instance.photonView.RPC("SelectFieldForPun", RpcTarget.Others, mousePos, mousePos.x <= collider.transform.position.x);
                                 break;

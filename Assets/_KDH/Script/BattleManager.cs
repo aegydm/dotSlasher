@@ -11,8 +11,8 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
-    public List<Field> unitList;
-    public List<Field> battleList;
+    public List<FieldCardObjectTest> unitList;
+    public List<FieldCardObjectTest> battleList;
     public bool isBattlePhase = false;
     //Test Code
     //public List<Unit> units;
@@ -33,7 +33,7 @@ public class BattleManager : MonoBehaviour
             _damageSum = value;
             if (_damageSum < 0)
             {
-                Debug.LogError("µ¥¹ÌÁö´Â 0º¸´Ù Ä¿¾ß ÇÕ´Ï´Ù.");
+                Debug.LogError("ë°ë¯¸ì§€ëŠ” 0ë³´ë‹¤ ì»¤ì•¼ í•©ë‹ˆë‹¤.");
             }
         }
     }
@@ -62,22 +62,22 @@ public class BattleManager : MonoBehaviour
                 Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
                 List<float> distanceList = new();
                 float leastDis = float.MaxValue;
-                Field clickField = null;
+                FieldCardObjectTest clickField = null;
                 colliders.Reverse();
                 foreach (Collider2D collider in colliders)
                 {
-                    if (collider.gameObject.layer == 7 && collider.gameObject.GetComponent<Field>().unitObject.playerID == GameManager.Instance.playerID)
+                    if (collider.gameObject.layer == 7 && collider.gameObject.GetComponent<FieldCardObjectTest>().playerID.ToString() == GameManager.Instance.playerID)
                     {
                         distanceList.Add(Mathf.Abs(collider.transform.position.x - mousePos.x));
                         if (leastDis >= Mathf.Abs(collider.transform.position.x - mousePos.x))
                         {
-                            clickField = collider.transform.GetComponent<Field>();
+                            clickField = collider.transform.GetComponent<FieldCardObjectTest>();
                         }
                     }
                 }
                 if (clickField != null)
                 {
-                    if (clickField.unitObject.cardData.cardName != string.Empty)
+                    if (clickField.cardData.cardName != string.Empty)
                     {
                         clickDirty = true;
                         GameManager.Instance.photonView.RPC("AttackStartForPun", RpcTarget.All, clickField.transform.position);
@@ -86,10 +86,10 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
-    public IEnumerator AttackProcess(Field field)
+    public IEnumerator AttackProcess(FieldCardObjectTest field)
     {
-        field.orderText.color = Color.red;
-        field.orderIMG.color = Color.blue;
+        //field.orderText.color = Color.red;
+        //field.orderIMG.color = Color.blue;
         yield return new WaitForSeconds(5);
         battleList.Remove(field);
         if (battleList.Count > 0)
@@ -101,7 +101,7 @@ public class BattleManager : MonoBehaviour
         {
             dirtySet = false;
             isBattlePhase = false;
-            Debug.LogError("*** ¹èÆ² Á¾·á ***");
+            Debug.LogError("*** ë°°í‹€ ì¢…ë£Œ ***");
             GameManager.Instance.EndPhase();
         }
     }
@@ -116,7 +116,7 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("¹èÆ² ÆäÀÌÁî°¡ ¾Æ´Õ´Ï´Ù.");
+                Debug.LogWarning("ë°°í‹€ í˜ì´ì¦ˆê°€ ì•„ë‹™ë‹ˆë‹¤.");
             }
         }
         else
@@ -127,7 +127,7 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("¹èÆ² ÆäÀÌÁî°¡ ¾Æ´Õ´Ï´Ù. -single");
+                Debug.LogWarning("ë°°í‹€ í˜ì´ì¦ˆê°€ ì•„ë‹™ë‹ˆë‹¤. -single");
             }
         }
     }
@@ -139,9 +139,9 @@ public class BattleManager : MonoBehaviour
             dirtySet = true;
             for (int i = 0; i < unitList.Count; i++)
             {
-                if (unitList[i].card.cardCategory == CardCategory.hero)
+                if (unitList[i].cardData.cardCategory == CardCategory.hero)
                 {
-                    unitList[i].canBattle = ((Hero)unitList[i].card).canAttack;
+                    unitList[i].canBattle = ((Hero)unitList[i].cardData).canAttack;
                 }
 
                 if (unitList[i].canBattle)
@@ -151,7 +151,7 @@ public class BattleManager : MonoBehaviour
                 }
                 else
                 {
-                    unitList[i].orderIMG.color = Color.blue;
+                    //unitList[i].orderIMG.color = Color.blue;
                 }
             }
             isBattlePhase = true;

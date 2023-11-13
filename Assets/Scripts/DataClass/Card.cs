@@ -29,8 +29,8 @@ namespace CCGCard
     [System.Serializable]
     public class Card
     {
-        #region ¸â¹ö 
-        #region È¿°ú ¸ğÀ½
+        #region ë©¤ë²„ 
+        #region íš¨ê³¼ ëª¨ìŒ
         public List<CardEffect> summonEffects = new();
         public List<CardEffect> attackStartEffects = new();
         public List<CardEffect> findEnemyEffects = new();
@@ -38,7 +38,7 @@ namespace CCGCard
         public List<CardEffect> attackProcessEffects = new();
         public List<CardEffect> getDamageEffects = new();
         #endregion
-        List<Field> enemyUnitInfo = new List<Field>();
+        List<FieldCardObjectTest> enemyUnitInfo = new List<FieldCardObjectTest>();
         public int cardID;
         public string cardName;
         public Sprite cardSprite;
@@ -52,7 +52,7 @@ namespace CCGCard
         public int backDamage;
         #endregion
 
-        #region »ı¼ºÀÚ
+        #region ìƒì„±ì
         public Card()
         {
             this.cardID = 0;
@@ -83,9 +83,9 @@ namespace CCGCard
 
         #endregion
 
-        #region ¼øÂ÷Àû Ã³¸®
+        #region ìˆœì°¨ì  ì²˜ë¦¬
 
-        private async Task ActiveEffect(List<CardEffect> cardEffects, LinkedBattleField battleFieldInfo, Field casterInfo, List<Field> targetInfos)
+        private async Task ActiveEffect(List<CardEffect> cardEffects, LinkedBattleField battleFieldInfo, FieldCardObjectTest casterInfo, List<FieldCardObjectTest> targetInfos)
         {
             for (int i = 0; i < cardEffects.Count; i++)
             {
@@ -94,12 +94,12 @@ namespace CCGCard
             }
         }
 
-        public async void Summon(LinkedBattleField battleFieldInfo, Field casterInfo)
+        public async void Summon(LinkedBattleField battleFieldInfo, FieldCardObjectTest casterInfo)
         {
             await ActiveEffect(summonEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
         }
 
-        public async void AttackStart(LinkedBattleField battleFieldInfo, Field casterInfo)
+        public async void AttackStart(LinkedBattleField battleFieldInfo, FieldCardObjectTest casterInfo)
         {
             await ActiveEffect(attackStartEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
 
@@ -111,9 +111,9 @@ namespace CCGCard
             return;
         }
 
-        public async void GetDamage(Field thisCard, int damageVal)
+        public async void GetDamage(FieldCardObjectTest thisCard, int damageVal)
         {
-            if (thisCard.card.cardCategory == CardCategory.hero && thisCard.unitObject.playerID == GameManager.Instance.playerID)
+            if (thisCard.cardData.cardCategory == CardCategory.hero && thisCard.playerID.ToString() == GameManager.Instance.playerID)
             {
                 BattleManager.instance.damageSum += damageVal;
             }
