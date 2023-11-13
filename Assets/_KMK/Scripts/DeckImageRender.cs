@@ -7,48 +7,74 @@ using UnityEngine.UI;
 public class DeckImageRender : MonoBehaviour
 {
     public Deck deck;
-    public List<Image> image;
+    public List<Image> deckImage;
+    public List<Image> graveImage;
     public Sprite emptySprite;
     public int deckCount;
+    public int graveCount;
     
     public int preDeckCount;
 
     private void Start()
     {
-        CountRefresh();
+        DeckCountRefresh();
+        GraveCountRefresh();
         preDeckCount = deckCount;
     }
 
     // Update is called once per frame
     void Update()
     {
-        CountRefresh();
+        DeckCountRefresh();
+        GraveCountRefresh();
         if(preDeckCount != deckCount)
         {
             preDeckCount = deckCount;
-            ImageRend();
+            DeckImageRend();
         }
     }
 
-    public void ImageRend()
+    public void DeckImageRend()
     {
-        int imageCount = (deckCount + 2) / 3;
+        int deckImageCount = (deckCount + 2) / 3;
         
-        for (int i = 0; i < image.Count; i++)
+        for (int i = 0; i < deckImage.Count; i++)
         {
-            if (i < imageCount)
+            if (i < deckImageCount)
             {
-                image[i].gameObject.SetActive(true);
+                deckImage[i].gameObject.SetActive(true);
             }
             else
             {
-                image[i].gameObject.SetActive(false);
+                deckImage[i].gameObject.SetActive(false);
             }
         }
-        CountRefresh();
+        DeckCountRefresh();
+    }
+    public void GraveImageRend()
+    {
+        int graveImageCount = (deckCount + 2) / 3;
+
+        for (int i = 0; i < graveImage.Count; i++)
+        {
+            if (i < graveImageCount)
+            {
+                graveImage[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                graveImage[i].gameObject.SetActive(false);
+            }
+        }
+        GraveCountRefresh();
     }
 
-    public void CountRefresh()
+    private void GraveCountRefresh()
+    {
+        graveCount = deck.countOfGrave;
+    }
+
+    public void DeckCountRefresh()
     {
         deckCount = deck.countOfDeck;
     }

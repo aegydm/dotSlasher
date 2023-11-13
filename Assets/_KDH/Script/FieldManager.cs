@@ -43,7 +43,8 @@ public class FieldManager : MonoBehaviour
             OnEnemyHandChanged?.Invoke(enemyCardNum);
         }
     }
-
+    public bool isLeftForPun;
+    public bool cancelTrigger;
     private int _enemyCardNum;
     public Vector2 instantiatePosition;
     public Vector2 mousePos;
@@ -144,7 +145,7 @@ public class FieldManager : MonoBehaviour
         //                return false;
         //            }
         //            isLeftForPun = isLeft;
-        //            Debug.LogError(field.name + "좌측" + (isLeft ? "좌측" : "우측"));
+        //            Debug.LogError(field.name + "醫뚯륫" + (isLeft ? "醫뚯륫" : "?곗륫"));
 
         //            GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
         //            newField.GetComponent<Field>().isNewField = true;
@@ -190,7 +191,7 @@ public class FieldManager : MonoBehaviour
         //            {
         //                return false;
         //            }
-        //            Debug.LogError("우측" + (isLeft ? "좌측" : "우측"));
+        //            Debug.LogError("?곗륫" + (isLeft ? "醫뚯륫" : "?곗륫"));
 
         //            GameObject newField = Instantiate(FieldPrefab, instantiatePosition, Quaternion.identity);
         //            newField.GetComponent<Field>().isNewField = true;
@@ -284,7 +285,7 @@ public class FieldManager : MonoBehaviour
     }
 
     /// <summary>
-    /// OnClick용도의 함수
+    /// OnClick?⑸룄???⑥닔
     /// </summary>
     /// <param name="lookingLeft"></param>
     public void SelectDirection(bool lookingLeft)
@@ -297,7 +298,7 @@ public class FieldManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 필드 선택 취소
+    /// ?꾨뱶 ?좏깮 痍⑥냼
     /// </summary>
     public void Cancel()
     {
