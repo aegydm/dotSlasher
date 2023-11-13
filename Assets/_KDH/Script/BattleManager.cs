@@ -5,19 +5,22 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Linq;
 
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
-    public List<Field> unitList;
-
+    public List<FieldCardObjectTest> unitList;
+    public List<FieldCardObjectTest> battleList;
+    public bool isBattlePhase = false;
     //Test Code
     //public List<Unit> units;
     //public List<GameObject> gameObjects;
     //Test End
 
     public bool dirtySet = false;
+    public bool clickDirty = false;
 
     public int damageSum
     {
@@ -30,7 +33,7 @@ public class BattleManager : MonoBehaviour
             _damageSum = value;
             if (_damageSum < 0)
             {
-                Debug.LogError("µ¥¹ÌÁö´Â 0º¸´Ù Ä¿¾ß ÇÕ´Ï´Ù.");
+                Debug.LogError("ë°ë¯¸ì§€ëŠ” 0ë³´ë‹¤ ì»¤ì•¼ í•©ë‹ˆë‹¤.");
             }
         }
     }
@@ -49,6 +52,60 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (clickDirty == false && isBattlePhase && GameManager.Instance.gamePhase == GamePhase.BattlePhase && GameManager.Instance.canAct && (UIManager.Instance.isPopUI == false))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
+                List<float> distanceList = new();
+                float leastDis = float.MaxValue;
+                FieldCardObjectTest clickField = null;
+                colliders.Reverse();
+                foreach (Collider2D collider in colliders)
+                {
+                    if (collider.gameObject.layer == 7 && collider.gameObject.GetComponent<FieldCardObjectTest>().playerID.ToString() == GameManager.Instance.playerID)
+                    {
+                        distanceList.Add(Mathf.Abs(collider.transform.position.x - mousePos.x));
+                        if (leastDis >= Mathf.Abs(collider.transform.position.x - mousePos.x))
+                        {
+                            clickField = collider.transform.GetComponent<FieldCardObjectTest>();
+                        }
+                    }
+                }
+                if (clickField != null)
+                {
+                    if (clickField.cardData.cardName != string.Empty)
+                    {
+                        clickDirty = true;
+                        GameManager.Instance.photonView.RPC("AttackStartForPun", RpcTarget.All, clickField.transform.position);
+                    }
+                }
+            }
+        }
+    }
+    public IEnumerator AttackProcess(FieldCardObjectTest field)
+    {
+        //field.orderText.color = Color.red;
+        //field.orderIMG.color = Color.blue;
+        yield return new WaitForSeconds(5);
+        battleList.Remove(field);
+        if (battleList.Count > 0)
+        {
+            GameManager.Instance.canAct = false;
+            clickDirty = false;
+        }
+        else
+        {
+            dirtySet = false;
+            isBattlePhase = false;
+            Debug.LogError("*** ë°°í‹€ ì¢…ë£Œ ***");
+            GameManager.Instance.EndPhase();
+        }
+    }
+
     public void AttackButton()
     {
         if (PhotonNetwork.InRoom)
@@ -59,7 +116,7 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("¹èÆ² ÆäÀÌÁî°¡ ¾Æ´Õ´Ï´Ù.");
+                Debug.LogWarning("ë°°í‹€ í˜ì´ì¦ˆê°€ ì•„ë‹™ë‹ˆë‹¤.");
             }
         }
         else
@@ -70,7 +127,7 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("¹èÆ² ÆäÀÌÁî°¡ ¾Æ´Õ´Ï´Ù. -single");
+                Debug.LogWarning("ë°°í‹€ í˜ì´ì¦ˆê°€ ì•„ë‹™ë‹ˆë‹¤. -single");
             }
         }
     }
@@ -80,50 +137,26 @@ public class BattleManager : MonoBehaviour
         if (GameManager.Instance.gamePhase == GamePhase.BattlePhase && dirtySet == false)
         {
             dirtySet = true;
-            StartCoroutine(AttackProcess());
-        }
-    }
-
-    private IEnumerator AttackProcess()
-    {
-        for(int i = 0; i < unitList.Count; i++)
-        {
-            if (unitList[i].card.cardCategory == CardCategory.hero)
+            for (int i = 0; i < unitList.Count; i++)
             {
-                unitList[i].canBattle = ((Hero)unitList[i].card).canAttack;
-            }
-        }
-
-        for (int i = 0; i < unitList.Count; i++)
-        {
-            if (unitList[i].canBattle)
-            {
-                unitList[i].animator.Play("Idle");
-            }
-        }
-
-        Debug.LogError("~~~ ¹èÆ² ½ÃÀÛ~~~");
-        for (int i = 0; i < unitList.Count; i++)
-        {
-            Field tmp;
-            if (unitList[i].unitObject.cardData.cardName != string.Empty)
-            {
-                if (unitList[i].unitObject.lookingLeft)
+                if (unitList[i].cardData.cardCategory == CardCategory.hero)
                 {
-                    tmp = unitList[i].Prev;
+                    unitList[i].canBattle = ((Hero)unitList[i].cardData).canAttack;
+                }
+
+                if (unitList[i].canBattle)
+                {
+                    battleList.Add(unitList[i]);
+                    unitList[i].animator.Play("Idle");
                 }
                 else
                 {
-                    tmp = unitList[i].Next;
+                    //unitList[i].orderIMG.color = Color.blue;
                 }
-                unitList[i].unitObject.cardData.AttackStart(FieldManager.Instance.battleFields, unitList[i]);
-                yield return new WaitForSeconds(5);
-                unitList[i].orderText.color = Color.red;
             }
-
+            isBattlePhase = true;
         }
-        dirtySet = false;
-        Debug.LogError("*** ¹èÆ² Á¾·á ***");
-        GameManager.Instance.EndPhase();
     }
+
+
 }

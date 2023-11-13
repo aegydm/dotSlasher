@@ -1,17 +1,18 @@
 using CCGCard;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GetDamageEffect", menuName = "Effect/BaseEffect/GetDamageEffect")]
 public class GetDamageEffect : CardEffect
 {
-    public override async void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObjectTest caster, List<FieldCardObjectTest> targets)
     {
         caster.animator.Play("Death");
-        System.Threading.Tasks.Task deathTask = GameManager.Instance.CheckAnim(caster.animator, "Death");
+        Task deathTask = TestManager.instance.CheckAnim(caster.animator, "Death");
         await deathTask;
-        caster.unitObject.CardChange(new Card());
-        caster.ResetField();
+        caster.cardData = null;
+        return;
     }
 }

@@ -35,7 +35,7 @@ Transform:
   - {fileID: 4070759202810733254}
   - {fileID: 2707936998720518894}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3244108844858169479
 SpriteRenderer:
@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c77b6813b1b8b41a3d937ab30a0d6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNewField: 0
   blankField: 0
   isEmpty: 1
   fieldOrder: 0
@@ -176,6 +177,7 @@ MonoBehaviour:
   frontDamageText: {fileID: 6733333447429586734}
   backDamageText: {fileID: 692118745384278820}
   orderText: {fileID: 5328525396186526446}
+  orderIMG: {fileID: 1114704882600372705}
   playerColor: {fileID: 234254404882330702}
 --- !u!114 &7650042282013144550
 MonoBehaviour:
@@ -209,8 +211,7 @@ MonoBehaviour:
     backDamage: 0
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
-  squareSprite: {fileID: 0}
-  _playerName: 
+  _playerID: 
 --- !u!1 &3018531304895510006
 GameObject:
   m_ObjectHideFlags: 0

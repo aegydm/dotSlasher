@@ -1,30 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 [CreateAssetMenu(fileName = "AttackStartEffect", menuName = "Effect/BaseEffect/AttackStartEffect")]
 public class AttackStartEffect : CardEffect
 {
-    public override void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObjectTest caster, List<FieldCardObjectTest> targets)
     {
         targets.Clear();
         if (battleFieldInfo == null)
         {
-            Debug.Log("ÇÊµå°¡ ºñ¾îÀÖ½À´Ï´Ù.");
+            Debug.Log("í•„ë“œê°€ ë¹„ì–´ìˆìŠµë‹ˆë‹¤.");
+            await Task.Delay((int)(Time.deltaTime * 1000));
             return;
         }
         if (caster == null)
         {
-            Debug.Log("ºó ¿ÀºêÁ§Æ®");
+            Debug.Log("ë¹ˆ ì˜¤ë¸Œì íŠ¸");
+            await Task.Delay((int)(Time.deltaTime * 1000));
             return;
         }
         if (caster.canBattle == false)
         {
-            Debug.Log("°ø°İÇÒ ¼ö ¾ø´Â »óÅÂÀÔ´Ï´Ù.");
+            Debug.Log("ê³µê²©í•  ìˆ˜ ì—†ëŠ” ìƒíƒœì…ë‹ˆë‹¤.");
             caster.canBattle = false;
+            await Task.Delay((int)(Time.deltaTime * 1000));
             return;
         }
 
-        Debug.Log(caster.unitObject.cardData.cardName + "ÀÇ °ø°İ");
+        Debug.Log(caster.cardData.cardName + "ì˜ ê³µê²©");
+        await Task.Delay((int)(Time.deltaTime * 1000));
+        return;
     }
 }
