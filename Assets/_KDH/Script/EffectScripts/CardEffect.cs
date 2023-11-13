@@ -15,5 +15,5 @@ public enum Phase
 
 public abstract class CardEffect : ScriptableObject
 {
-    public abstract Task ExecuteEffect(LinkedBattleField battleField, FieldCardObjectTest caster, List<FieldCardObjectTest> targets);
+    public abstract Task ExecuteEffect(LinkedBattleField battleField, FieldCardObject caster, List<FieldCardObject> targets);
 }

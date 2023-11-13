@@ -14,7 +14,7 @@ public class Timer : MonoBehaviour
     private void Awake()
     {
         timer = timerObj.GetComponent<TMP_Text>();
-        GameManager.Instance.TurnStart += PlayerTimer;
+        GameManager.instance.CallTurnStart += PlayerTimer;
     }
 
 
@@ -45,7 +45,7 @@ public class Timer : MonoBehaviour
             yield return null;
         }
 
-        FieldManager.Instance.TurnEnd();
+        GameManager.instance.EndButton();
         timerObj.SetActive(false);
     }
 }

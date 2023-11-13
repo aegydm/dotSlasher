@@ -96,7 +96,7 @@ public class UIManager : MonoBehaviour
             }
         }
         deck.Draw(count);
-        TestManager.instance.playerEnd = true;
+        GameManager.instance.playerEnd = true;
     }
 
     public void PopupCard(List<Card> cardList)

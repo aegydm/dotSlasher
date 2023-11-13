@@ -90,7 +90,7 @@ public class HandCardObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (TestManager.instance.canAct && PlayerActionManager.instance.isDrag && isDrag && UIManager.Instance.isPopUI == false)
+        if (GameManager.instance.useCard == false && GameManager.instance.canAct && PlayerActionManager.instance.isDrag && isDrag && UIManager.Instance.isPopUI == false)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z - Camera.main.transform.position.z));
             transform.position = mousePos;
@@ -100,7 +100,7 @@ public class HandCardObject : MonoBehaviour
     private void OnMouseEnter()
     {
 
-        if (PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
+        if (GameManager.instance.useCard == false && PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
             spriteGO.transform.localScale = new(1.3f, 1.3f, 1.3f);
         }
@@ -108,7 +108,7 @@ public class HandCardObject : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
+        if (GameManager.instance.useCard == false && PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
             spriteGO.transform.localScale = new(1, 1, 1);
         }
@@ -116,7 +116,7 @@ public class HandCardObject : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (TestManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManagerTest.instance.isOpenDirection == false)
+        if (GameManager.instance.useCard == false && GameManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManager.instance.isOpenDirection == false)
         {
             isDrag = true;
             cardRenderer.color = new Color(1, 1, 1, 0);
@@ -130,33 +130,33 @@ public class HandCardObject : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (isDrag && PlayerActionManager.instance.field != null && PlayerActionManager.instance.field.isEmpty && UIManager.Instance.isPopUI == false && FieldManagerTest.instance.isOpenDirection == false)
+        if (GameManager.instance.useCard == false && isDrag && PlayerActionManager.instance.field != null && PlayerActionManager.instance.field.isEmpty && UIManager.Instance.isPopUI == false && FieldManager.instance.isOpenDirection == false)
         {
-            if (FieldManagerTest.instance.battleField.Find(PlayerActionManager.instance.field.gameObject) == null)
+            if (FieldManager.instance.battleField.Find(PlayerActionManager.instance.field.gameObject) == null)
             {
                 if (PlayerActionManager.instance.field.Next == null)
                 {
                     PlayerActionManager.instance.field.gameObject.GetComponent<BoxCollider2D>().enabled = true;
-                    FieldManagerTest.instance.make = true;
-                    FieldManagerTest.instance.makeLeft = false;
+                    FieldManager.instance.make = true;
+                    FieldManager.instance.makeLeft = false;
 
                     //FieldManagerTest.instance.battleField.AddAfter(PlayerActionManager.instance.field.Prev, PlayerActionManager.instance.field.gameObject);
                 }
                 else
                 {
                     PlayerActionManager.instance.field.gameObject.GetComponent<BoxCollider2D>().enabled = true;
-                    FieldManagerTest.instance.make = true;
-                    FieldManagerTest.instance.makeLeft = true;
+                    FieldManager.instance.make = true;
+                    FieldManager.instance.makeLeft = true;
                     //FieldManagerTest.instance.battleField.AddBefore(PlayerActionManager.instance.field.Next, PlayerActionManager.instance.field.gameObject);
                 }
             }
             PlayerActionManager.instance.selectUI.SetActive(true);
-            FieldManagerTest.instance.isOpenDirection = true;
+            FieldManager.instance.isOpenDirection = true;
             OpenDirection();
-            PlayerActionManager.instance.CancelSelect += FieldManagerTest.instance.CancelSelect;
+            PlayerActionManager.instance.CancelSelect += FieldManager.instance.CancelSelect;
             PlayerActionManager.instance.selectUI.transform.position = PlayerActionManager.instance.field.transform.position;
         }
-        else if(FieldManagerTest.instance.isOpenDirection == false)
+        else if (FieldManager.instance.isOpenDirection == false)
         {
             CancelDrag();
         }

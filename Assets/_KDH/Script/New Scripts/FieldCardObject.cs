@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 
-public class FieldCardObjectTest : MonoBehaviour
+public class FieldCardObject : MonoBehaviour
 {
     public Card cardData
     {
@@ -33,7 +33,7 @@ public class FieldCardObjectTest : MonoBehaviour
             }
             if(cardData != null && cardData != new Card())
             {
-                this.playerID = int.Parse(TestManager.instance.playerID);
+                this.playerID = int.Parse(GameManager.instance.playerID);
             }
         }
     }
@@ -53,7 +53,7 @@ public class FieldCardObjectTest : MonoBehaviour
 
     public void CheckInter()
     {
-        if (isEmpty == false && this == FieldManagerTest.instance.battleField.First)
+        if (isEmpty == false && this == FieldManager.instance.battleField.First)
         {
             leftInter.SetActive(true);
         }
@@ -91,7 +91,20 @@ public class FieldCardObjectTest : MonoBehaviour
     [Header("카드의 좌우")]
     [SerializeField] private bool _lookingLeft = false;
     [Header("필드 소유자의 ID")]
-    public int playerID;
+    [SerializeField] private int _playerID;
+
+    public int playerID
+    {
+        get
+        {
+            return _playerID;
+        }
+        set
+        {
+            _playerID = value;
+            ownerColor.color = new Color(255 - (255 * playerID), 255 * playerID, 0);
+        }
+    }
     [Header("카드의 소유자 표시용 이미지")]
     public Image ownerColor;
 
@@ -119,8 +132,8 @@ public class FieldCardObjectTest : MonoBehaviour
     [Header("우측 끼어들기 가능 영역 표시용")]
     [SerializeField] GameObject rightInter;
     [Header("이전 칸과 다음 칸의 정보")]
-    public FieldCardObjectTest Prev;
-    public FieldCardObjectTest Next;
+    public FieldCardObject Prev;
+    public FieldCardObject Next;
 
     private void RenderCard()
     {
@@ -140,7 +153,7 @@ public class FieldCardObjectTest : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (isEmpty && PlayerActionManager.instance.isDrag && TestManager.instance.canAct && UIManager.Instance.isPopUI == false)
+        if (isEmpty && PlayerActionManager.instance.isDrag && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
             PlayerActionManager.instance.field = this;
         }
@@ -162,9 +175,9 @@ public class FieldCardObjectTest : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (cardData != null && cardData.cardID != 0 && canBattle && TestManager.instance.gamePhase == GamePhase.BattlePhase && TestManager.instance.canAct && UIManager.Instance.isPopUI == false)
+        if (cardData != null && cardData.cardID != 0 && canBattle && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
-            cardData.AttackStart(FieldManagerTest.instance.battleField, this);
+            cardData.AttackStart(FieldManager.instance.battleField, this);
         }
     }
 }
