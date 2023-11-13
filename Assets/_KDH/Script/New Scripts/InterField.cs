@@ -23,7 +23,7 @@ public class InterField : MonoBehaviour
         //Debug.Log("Enter");
         if (trigger == false && PlayerActionManager.instance.isDrag & PlayerActionManager.instance.dirtyForInter == false)
         {
-            if(FieldManagerTest.instance.GetAdditionalField() == null)
+            if (FieldManagerTest.instance.GetAdditionalField() == null)
             {
                 Debug.Log("모든 필드를 사용했습니다.");
                 return;
@@ -81,32 +81,60 @@ public class InterField : MonoBehaviour
                 interLine.SetActive(false);
             }
         }
+        if (trigger == false && (PlayerActionManager.instance.isDrag || FieldManagerTest.instance.isOpenDirection))
+        {
+            Debug.Log("DIRTYON");
+            PlayerActionManager.instance.dirtyForInter = true;
+        }
     }
 
     private void OnMouseExit()
     {
-        CancelInter();
+        if (PlayerActionManager.instance.isDrag)
+        {
+            Debug.Log("mouseExit");
+            CancelInter();
+        }
     }
 
     public void CancelInterWithNewField()
     {
-        if (trigger == true && PlayerActionManager.instance.isDrag && additionalGO != null && PlayerActionManager.instance.dirtyForInter == true)
+        Debug.Log("CANCELNEW");
+        if (trigger == true && (PlayerActionManager.instance.isDrag || FieldManagerTest.instance.isOpenDirection) && additionalGO != null && PlayerActionManager.instance.dirtyForInter == true)
         {
+            interLine.SetActive(true);
             PlayerActionManager.instance.dirtyForInter = false;
             trigger = false;
             if (originField == null)
             {
-                interLine.SetActive(true);
+
                 FieldCardObjectTest temp = FieldManagerTest.instance.battleField.First;
+                //while (temp != null)
+                //{
+                //    temp.gameObject.transform.position -= new Vector3(0.825f, 0, 0);
+                //    temp = temp.Next;
+                //}
                 this.transform.localPosition = new Vector3(-0.55f, 0, 0);
+                //additionalGO.SetActive(false);
                 PlayerActionManager.instance.field = null;
                 additionalGO = null;
             }
             else
             {
-                interLine.SetActive(true);
+
                 FieldCardObjectTest temp = FieldManagerTest.instance.battleField.First;
+                //for (int i = 0; i <= FieldManagerTest.instance.battleField.FindIndex(originField); i++)
+                //{
+                //    temp.gameObject.transform.position += new Vector3(0.825f, 0, 0);
+                //    temp = temp.Next;
+                //}
+                //while (temp != null)
+                //{
+                //    temp.gameObject.transform.position -= new Vector3(0.825f, 0, 0);
+                //    temp = temp.Next;
+                //}
                 this.transform.localPosition = new Vector3(0.55f, 0, 0);
+                //additionalGO.SetActive(false);
                 PlayerActionManager.instance.field = null;
                 additionalGO = null;
             }
@@ -115,13 +143,22 @@ public class InterField : MonoBehaviour
 
     public void CancelInter()
     {
-        if (trigger == true && PlayerActionManager.instance.isDrag && additionalGO != null && PlayerActionManager.instance.dirtyForInter == true)
+        //Debug.Log("CANCELNormal1");
+        //Debug.Log(trigger);
+        //Debug.Log(" " + (PlayerActionManager.instance.isDrag || FieldManagerTest.instance.isOpenDirection));
+        //Debug.Log(" " + (additionalGO != null));
+        //Debug.Log(" " + (PlayerActionManager.instance.dirtyForInter == true));
+        if (trigger == true && (PlayerActionManager.instance.isDrag || FieldManagerTest.instance.isOpenDirection) && additionalGO != null && PlayerActionManager.instance.dirtyForInter == true)
         {
+            Debug.Log("CANCELNormal2");
+            interLine.SetActive(true);
+            Debug.Log(interLine.activeSelf);
             PlayerActionManager.instance.dirtyForInter = false;
+            PlayerActionManager.instance.field.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             trigger = false;
             if (originField == null)
             {
-                interLine.SetActive(true);
+
                 FieldCardObjectTest temp = FieldManagerTest.instance.battleField.First;
                 while (temp != null)
                 {
@@ -137,7 +174,7 @@ public class InterField : MonoBehaviour
             }
             else
             {
-                interLine.SetActive(true);
+
                 FieldCardObjectTest temp = FieldManagerTest.instance.battleField.First;
                 for (int i = 0; i <= FieldManagerTest.instance.battleField.FindIndex(originField); i++)
                 {

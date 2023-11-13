@@ -46,10 +46,10 @@ public class FieldCardObjectTest : MonoBehaviour
     [Header("카드의 공격력 표시용")]
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
-    
+
     public void CheckInter()
     {
-        if(isEmpty == false && this == FieldManagerTest.instance.battleField.First)
+        if (isEmpty == false && this == FieldManagerTest.instance.battleField.First)
         {
             leftInter.SetActive(true);
         }
@@ -57,7 +57,7 @@ public class FieldCardObjectTest : MonoBehaviour
         {
             leftInter.SetActive(false);
         }
-        if(isEmpty == false && (Next == null || Next.isEmpty == false))
+        if (isEmpty == false && (Next == null || Next.isEmpty == false))
         {
             rightInter.SetActive(true);
         }
@@ -75,10 +75,12 @@ public class FieldCardObjectTest : MonoBehaviour
         }
         set
         {
-            if(_lookingLeft != value)
+            if (_lookingLeft != value)
             {
                 cardSprite.flipX = value;
                 _lookingLeft = value;
+                frontATKText.text = _lookingLeft ? cardData.backDamage.ToString() : cardData.frontDamage.ToString();
+                backATKText.text = _lookingLeft ? cardData.frontDamage.ToString() : cardData.backDamage.ToString();
             }
         }
     }
@@ -97,7 +99,7 @@ public class FieldCardObjectTest : MonoBehaviour
         }
         set
         {
-            if(animator.runtimeAnimatorController != null && value == true)
+            if (animator.runtimeAnimatorController != null && value == true)
             {
                 animator.Play("Idle");
             }
@@ -120,8 +122,8 @@ public class FieldCardObjectTest : MonoBehaviour
     {
         cardSprite.sprite = cardData.cardSprite;
         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(cardData.animator);
-        frontATKText.text = cardData.frontDamage.ToString();
-        backATKText.text = cardData.backDamage.ToString();
+        frontATKText.text = _lookingLeft ? cardData.backDamage.ToString() : cardData.frontDamage.ToString();
+        backATKText.text = _lookingLeft ? cardData.frontDamage.ToString() : cardData.backDamage.ToString();
     }
 
     private void ResetRender()
@@ -134,7 +136,7 @@ public class FieldCardObjectTest : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (isEmpty && PlayerActionManager.instance.isDrag)
+        if (isEmpty && PlayerActionManager.instance.isDrag && TestManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
             PlayerActionManager.instance.field = this;
         }
@@ -142,12 +144,13 @@ public class FieldCardObjectTest : MonoBehaviour
 
     private void OnMouseExit()
     {
-        CancelFieldSelect();
+        if (PlayerActionManager.instance.isDrag)
+            CancelFieldSelect();
     }
 
     public void CancelFieldSelect()
     {
-        if (PlayerActionManager.instance.isDrag)
+        if (PlayerActionManager.instance.isDrag || PlayerActionManager.instance.dirtyForInter == false)
         {
             PlayerActionManager.instance.field = null;
         }
@@ -155,12 +158,12 @@ public class FieldCardObjectTest : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (cardData != null && cardData.cardID != 0 && canBattle && TestManager.instance.isBattle)
+        if (cardData != null && cardData.cardID != 0 && canBattle && TestManager.instance.isBattle && TestManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
             Debug.Log("전투 시작");
             TestManager.instance.isBattle = false;
             cardData.AttackStart(FieldManagerTest.instance.battleField, this);
+            Debug.Log("마우스가 눌렸다.");
         }
-        Debug.Log("마우스가 눌렸다.");
     }
 }

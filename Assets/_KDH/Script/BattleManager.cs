@@ -54,7 +54,7 @@ public class BattleManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (clickDirty == false && isBattlePhase && GameManager.Instance.gamePhase == GamePhase.BattlePhase && GameManager.Instance.canAct && (UIManager.Instance.isPopUI == false))
+        if (clickDirty == false && isBattlePhase && GameManager.Instance.gamePhase == GamePhaseOld.BattlePhase && GameManager.Instance.canAct && (UIManager.Instance.isPopUI == false))
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -110,7 +110,7 @@ public class BattleManager : MonoBehaviour
     {
         if (PhotonNetwork.InRoom)
         {
-            if (GameManager.Instance.gamePhase == GamePhase.BattlePhase)
+            if (GameManager.Instance.gamePhase == GamePhaseOld.BattlePhase)
             {
                 GameManager.Instance.photonView.RPC("AttackPhaseNetwork", RpcTarget.All);
             }
@@ -121,7 +121,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            if (GameManager.Instance.gamePhase == GamePhase.BattlePhase && dirtySet == false)
+            if (GameManager.Instance.gamePhase == GamePhaseOld.BattlePhase && dirtySet == false)
             {
                 AttackPhase();
             }
@@ -134,7 +134,7 @@ public class BattleManager : MonoBehaviour
 
     public void AttackPhase()
     {
-        if (GameManager.Instance.gamePhase == GamePhase.BattlePhase && dirtySet == false)
+        if (GameManager.Instance.gamePhase == GamePhaseOld.BattlePhase && dirtySet == false)
         {
             dirtySet = true;
             for (int i = 0; i < unitList.Count; i++)

@@ -9,10 +9,12 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public bool isPopUI = false;
+    List<GameObject> cardList = new();
+    [SerializeField] GameObject mulliganButton;
     [SerializeField] GameObject popUpUi;
     [SerializeField] GameObject gridLayout;
     [SerializeField] GameObject cardObject;
-    Deck deck;
+    [SerializeField] Deck deck;
     public Card selectCard
     {
         get
@@ -60,45 +62,39 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("UIManager´Â 1°³¸¸ Á¸ÀçÇØ¾ß ÇÕ´Ï´Ù.");
+            Debug.LogError("UIManagerëŠ” 1ê°œë§Œ ì¡´ìž¬í•´ì•¼ í•©ë‹ˆë‹¤.");
             Destroy(this);
         }
     }
 
     public void TestPopUp()
     {
-        List<Card> tmpDeck;
-        BuildManager.instance.Load("1", out tmpDeck);
-        PopupCard(tmpDeck);
+        PopupCard(deck.useDeck);
     }
 
-    //private void Update()
-    //{
-    //    if (isPopUI)
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.Escape))
-    //        {
-    //            foreach (Transform child in gridLayout.transform)
-    //            {
-    //                Destroy(child.gameObject);
-    //                isPopUI = false;
-    //                popUpUi.SetActive(false);
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.Alpha9))
-    //        {
-    //            popUpUi.SetActive(true);
-    //            if(deck == null)
-    //            {
-    //                deck = GetComponent<Deck>();
-    //            }
-    //            PopupCard(deck.useDeck);
-    //        }
-    //    }
-    //}
+    public void StartMulligan()
+    {
+        Debug.Log("StartMulligan");
+        PopupCard(PlayerActionManager.instance.handCardObjectArray);
+    }
+
+    public void EndMulligan()
+    {
+        int count = 0;
+        mulliganButton.SetActive(false);
+        ClosePopup();
+        for(int i = 0; i < cardList.Count; i++)
+        {
+            if (cardList[i].GetComponent<UICard>().isSelected)
+            {
+                deck.Refill(cardList[i].GetComponent<UICard>().cardData);
+                cardList[i].GetComponent<UICard>().handCardObject.cardData = null;
+                Destroy(cardList[i]);
+                count++;
+            }
+        }
+        deck.Draw(count);
+    }
 
     public void PopupCard(List<Card> cardList)
     {
@@ -110,9 +106,30 @@ public class UIManager : MonoBehaviour
             foreach (Card card in cardList)
             {
                 go = Instantiate(cardObject, gridLayout.transform);
-                go.GetComponent<UnitObject>().Setting(card);
-                go.GetComponent<Image>().sprite = go.GetComponent<SpriteRenderer>().sprite;
+                go.GetComponent<UICard>().cardData = card;
+                go.GetComponent<Image>().sprite = go.GetComponent<SpriteRenderer>().sprite = card.cardSprite;
             }
+        }
+    }
+
+    public void PopupCard(HandCardObject[] handList)
+    {
+        Debug.Log("PopupCard");
+        if (isPopUI == false)
+        {
+            popUpUi.SetActive(true);
+            isPopUI = true;
+            GameObject go;
+            foreach (var card in handList)
+            {
+
+                go = Instantiate(cardObject, gridLayout.transform);
+                cardList.Add(go);
+                go.GetComponent<UICard>().cardData = card.cardData;
+                go.GetComponent<Image>().sprite = go.GetComponent<UICard>().spriteRenderer.sprite = card.cardSprite.sprite;
+                go.GetComponent<UICard>().handCardObject = card;
+            }
+            mulliganButton.SetActive(true);
         }
     }
 
