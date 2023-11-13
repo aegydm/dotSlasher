@@ -69,6 +69,18 @@ public class HandCardObject : MonoBehaviour
         boxCollider.enabled = true;
     }
 
+    public void OpenDirection()
+    {
+        PlayerActionManager.instance.isDrag = false;
+        transform.position = originPos;
+        spriteGO.transform.localScale = new(1, 1, 1);
+        frontATKText.enabled = true;
+        backATKText.enabled = true;
+        cardRenderer.color = new Color(1, 1, 1, 1);
+        isDrag = false;
+        boxCollider.enabled = true;
+    }
+
     private void Start()
     {
         originPos = transform.position;
@@ -78,7 +90,7 @@ public class HandCardObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (PlayerActionManager.instance.isDrag && isDrag)
+        if (TestManager.instance.canAct && PlayerActionManager.instance.isDrag && isDrag && UIManager.Instance.isPopUI == false)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z - Camera.main.transform.position.z));
             transform.position = mousePos;
@@ -88,7 +100,7 @@ public class HandCardObject : MonoBehaviour
     private void OnMouseEnter()
     {
 
-        if (PlayerActionManager.instance.isDrag == false)
+        if (PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
             spriteGO.transform.localScale = new(1.3f, 1.3f, 1.3f);
         }
@@ -96,8 +108,7 @@ public class HandCardObject : MonoBehaviour
 
     private void OnMouseExit()
     {
-
-        if (PlayerActionManager.instance.isDrag == false)
+        if (PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
             spriteGO.transform.localScale = new(1, 1, 1);
         }
@@ -105,45 +116,50 @@ public class HandCardObject : MonoBehaviour
 
     private void OnMouseDown()
     {
-        isDrag = true;
-        cardRenderer.color = new Color(1, 1, 1, 0);
-        frontATKText.enabled = false;
-        backATKText.enabled=false;
-        PlayerActionManager.instance.isDrag = true;
-        PlayerActionManager.instance.dragCardGO = this;
-        boxCollider.enabled = false;
+        if (TestManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManagerTest.instance.isOpenDirection == false)
+        {
+            isDrag = true;
+            cardRenderer.color = new Color(1, 1, 1, 0);
+            frontATKText.enabled = false;
+            backATKText.enabled = false;
+            PlayerActionManager.instance.isDrag = true;
+            PlayerActionManager.instance.dragCardGO = this;
+            boxCollider.enabled = false;
+        }
     }
 
     private void OnMouseUp()
     {
-        if (isDrag && PlayerActionManager.instance.field != null && PlayerActionManager.instance.field.isEmpty)
+        if (isDrag && PlayerActionManager.instance.field != null && PlayerActionManager.instance.field.isEmpty && UIManager.Instance.isPopUI == false && FieldManagerTest.instance.isOpenDirection == false)
         {
-            if(FieldManagerTest.instance.battleField.Find(PlayerActionManager.instance.field.gameObject) == null)
+            if (FieldManagerTest.instance.battleField.Find(PlayerActionManager.instance.field.gameObject) == null)
             {
-                if(PlayerActionManager.instance.field.Next == null)
+                if (PlayerActionManager.instance.field.Next == null)
                 {
-                    Debug.Log("ADD1");
                     PlayerActionManager.instance.field.gameObject.GetComponent<BoxCollider2D>().enabled = true;
-                    FieldManagerTest.instance.battleField.AddAfter(PlayerActionManager.instance.field.Prev, PlayerActionManager.instance.field.gameObject);
+                    FieldManagerTest.instance.make = true;
+                    FieldManagerTest.instance.makeLeft = false;
+
+                    //FieldManagerTest.instance.battleField.AddAfter(PlayerActionManager.instance.field.Prev, PlayerActionManager.instance.field.gameObject);
                 }
                 else
                 {
-                    Debug.Log("Add2");
                     PlayerActionManager.instance.field.gameObject.GetComponent<BoxCollider2D>().enabled = true;
-                    FieldManagerTest.instance.battleField.AddBefore(PlayerActionManager.instance.field.Next, PlayerActionManager.instance.field.gameObject);
-
+                    FieldManagerTest.instance.make = true;
+                    FieldManagerTest.instance.makeLeft = true;
+                    //FieldManagerTest.instance.battleField.AddBefore(PlayerActionManager.instance.field.Next, PlayerActionManager.instance.field.gameObject);
                 }
             }
-            PlayerActionManager.instance.field.cardData = cardData;
-            PlayerActionManager.instance.CancelWithNewField();
-            PlayerActionManager.instance.dirtyForInter = false;
-            PlayerActionManager.instance.RemoveHandCard(this);
+            PlayerActionManager.instance.selectUI.SetActive(true);
+            FieldManagerTest.instance.isOpenDirection = true;
+            OpenDirection();
+            PlayerActionManager.instance.CancelSelect += FieldManagerTest.instance.CancelSelect;
+            PlayerActionManager.instance.selectUI.transform.position = PlayerActionManager.instance.field.transform.position;
         }
-        else
+        else if(FieldManagerTest.instance.isOpenDirection == false)
         {
             CancelDrag();
         }
-        FieldManagerTest.instance.CheckInterAll();
     }
 
     private void RenderCard()

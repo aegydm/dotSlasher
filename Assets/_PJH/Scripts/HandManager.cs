@@ -42,7 +42,7 @@ public class HandManager : MonoBehaviour
         {
             usingSelectedCard = false;
         }
-        if (GameManager.Instance.gamePhase == GamePhase.ActionPhase && GameManager.Instance.canAct && UIManager.Instance.isPopUI == false)
+        if (GameManager.Instance.gamePhase == GamePhaseOld.ActionPhase && GameManager.Instance.canAct && UIManager.Instance.isPopUI == false)
         {
             if (usingSelectedCard == false)
             {

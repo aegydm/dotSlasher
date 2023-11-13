@@ -191,6 +191,11 @@ public class Deck : MonoBehaviour
         Draw(cards.Length);
     }
 
+    public void Mulligan(HandCardObject[] handCardList)
+    {
+
+    }
+
     /// <summary>
     /// 드로우 페이즈에만 드로우가 가능한 기능
     /// </summary>
@@ -198,7 +203,7 @@ public class Deck : MonoBehaviour
     {
         switch (GameManager.Instance.gamePhase)
         {
-            case GamePhase.DrawPhase:
+            case GamePhaseOld.DrawPhase:
                 Draw(1);
                 break;
 

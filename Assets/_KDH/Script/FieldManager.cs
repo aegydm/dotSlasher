@@ -48,7 +48,8 @@ public class FieldManager : MonoBehaviour
     public Vector2 instantiatePosition;
     public Vector2 mousePos;
     public Vector2 tilePos;
-
+    public bool cancelTrigger;
+    public bool isLeftForPun;
     public event Action<int> OnEnemyHandChanged;
 
     const int FULL_FIELD_COUNT = 10;
@@ -85,7 +86,7 @@ public class FieldManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1) && GameManager.Instance.gamePhase == GamePhase.ActionPhase && GameManager.Instance.canAct && cancelTrigger)
+        if (Input.GetMouseButtonDown(1) && GameManager.Instance.gamePhase == GamePhaseOld.ActionPhase && GameManager.Instance.canAct && cancelTrigger)
         {
             Cancel();
         }
