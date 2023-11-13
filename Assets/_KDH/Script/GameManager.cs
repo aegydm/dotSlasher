@@ -1,16 +1,16 @@
 using CCGCard;
-using JetBrains.Annotations;
 using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public enum GamePhase
 {
+    None,
     DrawPhase,
     ActionPhase,
     BattlePhase,
@@ -20,56 +20,15 @@ public enum GamePhase
 
 public class GameManager : MonoBehaviour
 {
+    #region Event
+    public event Action TurnStart;
+    #endregion
+    #region public member
     public static GameManager Instance;
-    public TMP_Text text;
+    public bool startFirst;
+    public bool isGameEnd;
     public TMP_Text turnText;
-    [SerializeField] GameObject endScene;
-    public bool isGameEnd = false;
-    bool gameStart = false;
-
-    //2¿Œ «√∑π¿Ã ≈◊Ω∫∆Æ øÎ ¿”Ω√ ƒ⁄µÂ
-    public string playerID
-    {
-        get
-        {
-            return _playerID;
-        }
-        set
-        {
-            _playerID = value;
-        }
-    }
-
-    [SerializeField] private string _playerID = "-1";
-
     public PhotonView photonView;
-    //End
-
-    public GamePhase gamePhase
-    {
-        get
-        {
-            return _gamePhase;
-        }
-        private set { _gamePhase = value; }
-    }
-
-    public int currentTurn
-    {
-        get
-        {
-            return _currentTurn;
-        }
-        set
-        {
-            _currentTurn = value;
-            if (gamePhase == GamePhase.ActionPhase)
-            {
-                turnText.text = "Turn : " + _currentTurn.ToString();
-            }
-        }
-    }
-
     public bool playerEnd
     {
         get
@@ -79,14 +38,13 @@ public class GameManager : MonoBehaviour
         set
         {
             _playerEnd = value;
-            if (_playerEnd)
+            if (_playerEnd && (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase))
             {
                 photonView.RPC("CallActionEnd", RpcTarget.Others);
             }
             CheckPhaseEnd();
         }
     }
-
     public bool enemyEnd
     {
         get
@@ -99,7 +57,6 @@ public class GameManager : MonoBehaviour
             CheckPhaseEnd();
         }
     }
-
     public bool canAct
     {
         get
@@ -109,42 +66,87 @@ public class GameManager : MonoBehaviour
         set
         {
             _canAct = value;
-            if (_canAct == false && gamePhase == GamePhase.ActionPhase)
+            if (_canAct == false && (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase))
             {
                 currentTurn++;
                 photonView.RPC("MatchTurnNum", RpcTarget.Others, currentTurn);
                 photonView.RPC("CallSummonEnd", RpcTarget.Others);
             }
-            else
+            else if (canAct == true && gamePhase == GamePhase.ActionPhase)
             {
                 TurnStart?.Invoke();
             }
         }
     }
-    public event Action TurnStart;
+    public string playerID
+    {
+        get
+        {
+            return _playerID;
+        }
+        set
+        {
+            _playerID = value;
+        }
+    }
+    public int currentTurn
+    {
+        get
+        {
+            return _currentTurn;
+        }
+        set
+        {
+            _currentTurn = value;
+            if (gamePhase == GamePhase.ActionPhase)
+            {
+                turnText.text = "Action Turn : " + (_currentTurn + 1).ToString();
+            }
+            else if (gamePhase == GamePhase.BattlePhase)
+            {
+                turnText.text = "Battle Turn : " + (_currentTurn + 1).ToString();
+            }
+        }
+    }
+    public GamePhase gamePhase
+    {
+        get
+        {
+            return _gamePhase;
+        }
+        private set 
+        {
+            _gamePhase = value;
+        }
+    }
+    #endregion
 
-    public bool startFirst = false;
+    #region SerializeField Members
+    [SerializeField] GameObject endScene;
+    [SerializeField] Image personalColor;
+    #endregion
 
+    #region private Members
+    private bool gameStart;
+    [SerializeField] private bool _playerEnd;
+    [SerializeField] private bool _enemyEnd;
     [SerializeField] private bool _canAct;
+    [SerializeField] private string _playerID = "-1";
+    [SerializeField] private int _currentTurn;
+    [SerializeField] private GamePhase _gamePhase;
+    private Deck deck;
+    #endregion
+
+
+    private GameObject tmpField = null;
 
     private void CheckPhaseEnd()
     {
-        if (playerEnd && enemyEnd)
+        if (playerEnd && enemyEnd && gamePhase != GamePhase.BattlePhase)
         {
             EndPhase();
         }
     }
-
-    [SerializeField] private int _currentTurn;
-
-    [SerializeField] private bool _playerEnd;
-
-    [SerializeField] private bool _enemyEnd;
-
-    private Deck deck;
-
-    [SerializeField] private GamePhase _gamePhase;
-
     private void Awake()
     {
         if (Instance == null)
@@ -162,81 +164,52 @@ public class GameManager : MonoBehaviour
         startFirst = NetworkManager.instance.first;
         NetworkManager.instance.SetPlayerID();
         ResetState();
-
-    }
-
-    private void Update()
-    {
-        if (PhotonNetwork.InRoom)
-        {
-            text.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
-        }
+        personalColor.color = new Color(255 - (255 * int.Parse(playerID)), 255 * int.Parse(playerID), 0);
     }
 
     private void ResetState()
     {
-        playerEnd = false;
-        enemyEnd = false;
+        _playerEnd = false;
+        _enemyEnd = false;
     }
 
-    public void StartSetting()
+
+
+    public void MulliganHandCard()
     {
-        if (deck == null)
+        gameStart = true;
+        List<Card> handList = new();
+        for (int i = 0; i < HandManager.Instance.hands.Count; i++)
         {
-            deck = GetComponent<Deck>();
-            deck.Shuffle();
-            FieldManager.Instance.ResetAllField();
-            SummonHero();
+            handList.Add(HandManager.Instance.hands[i].card);
         }
-
-        if (gamePhase == GamePhase.DrawPhase)
-        {
-            //deck.Shuffle();
-            deck.Draw(4);
-            photonView.RPC("EnemyCardChange", RpcTarget.Others, 4);
-            playerEnd = true;
-        }
-        else
-        {
-            Debug.Log("µÂ∑ŒøÏ ∆‰¿Ã¡Óø°∏∏ ¿€µø«’¥œ¥Ÿ.");
-        }
-
-        if (gameStart == false)
-        {
-            gameStart = true;
-            List<Card> handList = new();
-            for (int i = 0; i < HandManager.Instance.hands.Count; i++)
-            {
-                handList.Add(HandManager.Instance.hands[i].card);
-            }
-            UIManager.Instance.PopupCard(handList);
-        }
+        UIManager.Instance.PopupCard(handList);
     }
 
     private void SummonHero()
     {
-        if(int.Parse(playerID)%2 == 0)
-        {
-            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.First,deck.myHero,int.Parse(playerID),false);
-        }
-        else
-        {
-            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.Last, deck.myHero, int.Parse(playerID), true);
-        }
-        photonView.RPC("SummonHeroForPun", RpcTarget.Others, int.Parse(playerID), deck.myHero.cardID);
+        //if (int.Parse(playerID) % 2 == 0)
+        //{
+        //    FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.First, deck.myHero, int.Parse(playerID), false);
+        //}
+        //else
+        //{
+        //    FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.Last, deck.myHero, int.Parse(playerID), true);
+        //}
+        //photonView.RPC("SummonHeroForPun", RpcTarget.Others, int.Parse(playerID), deck.myHero.cardID);
     }
 
     [PunRPC]
     public void SummonHeroForPun(int id, int cardID)
     {
-        if (id % 2 == 0)
-        {
-            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.First, CardDB.instance.FindCardFromID(cardID), id, false);
-        }
-        else
-        {
-            FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.Last, CardDB.instance.FindCardFromID(cardID), id, true);
-        }
+        //if (id % 2 == 0)
+        //{
+        //    FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.First, CardDB.instance.FindCardFromID(cardID), id, false);
+        //}
+        //else
+        //{
+        //    FieldManager.Instance.PlaceCard(FieldManager.Instance.battleFields.Last, CardDB.instance.FindCardFromID(cardID), id, true);
+        //}
     }
 
     [PunRPC]
@@ -259,25 +232,25 @@ public class GameManager : MonoBehaviour
                 {
                     canAct = false;
                 }
-                //∞°¿ßπŸ¿ß∫∏ ∞·∞˙∑Œ ¥Î√º «“ ƒ⁄µÂ
-                //if (int.Parse(playerID) % 2 == 0)
-                //{
-                //    canAct = true;
-                //}
-                //else
-                //{
-                //    canAct = false;
-                //}
-                //
                 currentTurn = 0;
                 gamePhase = GamePhase.ActionPhase;
                 break;
             case GamePhase.ActionPhase:
+                currentTurn = 0;
+                ResetState();
                 gamePhase = GamePhase.BattlePhase;
+                //if (startFirst)
+                //{
+                //    Debug.Log("StartFirst Can Act");
+                //    _canAct = true;
+                //}
+                //else
+                //{
+                //    _canAct = false;
+                //}
                 BattleManager.instance.AttackButton();
                 break;
             case GamePhase.BattlePhase:
-                ResetState();
                 gamePhase = GamePhase.ExecutionPhase;
                 ExecuteGame();
                 break;
@@ -292,48 +265,83 @@ public class GameManager : MonoBehaviour
         turnText.text = gamePhase.ToString();
     }
 
+    [PunRPC]
+    public void AttackStartForPun(Vector3 fieldPos)
+    {
+        FieldCardObjectTest tempFIeld = null;
+        foreach (FieldCardObjectTest field in BattleManager.instance.battleList)
+        {
+            if (field.transform.position == fieldPos)
+            {
+                tempFIeld = field;
+                break;
+            }
+        }
+        if (tempFIeld != null)
+        {
+            tempFIeld.cardData.AttackStart(FieldManager.Instance.battleFields, tempFIeld);
+            StartCoroutine(BattleManager.instance.AttackProcess(tempFIeld));
+        }
+        else
+        {
+            Debug.LogError("Ï†ïÏÉÅÏ†ÅÏù¥ÏßÄ ÏïäÏùÄ ÌïÑÎìúÎ•º Í≥µÍ≤©ÏãúÌÇ§Î†§ ÌñàÏäµÎãàÎã§.");
+        }
+    }
+
     private void EndGame()
     {
-        Field tmp = FieldManager.Instance.battleFields.First;
-        while (tmp != null)
-        {
-            if (tmp.card.cardCategory != CardCategory.hero)
-            {
-                if (tmp.unitObject.playerID == playerID)
-                {
-                    deck.Refill(tmp.unitObject.cardData);
-                    tmp.ResetField();
-                }
-                else
-                {
-                    tmp.ResetField();
-                }
-            }
-            tmp = tmp.Next;
-        }
-        BattleManager.instance.unitList.Clear();
-        FieldManager.Instance.ResetAllField();
-        EndPhase();
+        //Field tmp = FieldManager.Instance.battleFields.First;
+        //while (tmp != null)
+        //{
+        //    if (tmp.card.cardCategory != CardCategory.hero)
+        //    {
+        //        if (tmp.unitObject.playerID == playerID)
+        //        {
+        //            deck.Refill(tmp.unitObject.cardData);
+        //            tmp.ResetField();
+        //        }
+        //        else
+        //        {
+        //            tmp.ResetField();
+        //        }
+        //    }
+        //    tmp = tmp.Next;
+        //}
+        //Field tmp1 = BattleManager.instance.unitList[0];
+        //Field tmp2 = BattleManager.instance.unitList[1];
+
+        //BattleManager.instance.unitList.Clear();
+
+        //BattleManager.instance.unitList.Add(tmp1);
+        //BattleManager.instance.unitList.Add(tmp2);
+
+        //FieldManager.Instance.ResetAllField();
+        //EndPhase();
     }
 
     private void ExecuteGame()
     {
-        Debug.LogError("√≥∏Æ ∆‰¿Ã¡Óø° ¡¯¿‘«ﬂΩ¿¥œ¥Ÿ.");
+        Debug.LogError("Ï≤òÎ¶¨ ÌéòÏù¥Ï¶àÏóê ÏßÑÏûÖÌñàÏäµÎãàÎã§.");
+        if (BattleManager.instance.damageSum == 0)
+        {
+            Debug.LogError("Î≤ÑÎ¶¥ Ïπ¥ÎìúÍ∞Ä ÏóÜÏäµÎãàÎã§.");
+            playerEnd = true;
+        }
         StartCoroutine(DiscardByDamage());
     }
 
     IEnumerator DiscardByDamage()
     {
-        Debug.LogError($"{BattleManager.instance.damageSum}¿Â πˆ∑¡æﬂ «’¥œ¥Ÿ.");
+        Debug.LogError($"{BattleManager.instance.damageSum}Ïû• Î≤ÑÎ†§Ïïº Ìï©ÎãàÎã§.");
         UIManager.Instance.PopupCard(deck.useDeck);
         UIManager.Instance.selectCardChanged += Discard;
-        while(BattleManager.instance.damageSum > 0)
+        while (BattleManager.instance.damageSum > 0)
         {
             yield return new WaitForSeconds(Time.deltaTime);
         }
         UIManager.Instance.selectCardChanged -= Discard;
         UIManager.Instance.ClosePopup();
-        Debug.LogError("ƒ´µÂ∏¶ ¿¸∫Œ πˆ∑»Ω¿¥œ¥Ÿ");
+        Debug.LogError("Ïπ¥ÎìúÎ•º Ï†ÑÎ∂Ä Î≤ÑÎ†∏ÏäµÎãàÎã§");
         playerEnd = true;
     }
 
@@ -346,117 +354,115 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    [PunRPC]
+    public void MakeFieldAndSetCardForPun(Vector2 mousePos, Vector2 fieldPos, bool isLeft, int cardID, int playerID, bool lookLeft)
+    {
+        Debug.Log("MAKE");
+        SelectFieldForPun(mousePos, fieldPos, isLeft);
+        Card summonCard = CardDB.instance.FindCardFromID(cardID);
+        FieldManager.Instance.PlaceCard(tmpField.GetComponent<FieldCardObjectTest>(), summonCard, playerID, lookLeft);
+    }
+
+
     [PunRPC]
     public void PlaceCardForPun(Vector2 pos, int cardID, int playerID, bool lookLeft)
     {
 
-        Vector2 mousePos = pos;
-        //FieldManager.Instance.instantiatePosition = new Vector3(mousePos.x, 0, 0);
-        RaycastHit2D rayhit = Physics2D.Raycast(mousePos, Vector2.zero);
-        if (cardID != 0)
+        Collider2D[] colliders = Physics2D.OverlapPointAll(pos);
+        foreach (Collider2D collider in colliders)
         {
-            Card summonCard = CardDB.instance.FindCardFromID(cardID);
-            FieldManager.Instance.PlaceCard(rayhit.collider.GetComponent<Field>(), summonCard, playerID, lookLeft);
+
+            FieldCardObjectTest field = collider.gameObject.GetComponent<FieldCardObjectTest>();
+            if ((Vector2)field.transform.position == pos)
+            {
+                if (cardID != 0)
+                {
+
+                    Card summonCard = CardDB.instance.FindCardFromID(cardID);
+                    FieldManager.Instance.PlaceCard(collider.GetComponent<FieldCardObjectTest>(), summonCard, playerID, lookLeft);
+                    return;
+                }
+            }
         }
     }
 
-    /// <summary>
-    /// Creat Tile By Pun
-    /// </summary>
-    /// <param name="mousePos"></param>
-    /// <param name="pos"></param>
     [PunRPC]
     public void SelectFieldForPun(Vector2 mousePos, Vector2 pos, bool temp)
     {
-        Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
-        foreach (Collider2D collider in colliders)
-        {
-            if (temp == mousePos.x <= collider.transform.position.x)
-            {
-                Field field = collider.gameObject.GetComponent<Field>();
-                if (temp)
-                {
-                    Debug.LogError("¡¬√¯" + (temp ? "¡¬√¯" : "øÏ√¯"));
-                    GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
-                    FieldManager.Instance.newFields.Add(newField);
-                    FieldManager.Instance.battleFields.AddBefore(field, newField);
-                    Field tmp = FieldManager.Instance.battleFields.First;
-                    FieldManager.Instance.fields.Clear();
-                    while (tmp != null)
-                    {
-                        FieldManager.Instance.fields.Add(tmp.gameObject);
-                        tmp = tmp.Next;
-                    }
-                    for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
-                    {
-                        try
-                        {
-                            FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogError(e.Message);
-                            break;
-                        }
-                    }
-                    return;
-                }
-                else
-                {
-                    Debug.LogError("øÏ√¯" + (temp ? "¡¬√¯" : "øÏ√¯"));
-                    GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
-                    FieldManager.Instance.newFields.Add(newField);
-                    FieldManager.Instance.battleFields.AddAfter(field, newField);
-                    Field tmp = FieldManager.Instance.battleFields.First;
-                    FieldManager.Instance.fields.Clear();
-                    while (tmp != null)
-                    {
-                        FieldManager.Instance.fields.Add(tmp.gameObject);
-                        tmp = tmp.Next;
-                    }
-                    for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
-                    {
-                        try
-                        {
-                            FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogException(e);
-                            break;
-                        }
-                    }
-                    return;
-                }
+        //Collider2D[] colliders = Physics2D.OverlapPointAll(mousePos);
+        //foreach (Collider2D collider in colliders)
+        //{
+        //    Field field = collider.gameObject.GetComponent<Field>();
+        //    if (field.isEmpty)
+        //    {
+        //        tmpField = field.gameObject;
+        //        return;
+        //    }
+        //    if (temp == mousePos.x <= collider.transform.position.x)
+        //    {
+        //        if (temp)
+        //        {
+        //            Debug.LogError(field.name + "Ï¢åÏ∏°" + (temp ? "Ï¢åÏ∏°" : "Ïö∞Ï∏°"));
+        //            GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
+        //            FieldManager.Instance.newFields.Add(newField);
+        //            FieldManager.Instance.battleFields.AddBefore(field, newField);
+        //            Field tmp = FieldManager.Instance.battleFields.First;
+        //            FieldManager.Instance.fields.Clear();
 
-            }
-            //if (collider.gameObject.layer == 7)
-            //{
+        //            while (tmp != null)
+        //            {
+        //                FieldManager.Instance.fields.Add(tmp.gameObject);
+        //                tmp = tmp.Next;
+        //            }
+        //            for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
+        //            {
+        //                try
+        //                {
+        //                    FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    Debug.LogError(e.Message);
+        //                    break;
+        //                }
+        //            }
+        //            tmpField = newField;
+        //            Debug.LogError(tmpField.name);
+        //            return;
+        //        }
+        //        else
+        //        {
+        //            Debug.LogError("Ïö∞Ï∏°" + (temp ? "Ï¢åÏ∏°" : "Ïö∞Ï∏°"));
+        //            GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
+        //            FieldManager.Instance.newFields.Add(newField);
+        //            FieldManager.Instance.battleFields.AddAfter(field, newField);
+        //            Field tmp = FieldManager.Instance.battleFields.First;
+        //            FieldManager.Instance.fields.Clear();
+        //            while (tmp != null)
+        //            {
+        //                FieldManager.Instance.fields.Add(tmp.gameObject);
+        //                tmp = tmp.Next;
+        //            }
+        //            for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
+        //            {
+        //                try
+        //                {
+        //                    FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    Debug.LogException(e);
+        //                    break;
+        //                }
+        //            }
+        //            tmpField = newField;
+        //            Debug.LogError(tmpField.name);
+        //            return;
+        //        }
 
-            //    GameObject newField = Instantiate(FieldManager.Instance.FieldPrefab, pos, Quaternion.identity);
-            //    FieldManager.Instance.battleFields.AddBefore(field, newField);
-            //    Field tmp = FieldManager.Instance.battleFields.First;
-            //    FieldManager.Instance.fields.Clear();
-            //    while (tmp != null)
-            //    {
-            //        FieldManager.Instance.fields.Add(tmp.gameObject);
-            //        tmp = tmp.Next;
-            //    }
-            //    for (int posit = (FieldManager.Instance.fields.Count - 1) * -9, i = 0; i < FieldManager.Instance.fields.Count; posit += 18, i++)
-            //    {
-            //        try
-            //        {
-            //            FieldManager.Instance.fields[i].transform.position = new Vector3(posit, 0, 0);
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            Debug.LogError(e.Message);
-            //            break;
-            //        }
-            //    }
-            //    return;
-            //}
-        }
+        //    }
+        //}
     }
 
     [PunRPC]
@@ -478,12 +484,11 @@ public class GameManager : MonoBehaviour
     }
 
     [PunRPC]
-    public void CallSummonEnd()
+    public void CallSummonEnd() 
     {
         if (playerEnd)
         {
             canAct = false;
-            photonView.RPC("CallSummonEnd", RpcTarget.Others);
         }
         else
         {
@@ -536,24 +541,92 @@ public class GameManager : MonoBehaviour
         if (isGameEnd)
         {
             PhotonNetwork.LeaveRoom();
-
         }
     }
 
-    public async System.Threading.Tasks.Task CheckAnim(Animator animator, string aniName)
+    /// <summary>
+    /// Function for check animation is end with async
+    /// </summary>
+    /// <param name="animator"></param>
+    /// <param name="aniName"></param>
+    /// <returns>return when animation is end</returns>
+    public async Task CheckAnim(Animator animator, string aniName)
     {
         if (animator == null)
         {
-            Debug.LogError("¡◊¿∫ ¿Ø¥÷ ¿‘¥œ¥Ÿ");
+            Debug.LogError("Ï£ΩÏùÄ Ïú†Îãõ ÏûÖÎãàÎã§");
             return;
         }
         while (animator != null && animator.runtimeAnimatorController != null && !animator.GetCurrentAnimatorStateInfo(0).IsName(aniName))
         {
-            await System.Threading.Tasks.Task.Delay((int)(Time.deltaTime * 1000));
+            await Task.Delay((int)(Time.deltaTime * 1000));
         }
         while (animator != null && animator.runtimeAnimatorController != null && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
-            await System.Threading.Tasks.Task.Delay((int)(Time.deltaTime * 1000));
+            await Task.Delay((int)(Time.deltaTime * 1000));
         }
+    }
+
+    /// <summary>
+    /// Function for setting when game is start
+    /// </summary>
+    public void StartGameSetting()
+    {
+        StartUISetting();
+        StartComponentSetting();
+        StartGame();
+    }
+
+    public void StartSetting()
+    {
+        if (deck == null)
+        {
+            deck = GetComponent<Deck>();
+            deck.Shuffle();
+            FieldManager.Instance.ResetAllField();
+            SummonHero();
+        }
+
+        if (gamePhase == GamePhase.DrawPhase)
+        {
+            //deck.Shuffle();
+            deck.Draw(4);
+            photonView.RPC("EnemyCardChange", RpcTarget.Others, 4);
+            playerEnd = true;
+        }
+        else
+        {
+            Debug.Log("ÎìúÎ°úÏö∞ ÌéòÏù¥Ï¶àÏóêÎßå ÏûëÎèôÌï©ÎãàÎã§.");
+        }
+
+        if (gameStart == false)
+        {
+            gameStart = true;
+        }
+    }
+
+    /// <summary>
+    /// Funcion for UI Setting when game is start
+    /// </summary>
+    private void StartUISetting()
+    {
+        return;
+    }
+
+    /// <summary>
+    /// Function for Set Components
+    /// </summary>
+    private void StartComponentSetting()
+    {
+        if(deck == null)
+        {
+            deck = GetComponent<Deck>();
+        }
+        return;
+    }
+
+    private void StartGame()
+    {
+        return;
     }
 }
