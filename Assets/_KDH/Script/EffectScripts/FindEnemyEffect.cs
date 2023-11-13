@@ -1,49 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "FindEnemyEffect", menuName = "Effect/BaseEffect/FindEnemyEffect")]
 public class FindEnemyEffect : CardEffect
 {
-    public override void ExecuteEffect(LinkedBattleField battleFieldInfo, Field caster, List<Field> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObjectTest caster, List<FieldCardObjectTest> targets)
     {
         if (caster.canBattle)
         {
-            Field tmp = caster;
-            if (caster.unitObject.lookingLeft)
+            FieldCardObjectTest tmp = caster;
+            if (caster.lookingLeft)
             {
                 if (tmp.Prev == null || tmp.Prev.isEmpty)
                 {
-                    Debug.Log("°ø°İ ´ë»óÀÌ ¾ø½À´Ï´Ù. °ø°İÀ» Á¾·áÇÕ´Ï´Ù");
+                    Debug.Log("ê³µê²© ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤. ê³µê²©ì„ ì¢…ë£Œí•©ë‹ˆë‹¤");
                     caster.canBattle = false;
+                    await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }
-                else if (tmp.Prev.unitObject.playerID != caster.unitObject.playerID)
+                else if (tmp.Prev.playerID != caster.playerID)
                 {
-                    Debug.Log("°ø°İ ´ë»ó : " + tmp.Prev.unitObject.cardData.cardName);
+                    Debug.Log("ê³µê²© ëŒ€ìƒ : " + tmp.Prev.cardData.cardName);
                     targets.Add(tmp.Prev);
+                    await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }
-                Debug.Log("°ø°İ ´ë»óÀÌ ¾ø½À´Ï´Ù. °ø°İÀ» Á¾·áÇÕ´Ï´Ù");
+                Debug.Log("ê³µê²© ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤. ê³µê²©ì„ ì¢…ë£Œí•©ë‹ˆë‹¤");
                 caster.canBattle = false;
+                await Task.Delay((int)(Time.deltaTime * 1000));
                 return;
             }
             else
             {
                 if (tmp.Next == null || tmp.Next.isEmpty)
                 {
-                    Debug.Log("°ø°İ ´ë»óÀÌ ¾ø½À´Ï´Ù. °ø°İÀ» Á¾·áÇÕ´Ï´Ù");
+                    Debug.Log("ê³µê²© ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤. ê³µê²©ì„ ì¢…ë£Œí•©ë‹ˆë‹¤");
                     caster.canBattle = false;
+                    await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }
-                else if (tmp.Next.unitObject.playerID != caster.unitObject.playerID)
+                else if (tmp.Next.playerID != caster.playerID)
                 {
-                    Debug.Log("°ø°İ ´ë»ó : " + tmp.Next.unitObject.cardData.cardName);
+                    Debug.Log("ê³µê²© ëŒ€ìƒ : " + tmp.Next.cardData.cardName);
                     targets.Add(tmp.Next);
+                    await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }
-                Debug.Log("°ø°İ ´ë»óÀÌ ¾ø½À´Ï´Ù. °ø°İÀ» Á¾·áÇÕ´Ï´Ù");
+                Debug.Log("ê³µê²© ëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤. ê³µê²©ì„ ì¢…ë£Œí•©ë‹ˆë‹¤");
                 caster.canBattle = false;
+                await Task.Delay((int)(Time.deltaTime * 1000));
                 return;
             }
         }

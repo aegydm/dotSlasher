@@ -33,7 +33,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 0
+    cardCategory: 1
     frontDamage: 0
     backDamage: 0
   - summonEffects:
@@ -56,7 +56,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 5
     backDamage: 1
   - summonEffects:
@@ -79,7 +79,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 4
     backDamage: 2
   - summonEffects:
@@ -102,7 +102,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 3
     backDamage: 3
   - summonEffects:
@@ -125,7 +125,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 2
     backDamage: 4
   - summonEffects:
@@ -148,7 +148,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 1
     backDamage: 5
   - summonEffects:
@@ -171,7 +171,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 3
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 5
     backDamage: 1
   - summonEffects:
@@ -194,7 +194,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 3
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 4
     backDamage: 2
   - summonEffects:
@@ -217,7 +217,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 3
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 3
     backDamage: 3
   - summonEffects:
@@ -240,7 +240,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 3
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 2
     backDamage: 4
   - summonEffects:
@@ -263,7 +263,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 3
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 1
     backDamage: 5
   - summonEffects:
@@ -286,7 +286,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 6
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 5
     backDamage: 1
   - summonEffects:
@@ -309,7 +309,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 6
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 4
     backDamage: 2
   - summonEffects:
@@ -332,7 +332,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 6
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 3
     backDamage: 3
   - summonEffects:
@@ -355,7 +355,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 6
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 2
     backDamage: 4
   - summonEffects:
@@ -378,7 +378,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 6
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 1
     backDamage: 5
   - summonEffects:
@@ -401,7 +401,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 1
     backDamage: 7
   - summonEffects:
@@ -424,7 +424,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 2
     backDamage: 6
   - summonEffects:
@@ -447,7 +447,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 3
     backDamage: 5
   - summonEffects:
@@ -470,7 +470,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 4
     backDamage: 4
   - summonEffects:
@@ -493,7 +493,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 5
     backDamage: 3
   - summonEffects:
@@ -516,7 +516,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 6
     backDamage: 2
   - summonEffects:
@@ -539,7 +539,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 0
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 7
     backDamage: 1
   - summonEffects:
@@ -562,7 +562,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 3
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 1
     backDamage: 6
   - summonEffects:
@@ -585,7 +585,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 3
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 2
     backDamage: 5
   - summonEffects:
@@ -608,7 +608,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 3
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 3
     backDamage: 4
   - summonEffects:
@@ -631,7 +631,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 3
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 4
     backDamage: 3
   - summonEffects:
@@ -654,7 +654,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 3
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 5
     backDamage: 2
   - summonEffects:
@@ -677,7 +677,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 3
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 6
     backDamage: 1
   - summonEffects:
@@ -700,7 +700,7 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 6
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 5
     backDamage: 5
   - summonEffects:
@@ -723,6 +723,6 @@ MonoBehaviour:
     skillContents: 
     cost: 0
     cardColor: 6
-    cardCategory: 1
+    cardCategory: 0
     frontDamage: 8
     backDamage: 8

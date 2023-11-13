@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public enum Phase
@@ -14,5 +15,5 @@ public enum Phase
 
 public abstract class CardEffect : ScriptableObject
 {
-    public abstract void ExecuteEffect(LinkedBattleField battleField, Field caster, List<Field> targets);
+    public abstract Task ExecuteEffect(LinkedBattleField battleField, FieldCardObjectTest caster, List<FieldCardObjectTest> targets);
 }
