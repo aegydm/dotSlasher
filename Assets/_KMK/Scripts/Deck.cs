@@ -11,6 +11,7 @@ public class Deck : MonoBehaviour
 {
     public List<Card> useDeck = new List<Card>();
     public List<Card> originDeck = new List<Card>();
+    public List<Card> grave =new List<Card>();
     public Card myHero = new Hero();
 
     public int countOfDeck
@@ -28,6 +29,21 @@ public class Deck : MonoBehaviour
             }
         }
     }
+    public int countOfGrave
+    {
+        get
+        {
+            return _countOfGrave;
+        }
+        set
+        {
+            if (_countOfGrave != value)
+            {
+                _countOfGrave = value;
+            }
+        }
+    }
+    [SerializeField] int _countOfGrave;
     [SerializeField] int _countOfDeck;
     [SerializeField] public List<int> sortedDeck;
     [SerializeField] TMP_Text deckCountUI;
@@ -64,7 +80,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 덱 셔플 기능
+    /// ???뷀뵆 湲곕뒫
     /// </summary>
     public void Shuffle()
     {
@@ -82,8 +98,8 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 카드 드로우 기능
-    /// 몇장 드로우 할지 설정해서 드로우 할 수 있음
+    /// 移대뱶 ?쒕줈??湲곕뒫
+    /// 紐뉗옣 ?쒕줈???좎? ?ㅼ젙?댁꽌 ?쒕줈???????덉쓬
     /// </summary>
     public void Draw(int drawCard)
     {
@@ -92,7 +108,7 @@ public class Deck : MonoBehaviour
         {
             if (countOfDeck > 0)
             {
-                //먼저 패에서 덱의 카드를 호출하고 난 다음 덱의 카드를 제거하도록 순서를 주의한다.
+                //癒쇱? ?⑥뿉???깆쓽 移대뱶瑜??몄텧?섍퀬 ???ㅼ쓬 ?깆쓽 移대뱶瑜??쒓굅?섎룄濡??쒖꽌瑜?二쇱쓽?쒕떎.
 
                 //if (HandManager.Instance.DrawCard(useDeck[0]))
                 if (PlayerActionManager.instance.AddHandCard(useDeck[0]))
@@ -102,13 +118,13 @@ public class Deck : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("손패가 가득 찼습니다.");
+                    Debug.LogError("?먰뙣媛 媛??李쇱뒿?덈떎.");
                 }
             }
             else
             {
                 Debug.Log(countOfDeck);
-                Debug.Log("카드가 없습니다");
+                Debug.Log("移대뱶媛 ?놁뒿?덈떎");
                 //GameManager.Instance.Lose();
             }
         }
@@ -116,7 +132,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 필드의 몬스터를 덱으로 되돌리는 기능
+    /// ?꾨뱶??紐ъ뒪?곕? ?깆쑝濡??섎룎由щ뒗 湲곕뒫
     /// </summary>
     public void Refill(Card card)
     {
@@ -137,23 +153,27 @@ public class Deck : MonoBehaviour
                 return true;
             }
         }
-        Debug.LogError("덱에 없는 카드를 제거하려고 했습니다.");
+        Debug.LogError("?깆뿉 ?녿뒗 移대뱶瑜??쒓굅?섎젮怨??덉뒿?덈떎.");
         RefreshDeckCount();
         return false;
     }
 
     /// <summary>
-    /// 덱에 남은 카드수 확인용 함수
+    /// ?깆뿉 ?⑥? 移대뱶???뺤씤???⑥닔
     /// </summary>
     public void RefreshDeckCount()
     {
         countOfDeck = useDeck.Count;
     }
+    public void RefreshGraveCount()
+    {
+        _countOfGrave = grave.Count;
+    }
 
     /// <summary>
-    /// 정렬된 카드의 아이디가 나와서 덱의 순서와 상관없이 덱에 남은 카드의 종류를 알 수 있다.
-    /// 이를 활용해서 묘지에 있는 카드 리스트를 받아 똑같은 코드를 진행한다해도 결과를 얻을 수 있다.
-    /// 순서까지 알고 싶다면 Sort 함수를 제거하고 진행하면 된다.
+    /// ?뺣젹??移대뱶???꾩씠?붽? ?섏????깆쓽 ?쒖꽌? ?곴??놁씠 ?깆뿉 ?⑥? 移대뱶??醫낅쪟瑜??????덈떎.
+    /// ?대? ?쒖슜?댁꽌 臾섏????덈뒗 移대뱶 由ъ뒪?몃? 諛쏆븘 ?묎컳? 肄붾뱶瑜?吏꾪뻾?쒕떎?대룄 寃곌낵瑜??살쓣 ???덈떎.
+    /// ?쒖꽌源뚯? ?뚭퀬 ?띕떎硫?Sort ?⑥닔瑜??쒓굅?섍퀬 吏꾪뻾?섎㈃ ?쒕떎.
     /// </summary>
     /// <param name="deck"></param>
     /// <returns></returns>
@@ -176,7 +196,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 시작패 교체 기능
+    /// ?쒖옉??援먯껜 湲곕뒫
     /// </summary>
     /// <param name="cards"></param>
     void Mulligan(Card[] cards)
@@ -192,7 +212,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 드로우 페이즈에만 드로우가 가능한 기능
+    /// ?쒕줈???섏씠利덉뿉留??쒕줈?곌? 媛?ν븳 湲곕뒫
     /// </summary>
     void OneDraw()
     {
