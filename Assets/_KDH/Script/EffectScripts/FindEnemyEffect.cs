@@ -6,24 +6,23 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "FindEnemyEffect", menuName = "Effect/BaseEffect/FindEnemyEffect")]
 public class FindEnemyEffect : CardEffect
 {
-    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObjectTest caster, List<FieldCardObjectTest> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObject caster, List<FieldCardObject> targets)
     {
-        if (caster.canBattle)
+        if (caster.attackChance)
         {
-            FieldCardObjectTest tmp = caster;
             if (caster.lookingLeft)
             {
-                if (tmp.Prev == null || tmp.Prev.isEmpty)
+                if (caster.Prev == null || caster.Prev.isEmpty)
                 {
                     Debug.Log("공격 대상이 없습니다. 공격을 종료합니다");
                     caster.canBattle = false;
                     await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }
-                else if (tmp.Prev.playerID != caster.playerID)
+                else if (caster.Prev.playerID != caster.playerID)
                 {
-                    Debug.Log("공격 대상 : " + tmp.Prev.cardData.cardName);
-                    targets.Add(tmp.Prev);
+                    Debug.Log("공격 대상 : " + caster.Prev.cardData.cardName);
+                    targets.Add(caster.Prev);
                     await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }
@@ -34,17 +33,17 @@ public class FindEnemyEffect : CardEffect
             }
             else
             {
-                if (tmp.Next == null || tmp.Next.isEmpty)
+                if (caster.Next == null || caster.Next.isEmpty)
                 {
                     Debug.Log("공격 대상이 없습니다. 공격을 종료합니다");
                     caster.canBattle = false;
                     await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }
-                else if (tmp.Next.playerID != caster.playerID)
+                else if (caster.Next.playerID != caster.playerID)
                 {
-                    Debug.Log("공격 대상 : " + tmp.Next.cardData.cardName);
-                    targets.Add(tmp.Next);
+                    Debug.Log("공격 대상 : " + caster.Next.cardData.cardName);
+                    targets.Add(caster.Next);
                     await Task.Delay((int)(Time.deltaTime * 1000));
                     return;
                 }

@@ -17,27 +17,13 @@ public class EnemyCardRender : MonoBehaviour
     [SerializeField] public float xPos;
     [SerializeField] public float yPos;
 
-    FieldManager fieldManager;
+    //FieldManager fieldManager;
 
-    private void Start()
-    {
-        fieldManager = FieldManager.Instance;
-        fieldManager.OnEnemyHandChanged += ShowNumber;
-        fieldManager.OnEnemyHandChanged += RenderEnemyCard;
-    }
-
-    //public void SoundBoolChange()
+    //private void Start()
     //{
-    //    if (isShow)
-    //    {
-    //        isShow = false;
-    //        return;
-    //    }
-    //    else
-    //    {
-    //        isShow = true;
-    //        return;
-    //    }
+    //    fieldManager = FieldManager.Instance;
+    //    fieldManager.OnEnemyHandChanged += ShowNumber;
+    //    fieldManager.OnEnemyHandChanged += RenderEnemyCard;
     //}
 
     private void ShowNumber(int cardNum)

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1150808645461756086
+--- !u!1 &3716358690890819855
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,12 +8,13 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5784617331498236783}
-  - component: {fileID: 1369465017379345213}
-  - component: {fileID: 5207098261038665007}
-  - component: {fileID: 2027963766313992369}
-  - component: {fileID: 4970475883086378209}
-  - component: {fileID: 8655641205670721249}
+  - component: {fileID: 5178890866432215669}
+  - component: {fileID: 7729240129371499000}
+  - component: {fileID: 3526511190851638278}
+  - component: {fileID: 925205735803683637}
+  - component: {fileID: 2532386550245113630}
+  - component: {fileID: 9118654934647822572}
+  - component: {fileID: 6030278600457075863}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -21,28 +22,52 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5784617331498236783
+--- !u!4 &5178890866432215669
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1150808645461756086}
+  m_GameObject: {fileID: 3716358690890819855}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.4033962, y: -4.7275543, z: 6.1021924}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1369465017379345213
+--- !u!114 &7729240129371499000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1150808645461756086}
+  m_GameObject: {fileID: 3716358690890819855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94d9eb36aab010408eae265566d27f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDrag: 0
+  dragCardGO: {fileID: 0}
+  field: {fileID: 0}
+  handCardObjectArray:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  selectUI: {fileID: 0}
+  _dirtyForInter: 0
+  _handCardCount: 0
+--- !u!114 &3526511190851638278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3716358690890819855}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 398a77147ca54824c81917dc3938b31d, type: 3}
@@ -50,6 +75,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useDeck: []
   originDeck: []
+  grave: []
+  enemyGrave: []
   myHero:
     summonEffects: []
     attackStartEffects: []
@@ -66,56 +93,96 @@ MonoBehaviour:
     cost: 0
     cardColor: 6
     cardCategory: 0
-    frontDamage: 0
-    backDamage: 0
+    frontDamage: -1
+    backDamage: -1
+  _countOfEnemyGrave: 0
+  _countOfGrave: 0
   _countOfDeck: 0
   sortedDeck: 
   deckCountUI: {fileID: 0}
---- !u!114 &5207098261038665007
+--- !u!114 &925205735803683637
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1150808645461756086}
+  m_GameObject: {fileID: 3716358690890819855}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2e08ac3ad199ba40b2ca32d44bd6558, type: 3}
+  m_Script: {fileID: 11500000, guid: b6088c9f73bf6344ca02c956a52e4e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitList: []
-  dirtySet: 0
---- !u!114 &2027963766313992369
+  deck: []
+  deckName: 1
+--- !u!114 &2532386550245113630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1150808645461756086}
+  m_GameObject: {fileID: 3716358690890819855}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2cda7608d805eb4bbebee1692addf9d, type: 3}
+  m_Script: {fileID: 11500000, guid: f0453ac7074338242920442a803bb45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 0}
-  turnText: {fileID: 0}
-  endScene: {fileID: 0}
-  isGameEnd: 0
-  _playerID: -1
-  photonView: {fileID: 4970475883086378209}
   startFirst: 0
+  isGameEnd: 0
+  turnText: {fileID: 0}
   _canAct: 0
-  _currentTurn: 0
+  photonView: {fileID: 6030278600457075863}
+  deck: {fileID: 3526511190851638278}
+  damageSum: 0
+  playerID: 
+  gamePhase: 0
+  personalColor: {fileID: 0}
   _playerEnd: 0
   _enemyEnd: 0
-  _gamePhase: 0
---- !u!114 &4970475883086378209
+--- !u!114 &9118654934647822572
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1150808645461756086}
+  m_GameObject: {fileID: 3716358690890819855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ff246c056dfda43b2c8a1fd5b6b5bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPopUI: 0
+  mulliganButton: {fileID: 0}
+  ExitButton: {fileID: 0}
+  popUpUi: {fileID: 0}
+  gridLayout: {fileID: 0}
+  cardObject: {fileID: 4475879479727289877, guid: 568e038a52c5a5542b002e2228e76a1d,
+    type: 3}
+  deck: {fileID: 3526511190851638278}
+  _selectCard:
+    summonEffects: []
+    attackStartEffects: []
+    findEnemyEffects: []
+    calculateDamageEffects: []
+    attackProcessEffects: []
+    getDamageEffects: []
+    cardID: 0
+    cardName: 
+    cardSprite: {fileID: 0}
+    animator: 
+    skill: 
+    skillContents: 
+    cost: 0
+    cardColor: 6
+    cardCategory: 0
+    frontDamage: -1
+    backDamage: -1
+--- !u!114 &6030278600457075863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3716358690890819855}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
@@ -131,22 +198,3 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &8655641205670721249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1150808645461756086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6dd0319d2ab56e43b083420a2fb4c28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyCards: []
-  enemyCardText: {fileID: 0}
-  cardBackPrefab: {fileID: 0}
-  cardTransform: {fileID: 0}
-  count: 0
-  xPos: 0
-  yPos: 0

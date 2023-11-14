@@ -7,16 +7,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CalculateDamageEffect", menuName = "Effect/BaseEffect/CalculateDamageEffect")]
 public class CalculateDamageEffect : CardEffect
 {
-    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObjectTest caster, List<FieldCardObjectTest> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObject caster, List<FieldCardObject> targets)
     {
         Debug.Log(targets.Count);
-        if (caster.canBattle)
+        if (caster.attackChance)
         {
-            Task atkTask = TestManager.instance.CheckAnim(caster.animator, "Attack");
+            Task atkTask = GameManager.instance.CheckAnim(caster.animator, "Attack");
 
             caster.animator.Play("Attack");
             await atkTask;
-            caster.canBattle = false;
+            caster.attackChance = false;
             caster.animator.Play("Breath");
             for (int i = 0; i < targets.Count; i++)
             {
@@ -35,7 +35,7 @@ public class CalculateDamageEffect : CardEffect
                     else if (targets[i].cardData.cardCategory == CardCategory.minion)
                     {
                         targets[i].cardData.GetDamage(targets[i], attackPower);
-                        Task deathTask = TestManager.instance.CheckAnim(caster.animator, "Death");
+                        Task deathTask = GameManager.instance.CheckAnim(caster.animator, "Death");
                         await deathTask;
                     }
                     else
@@ -47,14 +47,14 @@ public class CalculateDamageEffect : CardEffect
                 {
                     Debug.Log(caster.cardData.cardName + "의 공격이 실패했습니다.");
                     Debug.Log("HitStart");
-                    Task hitTask = TestManager.instance.CheckAnim(targets[i].animator, "Hit");
+                    Task hitTask = GameManager.instance.CheckAnim(targets[i].animator, "Hit");
                     targets[i].animator.Play("Hit");
                     Debug.Log("HitAnimation");
                     await hitTask;
                     Debug.Log("HitEnd");
                     if (targets[i].animator.runtimeAnimatorController != null)
                     {
-                        if (targets[i].canBattle)
+                        if (targets[i].attackChance)
                         {
                             Debug.Log("Hit Can Battle");
                             targets[i].animator.Play("Idle");
@@ -67,6 +67,7 @@ public class CalculateDamageEffect : CardEffect
                     }
                 }
             }
+            caster.canBattle = false;
         }
         return;
     }

@@ -76,7 +76,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if (sortedPlayers[i].ActorNumber == actorNumber)
             {
-                GameManager.Instance.playerID = i.ToString();
+                GameManager.instance.playerID = i.ToString();
                 break;
             }
         }
@@ -84,15 +84,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        if(GameManager.Instance == null)
+        if(GameManager.instance == null)
         {
             PhotonNetwork.LeaveRoom();
         }
         else
         {
-            if(GameManager.Instance.isGameEnd == false)
+            if(GameManager.instance.isGameEnd == false)
             {
-                GameManager.Instance.GameSet();
+                GameManager.instance.GameSet();
             }
         }
     }

@@ -58,6 +58,13 @@ MonoBehaviour:
   - MakeFieldAndSetCardForPun
   - AttackStartForPun
   - SetCardToFieldForPun
+  - CallPlayerPhaseEnd
+  - CallPlayerTurnEnd
+  - CallSummonUnit
+  - CallCheckPhaseEnd
+  - WinLoseCheck
+  - CallPlayerWinOrLose
+  - AttackUnit
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

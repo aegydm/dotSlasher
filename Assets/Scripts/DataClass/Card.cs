@@ -38,7 +38,7 @@ namespace CCGCard
         public List<CardEffect> attackProcessEffects = new();
         public List<CardEffect> getDamageEffects = new();
         #endregion
-        List<FieldCardObjectTest> enemyUnitInfo = new List<FieldCardObjectTest>();
+        List<FieldCardObject> enemyUnitInfo = new List<FieldCardObject>();
         public int cardID;
         public string cardName;
         public Sprite cardSprite;
@@ -85,7 +85,7 @@ namespace CCGCard
 
         #region 순차적 처리
 
-        private async Task ActiveEffect(List<CardEffect> cardEffects, LinkedBattleField battleFieldInfo, FieldCardObjectTest casterInfo, List<FieldCardObjectTest> targetInfos)
+        private async Task ActiveEffect(List<CardEffect> cardEffects, LinkedBattleField battleFieldInfo, FieldCardObject casterInfo, List<FieldCardObject> targetInfos)
         {
             for (int i = 0; i < cardEffects.Count; i++)
             {
@@ -94,12 +94,12 @@ namespace CCGCard
             }
         }
 
-        public async void Summon(LinkedBattleField battleFieldInfo, FieldCardObjectTest casterInfo)
+        public async void Summon(LinkedBattleField battleFieldInfo, FieldCardObject casterInfo)
         {
             await ActiveEffect(summonEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
         }
 
-        public async void AttackStart(LinkedBattleField battleFieldInfo, FieldCardObjectTest casterInfo)
+        public async void AttackStart(LinkedBattleField battleFieldInfo, FieldCardObject casterInfo)
         {
             await ActiveEffect(attackStartEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
 
@@ -111,11 +111,11 @@ namespace CCGCard
             return;
         }
 
-        public async void GetDamage(FieldCardObjectTest thisCard, int damageVal)
+        public async void GetDamage(FieldCardObject thisCard, int damageVal)
         {
-            if (thisCard.cardData.cardCategory == CardCategory.hero && thisCard.playerID.ToString() == GameManager.Instance.playerID)
+            if (thisCard.cardData.cardCategory == CardCategory.hero && thisCard.playerID.ToString() == GameManager.instance.playerID)
             {
-                BattleManager.instance.damageSum += damageVal;
+                GameManager.instance.damageSum += damageVal;
             }
             await ActiveEffect(getDamageEffects, null, thisCard, null);
         }

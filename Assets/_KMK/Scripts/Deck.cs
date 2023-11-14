@@ -11,7 +11,8 @@ public class Deck : MonoBehaviour
 {
     public List<Card> useDeck = new List<Card>();
     public List<Card> originDeck = new List<Card>();
-    public List<Card> grave =new List<Card>();
+    public List<Card> grave = new List<Card>();
+    public List<Card> enemyGrave = new List<Card>();
     public Card myHero = new Hero();
 
     public int countOfDeck
@@ -43,26 +44,51 @@ public class Deck : MonoBehaviour
             }
         }
     }
+
+    public int countOfEnemyGrave
+    {
+        get
+        {
+            return _countOfEnemyGrave;
+        }
+        set
+        {
+            if (_countOfEnemyGrave != value)
+            {
+                _countOfEnemyGrave = value;
+            }
+        }
+    }
+    [SerializeField] int _countOfEnemyGrave;
     [SerializeField] int _countOfGrave;
     [SerializeField] int _countOfDeck;
     [SerializeField] public List<int> sortedDeck;
     [SerializeField] TMP_Text deckCountUI;
+    [SerializeField] TMP_Text graveCountUI;
+    [SerializeField] TMP_Text enemyGraveCountUI;
 
     public event Action OnDeckCountChanged;
+    public event Action OnGraveCountChanged;
+    public event Action OnEnemyGraveCountChanged;
+
 
     private void Start()
     {
         OnDeckCountChanged = null;
-        //OnDeckCountChanged += RenderDeckCount;
-        if(BuildManager.instance.Load("1",out originDeck) == false)
+        OnDeckCountChanged += RenderDeckCount;
+        OnGraveCountChanged = null;
+        OnGraveCountChanged += RenderGraveCount;
+        OnEnemyGraveCountChanged = null;
+        OnEnemyGraveCountChanged += RenderEnemyGraveCount;
+        if (BuildManager.instance.Load("1", out originDeck) == false)
         //if(BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
         {
             Debug.Log("Fail to Load Deck");
-            //GameManager.Instance.Lose();
+            //GameManager.instance.Lose();
         }
-        foreach(var card in originDeck)
+        foreach (var card in originDeck)
         {
-            if(card.cardCategory != CardCategory.hero)
+            if (card.cardCategory != CardCategory.hero)
             {
                 useDeck.Add(card);
             }
@@ -79,8 +105,18 @@ public class Deck : MonoBehaviour
         deckCountUI.text = countOfDeck.ToString();
     }
 
+    void RenderGraveCount()
+    {
+        graveCountUI.text = countOfGrave.ToString();
+    }
+
+    void RenderEnemyGraveCount()
+    {
+        enemyGraveCountUI.text = countOfEnemyGrave.ToString();
+    }
+
     /// <summary>
-    /// ???뷀뵆 湲곕뒫
+    /// 덱의 카드를 섞는 카드
     /// </summary>
     public void Shuffle()
     {
@@ -98,9 +134,11 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 移대뱶 ?쒕줈??湲곕뒫
-    /// 紐뉗옣 ?쒕줈???좎? ?ㅼ젙?댁꽌 ?쒕줈???????덉쓬
+    /// int의 값 만큼 덱에서 카드를 뽑는 카드
+    /// 현재 손패가 가득 찰 경우 에러코드를 보내도록 설계되어있음
+    /// 덱이 0장이고 손패에 빈 자리가 있을 경우
     /// </summary>
+    /// <param name="drawCard"></param>
     public void Draw(int drawCard)
     {
 
@@ -108,32 +146,34 @@ public class Deck : MonoBehaviour
         {
             if (countOfDeck > 0)
             {
-                //癒쇱? ?⑥뿉???깆쓽 移대뱶瑜??몄텧?섍퀬 ???ㅼ쓬 ?깆쓽 移대뱶瑜??쒓굅?섎룄濡??쒖꽌瑜?二쇱쓽?쒕떎.
-
-                //if (HandManager.Instance.DrawCard(useDeck[0]))
                 if (PlayerActionManager.instance.AddHandCard(useDeck[0]))
                 {
                     useDeck.Remove(useDeck[0]);
-                    //GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
+                    //GameManager.instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
                 }
                 else
                 {
-                    Debug.LogError("?먰뙣媛 媛??李쇱뒿?덈떎.");
+                    Debug.LogError("손패가 가득 찼습니다.");
                 }
             }
             else
             {
+                if (PlayerActionManager.instance.handCardCount < 5)
+                {
+                    //GameManager.instance.Lose();
+                }
                 Debug.Log(countOfDeck);
-                Debug.Log("移대뱶媛 ?놁뒿?덈떎");
-                //GameManager.Instance.Lose();
+                Debug.Log("덱이 비었습니다.");
+                GameManager.instance.Lose();
             }
         }
         RefreshDeckCount();
     }
 
     /// <summary>
-    /// ?꾨뱶??紐ъ뒪?곕? ?깆쑝濡??섎룎由щ뒗 湲곕뒫
+    /// 덱에 특정 카드를 넣는 기능
     /// </summary>
+    /// <param name="card"></param>
     public void Refill(Card card)
     {
 
@@ -142,48 +182,49 @@ public class Deck : MonoBehaviour
         RefreshDeckCount();
     }
 
+    /// <summary>
+    /// 덱에서 특정 카드를 지우는 기능
+    /// </summary>
+    /// <param name="card"></param>
+    /// <returns></returns>
     public bool RemoveDeckCard(Card card)
     {
-        for(int i  = 0; i < useDeck.Count; i++)
+        for (int i = 0; i < useDeck.Count; i++)
         {
             if (useDeck[i] == card)
             {
+                grave.Add(useDeck[i]);
                 useDeck.RemoveAt(i);
                 RefreshDeckCount();
                 return true;
             }
         }
-        Debug.LogError("?깆뿉 ?녿뒗 移대뱶瑜??쒓굅?섎젮怨??덉뒿?덈떎.");
+        Debug.LogError($"덱에서 {card.cardName} 카드를 지우지 못했습니다. 덱에 해당 카드가 존재하는지 확인해주십시오.");
         RefreshDeckCount();
         return false;
     }
 
-    /// <summary>
-    /// ?깆뿉 ?⑥? 移대뱶???뺤씤???⑥닔
-    /// </summary>
     public void RefreshDeckCount()
     {
         countOfDeck = useDeck.Count;
     }
     public void RefreshGraveCount()
     {
-        _countOfGrave = grave.Count;
+        countOfGrave = grave.Count;
     }
 
-    /// <summary>
-    /// ?뺣젹??移대뱶???꾩씠?붽? ?섏????깆쓽 ?쒖꽌? ?곴??놁씠 ?깆뿉 ?⑥? 移대뱶??醫낅쪟瑜??????덈떎.
-    /// ?대? ?쒖슜?댁꽌 臾섏????덈뒗 移대뱶 由ъ뒪?몃? 諛쏆븘 ?묎컳? 肄붾뱶瑜?吏꾪뻾?쒕떎?대룄 寃곌낵瑜??살쓣 ???덈떎.
-    /// ?쒖꽌源뚯? ?뚭퀬 ?띕떎硫?Sort ?⑥닔瑜??쒓굅?섍퀬 吏꾪뻾?섎㈃ ?쒕떎.
-    /// </summary>
-    /// <param name="deck"></param>
-    /// <returns></returns>
+    public void RefreshEnemyGraveCount()
+    {
+        countOfEnemyGrave = grave.Count;
+    }
+
     public void SortDeck()
     {
         List<int> idList = new List<int>();
         foreach (Card card in useDeck)
         {
             Card cardScript = card;
-            if (cardScript != null)
+            if (cardScript != null && cardScript != new Card())
             {
                 idList.Add(cardScript.frontDamage);
             }
@@ -191,44 +232,35 @@ public class Deck : MonoBehaviour
         idList.Sort();
         //return idList;
 
-        for (int i = 0; i < idList.Count; i++)
-            Debug.Log(idList[i]);
+        sortedDeck = idList;
     }
 
-    /// <summary>
-    /// ?쒖옉??援먯껜 湲곕뒫
-    /// </summary>
-    /// <param name="cards"></param>
-    void Mulligan(Card[] cards)
-    {
+    //void Mulligan(Card[] cards)
+    //{
 
-        for (int i = 0; i < cards.Length; i++)
-        {
-            Refill(cards[i]);
-            HandManager.Instance.RemoveHand();
-        }
+    //    for (int i = 0; i < cards.Length; i++)
+    //    {
+    //        Refill(cards[i]);
+    //    }
 
-        Draw(cards.Length);
-    }
+    //    Draw(cards.Length);
+    //}
 
-    public void Mulligan(HandCardObject[] handCardList)
-    {
+    //public void Mulligan(HandCardObject[] handCardList)
+    //{
 
-    }
+    //}
 
-    /// <summary>
-    /// ?쒕줈???섏씠利덉뿉留??쒕줈?곌? 媛?ν븳 湲곕뒫
-    /// </summary>
-    void OneDraw()
-    {
-        switch (GameManager.Instance.gamePhase)
-        {
-            case GamePhaseOld.DrawPhase:
-                Draw(1);
-                break;
+    //void OneDraw()
+    //{
+    //    switch (GameManager.instance.gamePhase)
+    //    {
+    //        case GamePhase.DrawPhase:
+    //            Draw(1);
+    //            break;
 
-            default:
-                break;
-        }
-    }
+    //        default:
+    //            break;
+    //    }
+    //}
 }

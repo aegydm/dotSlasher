@@ -7,12 +7,19 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "HeroGetDamageEffect", menuName = "Effect/HeroEffect/HeroGetDamageEffect")]
 public class HeroGetDamagedEffect : GetDamageEffect
 {
-    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObjectTest caster, List<FieldCardObjectTest> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObject caster, List<FieldCardObject> targets)
     {
         caster.animator.Play("Hit");
-        Task hitTask = GameManager.Instance.CheckAnim(caster.animator, "Hit");
+        Task hitTask = GameManager.instance.CheckAnim(caster.animator, "Hit");
         await hitTask;
-        caster.animator.Play("Breath");
+        if (caster.canBattle)
+        {
+            caster.animator.Play("Idle");
+        }
+        else
+        {
+            caster.animator.Play("Breath");
+        }
         return;
     }
 }
