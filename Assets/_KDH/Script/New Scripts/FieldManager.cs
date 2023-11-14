@@ -7,13 +7,13 @@ public class FieldManager : MonoBehaviour
 {
     public static FieldManager instance;
     public LinkedBattleField battleField;
-    [Header("Field의 부모 오브젝트")]
+    [Header("Field??遺紐??ㅻ툕?앺듃")]
     public GameObject parentField;
-    [Header("초기 5개 타일을 넣어주세요")]
+    [Header("珥덇린 5媛???쇱쓣 ?ｌ뼱二쇱꽭??")]
     public List<FieldCardObject> startFieldList;
-    [Header("추가로 생성될 타일을 넣어주세요")]
+    [Header("異붽?濡??앹꽦????쇱쓣 ?ｌ뼱二쇱꽭??")]
     public List<FieldCardObject> additionalFieldList = new();
-    [Header("방향키 선택 화면 여부")]
+    [Header("諛⑺뼢???좏깮 ?붾㈃ ?щ?")]
     public bool isOpenDirection = false;
 
     public PhotonView photonView;

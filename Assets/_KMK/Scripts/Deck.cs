@@ -142,7 +142,7 @@ public class Deck : MonoBehaviour
             {
                 Debug.Log(countOfDeck);
                 Debug.Log("移대뱶媛 ?놁뒿?덈떎");
-                //GameManager.instance.Lose();
+                GameManager.instance.Lose();
             }
         }
         RefreshDeckCount();

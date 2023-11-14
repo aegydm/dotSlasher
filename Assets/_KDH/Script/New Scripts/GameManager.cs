@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -134,6 +135,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool _playerEnd;
     [SerializeField] private bool _enemyEnd;
 
+    public bool playerLose;
+
     private void Awake()
     {
         instance = this;
@@ -148,6 +151,7 @@ public class GameManager : MonoBehaviour
         Invoke("FirstTurnSetting", 3f);
         CallTurnStart += TurnStart;
     }
+
 
     IEnumerator CheckPhaseEnd()
     {
@@ -193,10 +197,10 @@ public class GameManager : MonoBehaviour
 
     private void ExecuteGame()
     {
-        Debug.LogError("처리 페이즈에 진입했습니다.");
+        Debug.LogError("泥섎━ ?섏씠利덉뿉 吏꾩엯?덉뒿?덈떎.");
         if (damageSum == 0)
         {
-            Debug.LogError("버릴 카드가 없습니다.");
+            Debug.LogError("踰꾨┫ 移대뱶媛 ?놁뒿?덈떎.");
             playerEnd = true;
         }
         StartCoroutine(DiscardByDamage());
@@ -204,7 +208,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DiscardByDamage()
     {
-        Debug.LogError($"{damageSum}장 버려야 합니다.");
+        Debug.LogError($"{damageSum}??踰꾨젮???⑸땲??");
         UIManager.Instance.PopupCard(deck.useDeck);
         UIManager.Instance.selectCardChanged += Discard;
         while (damageSum > 0)
@@ -213,7 +217,7 @@ public class GameManager : MonoBehaviour
         }
         UIManager.Instance.selectCardChanged -= Discard;
         UIManager.Instance.ClosePopup();
-        Debug.LogError("카드를 전부 버렸습니다");
+        Debug.LogError("移대뱶瑜??꾨? 踰꾨졇?듬땲??");
         playerEnd = true;
     }
 
@@ -264,7 +268,7 @@ public class GameManager : MonoBehaviour
     {
         if (animator == null)
         {
-            Debug.LogError("죽은 유닛 입니다");
+            Debug.LogError("二쎌? ?좊떅 ?낅땲??");
             return;
         }
         while (animator != null && animator.runtimeAnimatorController != null && !animator.GetCurrentAnimatorStateInfo(0).IsName(aniName))
@@ -346,4 +350,35 @@ public class GameManager : MonoBehaviour
         Debug.LogError("CallSummonUnit");
         FieldManager.instance.SetCardToFieldForPun(index, make, makeLeft, cardID, lookingLeft, playerID);
     }
+
+    [PunRPC]
+    public void CallPlayerWinOrLose(bool enemyLose)
+    {
+        if(enemyLose == playerLose)
+        {
+            Debug.Log("Draw");
+        }
+        else
+        {
+            if (playerLose)
+            {
+                Debug.Log("lose");
+            }
+            else
+            {
+                Debug.Log("win");
+            }
+        }
+    }
+
+    private void CheckDraw()
+    {
+    }
+
+    public void Lose()
+    {
+        playerLose = true;
+        photonView.RPC("CallPlayerWinOrLose", RpcTarget.Others, playerLose);
+    }
+
 }
