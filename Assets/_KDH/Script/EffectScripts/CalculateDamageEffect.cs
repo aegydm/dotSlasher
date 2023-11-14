@@ -10,13 +10,13 @@ public class CalculateDamageEffect : CardEffect
     public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObject caster, List<FieldCardObject> targets)
     {
         Debug.Log(targets.Count);
-        if (caster.canBattle)
+        if (caster.attackChance)
         {
             Task atkTask = GameManager.instance.CheckAnim(caster.animator, "Attack");
 
             caster.animator.Play("Attack");
             await atkTask;
-            caster.canBattle = false;
+            caster.attackChance = false;
             caster.animator.Play("Breath");
             for (int i = 0; i < targets.Count; i++)
             {
@@ -54,7 +54,7 @@ public class CalculateDamageEffect : CardEffect
                     Debug.Log("HitEnd");
                     if (targets[i].animator.runtimeAnimatorController != null)
                     {
-                        if (targets[i].canBattle)
+                        if (targets[i].attackChance)
                         {
                             Debug.Log("Hit Can Battle");
                             targets[i].animator.Play("Idle");

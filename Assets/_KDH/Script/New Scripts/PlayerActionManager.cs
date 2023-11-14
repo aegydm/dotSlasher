@@ -179,6 +179,7 @@ public class PlayerActionManager : MonoBehaviour
                 }
             }
         }
+        CountHandCard();
     }
 
     private void CountHandCard()
@@ -186,16 +187,16 @@ public class PlayerActionManager : MonoBehaviour
         int count = 0;
         for (int i = 0; i < handCardObjectArray.Length; i++)
         {
-            if (!handCardObjectArray[i].isEmpty == false)
+            if (handCardObjectArray[i].isEmpty == false)
             {
                 count++;
             }
             else
             {
-                handCardCount = count;
-                return;
+                break;
             }
         }
+        handCardCount = count;
         return;
     }
 }

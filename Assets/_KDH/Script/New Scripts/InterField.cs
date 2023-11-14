@@ -83,7 +83,7 @@ public class InterField : MonoBehaviour
         }
         if (trigger == false && (PlayerActionManager.instance.isDrag || FieldManager.instance.isOpenDirection))
         {
-            Debug.Log("DIRTYON");
+            Debug.Log("DIRTY-ON");
             PlayerActionManager.instance.dirtyForInter = true;
         }
     }

@@ -66,7 +66,24 @@ public class GameManager : MonoBehaviour
 
     public string playerID;
 
-    public GamePhase gamePhase = GamePhase.None;
+    public GamePhase gamePhase
+    {
+        get
+        {
+            return _gamePhase;
+        }
+        set
+        {
+            if (_gamePhase != value)
+                _gamePhase = value;
+            if (gamePhase != GamePhase.None)
+            {
+                StartPhaseSetting();
+            }
+        }
+    }
+
+    [SerializeField] private GamePhase _gamePhase = GamePhase.None;
     private GamePhase nextPhase = GamePhase.DrawPhase;
 
     public Image personalColor;
@@ -169,14 +186,6 @@ public class GameManager : MonoBehaviour
             _playerEnd = false;
             _enemyEnd = false;
             Debug.LogError(nextPhase);
-            if ((nextPhase == GamePhase.ActionPhase || nextPhase == GamePhase.BattlePhase) && startFirst)
-            {
-                canAct = true;
-            }
-            else
-            {
-                canAct = false;
-            }
             gamePhase = nextPhase;
             turnText.text = gamePhase.ToString();
             currentTurn = 0;
@@ -185,21 +194,143 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    [PunRPC]
-    public void CallCheckPhaseEnd()
+    private void StartPhaseSetting()
     {
-        phaseTrigger = true;
+        switch (gamePhase)
+        {
+            case GamePhase.DrawPhase:
+                Invoke("DrawPhaseStart", 3);
+                break;
+            case GamePhase.ActionPhase:
+                Invoke("ActionPhaseStart", 3);
+                break;
+            case GamePhase.BattlePhase:
+                Invoke("BattlePhaseStart", 3);
+                break;
+            case GamePhase.ExecutionPhase:
+                Invoke("ExecutionPhaseStart", 3);
+                break;
+            case GamePhase.EndPhase:
+                Invoke("EndPhaseStart", 3);
+                break;
+            default:
+                Debug.LogError("Error is Occur in Phase Change");
+                break;
+        }
     }
 
-    private void ExecuteGame()
+    private void DrawPhaseStart()
+    {
+        deck.Draw(5);
+        playerEnd = true;
+    }
+
+    private void ActionPhaseStart()
+    {
+        if (startFirst)
+        {
+            _canAct = true;
+        }
+        else
+        {
+            _canAct = false;
+        }
+    }
+
+    private void BattlePhaseStart()
+    {
+        FieldCardObject temp = FieldManager.instance.battleField.First;
+        while (temp != null)
+        {
+            if(temp.isEmpty == false)
+            {
+                temp.canBattle = true;
+            }
+            else
+            {
+                temp.canBattle = false;
+            }
+            temp = temp.Next;
+        }
+
+        CheckCanBattle();
+
+        if (startFirst)
+        {
+            _canAct = true;
+        }
+        else
+        {
+            _canAct = false;
+        }
+    }
+
+    private void CheckCanBattle()
+    {
+        FieldCardObject temp = FieldManager.instance.battleField.First;
+        while (temp != null)
+        {
+            if (temp.isEmpty)
+            {
+                temp.canBattle = false;
+            }
+            else
+            {
+                if (temp.cardData.cardCategory == CardCategory.hero)
+                {
+                    if (((Hero)temp.cardData).canAttack == false)
+                    {
+                        temp.canBattle = false;
+                    }
+                    else
+                    {
+                        temp.canBattle = true;
+                    }
+                }
+                else
+                {
+                    
+                }
+            }
+            temp = temp.Next;
+        }
+    }
+
+    private void ExecutionPhaseStart()
     {
         Debug.LogError("처리 페이즈에 진입했습니다.");
         if (damageSum == 0)
         {
             Debug.LogError("버릴 카드가 없습니다.");
             playerEnd = true;
+            return;
         }
         StartCoroutine(DiscardByDamage());
+    }
+
+    private void EndPhaseStart()
+    {
+        FieldCardObject temp = FieldManager.instance.battleField.First;
+        while (temp != null)
+        {
+            if (temp.playerID != -1)
+            {
+                if (temp.cardData.cardCategory != CardCategory.hero)
+                {
+                    if (temp.playerID == int.Parse(playerID))
+                    {
+                        deck.Refill(temp.cardData);
+                        temp.cardData = null;
+                    }
+                    else
+                    {
+                        temp.cardData = null;
+                    }
+                }
+            }
+            temp = temp.Next;
+        }
+        playerEnd = true;
     }
 
     IEnumerator DiscardByDamage()
@@ -226,13 +357,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    public void CallCheckPhaseEnd()
+    {
+        phaseTrigger = true;
+    }
+
+
     public void FirstTurnSetting()
     {
         deck.Shuffle();
         deck.Draw(5);
         SummonHero();
         UIManager.Instance.StartMulligan();
-        gamePhase = GamePhase.DrawPhase;
+        _gamePhase = GamePhase.DrawPhase;
     }
 
     private void SummonHero()

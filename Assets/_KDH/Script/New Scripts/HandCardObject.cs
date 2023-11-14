@@ -116,7 +116,7 @@ public class HandCardObject : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (GameManager.instance.useCard == false && GameManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManager.instance.isOpenDirection == false)
+        if (GameManager.instance.gamePhase == GamePhase.ActionPhase && GameManager.instance.useCard == false && GameManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManager.instance.isOpenDirection == false)
         {
             isDrag = true;
             cardRenderer.color = new Color(1, 1, 1, 0);

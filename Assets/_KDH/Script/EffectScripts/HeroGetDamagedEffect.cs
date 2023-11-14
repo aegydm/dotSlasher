@@ -12,7 +12,14 @@ public class HeroGetDamagedEffect : GetDamageEffect
         caster.animator.Play("Hit");
         Task hitTask = GameManager.instance.CheckAnim(caster.animator, "Hit");
         await hitTask;
-        caster.animator.Play("Breath");
+        if (caster.canBattle)
+        {
+            caster.animator.Play("Idle");
+        }
+        else
+        {
+            caster.animator.Play("Breath");
+        }
         return;
     }
 }

@@ -1202,7 +1202,7 @@ MonoBehaviour:
   frontATKText: {fileID: 7292840393620530438}
   backATKText: {fileID: 1710812029057780987}
   _lookingLeft: 0
-  playerID: -1
+  _playerID: -1
   ownerColor: {fileID: 3557233206728275408}
   _canBattle: 0
   canBattleImage: {fileID: 6048191671734857711}

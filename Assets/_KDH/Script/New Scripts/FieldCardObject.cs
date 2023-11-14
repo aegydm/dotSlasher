@@ -102,7 +102,14 @@ public class FieldCardObject : MonoBehaviour
         set
         {
             _playerID = value;
-            ownerColor.color = new Color(255 - (255 * playerID), 255 * playerID, 0);
+            if (playerID != -1)
+            {
+                ownerColor.color = new Color(255 - (255 * playerID), 255 * playerID, 0);
+            }
+            else
+            {
+                ownerColor.color = Color.white;
+            }
         }
     }
     [Header("카드의 소유자 표시용 이미지")]
@@ -116,15 +123,48 @@ public class FieldCardObject : MonoBehaviour
         }
         set
         {
+            if(_canBattle != value)
+            {
+                if(value && attackChance)
+                {
+                    _canBattle = value;
+                    if(animator.runtimeAnimatorController != null)
+                    {
+                        animator.Play("Idle");
+                    }
+                }
+                else if(value == false)
+                {
+                    _canBattle = value;
+                    if (animator.runtimeAnimatorController != null)
+                    {
+                        animator.Play("Breath");
+                    }
+                }
+            }
+        }
+    }
+
+    public bool attackChance
+    {
+        get
+        {
+            return _attackChance;
+        }
+        set
+        {
             if (animator.runtimeAnimatorController != null && value == true)
             {
                 animator.Play("Idle");
             }
-            _canBattle = value;
+            _attackChance = value;
         }
     }
-    [Header("해당 필드의 공격 가능 여부")]
-    [SerializeField] private bool _canBattle;
+
+    [Header("해당 필드가 공격을 할 수 있는지 여부")]
+    [SerializeField] bool _canBattle = false;
+    [Header("해당 필드가 공격권을 가지고 있는지 여부")]
+    [SerializeField] private bool _attackChance;
     [Header("공격 가능 여부 표시용 이미지")]
     public Image canBattleImage;
     [Header("좌측 끼어들기 용 - First일 때만 활성화 예정")]
@@ -149,6 +189,7 @@ public class FieldCardObject : MonoBehaviour
         cardSprite.sprite = null;
         frontATKText.text = string.Empty;
         backATKText.text = string.Empty;
+        playerID = -1;
     }
 
     private void OnMouseOver()
@@ -175,7 +216,7 @@ public class FieldCardObject : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (cardData != null && cardData.cardID != 0 && canBattle && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
+        if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
             cardData.AttackStart(FieldManager.instance.battleField, this);
         }
