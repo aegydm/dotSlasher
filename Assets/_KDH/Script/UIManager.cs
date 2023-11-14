@@ -81,7 +81,6 @@ public class UIManager : MonoBehaviour
 
     public void EndMulligan()
     {
-        int count = 0;
         mulliganButton.SetActive(false);
         ExitButton.SetActive(true);
         ClosePopup();
@@ -91,11 +90,10 @@ public class UIManager : MonoBehaviour
             {
                 deck.Refill(cardList[i].GetComponent<UICard>().cardData);
                 cardList[i].GetComponent<UICard>().handCardObject.cardData = null;
+                deck.Draw(1);
                 Destroy(cardList[i]);
-                count++;
             }
         }
-        deck.Draw(count);
         GameManager.instance.playerEnd = true;
     }
 

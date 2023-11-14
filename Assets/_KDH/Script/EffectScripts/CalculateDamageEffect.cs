@@ -67,6 +67,7 @@ public class CalculateDamageEffect : CardEffect
                     }
                 }
             }
+            caster.canBattle = false;
         }
         return;
     }

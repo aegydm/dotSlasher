@@ -196,6 +196,11 @@ public class InterField : MonoBehaviour
         }
     }
 
+    public void ResetInterField()
+    {
+        interLine.SetActive(true);
+    }
+
     private void TransMatch()
     {
         this.transform.position = originField.transform.position + new Vector3(0.825f, 0, 0);

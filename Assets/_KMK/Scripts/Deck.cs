@@ -64,13 +64,22 @@ public class Deck : MonoBehaviour
     [SerializeField] int _countOfDeck;
     [SerializeField] public List<int> sortedDeck;
     [SerializeField] TMP_Text deckCountUI;
+    [SerializeField] TMP_Text graveCountUI;
+    [SerializeField] TMP_Text enemyGraveCountUI;
 
     public event Action OnDeckCountChanged;
+    public event Action OnGraveCountChanged;
+    public event Action OnEnemyGraveCountChanged;
+
 
     private void Start()
     {
         OnDeckCountChanged = null;
-        //OnDeckCountChanged += RenderDeckCount;
+        OnDeckCountChanged += RenderDeckCount;
+        OnGraveCountChanged = null;
+        OnGraveCountChanged += RenderGraveCount;
+        OnEnemyGraveCountChanged = null;
+        OnEnemyGraveCountChanged += RenderEnemyGraveCount;
         if (BuildManager.instance.Load("1", out originDeck) == false)
         //if(BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
         {
@@ -94,6 +103,16 @@ public class Deck : MonoBehaviour
     void RenderDeckCount()
     {
         deckCountUI.text = countOfDeck.ToString();
+    }
+
+    void RenderGraveCount()
+    {
+        graveCountUI.text = countOfGrave.ToString();
+    }
+
+    void RenderEnemyGraveCount()
+    {
+        enemyGraveCountUI.text = countOfEnemyGrave.ToString();
     }
 
     /// <summary>
@@ -145,6 +164,7 @@ public class Deck : MonoBehaviour
                 }
                 Debug.Log(countOfDeck);
                 Debug.Log("덱이 비었습니다.");
+                GameManager.instance.Lose();
             }
         }
         RefreshDeckCount();
@@ -190,7 +210,12 @@ public class Deck : MonoBehaviour
     }
     public void RefreshGraveCount()
     {
-        _countOfGrave = grave.Count;
+        countOfGrave = grave.Count;
+    }
+
+    public void RefreshEnemyGraveCount()
+    {
+        countOfEnemyGrave = grave.Count;
     }
 
     public void SortDeck()

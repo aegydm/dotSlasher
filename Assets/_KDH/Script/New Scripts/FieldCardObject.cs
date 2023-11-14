@@ -31,7 +31,7 @@ public class FieldCardObject : MonoBehaviour
                 GetComponent<BoxCollider2D>().enabled = false;
                 RenderCard();
             }
-            if(cardData != null && cardData != new Card())
+            if (cardData != null && cardData != new Card())
             {
                 this.playerID = int.Parse(GameManager.instance.playerID);
             }
@@ -123,17 +123,17 @@ public class FieldCardObject : MonoBehaviour
         }
         set
         {
-            if(_canBattle != value)
+            if (_canBattle != value)
             {
-                if(value && attackChance)
+                if (value && attackChance)
                 {
                     _canBattle = value;
-                    if(animator.runtimeAnimatorController != null)
+                    if (animator.runtimeAnimatorController != null)
                     {
                         animator.Play("Idle");
                     }
                 }
-                else if(value == false)
+                else if (value == false)
                 {
                     _canBattle = value;
                     if (animator.runtimeAnimatorController != null)
@@ -141,6 +141,10 @@ public class FieldCardObject : MonoBehaviour
                         animator.Play("Breath");
                     }
                 }
+            }
+            if (GameManager.instance.gamePhase == GamePhase.BattlePhase)
+            {
+                canBattleImage.color = canBattle ? Color.cyan : Color.white;
             }
         }
     }
@@ -168,9 +172,9 @@ public class FieldCardObject : MonoBehaviour
     [Header("공격 가능 여부 표시용 이미지")]
     public Image canBattleImage;
     [Header("좌측 끼어들기 용 - First일 때만 활성화 예정")]
-    [SerializeField] GameObject leftInter;
+    public GameObject leftInter;
     [Header("우측 끼어들기 가능 영역 표시용")]
-    [SerializeField] GameObject rightInter;
+    public GameObject rightInter;
     [Header("이전 칸과 다음 칸의 정보")]
     public FieldCardObject Prev;
     public FieldCardObject Next;
@@ -218,7 +222,23 @@ public class FieldCardObject : MonoBehaviour
     {
         if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
-            cardData.AttackStart(FieldManager.instance.battleField, this);
+            if (canBattle && playerID == int.Parse(GameManager.instance.playerID))
+            {
+                GameManager.instance.photonView.RPC("AttackUnit", Photon.Pun.RpcTarget.All, FieldManager.instance.battleField.FindIndex(this));
+                //cardData.AttackStart(FieldManager.instance.battleField, this);
+                GameManager.instance.canAct = false;
+            }
         }
+    }
+
+    public void ResetField()
+    {
+        leftInter.GetComponent<InterField>().ResetInterField();
+        rightInter.GetComponent<InterField>().ResetInterField();
+        leftInter.SetActive(false);
+        rightInter.SetActive(false);
+        GetComponent<BoxCollider2D>().enabled = true;
+        canBattle = false;
+        attackChance = false;
     }
 }

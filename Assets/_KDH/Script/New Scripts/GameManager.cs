@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,6 +47,10 @@ public class GameManager : MonoBehaviour
                         currentTurn++;
                         photonView.RPC("CallPlayerTurnEnd", RpcTarget.Others);
                     }
+                    if (gamePhase == GamePhase.BattlePhase)
+                    {
+                        CheckCanBattle();
+                    }
                 }
             }
             _canAct = value;
@@ -75,10 +80,12 @@ public class GameManager : MonoBehaviour
         set
         {
             if (_gamePhase != value)
-                _gamePhase = value;
-            if (gamePhase != GamePhase.None)
             {
-                StartPhaseSetting();
+                _gamePhase = value;
+                if (gamePhase != GamePhase.None)
+                {
+                    StartPhaseSetting();
+                }
             }
         }
     }
@@ -103,6 +110,10 @@ public class GameManager : MonoBehaviour
                 {
                     photonView.RPC("CallPlayerPhaseEnd", RpcTarget.Others);
                     nextPhase = gamePhase + 1;
+                    if(gamePhase == GamePhase.EndPhase)
+                    {
+                        nextPhase = GamePhase.DrawPhase;
+                    }
                     gamePhase = GamePhase.None;
 
                 }
@@ -151,6 +162,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool _playerEnd;
     [SerializeField] private bool _enemyEnd;
 
+    public bool playerLose;
+
     private void Awake()
     {
         instance = this;
@@ -165,6 +178,7 @@ public class GameManager : MonoBehaviour
         Invoke("FirstTurnSetting", 3f);
         CallTurnStart += TurnStart;
     }
+
 
     IEnumerator CheckPhaseEnd()
     {
@@ -183,11 +197,13 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(1);
                 count++;
             }
+            yield return new WaitForSeconds(5);
             _playerEnd = false;
             _enemyEnd = false;
             Debug.LogError(nextPhase);
             gamePhase = nextPhase;
             turnText.text = gamePhase.ToString();
+            Debug.LogError("Currnet Phase is " + gamePhase.ToString());
             currentTurn = 0;
             phaseTrigger = false;
         }
@@ -239,20 +255,15 @@ public class GameManager : MonoBehaviour
 
     private void BattlePhaseStart()
     {
+        Debug.LogError("BattlePhaseStart");
         FieldCardObject temp = FieldManager.instance.battleField.First;
         while (temp != null)
         {
-            if(temp.isEmpty == false)
-            {
-                temp.canBattle = true;
-            }
-            else
-            {
-                temp.canBattle = false;
-            }
+            temp.ResetField();
+            temp.attackChance = true;
+            temp.canBattle = !temp.isEmpty;
             temp = temp.Next;
         }
-
         CheckCanBattle();
 
         if (startFirst)
@@ -263,10 +274,12 @@ public class GameManager : MonoBehaviour
         {
             _canAct = false;
         }
+        CallTurnStart += CheckMyUnitCanAttack;
     }
 
     private void CheckCanBattle()
     {
+        Debug.LogError("CheckCanBattle");
         FieldCardObject temp = FieldManager.instance.battleField.First;
         while (temp != null)
         {
@@ -289,19 +302,73 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    
+                    if (temp.lookingLeft)
+                    {
+                        if (temp.Prev == null || temp.Prev.isEmpty)
+                        {
+                            temp.canBattle = false;
+                        }
+                        else if (temp.Prev.playerID == temp.playerID)
+                        {
+                            temp.canBattle = false;
+                        }
+
+                        else
+                        {
+                            temp.canBattle = true;
+                        }
+                    }
+                    else
+                    {
+                        if (temp.Next == null || temp.Next.isEmpty)
+                        {
+                            temp.canBattle = false;
+                        }
+                        else if (temp.Next.playerID == temp.playerID)
+                        {
+                            temp.canBattle = false;
+                        }
+                        else
+                        {
+                            temp.canBattle = true;
+                        }
+                    }
+                    if (temp.cardData.frontDamage == 0)
+                    {
+                        temp.canBattle = false;
+                    }
                 }
             }
             temp = temp.Next;
         }
     }
 
+    private void CheckMyUnitCanAttack()
+    {
+        if (gamePhase == GamePhase.BattlePhase)
+        {
+            FieldCardObject myTemp = FieldManager.instance.battleField.First;
+            while (myTemp != null)
+            {
+                if ((myTemp.playerID == int.Parse(playerID)) && myTemp.canBattle)
+                {
+                    return;
+                }
+                myTemp = myTemp.Next;
+            }
+            canAct = false;
+            playerEnd = true;
+            return;
+        }
+    }
+
     private void ExecutionPhaseStart()
     {
-        Debug.LogError("처리 페이즈에 진입했습니다.");
+        CallTurnStart -= CheckMyUnitCanAttack;
+        Debug.LogError("처리페이즈에 진입 했습니다.");
         if (damageSum == 0)
         {
-            Debug.LogError("버릴 카드가 없습니다.");
+            Debug.LogError("모든 카드를 버렸습니다.");
             playerEnd = true;
             return;
         }
@@ -330,12 +397,13 @@ public class GameManager : MonoBehaviour
             }
             temp = temp.Next;
         }
+        FieldManager.instance.ResetGameField();
         playerEnd = true;
     }
 
     IEnumerator DiscardByDamage()
     {
-        Debug.LogError($"{damageSum}장 버려야 합니다.");
+        Debug.LogError($"{damageSum}장 버려야합니다.");
         UIManager.Instance.PopupCard(deck.useDeck);
         UIManager.Instance.selectCardChanged += Discard;
         while (damageSum > 0)
@@ -344,7 +412,7 @@ public class GameManager : MonoBehaviour
         }
         UIManager.Instance.selectCardChanged -= Discard;
         UIManager.Instance.ClosePopup();
-        Debug.LogError("카드를 전부 버렸습니다");
+        Debug.LogError("모든 카드를 버렸습니다.");
         playerEnd = true;
     }
 
@@ -402,7 +470,7 @@ public class GameManager : MonoBehaviour
     {
         if (animator == null)
         {
-            Debug.LogError("죽은 유닛 입니다");
+            Debug.LogError("null animator error");
             return;
         }
         while (animator != null && animator.runtimeAnimatorController != null && !animator.GetCurrentAnimatorStateInfo(0).IsName(aniName))
@@ -417,14 +485,21 @@ public class GameManager : MonoBehaviour
 
     public void EndButton()
     {
-        if (canAct && playerEnd == false && useCard)
+        if (gamePhase == GamePhase.ActionPhase)
         {
-            canAct = false;
-        }
-        else if (canAct && playerEnd == false)
-        {
-            canAct = false;
-            playerEnd = true;
+            if (canAct && playerEnd == false && useCard)
+            {
+                canAct = false;
+                if (PlayerActionManager.instance.handCardCount == 0 || FieldManager.instance.FieldIsFull())
+                {
+                    playerEnd = true;
+                }
+            }
+            else if (canAct && playerEnd == false)
+            {
+                canAct = false;
+                playerEnd = true;
+            }
         }
     }
 
@@ -484,4 +559,37 @@ public class GameManager : MonoBehaviour
         Debug.LogError("CallSummonUnit");
         FieldManager.instance.SetCardToFieldForPun(index, make, makeLeft, cardID, lookingLeft, playerID);
     }
+
+    [PunRPC]
+    public void CallPlayerWinOrLose(bool enemyLose)
+    {
+        if (enemyLose == playerLose)
+        {
+            Debug.Log("Draw");
+        }
+        else
+        {
+            if (enemyLose == false)
+            {
+                Debug.Log("Lose");
+            }
+            else
+            {
+                Debug.Log("Win");
+            }
+        }
+    }
+
+    [PunRPC]
+    public void AttackUnit(int index)
+    {
+        FieldManager.instance.battleField[index].cardData.AttackStart(FieldManager.instance.battleField, FieldManager.instance.battleField[index]);
+    }
+
+    public void Lose()
+    {
+        playerLose = true;
+        photonView.RPC("CallPlayerWinOrLose", RpcTarget.Others, playerLose);
+    }
+
 }

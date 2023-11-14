@@ -7,13 +7,13 @@ public class FieldManager : MonoBehaviour
 {
     public static FieldManager instance;
     public LinkedBattleField battleField;
-    [Header("Field의 부모 오브젝트")]
+    [Header("Field의 부모를 넣어주세요")]
     public GameObject parentField;
-    [Header("초기 5개 타일을 넣어주세요")]
+    [Header("초기 필드 5개를 넣어주세요")]
     public List<FieldCardObject> startFieldList;
-    [Header("추가로 생성될 타일을 넣어주세요")]
+    [Header("추가 생성될 필드를 넣어주세요.")]
     public List<FieldCardObject> additionalFieldList = new();
-    [Header("방향키 선택 화면 여부")]
+    [Header("방향 설정 캔버스의 작동 유무체크용")]
     public bool isOpenDirection = false;
 
     public PhotonView photonView;
@@ -45,6 +45,27 @@ public class FieldManager : MonoBehaviour
         CheckInterAll();
     }
 
+    public void ResetGameField()
+    {
+        for (int i = 0; i < additionalFieldList.Count; i++)
+        {
+            if (additionalFieldList[i].gameObject.activeSelf)
+            {
+                battleField.Remove(additionalFieldList[i]);
+                additionalFieldList[i].ResetField();
+                additionalFieldList[i].gameObject.SetActive(false);
+                additionalFieldList[i].GetComponent<BoxCollider2D>().enabled = false;
+                additionalFieldList[i].Prev = null;
+                additionalFieldList[i].Next = null;
+            }
+        }
+        for (int i = 0; i < startFieldList.Count; i++)
+        {
+            startFieldList[i].gameObject.transform.position = (i - ((startFieldList.Count - 1) / 2)) * CARDDISTANCE + new Vector3(0, 2.12f, 0);
+            startFieldList[i].ResetField();
+        }
+    }
+
     public FieldCardObject GetAdditionalField()
     {
         for (int i = 0; i < additionalFieldList.Count; i++)
@@ -60,6 +81,24 @@ public class FieldManager : MonoBehaviour
     public void AddFieldAfter(int index, int cardID)
     {
 
+    }
+
+    public bool FieldIsFull()
+    {
+        if (battleField.Count() == (startFieldList.Count + additionalFieldList.Count))
+        {
+            FieldCardObject temp = battleField.First;
+            while (temp != null)
+            {
+                if (temp.isEmpty)
+                {
+                    return false;
+                }
+                temp = temp.Next;
+            }
+            return true;
+        }
+        return false;
     }
 
     public void CheckInterAll()
@@ -156,12 +195,12 @@ public class FieldManager : MonoBehaviour
                 FieldCardObject temp1 = FieldManager.instance.battleField.First;
                 for (int i = 0; i <= index; i++)
                 {
-                    temp1.gameObject.transform.position -= CARDDISTANCE/2;
+                    temp1.gameObject.transform.position -= CARDDISTANCE / 2;
                     temp1 = temp1.Next;
                 }
                 while (temp1 != null)
                 {
-                    temp1.gameObject.transform.position += CARDDISTANCE/2;
+                    temp1.gameObject.transform.position += CARDDISTANCE / 2;
                     temp1 = temp1.Next;
                 }
 

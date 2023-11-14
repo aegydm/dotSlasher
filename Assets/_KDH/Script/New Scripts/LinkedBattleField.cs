@@ -15,11 +15,11 @@ public class LinkedBattleField
         get
         {
             FieldCardObject temp = First;
-            for(int i = 0; i < index; i++)
+            for (int i = 0; i < index; i++)
             {
                 temp = temp.Next;
             }
-            if(temp == null)
+            if (temp == null)
             {
                 Debug.LogError("IndexOutOfRange!");
             }
@@ -28,16 +28,21 @@ public class LinkedBattleField
         set
         {
             FieldCardObject temp = First;
-            for(int i = 0; i < index; i++)
+            for (int i = 0; i < index; i++)
             {
                 temp = temp.Next;
             }
-            if(temp == null)
+            if (temp == null)
             {
                 Debug.LogError("IndexOutOfRange!");
             }
             temp = value;
         }
+    }
+
+    public int Count()
+    {
+        return FindIndex(Last) + 1;
     }
 
     public int FindIndex(FieldCardObject field)
@@ -60,7 +65,7 @@ public class LinkedBattleField
     {
         _tmp = gameObject.GetComponent<FieldCardObject>();
 
-        if(_first != null)
+        if (_first != null)
         {
             _tmp.Next = _first;
             _first.Prev = _tmp;
@@ -76,7 +81,7 @@ public class LinkedBattleField
     public void AddLast(GameObject gameObject)
     {
         _tmp = gameObject.GetComponent<FieldCardObject>();
-        if(_last != null)
+        if (_last != null)
         {
             _tmp.Prev = _last;
             _last.Next = _tmp;
@@ -93,7 +98,7 @@ public class LinkedBattleField
     {
         _tmp = gameObject.GetComponent<FieldCardObject>();
 
-        if(battleField.Prev != null)
+        if (battleField.Prev != null)
         {
             battleField.Prev.Next = _tmp;
             _tmp.Prev = battleField.Prev;
@@ -107,11 +112,11 @@ public class LinkedBattleField
         battleField.Prev = _tmp;
     }
 
-    public void AddAfter(FieldCardObject battlefield,GameObject gameObject)
+    public void AddAfter(FieldCardObject battlefield, GameObject gameObject)
     {
         _tmp = gameObject.GetComponent<FieldCardObject>();
 
-        if(battlefield.Next != null)
+        if (battlefield.Next != null)
         {
             battlefield.Next.Prev = _tmp;
             _tmp.Next = battlefield.Next;
@@ -127,7 +132,7 @@ public class LinkedBattleField
 
     public void Add(GameObject gameObject)
     {
-        if(_first == null)
+        if (_first == null)
         {
             AddFirst(gameObject);
         }
@@ -140,9 +145,9 @@ public class LinkedBattleField
     public FieldCardObject Find(GameObject gameObject)
     {
         _tmp = _first;
-        while(_tmp.Next != null)
+        while (_tmp.Next != null)
         {
-            if(_tmp.gameObject == gameObject)
+            if (_tmp.gameObject == gameObject)
             {
                 return _tmp;
             }
@@ -158,9 +163,9 @@ public class LinkedBattleField
     public FieldCardObject FindLast(GameObject gameObject)
     {
         _tmp = _last;
-        while(_tmp.Prev != null) 
+        while (_tmp.Prev != null)
         {
-            if(_tmp.gameObject == gameObject)
+            if (_tmp.gameObject == gameObject)
             {
                 return _tmp;
             }
@@ -176,12 +181,12 @@ public class LinkedBattleField
 
     public bool Remove(FieldCardObject battleField)
     {
-        if(battleField == null)
+        if (battleField == null)
         {
             return false;
         }
 
-        if(battleField.Prev != null)
+        if (battleField.Prev != null)
         {
             battleField.Prev.Next = battleField.Next;
         }
@@ -190,7 +195,7 @@ public class LinkedBattleField
             _first = battleField.Next;
         }
 
-        if(battleField.Next != null)
+        if (battleField.Next != null)
         {
             battleField.Next.Prev = battleField.Prev;
         }
