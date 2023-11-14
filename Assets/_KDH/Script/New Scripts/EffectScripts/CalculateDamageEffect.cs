@@ -47,6 +47,10 @@ public class CalculateDamageEffect : CardEffect
                 {
                     Debug.Log(caster.cardData.cardName + "의 공격이 실패했습니다.");
                     Debug.Log("HitStart");
+                    if (targets[i].lookingLeft == caster.lookingLeft)
+                    {
+                        targets[i].lookingLeft = !targets[i].lookingLeft;
+                    }
                     Task hitTask = GameManager.instance.CheckAnim(targets[i].animator, "Hit");
                     targets[i].animator.Play("Hit");
                     Debug.Log("HitAnimation");

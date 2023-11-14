@@ -142,7 +142,7 @@ public class FieldCardObject : MonoBehaviour
                     }
                 }
             }
-            if (GameManager.instance.gamePhase == GamePhase.BattlePhase)
+            if (GameManager.instance.gamePhase == GamePhase.BattlePhase || GameManager.instance.nextPhase == GamePhase.ExecutionPhase)
             {
                 canBattleImage.color = canBattle ? Color.cyan : Color.white;
             }
@@ -220,15 +220,29 @@ public class FieldCardObject : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
+        if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct &&UIManager.Instance.isPopUI == false)
         {
-            if (canBattle && playerID == int.Parse(GameManager.instance.playerID))
-            {
-                GameManager.instance.photonView.RPC("AttackUnit", Photon.Pun.RpcTarget.All, FieldManager.instance.battleField.FindIndex(this));
-                //cardData.AttackStart(FieldManager.instance.battleField, this);
-                GameManager.instance.canAct = false;
-            }
+            FieldAttack();
         }
+    }
+
+    public void FieldAttack()
+    {
+        if (GameManager.instance.isAlreadyAttack == false && canBattle && playerID == int.Parse(GameManager.instance.playerID))
+        {
+            GameManager.instance.isAlreadyAttack = true;
+            GameManager.instance.photonView.RPC("AttackUnit", Photon.Pun.RpcTarget.All, FieldManager.instance.battleField.FindIndex(this));
+            Invoke("DelayTurnEnd", 7);
+        }
+    }
+
+    private void DelayTurnEnd()
+    {
+        Debug.LogError("DelayCanAttackFalse");
+        GameManager.instance.canAct = false;
+        Debug.LogError("DelayIsAttackFalse");
+        GameManager.instance.isAlreadyAttack = false;
+        Debug.LogError("DelayEnd");
     }
 
     public void ResetField()
