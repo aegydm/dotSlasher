@@ -21,6 +21,8 @@ public class FieldManager : MonoBehaviour
     public bool make = false;
     public bool makeLeft = false;
 
+    private readonly Vector3 CARDDISTANCE = new Vector3(1.65f, 0, 0);
+
     private void Awake()
     {
         if (instance == null)
@@ -136,10 +138,10 @@ public class FieldManager : MonoBehaviour
                 FieldCardObject temp1 = FieldManager.instance.battleField.First;
                 while (temp1 != null)
                 {
-                    temp1.gameObject.transform.position += new Vector3(0.825f, 0, 0);
+                    temp1.gameObject.transform.position += CARDDISTANCE / 2;
                     temp1 = temp1.Next;
                 }
-                temp.transform.position = battleField.First.transform.position - new Vector3(1.65f, 0, 0);
+                temp.transform.position = battleField.First.transform.position - CARDDISTANCE;
 
                 battleField.AddBefore(battleField[index], temp.gameObject);
                 temp.cardData = CardDB.instance.FindCardFromID(cardID);
@@ -152,20 +154,20 @@ public class FieldManager : MonoBehaviour
                 temp.gameObject.SetActive(true);
 
                 FieldCardObject temp1 = FieldManager.instance.battleField.First;
-                for (int i = 0; i < index; i++)
+                for (int i = 0; i <= index; i++)
                 {
-                    temp1.gameObject.transform.position -= new Vector3(0.825f, 0, 0);
+                    temp1.gameObject.transform.position -= CARDDISTANCE/2;
                     temp1 = temp1.Next;
                 }
                 while (temp1 != null)
                 {
-                    temp1.gameObject.transform.position += new Vector3(0.825f, 0, 0);
+                    temp1.gameObject.transform.position += CARDDISTANCE/2;
                     temp1 = temp1.Next;
                 }
 
-                temp.transform.position = (battleField[index - 1].transform.position + battleField[index].transform.position) / 2;
 
                 battleField.AddAfter(battleField[index], temp.gameObject);
+                temp.transform.position = (battleField[index].transform.position) + CARDDISTANCE;
                 temp.cardData = CardDB.instance.FindCardFromID(cardID);
                 temp.playerID = playerID;
                 temp.lookingLeft = lookingLeft;
