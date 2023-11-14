@@ -13,21 +13,36 @@ public class UICard : MonoBehaviour
 
     private void OnMouseOver()
     {
-        GetComponent<Image>().color = Color.red;
+        if (isSelected == false)
+        {
+            GetComponent<Image>().color = Color.red;
+
+        }
     }
 
     private void OnMouseExit()
     {
-        GetComponent<Image>().color = Color.white;
+        if (isSelected == false)
+        {
+            GetComponent<Image>().color = Color.white;
+        }
     }
 
     private void OnMouseDown()
     {
         UIManager.Instance.selectObject = gameObject;
         UIManager.Instance.selectCard = cardData;
-        if(handCardObject != null )
+        if (handCardObject != null)
         {
             isSelected = !isSelected;
+            if (isSelected)
+            {
+                GetComponent<Image>().color = Color.gray;
+            }
+            else
+            {
+                GetComponent<Image>().color = Color.white;
+            }
             Debug.Log(handCardObject.name + "is " + isSelected);
         }
     }

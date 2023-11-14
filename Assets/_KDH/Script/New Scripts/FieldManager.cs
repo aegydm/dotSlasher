@@ -214,10 +214,10 @@ public class FieldManager : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Original Field : {battleField[index]},{index} + Card is : {battleField[index].cardData.cardName}");
             battleField[index].cardData = CardDB.instance.FindCardFromID(cardID);
             battleField[index].lookingLeft = lookingLeft;
             battleField[index].playerID = playerID;
+            Debug.Log($"Original Field : {battleField[index]},{index} + Card is : {battleField[index].cardData.cardName}");
         }
         isOpenDirection = false;
         CheckInterAll();

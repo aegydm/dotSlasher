@@ -15,10 +15,12 @@ public class GetDamageEffect : CardEffect
         if(caster.playerID.ToString() == GameManager.instance.playerID)
         {
             GameManager.instance.deck.grave.Add(caster.cardData);
+            GameManager.instance.deck.RefreshGraveCount();
         }
         else
         {
             GameManager.instance.deck.enemyGrave.Add(caster.cardData);
+            GameManager.instance.deck.RefreshEnemyGraveCount();
         }
         caster.cardData = null;
         return;

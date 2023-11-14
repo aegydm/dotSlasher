@@ -11,8 +11,39 @@ public class Deck : MonoBehaviour
 {
     public List<Card> useDeck = new List<Card>();
     public List<Card> originDeck = new List<Card>();
-    public List<Card> grave = new List<Card>();
-    public List<Card> enemyGrave = new List<Card>();
+    public List<Card> grave
+    {
+        get
+        {
+            return _grave;
+        }
+        set
+        {
+            if(_grave.Count != value.Count)
+            {
+                countOfGrave = value.Count;
+            }
+            _grave = value;
+        }
+    }
+    [SerializeField] private List<Card> _grave = new List<Card>();
+
+    public List<Card> enemyGrave
+    {
+        get
+        {
+            return _enemyGrave;
+        }
+        set
+        {
+            if(_enemyGrave.Count != value.Count)
+            {
+                countOfEnemyGrave = value.Count;
+            }
+            _enemyGrave = value;
+        }
+    }
+    [SerializeField] List<Card> _enemyGrave = new List<Card>();
     public Card myHero = new Hero();
 
     public int countOfDeck
@@ -30,6 +61,7 @@ public class Deck : MonoBehaviour
             }
         }
     }
+
     public int countOfGrave
     {
         get
@@ -41,6 +73,7 @@ public class Deck : MonoBehaviour
             if (_countOfGrave != value)
             {
                 _countOfGrave = value;
+                OnGraveCountChanged?.Invoke();
             }
         }
     }
@@ -56,6 +89,7 @@ public class Deck : MonoBehaviour
             if (_countOfEnemyGrave != value)
             {
                 _countOfEnemyGrave = value;
+                OnEnemyGraveCountChanged?.Invoke();
             }
         }
     }
@@ -195,6 +229,7 @@ public class Deck : MonoBehaviour
             {
                 grave.Add(useDeck[i]);
                 useDeck.RemoveAt(i);
+                RefreshGraveCount();
                 RefreshDeckCount();
                 return true;
             }
@@ -234,33 +269,4 @@ public class Deck : MonoBehaviour
 
         sortedDeck = idList;
     }
-
-    //void Mulligan(Card[] cards)
-    //{
-
-    //    for (int i = 0; i < cards.Length; i++)
-    //    {
-    //        Refill(cards[i]);
-    //    }
-
-    //    Draw(cards.Length);
-    //}
-
-    //public void Mulligan(HandCardObject[] handCardList)
-    //{
-
-    //}
-
-    //void OneDraw()
-    //{
-    //    switch (GameManager.instance.gamePhase)
-    //    {
-    //        case GamePhase.DrawPhase:
-    //            Draw(1);
-    //            break;
-
-    //        default:
-    //            break;
-    //    }
-    //}
 }

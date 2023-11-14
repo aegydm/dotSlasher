@@ -4746,6 +4746,11 @@ PrefabInstance:
       objectReference: {fileID: 1981087831}
     - target: {fileID: 9118654934647822572, guid: bff28281831808343a1e87134a104dc8,
         type: 3}
+      propertyPath: exitButton
+      value: 
+      objectReference: {fileID: 1981087831}
+    - target: {fileID: 9118654934647822572, guid: bff28281831808343a1e87134a104dc8,
+        type: 3}
       propertyPath: gridLayout
       value: 
       objectReference: {fileID: 884083905}
