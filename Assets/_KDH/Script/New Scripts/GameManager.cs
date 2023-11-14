@@ -166,13 +166,17 @@ public class GameManager : MonoBehaviour
         set
         {
             _currentTurn = value;
-            if (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase)
+            if (dirtySet == false)
             {
-                turnText.text = gamePhase.ToString() + " : " + (currentTurn + 1);
-            }
-            else if (currentTurn > 0)
-            {
-                turnText.text = turnText.text.Substring(0, turnText.text.Length - 2) + (currentTurn + 1);
+
+                if (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase)
+                {
+                    turnText.text = gamePhase.ToString() + " : " + (currentTurn + 1);
+                }
+                else if (nextPhase == GamePhase.BattlePhase || nextPhase == GamePhase.ExecutionPhase)
+                {
+                    turnText.text = (nextPhase - 1).ToString() + " : " + (currentTurn + 1);
+                }
             }
         }
     }
@@ -294,12 +298,11 @@ public class GameManager : MonoBehaviour
             temp.canBattle = !temp.isEmpty;
             temp = temp.Next;
         }
-        CheckCanBattle();
-        CheckMyUnitCanAttack();
 
         if (startFirst)
         {
             _canAct = true;
+            Debug.LogError("canAct is true!");
             turnText.color = personalColor.color;
             CallTurnStart?.Invoke();
             currentTurn = 0;
@@ -307,14 +310,17 @@ public class GameManager : MonoBehaviour
         else
         {
             _canAct = false;
+            Debug.LogError("canAct is false!");
             turnText.color = Color.white;
         }
-        CallTurnEnd -= TurnEnd;
+        //CallTurnEnd -= TurnEnd;
         CallTurnStart += CheckCanBattle;
         CallTurnStart += CheckMyUnitCanAttack;
         CallTurnEnd += CheckCanBattle;
         CallTurnEnd += CheckMyUnitCanAttack;
-        CallTurnEnd += TurnEnd;
+        //CallTurnEnd += TurnEnd;
+        CheckCanBattle();
+        CheckMyUnitCanAttack();
     }
 
     private void CheckCanBattle()
@@ -503,6 +509,7 @@ public class GameManager : MonoBehaviour
         {
             damageSum--;
             UIManager.Instance.RemoveSelectObject();
+            photonView.RPC("EnemyDeckDiscard", RpcTarget.Others, card.cardID);
         }
     }
 
@@ -609,10 +616,9 @@ public class GameManager : MonoBehaviour
 
     public void TurnStart()
     {
-        if (enemyEnd == false)
+        //if (enemyEnd == false)
         {
-
-            currentTurn++;
+            //currentTurn++;
         }
     }
 
@@ -626,6 +632,7 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     public void CallPlayerTurnEnd()
     {
+        currentTurn++;
         Debug.LogError("CallPlayerTurnEnd");
         if (playerEnd)
         {
@@ -642,19 +649,18 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        currentTurn++;
-                        photonView.RPC("CallPlayerTurnEnd", RpcTarget.Others);
+                        CallTurnEnd();
                     }
                 }
                 else
                 {
-                    currentTurn++;
-                    photonView.RPC("CallPlayerTurnEnd", RpcTarget.Others);
+                    CallTurnEnd();
                 }
             }
         }
         else if (canAct == false && (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase))
         {
+
             canAct = true;
         }
     }
@@ -704,6 +710,13 @@ public class GameManager : MonoBehaviour
     public void AttackUnit(int index)
     {
         FieldManager.instance.battleField[index].cardData.AttackStart(FieldManager.instance.battleField, FieldManager.instance.battleField[index]);
+    }
+
+    [PunRPC]
+    public void EnemyDeckDiscard(int cardID)
+    {
+        deck.enemyGrave.Add(CardDB.instance.FindCardFromID(cardID));
+        deck.RefreshEnemyGraveCount();
     }
 
     public void Lose()

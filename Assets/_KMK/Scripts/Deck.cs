@@ -229,6 +229,7 @@ public class Deck : MonoBehaviour
             {
                 grave.Add(useDeck[i]);
                 useDeck.RemoveAt(i);
+                RefreshGraveCount();
                 RefreshDeckCount();
                 return true;
             }
