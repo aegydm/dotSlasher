@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public bool isPopUI = false;
     List<GameObject> cardList = new();
     [SerializeField] GameObject mulliganButton;
+    [SerializeField] GameObject ExitButton;
     [SerializeField] GameObject popUpUi;
     [SerializeField] GameObject gridLayout;
     [SerializeField] GameObject cardObject;
@@ -82,6 +83,7 @@ public class UIManager : MonoBehaviour
     {
         int count = 0;
         mulliganButton.SetActive(false);
+        ExitButton.SetActive(true);
         ClosePopup();
         for(int i = 0; i < cardList.Count; i++)
         {
@@ -94,6 +96,7 @@ public class UIManager : MonoBehaviour
             }
         }
         deck.Draw(count);
+        GameManager.instance.playerEnd = true;
     }
 
     public void PopupCard(List<Card> cardList)
@@ -130,6 +133,7 @@ public class UIManager : MonoBehaviour
                 go.GetComponent<UICard>().handCardObject = card;
             }
             mulliganButton.SetActive(true);
+            ExitButton.SetActive(false);
         }
     }
 

@@ -6,11 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "FindEnemyEffect", menuName = "Effect/BaseEffect/FindEnemyEffect")]
 public class FindEnemyEffect : CardEffect
 {
-    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObjectTest caster, List<FieldCardObjectTest> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObject caster, List<FieldCardObject> targets)
     {
         if (caster.canBattle)
         {
-            FieldCardObjectTest tmp = caster;
+            FieldCardObject tmp = caster;
             if (caster.lookingLeft)
             {
                 if (tmp.Prev == null || tmp.Prev.isEmpty)

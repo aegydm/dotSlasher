@@ -12,7 +12,7 @@ public class PlayerActionManager : MonoBehaviour
     [Header("드래그 중인 오브젝트")]
     public HandCardObject dragCardGO;
     [Header("현재 마우스를 올려둔 필드의 정보")]
-    public FieldCardObjectTest field;
+    public FieldCardObject field;
     [Header("손패 오브젝트를 5개 넣어주세요")]
     public HandCardObject[] handCardObjectArray = new HandCardObject[5];
     [Header("좌우 방향을 정하는 용도의 캔버스")]
@@ -103,7 +103,7 @@ public class PlayerActionManager : MonoBehaviour
             field.CancelFieldSelect();
         if (dragCardGO != null)
             dragCardGO.CancelDrag();
-        FieldManagerTest.instance.isOpenDirection = false;
+        FieldManager.instance.isOpenDirection = false;
     }
 
     public bool AddHandCard(Card card)

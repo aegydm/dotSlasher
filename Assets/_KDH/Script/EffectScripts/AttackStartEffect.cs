@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 [CreateAssetMenu(fileName = "AttackStartEffect", menuName = "Effect/BaseEffect/AttackStartEffect")]
 public class AttackStartEffect : CardEffect
 {
-    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObjectTest caster, List<FieldCardObjectTest> targets)
+    public override async Task ExecuteEffect(LinkedBattleField battleFieldInfo, FieldCardObject caster, List<FieldCardObject> targets)
     {
         targets.Clear();
         if (battleFieldInfo == null)

@@ -995,7 +995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adce1f8e3d46a7b44b39459500ab8054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originField: {fileID: 5926629837941510087}
+  originField: {fileID: 7546640666454565840}
   interLine: {fileID: 3009613062362833881}
 --- !u!1 &6745081207831737708
 GameObject:
@@ -1094,7 +1094,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1278528790631674619}
   - component: {fileID: 3306576954393284264}
-  - component: {fileID: 5926629837941510087}
+  - component: {fileID: 7546640666454565840}
   m_Layer: 0
   m_Name: FieldCardObject
   m_TagString: Untagged
@@ -1165,7 +1165,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &5926629837941510087
+--- !u!114 &7546640666454565840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1174,7 +1174,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7057490419741340519}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cd6646f0a0c9d04084bfbe4029b1edd, type: 3}
+  m_Script: {fileID: 11500000, guid: 1202556020dc44343914da653bea598e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _cardData:
@@ -1202,7 +1202,7 @@ MonoBehaviour:
   frontATKText: {fileID: 7292840393620530438}
   backATKText: {fileID: 1710812029057780987}
   _lookingLeft: 0
-  playerID: 0
+  playerID: -1
   ownerColor: {fileID: 3557233206728275408}
   _canBattle: 0
   canBattleImage: {fileID: 6048191671734857711}

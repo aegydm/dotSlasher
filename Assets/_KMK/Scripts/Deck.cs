@@ -12,6 +12,7 @@ public class Deck : MonoBehaviour
     public List<Card> useDeck = new List<Card>();
     public List<Card> originDeck = new List<Card>();
     public List<Card> grave =new List<Card>();
+    public List<Card> enemyGrave = new List<Card>();
     public Card myHero = new Hero();
 
     public int countOfDeck
@@ -43,6 +44,22 @@ public class Deck : MonoBehaviour
             }
         }
     }
+
+    public int countOfEnemyGrave
+    {
+        get
+        {
+            return _countOfEnemyGrave;
+        }
+        set
+        {
+            if(_countOfEnemyGrave != value)
+            {
+                _countOfEnemyGrave = value;
+            }
+        }
+    }
+    [SerializeField] int _countOfEnemyGrave;
     [SerializeField] int _countOfGrave;
     [SerializeField] int _countOfDeck;
     [SerializeField] public List<int> sortedDeck;
@@ -58,7 +75,7 @@ public class Deck : MonoBehaviour
         //if(BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
         {
             Debug.Log("Fail to Load Deck");
-            //GameManager.Instance.Lose();
+            //GameManager.instance.Lose();
         }
         foreach(var card in originDeck)
         {
@@ -114,7 +131,7 @@ public class Deck : MonoBehaviour
                 if (PlayerActionManager.instance.AddHandCard(useDeck[0]))
                 {
                     useDeck.Remove(useDeck[0]);
-                    //GameManager.Instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
+                    //GameManager.instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
                 }
                 else
                 {
@@ -125,7 +142,7 @@ public class Deck : MonoBehaviour
             {
                 Debug.Log(countOfDeck);
                 Debug.Log("移대뱶媛 ?놁뒿?덈떎");
-                //GameManager.Instance.Lose();
+                //GameManager.instance.Lose();
             }
         }
         RefreshDeckCount();
@@ -148,6 +165,7 @@ public class Deck : MonoBehaviour
         {
             if (useDeck[i] == card)
             {
+                grave.Add(useDeck[i]);
                 useDeck.RemoveAt(i);
                 RefreshDeckCount();
                 return true;
@@ -205,7 +223,6 @@ public class Deck : MonoBehaviour
         for (int i = 0; i < cards.Length; i++)
         {
             Refill(cards[i]);
-            HandManager.Instance.RemoveHand();
         }
 
         Draw(cards.Length);
@@ -213,17 +230,14 @@ public class Deck : MonoBehaviour
 
     public void Mulligan(HandCardObject[] handCardList)
     {
-
+            
     }
 
-    /// <summary>
-    /// ?쒕줈???섏씠利덉뿉留??쒕줈?곌? 媛?ν븳 湲곕뒫
-    /// </summary>
     void OneDraw()
     {
-        switch (GameManager.Instance.gamePhase)
+        switch (GameManager.instance.gamePhase)
         {
-            case GamePhaseOld.DrawPhase:
+            case GamePhase.DrawPhase:
                 Draw(1);
                 break;
 

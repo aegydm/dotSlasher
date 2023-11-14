@@ -123,18 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &19937979 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5207098261038665007, guid: bff28281831808343a1e87134a104dc8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1463409372}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463409375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2e08ac3ad199ba40b2ca32d44bd6558, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &20402589
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +284,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1463409374}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Deck, Assembly-CSharp
         m_MethodName: Draw
         m_Mode: 3
@@ -1039,7 +1027,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 19937979}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
         m_MethodName: AttackButton
         m_Mode: 1
@@ -1089,12 +1077,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374886898}
   m_CullTransparentMesh: 1
---- !u!1 &437104868 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4200101501985923419, guid: 1fd2b106ef9baa041af0319e664f9b2e,
-    type: 3}
-  m_PrefabInstance: {fileID: 6483901190284263346}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &473867961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1794,7 +1776,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1463409373}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ExitGame
         m_Mode: 1
@@ -2063,7 +2045,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1463409373}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: StartSetting
         m_Mode: 1
@@ -3092,7 +3074,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1325771575
 GameObject:
@@ -3171,12 +3153,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325771575}
   m_CullTransparentMesh: 1
---- !u!1 &1376144331 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 562543891399525374, guid: 1fd2b106ef9baa041af0319e664f9b2e,
-    type: 3}
-  m_PrefabInstance: {fileID: 6483901190284263346}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1410081252
 GameObject:
   m_ObjectHideFlags: 0
@@ -3525,6 +3501,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6030278600457075863, guid: bff28281831808343a1e87134a104dc8,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8655641205670721249, guid: bff28281831808343a1e87134a104dc8,
         type: 3}
       propertyPath: xPos
@@ -3554,95 +3535,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1150808645461756086, guid: bff28281831808343a1e87134a104dc8,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1463409376}
-    - targetCorrespondingSourceObject: {fileID: 1150808645461756086, guid: bff28281831808343a1e87134a104dc8,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1463409377}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bff28281831808343a1e87134a104dc8, type: 3}
---- !u!114 &1463409373 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2027963766313992369, guid: bff28281831808343a1e87134a104dc8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1463409372}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463409375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2cda7608d805eb4bbebee1692addf9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1463409374 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1369465017379345213, guid: bff28281831808343a1e87134a104dc8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1463409372}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463409375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 398a77147ca54824c81917dc3938b31d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &1463409375 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1150808645461756086, guid: bff28281831808343a1e87134a104dc8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1463409372}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1463409376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463409375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6088c9f73bf6344ca02c956a52e4e70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deck: []
-  deckName: 
---- !u!114 &1463409377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463409375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ff246c056dfda43b2c8a1fd5b6b5bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPopUI: 0
-  popUpUi: {fileID: 437104868}
-  gridLayout: {fileID: 1376144331}
-  cardObject: {fileID: 4475879479727289877, guid: 568e038a52c5a5542b002e2228e76a1d,
-    type: 3}
-  _selectCard:
-    summonEffects: []
-    attackStartEffects: []
-    findEnemyEffects: []
-    calculateDamageEffects: []
-    attackProcessEffects: []
-    getDamageEffects: []
-    cardID: 0
-    cardName: 
-    cardSprite: {fileID: 0}
-    animator: 
-    skill: 
-    skillContents: 
-    cost: 0
-    cardColor: 6
-    cardCategory: 0
-    frontDamage: 0
-    backDamage: 0
 --- !u!1 &1550368817 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1889213560221228389, guid: 1469ec8e360c2624e98895367e80f51f,
@@ -4571,7 +4465,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 19937979}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
         m_MethodName: AttackPhase
         m_Mode: 1
@@ -4657,7 +4551,7 @@ Transform:
   - {fileID: 301465342}
   - {fileID: 359699200}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2041613392
 MonoBehaviour:
@@ -5102,7 +4996,7 @@ PrefabInstance:
     - target: {fileID: 1014853829456024991, guid: 01610a09cc3c41741826d8357b88efd1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1014853829456024991, guid: 01610a09cc3c41741826d8357b88efd1,
         type: 3}
