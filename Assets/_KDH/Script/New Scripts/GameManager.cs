@@ -483,6 +483,8 @@ public class GameManager : MonoBehaviour
         }
         FieldManager.instance.ResetGameField();
         FieldManager.instance.CheckInterAll();
+        FieldManager.instance.battleField.First.lookingLeft = false;
+        FieldManager.instance.battleField.Last.lookingLeft = true;
         playerEnd = true;
     }
 
@@ -690,27 +692,6 @@ public class GameManager : MonoBehaviour
         Debug.LogError("CallSummonUnit");
         FieldManager.instance.SetCardToFieldForPun(index, make, makeLeft, cardID, lookingLeft, playerID);
     }
-
-    [PunRPC]
-    public void CallPlayerWinOrLose(bool enemyLose)
-    {
-        if (enemyLose == playerLose)
-        {
-            Debug.Log("Draw");
-        }
-        else
-        {
-            if (enemyLose == false)
-            {
-                Debug.Log("Lose");
-            }
-            else
-            {
-                Debug.Log("Win");
-            }
-        }
-    }
-
     [PunRPC]
     public void AttackUnit(int index)
     {
@@ -724,10 +705,50 @@ public class GameManager : MonoBehaviour
         deck.RefreshEnemyGraveCount();
     }
 
+
+    [PunRPC]
+    public void CallPlayerWinOrLose(bool enemyLose)
+    {
+        //if (enemyLose == playerLose)
+        //{
+        //    Debug.Log("Draw");
+        //}
+        //else
+        {
+            if (enemyLose == false)
+            {
+                Debug.Log("Lose");
+            }
+            else
+            {
+                Win();
+            }
+        }
+    }
+
+    public void Win()
+    {
+        playerLose = false;
+        StopAllCoroutines();
+        if (UIManager.Instance.isPopUI)
+        {
+            UIManager.Instance.ClosePopup();
+        }
+        Debug.LogError("You Win");
+        Time.timeScale = 0;
+    }
+
     public void Lose()
     {
         playerLose = true;
-        photonView.RPC("CallPlayerWinOrLose", RpcTarget.Others, playerLose);
+        photonView.RPC("CallPlayerWin", RpcTarget.Others, playerLose);
+        StopAllCoroutines();
+        if (UIManager.Instance.isPopUI)
+        {
+            UIManager.Instance.ClosePopup();
+        }
+        Debug.LogError("You Lose");
+        Time.timeScale = 0;
     }
 
 }
