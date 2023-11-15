@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class BuildManager : MonoBehaviour
@@ -18,6 +19,12 @@ public class BuildManager : MonoBehaviour
     BinaryFormatter binaryFormatter = new();
     bool trigger = false;
 
+    public SavedDeck SelectedSavedDeck;
+
+    public GameObject gridLayout;
+
+    public GameObject textObject;
+
     private void Awake()
     {
         if (instance == null)
@@ -29,6 +36,11 @@ public class BuildManager : MonoBehaviour
             Destroy(this);
         }
     }
+    private void Start()
+    {
+        Delete("Assets/2.data");
+    }
+
 
     private void SetPathByDeckName(string deckName)
     {
@@ -39,7 +51,7 @@ public class BuildManager : MonoBehaviour
     public void Save(string deckName)
     {
         SetPathByDeckName(deckName);
-        //List<Card>를 카드 ID를 가진 List<ID>로 변환해서 진행할 예정;
+        //List<Card>??燁삳?諭?ID??揶쎛筌?List<ID>嚥?癰궰??묐퉸??筌욊쑵六????됱젟;
         //
         List<int> myDeck = new List<int>();
         for(int i = 0; i < deck.Count; i++)
@@ -67,6 +79,19 @@ public class BuildManager : MonoBehaviour
         }
     }
 
+    public void Delete(string deckName)
+    {
+        if (File.Exists(deckName))
+        {
+            File.Delete(deckName);
+            Debug.Log("File is Deleted");
+        }
+        else
+        {
+            Debug.Log("File doesn't exist");
+        }
+    }
+
     public List<Card> LoadData(string path)
     {
         List<int> loadDeck = new();
@@ -90,7 +115,7 @@ public class BuildManager : MonoBehaviour
             }
             Save("1");
             trigger = true;
-            //빌드용 임시 스타터덱 코드
+            //??슢諭???袁⑸뻻 ????怨뺣쑔 ?꾨뗀諭?
             //trigger = false;
             Debug.Log(e);
         }
@@ -99,7 +124,7 @@ public class BuildManager : MonoBehaviour
 
         List<Card> tmpDeck = new();
 
-        //List<int>를 List<Card>로 변환시킬 예정;
+        //List<int>??List<Card>嚥?癰궰??뤿뻻????됱젟;
         foreach(var data in loadDeck)
         {
             tmpDeck.Add(CardDB.instance.FindCardFromID(data));
@@ -120,6 +145,15 @@ public class BuildManager : MonoBehaviour
         return trigger;
     }
 
+    public void PrintSavedDeck()
+    {
+        GameObject GO;
+        foreach(Card cards in SelectedSavedDeck.deck)
+        {
+            //GO = Instantiate()
+        }
+    }
+
     //void AddCard(RaycastHit hit, Ray ray)
     //{
     //    GameObject clickedObject = hit.collider.gameObject;
@@ -136,7 +170,7 @@ public class BuildManager : MonoBehaviour
     //    }
     //    else
     //    {
-    //        print("카드가 더 이상 들어가지 않습니다");
+    //        print("燁삳?諭뜹첎? ????곴맒 ??쇰선揶쎛筌왖 ??녿뮸??덈뼄");
     //    }
     //}
 
@@ -156,7 +190,7 @@ public class BuildManager : MonoBehaviour
     //    }
     //    else
     //    {
-    //        print("더 이상 카드가 존재하지 않습니다");
+    //        print("????곴맒 燁삳?諭뜹첎? 鈺곕똻???? ??녿뮸??덈뼄");
     //    }
     //}
 }

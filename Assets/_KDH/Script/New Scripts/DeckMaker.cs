@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class DeckMaker : MonoBehaviour
 {
     public static DeckMaker instance;
-    [Header("현재 나의 덱 입니다. DB에서 불러오면 빈칸, 덱에서 불러오면 덱으로 나옵니다.")]
+    [Header("?袁⑹삺 ??륁벥 ????낅빍?? DB?癒?퐣 ?븍뜄???삠늺 ??뜆萸? ?源녿퓠???븍뜄???삠늺 ?源놁몵嚥???륁긿??덈뼄.")]
     public List<Card> deck;
     
     public GameObject gridLayout;
@@ -28,6 +28,8 @@ public class DeckMaker : MonoBehaviour
             }
         }
     }
+
+    public GameObject panel;
 
     public event Action<Card> selectCardChanged;
 
@@ -54,6 +56,11 @@ public class DeckMaker : MonoBehaviour
 
     public void LoadCardFromDB()
     {
+        if(panel != null)
+        {
+            if (panel.activeSelf == false)
+                panel.SetActive(true);
+        }
         deck = new();
         GameObject go;
         foreach (Card card in CardDB.instance.cards)

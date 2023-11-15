@@ -245,7 +245,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 덱의 카드를 섞는 카드
+    /// ?源놁벥 燁삳?諭띄몴???뚮뮉 燁삳?諭?
     /// </summary>
     public void Shuffle()
     {
@@ -263,9 +263,9 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// int의 값 만큼 덱에서 카드를 뽑는 카드
-    /// 현재 손패가 가득 찰 경우 에러코드를 보내도록 설계되어있음
-    /// 덱이 0장이고 손패에 빈 자리가 있을 경우
+    /// int??揶?筌띾슦寃??源녿퓠??燁삳?諭띄몴?筌믩쵎??燁삳?諭?
+    /// ?袁⑹삺 ?癒곕솭揶쎛 揶쎛??筌?野껋럩???癒?쑎?꾨뗀諭띄몴?癰귣?沅?袁⑥쨯 ??블??뤿선??됱벉
+    /// ?源놁뵠 0?關?졿??癒곕솭?????癒?봺揶쎛 ??됱뱽 野껋럩??
     /// </summary>
     /// <param name="drawCard"></param>
     public void Draw(int drawCard)
@@ -282,7 +282,7 @@ public class Deck : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("손패가 가득 찼습니다.");
+                    Debug.LogError("?癒곕솭揶쎛 揶쎛??筌≪눘???덈뼄.");
                 }
             }
             else
@@ -292,7 +292,7 @@ public class Deck : MonoBehaviour
                     //GameManager.instance.Lose();
                 }
                 Debug.Log(countOfDeck);
-                Debug.Log("덱이 비었습니다.");
+                Debug.Log("?源놁뵠 ??쑴肉??щ빍??");
                 GameManager.instance.Lose();
             }
             RefreshDeckCount();
@@ -300,7 +300,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 덱에 특정 카드를 넣는 기능
+    /// ?源녿퓠 ?諭??燁삳?諭띄몴??節뗫뮉 疫꿸퀡??
     /// </summary>
     /// <param name="card"></param>
     public void Refill(Card card)
@@ -312,7 +312,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 덱에서 특정 카드를 지우는 기능
+    /// ?源녿퓠???諭??燁삳?諭띄몴?筌왖?怨뺣뮉 疫꿸퀡??
     /// </summary>
     /// <param name="card"></param>
     /// <returns></returns>
@@ -329,7 +329,7 @@ public class Deck : MonoBehaviour
                 return true;
             }
         }
-        Debug.LogError($"덱에서 {card.cardName} 카드를 지우지 못했습니다. 덱에 해당 카드가 존재하는지 확인해주십시오.");
+        Debug.LogError($"?源녿퓠??{card.cardName} 燁삳?諭띄몴?筌왖?怨? 筌륁궢六??щ빍?? ?源녿퓠 ????燁삳?諭뜹첎? 鈺곕똻???롫뮉筌왖 ?類ㅼ뵥??곻폒?????");
         RefreshDeckCount();
         return false;
     }

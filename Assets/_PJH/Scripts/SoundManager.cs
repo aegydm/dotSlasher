@@ -9,16 +9,18 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance {  get; private set; }
 
-    [Header("음량 슬라이더")]
+    [Header("?뚮웾 ?щ씪?대뜑")]
     public Slider mVol;
     public Slider bgmVol;
     public Slider effVol;
-    [Header("음소거 버튼")]
+    [Header("?뚯냼嫄?踰꾪듉")]
     public Toggle mToggle;
     public Toggle bgmToggle;
     public Toggle effToggle;
 
     public GameObject soundWindow;
+
+    AudioSource audioSource;
 
     private void Awake()
     {
@@ -32,6 +34,7 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -66,22 +69,16 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBGMSound(AudioClip clip)
     {
-        GameObject soundObject = new GameObject("BGM");
-        AudioSource audioSource = soundObject.AddComponent<AudioSource>();
         audioSource.clip = clip;
         audioSource.volume = mVol.value * bgmVol.value;
         audioSource.Play();
-        Destroy(soundObject, clip.length);
     }
 
     public void PlayEffSound(AudioClip clip)
     {
-        GameObject soundObject = new GameObject("Effect");
-        AudioSource audioSource = soundObject.AddComponent<AudioSource>();
         audioSource.clip = clip;
         audioSource.volume = mVol.value * effVol.value;
         audioSource.Play();
-        Destroy(soundObject, clip.length);
     }
 
     public void PauseSound()
