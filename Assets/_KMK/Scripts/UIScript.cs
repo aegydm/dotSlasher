@@ -83,7 +83,7 @@ public class UIScript : MonoBehaviour
     {
         if (mToggle.isOn)
         {
-            if (bgmToggle.isOn)
+            if (effToggle.isOn)
             {
                 effPlayer.volume = effVol.value * mVol.value;
             }
@@ -95,7 +95,7 @@ public class UIScript : MonoBehaviour
         else
         {
             mVol.value = 0;
-            bgmPlayer.volume = 0;
+            effPlayer.volume = 0;
         }
     }
 
