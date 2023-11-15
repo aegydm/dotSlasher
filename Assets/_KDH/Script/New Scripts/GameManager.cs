@@ -522,6 +522,9 @@ public class GameManager : MonoBehaviour
 
     public void FirstTurnSetting()
     {
+        //Please Input BGM Start Code
+        //BGM 사운드 시작 코드 넣어주세요
+        //
         deck.Shuffle();
         deck.Draw(5);
         SummonHero();
@@ -616,14 +619,16 @@ public class GameManager : MonoBehaviour
 
     public void TurnStart()
     {
-        //if (enemyEnd == false)
-        {
-            //currentTurn++;
-        }
+        //Please Input Turn Start Sound Code
+        //턴 시작시 나오는 소리 코드 넣어주세요
+        //
     }
 
     public void TurnEnd()
     {
+        //Please Input Turn End Sound Code
+        //턴 종료시 나오는 소리 코드 넣어주세요
+        //
         Debug.LogError("TurnEnd");
         currentTurn++;
         photonView.RPC("CallPlayerTurnEnd", RpcTarget.Others);

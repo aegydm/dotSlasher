@@ -99,6 +99,9 @@ public class UIManager : MonoBehaviour
 
     public void PopupCard(List<Card> cardList)
     {
+        //Please Input UI On Sound Code
+        //UI 켤 때 나는 소리 재생 코드 넣어주세요
+        //
         if (isPopUI == false)
         {
             popUpUi.SetActive(true);
@@ -115,6 +118,9 @@ public class UIManager : MonoBehaviour
 
     public void PopupCard(HandCardObject[] handList)
     {
+        //Please Input UI On Sound Code
+        //UI 켤 때 나는 소리 재생 코드 넣어주세요
+        //
         Debug.Log("PopupCard");
         if (isPopUI == false)
         {
@@ -137,6 +143,9 @@ public class UIManager : MonoBehaviour
 
     public void ClosePopup()
     {
+        //Please Input UI Off Sound Code
+        //UI 끌 때 나는 소리 재생 코드 넣어주세요
+        //
         if (isPopUI)
         {
             foreach(Transform child in gridLayout.transform)
@@ -150,6 +159,9 @@ public class UIManager : MonoBehaviour
 
     public void PopupSettingWindow()
     {
+        //Please Input UI On Sound Code
+        //UI 켤 때 나는 소리 재생 코드 넣어주세요
+        //
         if (isPopUI == false)
         {
             isPopUI = true;

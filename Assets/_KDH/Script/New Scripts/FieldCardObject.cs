@@ -220,6 +220,9 @@ public class FieldCardObject : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //Please Input Card Click Sound Code
+        //카드 클릭 사운드 코드 넣어주세요
+        //
         if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct &&UIManager.Instance.isPopUI == false)
         {
             FieldAttack();

@@ -46,6 +46,9 @@ public class HandCardObject : MonoBehaviour
     [Header("카드의 공격력 표시용")]
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
+    [Header("카드의 이름과 설명용")]
+    public TMP_Text nameText;
+    public TMP_Text explainText;
     [Header("카드가 비어있는지 체크하는 변수")]
     public bool isEmpty = true;
 
@@ -64,6 +67,8 @@ public class HandCardObject : MonoBehaviour
         spriteGO.transform.localScale = new(1, 1, 1);
         frontATKText.enabled = true;
         backATKText.enabled = true;
+        nameText.enabled = true;
+        explainText.enabled = true;
         cardRenderer.color = new Color(1, 1, 1, 1);
         isDrag = false;
         boxCollider.enabled = true;
@@ -76,6 +81,8 @@ public class HandCardObject : MonoBehaviour
         spriteGO.transform.localScale = new(1, 1, 1);
         frontATKText.enabled = true;
         backATKText.enabled = true;
+        nameText.enabled = true;
+        explainText.enabled = true;
         cardRenderer.color = new Color(1, 1, 1, 1);
         isDrag = false;
         boxCollider.enabled = true;
@@ -116,12 +123,17 @@ public class HandCardObject : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //Please Input Card Click Sound Code
+        //카드 클릭 시 소리 재생하는 코드 넣어주세요
+        //
         if (GameManager.instance.gamePhase == GamePhase.ActionPhase && GameManager.instance.useCard == false && GameManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManager.instance.isOpenDirection == false)
         {
             isDrag = true;
             cardRenderer.color = new Color(1, 1, 1, 0);
             frontATKText.enabled = false;
             backATKText.enabled = false;
+            nameText.enabled = false;
+            explainText.enabled = false;
             PlayerActionManager.instance.isDrag = true;
             PlayerActionManager.instance.dragCardGO = this;
             boxCollider.enabled = false;
@@ -168,6 +180,8 @@ public class HandCardObject : MonoBehaviour
         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(cardData.animator);
         frontATKText.text = cardData.frontDamage.ToString();
         backATKText.text = cardData.backDamage.ToString();
+        nameText.text = cardData.cardName;
+        explainText.text = cardData.skillContents;
     }
 
     private void ResetRender()
@@ -176,5 +190,7 @@ public class HandCardObject : MonoBehaviour
         cardSprite.sprite = null;
         frontATKText.text = string.Empty;
         backATKText.text = string.Empty;
+        nameText.text = string.Empty;
+        explainText.text = string.Empty;
     }
 }
