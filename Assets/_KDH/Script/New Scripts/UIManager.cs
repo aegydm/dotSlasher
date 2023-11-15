@@ -16,6 +16,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject gridLayout;
     [SerializeField] GameObject cardObject;
     [SerializeField] Deck deck;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip PopUpSound;
+    [SerializeField] private AudioClip CloseSound;
+    [SerializeField] private AudioClip WindowPopupSound;
     public Card selectCard
     {
         get
@@ -63,7 +68,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("UIManager는 1개만 존재해야 합니다.");
+            Debug.LogError("UIManager??1媛쒕쭔 議댁옱?댁빞 ?⑸땲??");
             Destroy(this);
         }
     }
@@ -100,8 +105,8 @@ public class UIManager : MonoBehaviour
     public void PopupCard(List<Card> cardList)
     {
         //Please Input UI On Sound Code
-        //UI 켤 때 나는 소리 재생 코드 넣어주세요
-        //
+        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
+        //SoundManager.instance.PlayEffSound(PopUpSound);
         if (isPopUI == false)
         {
             popUpUi.SetActive(true);
@@ -119,8 +124,8 @@ public class UIManager : MonoBehaviour
     public void PopupCard(HandCardObject[] handList)
     {
         //Please Input UI On Sound Code
-        //UI 켤 때 나는 소리 재생 코드 넣어주세요
-        //
+        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
+        //SoundManager.instance.PlayEffSound(PopUpSound);
         Debug.Log("PopupCard");
         if (isPopUI == false)
         {
@@ -144,8 +149,8 @@ public class UIManager : MonoBehaviour
     public void ClosePopup()
     {
         //Please Input UI Off Sound Code
-        //UI 끌 때 나는 소리 재생 코드 넣어주세요
-        //
+        //UI ?????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
+        //SoundManager.instance.PlayEffSound(CloseSound);
         if (isPopUI)
         {
             foreach(Transform child in gridLayout.transform)
@@ -160,8 +165,8 @@ public class UIManager : MonoBehaviour
     public void PopupSettingWindow()
     {
         //Please Input UI On Sound Code
-        //UI 켤 때 나는 소리 재생 코드 넣어주세요
-        //
+        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
+        //SoundManager.instance.PlayEffSound(WindowPopupSound);
         if (isPopUI == false)
         {
             isPopUI = true;

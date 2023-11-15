@@ -185,6 +185,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool _playerEnd;
     [SerializeField] private bool _enemyEnd;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip BGM;
+    [SerializeField] private AudioClip TurnStartSound;
+    [SerializeField] private AudioClip TurnEndSound;
+
     public bool playerLose;
 
     private void Awake()
@@ -448,10 +453,10 @@ public class GameManager : MonoBehaviour
         CallTurnStart -= CheckMyUnitCanAttack;
         CallTurnEnd -= CheckCanBattle;
         CallTurnEnd -= CheckMyUnitCanAttack;
-        Debug.LogError("처리페이즈에 진입 했습니다.");
+        Debug.LogError("筌ｌ꼶???륁뵠筌앸뜆肉?筌욊쑴????됰뮸??덈뼄.");
         if (damageSum == 0)
         {
-            Debug.LogError("모든 카드를 버렸습니다.");
+            Debug.LogError("筌뤴뫀諭?燁삳?諭띄몴?甕곌쑬議??щ빍??");
             playerEnd = true;
             return;
         }
@@ -490,7 +495,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DiscardByDamage()
     {
-        Debug.LogError($"{damageSum}장 버려야합니다.");
+        Debug.LogError($"{damageSum}??甕곌쑬???노???덈뼄.");
         UIManager.Instance.PopupCard(deck.useDeck);
         UIManager.Instance.selectCardChanged += Discard;
         UIManager.Instance.exitButton.SetActive(false);
@@ -501,7 +506,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.exitButton.SetActive(true);
         UIManager.Instance.selectCardChanged -= Discard;
         UIManager.Instance.ClosePopup();
-        Debug.LogError("모든 카드를 버렸습니다.");
+        Debug.LogError("筌뤴뫀諭?燁삳?諭띄몴?甕곌쑬議??щ빍??");
         playerEnd = true;
     }
 
@@ -525,8 +530,8 @@ public class GameManager : MonoBehaviour
     public void FirstTurnSetting()
     {
         //Please Input BGM Start Code
-        //BGM 사운드 시작 코드 넣어주세요
-        //
+        //BGM ???????뽰삂 ?꾨뗀諭??節뚮선雅뚯눘苑??
+        //SoundManager.instance.PlayBGMSound(BGM);
         deck.Shuffle();
         deck.Draw(5);
         SummonHero();
@@ -599,7 +604,7 @@ public class GameManager : MonoBehaviour
         {
             if (isAlreadyAttack == false && canAct)
             {
-                Debug.LogError("시간초과로 자동 공격 처리되었습니다.");
+                Debug.LogError("??볦퍢?λ뜃?득에??癒?짗 ?⑤벀爰?筌ｌ꼶???뤿???щ빍??");
                 FieldCardObject temp = FieldManager.instance.battleField.First;
                 while (temp != null)
                 {
@@ -622,15 +627,15 @@ public class GameManager : MonoBehaviour
     public void TurnStart()
     {
         //Please Input Turn Start Sound Code
-        //턴 시작시 나오는 소리 코드 넣어주세요
-        //
+        //????뽰삂????륁궎?????봺 ?꾨뗀諭??節뚮선雅뚯눘苑??
+        //SoundManager.instance.PlayEffSound(TurnStartSound);
     }
 
     public void TurnEnd()
     {
         //Please Input Turn End Sound Code
-        //턴 종료시 나오는 소리 코드 넣어주세요
-        //
+        //???ル굝利????륁궎?????봺 ?꾨뗀諭??節뚮선雅뚯눘苑??
+        //SoundManager.instance.PlayEffSound(TurnEndSound);
         Debug.LogError("TurnEnd");
         currentTurn++;
         photonView.RPC("CallPlayerTurnEnd", RpcTarget.Others);
