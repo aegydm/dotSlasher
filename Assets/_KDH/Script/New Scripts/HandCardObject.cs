@@ -55,6 +55,7 @@ public class HandCardObject : MonoBehaviour
     private BoxCollider2D boxCollider;
     private Vector3 originPos;
     private bool isDrag;
+    private Vector3 originScale;
 
     /// <summary>
     /// 드래그 중 취소하는 코드
@@ -64,7 +65,7 @@ public class HandCardObject : MonoBehaviour
         PlayerActionManager.instance.isDrag = false;
         PlayerActionManager.instance.dragCardGO = null;
         transform.position = originPos;
-        spriteGO.transform.localScale = new(1, 1, 1);
+        spriteGO.transform.localScale = originScale;
         frontATKText.enabled = true;
         backATKText.enabled = true;
         nameText.enabled = true;
@@ -78,7 +79,7 @@ public class HandCardObject : MonoBehaviour
     {
         PlayerActionManager.instance.isDrag = false;
         transform.position = originPos;
-        spriteGO.transform.localScale = new(1, 1, 1);
+        spriteGO.transform.localScale = originScale;
         frontATKText.enabled = true;
         backATKText.enabled = true;
         nameText.enabled = true;
@@ -91,6 +92,7 @@ public class HandCardObject : MonoBehaviour
     private void Start()
     {
         originPos = transform.position;
+        originScale = spriteGO.transform.localScale;
         boxCollider = GetComponent<BoxCollider2D>();
         cardRenderer = spriteGO.GetComponent<SpriteRenderer>();
     }
@@ -109,7 +111,7 @@ public class HandCardObject : MonoBehaviour
 
         if (GameManager.instance.useCard == false && PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
-            spriteGO.transform.localScale = new(1.3f, 1.3f, 1.3f);
+            spriteGO.transform.localScale = 1.3f * originScale;
         }
     }
 
@@ -117,7 +119,7 @@ public class HandCardObject : MonoBehaviour
     {
         if (GameManager.instance.useCard == false && PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
-            spriteGO.transform.localScale = new(1, 1, 1);
+            spriteGO.transform.localScale = originScale;
         }
     }
 
@@ -129,7 +131,7 @@ public class HandCardObject : MonoBehaviour
         if (GameManager.instance.gamePhase == GamePhase.ActionPhase && GameManager.instance.useCard == false && GameManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManager.instance.isOpenDirection == false)
         {
             isDrag = true;
-            cardRenderer.color = new Color(1, 1, 1, 0);
+            cardRenderer.color = new Color(cardRenderer.color.r, cardRenderer.color.g, cardRenderer.color.b, 0);
             frontATKText.enabled = false;
             backATKText.enabled = false;
             nameText.enabled = false;

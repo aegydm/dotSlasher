@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,9 @@ public class FieldManager : MonoBehaviour
 
     public bool make = false;
     public bool makeLeft = false;
+    public Action CallSummonUnit;
+    public Action CallFieldCardRemoved;
+    public Action CallFieldCardChange;
 
     private readonly Vector3 CARDDISTANCE = new Vector3(1.65f, 0, 0);
 
@@ -42,7 +46,26 @@ public class FieldManager : MonoBehaviour
         {
             battleField.Add(startFieldList[i].gameObject);
         }
+        CallFieldCardChange += FieldChangeEffects;
+        CallSummonUnit += CallFieldCardChange;
+        CallFieldCardRemoved += CallFieldCardChange;
         CheckInterAll();
+    }
+
+    private void FieldChangeEffects()
+    {
+        Debug.Log("CallFieldChange");
+        FieldCardObject temp = battleField.First;
+        while(temp != null)
+        {
+            Debug.Log("Test1");
+            if(temp.cardData != null && temp.cardData.cardID != 0)
+            {
+                Debug.Log("Test2");
+                temp.cardData.FieldChange(battleField, temp);
+            }
+            temp = temp.Next;
+        }
     }
 
     public void ResetGameField()
@@ -64,6 +87,7 @@ public class FieldManager : MonoBehaviour
             startFieldList[i].gameObject.transform.position = (i - ((startFieldList.Count - 1) / 2)) * CARDDISTANCE + new Vector3(0, 2.12f, 0);
             startFieldList[i].ResetField();
         }
+        CallSummonUnit = null;
     }
 
     public FieldCardObject GetAdditionalField()
@@ -143,6 +167,8 @@ public class FieldManager : MonoBehaviour
             PlayerActionManager.instance.RemoveHandCard(PlayerActionManager.instance.dragCardGO.GetComponent<HandCardObject>());
             PlayerActionManager.instance.CancelWithNewField();
             PlayerActionManager.instance.dirtyForInter = false;
+            battleField[index].cardData.Summon(battleField, battleField[index]);
+            CallSummonUnit?.Invoke();
             isOpenDirection = false;
             CheckInterAll();
             Debug.LogError("SummonUnit");
@@ -219,6 +245,8 @@ public class FieldManager : MonoBehaviour
             battleField[index].playerID = playerID;
             Debug.Log($"Original Field : {battleField[index]},{index} + Card is : {battleField[index].cardData.cardName}");
         }
+        battleField[index].cardData.Summon(battleField, battleField[index]);
+        CallSummonUnit?.Invoke();
         isOpenDirection = false;
         CheckInterAll();
         return;

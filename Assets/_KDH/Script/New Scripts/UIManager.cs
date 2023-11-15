@@ -31,13 +31,6 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-
-    public void RemoveSelectObject()
-    {
-        Destroy(selectObject);
-        selectCard = null;
-    }
-
     public event Action<Card> selectCardChanged;
 
     [SerializeField] private Card _selectCard = null;
@@ -55,6 +48,13 @@ public class UIManager : MonoBehaviour
     }
 
     private GameObject _selectObject = null;
+
+    public void RemoveSelectObject()
+    {
+        Destroy(selectObject);
+        selectCard = null;
+    }
+
     private void Awake()
     {
         if (Instance == null)

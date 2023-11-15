@@ -19,7 +19,7 @@ public class Deck : MonoBehaviour
         }
         set
         {
-            if(_grave.Count != value.Count)
+            if (_grave.Count != value.Count)
             {
                 countOfGrave = value.Count;
             }
@@ -36,7 +36,7 @@ public class Deck : MonoBehaviour
         }
         set
         {
-            if(_enemyGrave.Count != value.Count)
+            if (_enemyGrave.Count != value.Count)
             {
                 countOfEnemyGrave = value.Count;
             }
@@ -114,24 +114,119 @@ public class Deck : MonoBehaviour
         OnGraveCountChanged += RenderGraveCount;
         OnEnemyGraveCountChanged = null;
         OnEnemyGraveCountChanged += RenderEnemyGraveCount;
-        if (BuildManager.instance.Load("1", out originDeck) == false)
-        //if(BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
+        //if (BuildManager.instance.Load(BuildManager.instance.deckName, out originDeck) == false)
+        if (NetworkManager.instance != null)
         {
-            Debug.Log("Fail to Load Deck");
-            //GameManager.instance.Lose();
-        }
-        foreach (var card in originDeck)
-        {
-            if (card.cardCategory != CardCategory.hero)
+            if (BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
             {
-                useDeck.Add(card);
+                Debug.Log("Fail to Load Deck");
+                //GameManager.instance.Lose();
+            }
+            foreach (var card in originDeck)
+            {
+                if (card.cardCategory != CardCategory.hero)
+                {
+                    useDeck.Add(card);
+                }
+                else
+                {
+                    myHero = card;
+                }
+            }
+            RefreshDeckCount();
+        }
+    }
+
+    public void LoadDeckFromBuildManager(string deckName = "")
+    {
+        if (NetworkManager.instance != null)
+        {
+            if (deckName == "")
+            {
+                if (BuildManager.instance.Load("1", out originDeck) == false)
+                {
+                    Debug.Log("Fail to Load Deck");
+                    //GameManager.instance.Lose();
+                }
+                foreach (var card in originDeck)
+                {
+                    if (card.cardCategory != CardCategory.hero)
+                    {
+                        useDeck.Add(card);
+                    }
+                    else
+                    {
+                        myHero = card;
+                    }
+                }
+                RefreshDeckCount();
             }
             else
             {
-                myHero = card;
+                if (BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
+                {
+                    Debug.Log("Fail to Load Deck");
+                    //GameManager.instance.Lose();
+                }
+                foreach (var card in originDeck)
+                {
+                    if (card.cardCategory != CardCategory.hero)
+                    {
+                        useDeck.Add(card);
+                    }
+                    else
+                    {
+                        myHero = card;
+                    }
+                }
+                RefreshDeckCount();
+
             }
         }
-        RefreshDeckCount();
+        else
+        {
+            if (deckName == "")
+            {
+                if (BuildManager.instance.Load(BuildManager.instance.deckName, out originDeck) == false)
+                {
+                    Debug.Log("Fail to Load Deck");
+                    //GameManager.instance.Lose();
+                }
+                foreach (var card in originDeck)
+                {
+                    if (card.cardCategory != CardCategory.hero)
+                    {
+                        useDeck.Add(card);
+                    }
+                    else
+                    {
+                        myHero = card;
+                    }
+                }
+                RefreshDeckCount();
+            }
+            else
+            {
+
+                if (BuildManager.instance.Load(deckName, out originDeck) == false)
+                {
+                    Debug.Log("Fail to Load Deck");
+                    //GameManager.instance.Lose();
+                }
+                foreach (var card in originDeck)
+                {
+                    if (card.cardCategory != CardCategory.hero)
+                    {
+                        useDeck.Add(card);
+                    }
+                    else
+                    {
+                        myHero = card;
+                    }
+                }
+                RefreshDeckCount();
+            }
+        }
     }
 
     void RenderDeckCount()
@@ -200,8 +295,8 @@ public class Deck : MonoBehaviour
                 Debug.Log("덱이 비었습니다.");
                 GameManager.instance.Lose();
             }
+            RefreshDeckCount();
         }
-        RefreshDeckCount();
     }
 
     /// <summary>

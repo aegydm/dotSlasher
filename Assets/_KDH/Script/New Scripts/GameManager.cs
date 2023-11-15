@@ -624,6 +624,11 @@ public class GameManager : MonoBehaviour
         //Please Input Turn Start Sound Code
         //턴 시작시 나오는 소리 코드 넣어주세요
         //
+        if (FieldManager.instance.FieldIsFull())
+        {
+            playerEnd = true;
+            canAct = false;
+        }
     }
 
     public void TurnEnd()

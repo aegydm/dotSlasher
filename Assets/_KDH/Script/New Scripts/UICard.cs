@@ -30,8 +30,16 @@ public class UICard : MonoBehaviour
 
     private void OnMouseDown()
     {
-        UIManager.Instance.selectObject = gameObject;
-        UIManager.Instance.selectCard = cardData;
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.selectObject = gameObject;
+            UIManager.Instance.selectCard = cardData;
+        }
+        else
+        {
+            DeckMaker.instance.selectObject = gameObject;
+            DeckMaker.instance.selectCard = cardData;
+        }
         if (handCardObject != null)
         {
             isSelected = !isSelected;
@@ -44,6 +52,10 @@ public class UICard : MonoBehaviour
                 GetComponent<Image>().color = Color.white;
             }
             Debug.Log(handCardObject.name + "is " + isSelected);
+        }
+        else if(DeckMaker.instance != null)
+        {
+            DeckMaker.instance.deck.Add(cardData);
         }
     }
 }

@@ -7,38 +7,48 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     public GameObject timerObj;
-    private TMP_Text timer;
+    public TMP_Text timer;
     private float baseTimer = 30.0f;
     private float runTime;
+    private bool dirty = false;
+    IEnumerator timerCoroutine;
 
-    private void Awake()
+    private void Start()
     {
-        timer = timerObj.GetComponent<TMP_Text>();
         GameManager.instance.CallTurnStart += PlayerTimer;
+        GameManager.instance.CallTurnEnd += StopTimer;
+        timerCoroutine = TurnTimer();
     }
 
 
     public void PlayerTimer()
     {
-        StartCoroutine(TurnTimer());
+        if (dirty == false)
+        {
+            timerObj.SetActive(true);
+            baseTimer = 30.0f;
+            dirty = true;
+            StartCoroutine(timerCoroutine);
+        }
     }
 
     public void StopTimer()
     {
         timerObj.SetActive(false);
-        StopCoroutine(TurnTimer());
+        StopCoroutine(timerCoroutine);
+        dirty = false;
+        baseTimer = 30.0f;
     }
 
     private IEnumerator TurnTimer()
     {
         timerObj.SetActive(true);
-
         baseTimer = 30.0f;
 
         while (baseTimer > 0)
         {
-            runTime = Time.deltaTime;
-            baseTimer -= runTime;
+            Debug.Log(Time.deltaTime);
+            baseTimer -= Time.deltaTime;
 
             timer.text = baseTimer.ToString("F0");
 
@@ -47,5 +57,6 @@ public class Timer : MonoBehaviour
 
         GameManager.instance.EndButton();
         timerObj.SetActive(false);
+        dirty = false;
     }
 }
