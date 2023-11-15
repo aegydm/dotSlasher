@@ -114,10 +114,25 @@ public class CardDB : ScriptableObject
             card.findEnemyEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/FindEnemyEffect"));
             card.calculateDamageEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/CalculateDamageEffect"));
             card.attackProcessEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/AttackProcessEffect"));
-            if(card.skill == "결속") 
+            if(card.skill == "시너지1") 
             {
                 card.fieldChangeEffects.Clear();
-                card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Effects/FieldAttackIncrease"));
+                card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Effects/FieldUnity1"));
+            }
+            else if (card.skill == "시너지2")
+            {
+                card.fieldChangeEffects.Clear();
+                card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Effects/FieldUnity2"));
+            }
+            else if (card.skill == "시너지3")
+            {
+                card.fieldChangeEffects.Clear();
+                card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Effects/FieldUnity3"));
+            }
+            else if (card.skill == "시너지4")
+            {
+                card.fieldChangeEffects.Clear();
+                card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Effects/FieldUnity4"));
             }
             cards.Add(card);
         }
