@@ -39,7 +39,7 @@ public class BuildManager : MonoBehaviour
     public void Save(string deckName)
     {
         SetPathByDeckName(deckName);
-        //List<Card>¸¦ Ä«µå ID¸¦ °¡Áø List<ID>·Î º¯È¯ÇØ¼­ ÁøÇàÇÒ ¿¹Á¤;
+        //List<Card>ë¥¼ ì¹´ë“œ IDë¥¼ ê°€ì§„ List<ID>ë¡œ ë³€í™˜í•´ì„œ ì§„í–‰í•  ì˜ˆì •;
         //
         List<int> myDeck = new List<int>();
         for(int i = 0; i < deck.Count; i++)
@@ -90,7 +90,7 @@ public class BuildManager : MonoBehaviour
             }
             Save("1");
             trigger = true;
-            //ºôµå¿ë ÀÓ½Ã ½ºÅ¸ÅÍµ¦ ÄÚµå
+            //ë¹Œë“œìš© ì„ì‹œ ìŠ¤íƒ€í„°ë± ì½”ë“œ
             //trigger = false;
             Debug.Log(e);
         }
@@ -99,7 +99,7 @@ public class BuildManager : MonoBehaviour
 
         List<Card> tmpDeck = new();
 
-        //List<int>¸¦ List<Card>·Î º¯È¯½ÃÅ³ ¿¹Á¤;
+        //List<int>ë¥¼ List<Card>ë¡œ ë³€í™˜ì‹œí‚¬ ì˜ˆì •;
         foreach(var data in loadDeck)
         {
             tmpDeck.Add(CardDB.instance.FindCardFromID(data));
@@ -136,7 +136,7 @@ public class BuildManager : MonoBehaviour
     //    }
     //    else
     //    {
-    //        print("Ä«µå°¡ ´õ ÀÌ»ó µé¾î°¡Áö ¾Ê½À´Ï´Ù");
+    //        print("ì¹´ë“œê°€ ë” ì´ìƒ ë“¤ì–´ê°€ì§€ ì•ŠìŠµë‹ˆë‹¤");
     //    }
     //}
 
@@ -156,7 +156,7 @@ public class BuildManager : MonoBehaviour
     //    }
     //    else
     //    {
-    //        print("´õ ÀÌ»ó Ä«µå°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù");
+    //        print("ë” ì´ìƒ ì¹´ë“œê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤");
     //    }
     //}
 }

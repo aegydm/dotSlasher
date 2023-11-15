@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,19 +8,22 @@ public class FieldManager : MonoBehaviour
 {
     public static FieldManager instance;
     public LinkedBattleField battleField;
-    [Header("Field의 부모를 넣어주세요")]
+    [Header("Field???봔筌뤴뫀? ?節뚮선雅뚯눘苑??")]
     public GameObject parentField;
-    [Header("초기 필드 5개를 넣어주세요")]
+    [Header("?λ뜃由??袁⑤굡 5揶쏆뮆? ?節뚮선雅뚯눘苑??")]
     public List<FieldCardObject> startFieldList;
-    [Header("추가 생성될 필드를 넣어주세요.")]
+    [Header("?곕떽? ??밴쉐???袁⑤굡???節뚮선雅뚯눘苑??")]
     public List<FieldCardObject> additionalFieldList = new();
-    [Header("방향 설정 캔버스의 작동 유무체크용")]
+    [Header("獄쎻뫚堉???쇱젟 筌?뗀苡??쇱벥 ?臾먮짗 ?醫듢?㎗?꾧쾿??")]
     public bool isOpenDirection = false;
 
     public PhotonView photonView;
 
     public bool make = false;
     public bool makeLeft = false;
+    public Action CallSummonUnit;
+    public Action CallFieldCardRemoved;
+    public Action CallFieldCardChange;
 
     private readonly Vector3 CARDDISTANCE = new Vector3(1.65f, 0, 0);
 
@@ -42,7 +46,26 @@ public class FieldManager : MonoBehaviour
         {
             battleField.Add(startFieldList[i].gameObject);
         }
+        CallFieldCardChange += FieldChangeEffects;
+        CallSummonUnit += CallFieldCardChange;
+        CallFieldCardRemoved += CallFieldCardChange;
         CheckInterAll();
+    }
+
+    private void FieldChangeEffects()
+    {
+        Debug.Log("CallFieldChange");
+        FieldCardObject temp = battleField.First;
+        while(temp != null)
+        {
+            Debug.Log("Test1");
+            if(temp.cardData != null && temp.cardData.cardID != 0)
+            {
+                Debug.Log("Test2");
+                temp.cardData.FieldChange(battleField, temp);
+            }
+            temp = temp.Next;
+        }
     }
 
     public void ResetGameField()
@@ -64,6 +87,7 @@ public class FieldManager : MonoBehaviour
             startFieldList[i].gameObject.transform.position = (i - ((startFieldList.Count - 1) / 2)) * CARDDISTANCE + new Vector3(0, 2.12f, 0);
             startFieldList[i].ResetField();
         }
+        CallSummonUnit = null;
     }
 
     public FieldCardObject GetAdditionalField()
@@ -143,6 +167,8 @@ public class FieldManager : MonoBehaviour
             PlayerActionManager.instance.RemoveHandCard(PlayerActionManager.instance.dragCardGO.GetComponent<HandCardObject>());
             PlayerActionManager.instance.CancelWithNewField();
             PlayerActionManager.instance.dirtyForInter = false;
+            battleField[index].cardData.Summon(battleField, battleField[index]);
+            CallSummonUnit?.Invoke();
             isOpenDirection = false;
             CheckInterAll();
             Debug.LogError("SummonUnit");
@@ -219,6 +245,8 @@ public class FieldManager : MonoBehaviour
             battleField[index].playerID = playerID;
             Debug.Log($"Original Field : {battleField[index]},{index} + Card is : {battleField[index].cardData.cardName}");
         }
+        battleField[index].cardData.Summon(battleField, battleField[index]);
+        CallSummonUnit?.Invoke();
         isOpenDirection = false;
         CheckInterAll();
         return;

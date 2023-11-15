@@ -185,6 +185,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool _playerEnd;
     [SerializeField] private bool _enemyEnd;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip BGM;
+    [SerializeField] private AudioClip TurnStartSound;
+    [SerializeField] private AudioClip TurnEndSound;
     public bool playerLose;
 
     private void Awake()
@@ -526,7 +530,7 @@ public class GameManager : MonoBehaviour
     {
         //Please Input BGM Start Code
         //BGM 사운드 시작 코드 넣어주세요
-        //
+        //SoundManager.instance.PlayBGMSound(BGM);
         deck.Shuffle();
         deck.Draw(5);
         SummonHero();
@@ -623,14 +627,19 @@ public class GameManager : MonoBehaviour
     {
         //Please Input Turn Start Sound Code
         //턴 시작시 나오는 소리 코드 넣어주세요
-        //
+        //SoundManager.instance.PlayEffSound(TurnStartSound);
+        if (FieldManager.instance.FieldIsFull())
+        {
+            playerEnd = true;
+            canAct = false;
+        }
     }
 
     public void TurnEnd()
     {
         //Please Input Turn End Sound Code
         //턴 종료시 나오는 소리 코드 넣어주세요
-        //
+        //SoundManager.instance.PlayEffSound(TurnEndSound);
         Debug.LogError("TurnEnd");
         currentTurn++;
         photonView.RPC("CallPlayerTurnEnd", RpcTarget.Others);

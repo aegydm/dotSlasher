@@ -5,32 +5,31 @@ using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour
 {
-    [Header("¸Ş´º Ã¢")]
+    [Header("ë©”ë‰´ ì°½")]
     public GameObject soundUIBackGround;
     public GameObject optionUIBackGround;
     public GameObject blank;
     public bool windowOn = false;
     bool soundWindowOn = false;
-    [Header("Ã¢ ´İ±â")]
+    [Header("ì°½ ë‹«ê¸°")]
     public Button soundMenuCloseButton;
     public Button optionMenuCloseButton;
-    [Header("À½·® ½½¶óÀÌ´õ")]
+    [Header("ìŒëŸ‰ ìŠ¬ë¼ì´ë”")]
     public Slider mVol;
     public Slider bgmVol;
     public Slider effVol;
-    [Header("À½¼Ò°Å ¹öÆ°")]
+    [Header("ìŒì†Œê±° ë²„íŠ¼")]
     public Toggle mToggle;
     public Toggle bgmToggle;
     public Toggle effToggle;
-    [Header("¿Àµğ¿À ¼Ò½º")]
+    [Header("ì˜¤ë””ì˜¤ ì†ŒìŠ¤")]
     public AudioSource bgmPlayer;
     public AudioSource effPlayer;
 
     // Start is called before the first frame update
     void Start()
     {
-        bgmPlayer.clip = SoundManager.instance.BGM;
-        effPlayer.clip = SoundManager.instance.effectSound;
+
     }
 
     // Update is called once per frame
@@ -54,7 +53,6 @@ public class UIScript : MonoBehaviour
             }
             else if(!windowOn)
             {
-                
                 blank.SetActive(true); 
                 windowOn = true;
             }
@@ -85,7 +83,7 @@ public class UIScript : MonoBehaviour
     {
         if (mToggle.isOn)
         {
-            if (bgmToggle.isOn)
+            if (effToggle.isOn)
             {
                 effPlayer.volume = effVol.value * mVol.value;
             }
@@ -97,7 +95,7 @@ public class UIScript : MonoBehaviour
         else
         {
             mVol.value = 0;
-            bgmPlayer.volume = 0;
+            effPlayer.volume = 0;
         }
     }
 

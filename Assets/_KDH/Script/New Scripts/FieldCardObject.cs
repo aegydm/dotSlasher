@@ -5,6 +5,7 @@ using CCGCard;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System;
 
 public class FieldCardObject : MonoBehaviour
 {
@@ -21,8 +22,11 @@ public class FieldCardObject : MonoBehaviour
                 _cardData = value;
                 isEmpty = true;
                 GetComponent<BoxCollider2D>().enabled = true;
-                //rightInter.SetActive(false);
                 ResetRender();
+                if (GameManager.instance.gamePhase != GamePhase.EndPhase)
+                {
+                    FieldManager.instance.CallFieldCardRemoved?.Invoke();
+                }
             }
             else if (cardData != value && value != null && value != new Card())
             {
@@ -51,22 +55,34 @@ public class FieldCardObject : MonoBehaviour
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
 
+    [Header("Sound")]
+    private AudioClip ClickSound;
     public void CheckInter()
     {
-        if (isEmpty == false && this == FieldManager.instance.battleField.First)
+        if (FieldManager.instance.FieldIsFull() == false)
         {
-            leftInter.SetActive(true);
+
+            if (isEmpty == false && this == FieldManager.instance.battleField.First)
+            {
+                leftInter.SetActive(true);
+            }
+            else
+            {
+                leftInter.SetActive(false);
+            }
+            if (isEmpty == false && (Next == null || Next.isEmpty == false))
+            {
+                rightInter.SetActive(true);
+            }
+            else
+            {
+                rightInter.SetActive(false);
+            }
+
         }
         else
         {
             leftInter.SetActive(false);
-        }
-        if (isEmpty == false && (Next == null || Next.isEmpty == false))
-        {
-            rightInter.SetActive(true);
-        }
-        else
-        {
             rightInter.SetActive(false);
         }
     }
@@ -83,8 +99,8 @@ public class FieldCardObject : MonoBehaviour
             {
                 cardSprite.flipX = value;
                 _lookingLeft = value;
-                frontATKText.text = _lookingLeft ? cardData.backDamage.ToString() : cardData.frontDamage.ToString();
-                backATKText.text = _lookingLeft ? cardData.frontDamage.ToString() : cardData.backDamage.ToString();
+                frontATKText.text = _lookingLeft ? (cardData.backDamage).ToString() : (cardData.frontDamage).ToString();
+                backATKText.text = _lookingLeft ? (cardData.frontDamage).ToString() : (cardData.backDamage).ToString();
             }
         }
     }
@@ -179,12 +195,12 @@ public class FieldCardObject : MonoBehaviour
     public FieldCardObject Prev;
     public FieldCardObject Next;
 
-    private void RenderCard()
+    public void RenderCard()
     {
         cardSprite.sprite = cardData.cardSprite;
         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(cardData.animator);
-        frontATKText.text = _lookingLeft ? cardData.backDamage.ToString() : cardData.frontDamage.ToString();
-        backATKText.text = _lookingLeft ? cardData.frontDamage.ToString() : cardData.backDamage.ToString();
+        frontATKText.text = _lookingLeft ? (cardData.backDamage).ToString() : (cardData.frontDamage).ToString();
+        backATKText.text = _lookingLeft ? (cardData.frontDamage).ToString() : (cardData.backDamage).ToString();
     }
 
     private void ResetRender()
@@ -223,7 +239,8 @@ public class FieldCardObject : MonoBehaviour
         //Please Input Card Click Sound Code
         //카드 클릭 사운드 코드 넣어주세요
         //
-        if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct &&UIManager.Instance.isPopUI == false)
+        //SoundManager.instance.PlayEffSound(ClickSound);
+        if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
             FieldAttack();
         }

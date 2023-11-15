@@ -106,11 +106,19 @@ public class CardDB : ScriptableObject
             card.backDamage = int.Parse(dicList[i]["B_Atk"].ToString());
             card.animator = ("Sprites/" + dicList[i]["faction"].ToString() + "/" + dicList[i]["faction"].ToString() + "_" + dicList[i]["type"].ToString() + "/" + dicList[i]["sprite"].ToString() + "/" + dicList[i]["sprite"].ToString());
             card.cardSprite = Resources.Load<Sprite>("Sprites/" + dicList[i]["faction"].ToString() + "/" + dicList[i]["faction"].ToString() + "_" + dicList[i]["type"].ToString() + "/" + dicList[i]["sprite"].ToString() + "/" + dicList[i]["sprite"].ToString());
+            card.skill = dicList[i]["skill"].ToString();
+            card.skillContents = dicList[i]["skill"].ToString() + "\n" + dicList[i]["skillContents"].ToString();
             card.summonEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/SummonEffect"));
+            card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/FieldChangeEffect"));
             card.attackStartEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/AttackStartEffect"));
             card.findEnemyEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/FindEnemyEffect"));
             card.calculateDamageEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/CalculateDamageEffect"));
             card.attackProcessEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/AttackProcessEffect"));
+            if(card.skill == "결속") 
+            {
+                card.fieldChangeEffects.Clear();
+                card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Effects/FieldAttackIncrease"));
+            }
             cards.Add(card);
         }
 

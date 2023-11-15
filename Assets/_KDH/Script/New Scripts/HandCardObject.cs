@@ -35,36 +35,39 @@ public class HandCardObject : MonoBehaviour
         }
     }
 
-    [Header("카드 정보")]
+    [Header("移대뱶 ?뺣낫")]
     [SerializeField] Card _cardData;
-    [Header("카드 전체 틀 스프라이트")]
+    [Header("移대뱶 ?꾩껜 ? ?ㅽ봽?쇱씠??")]
     public GameObject spriteGO;
     private SpriteRenderer cardRenderer;
-    [Header("실제 카드의 스프라이트")]
+    [Header("?ㅼ젣 移대뱶???ㅽ봽?쇱씠??")]
     public SpriteRenderer cardSprite;
     public Animator animator;
-    [Header("카드의 공격력 표시용")]
+    [Header("移대뱶??怨듦꺽???쒖떆??")]
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
-    [Header("카드의 이름과 설명용")]
+    [Header("移대뱶???대쫫怨??ㅻ챸??")]
     public TMP_Text nameText;
     public TMP_Text explainText;
-    [Header("카드가 비어있는지 체크하는 변수")]
+    [Header("移대뱶媛 鍮꾩뼱?덈뒗吏 泥댄겕?섎뒗 蹂??")]
     public bool isEmpty = true;
+    [Header("Sound")]
+    private AudioClip ClickSound;
 
     private BoxCollider2D boxCollider;
     private Vector3 originPos;
     private bool isDrag;
+    private Vector3 originScale;
 
     /// <summary>
-    /// 드래그 중 취소하는 코드
+    /// ?쒕옒洹?以?痍⑥냼?섎뒗 肄붾뱶
     /// </summary>
     public void CancelDrag()
     {
         PlayerActionManager.instance.isDrag = false;
         PlayerActionManager.instance.dragCardGO = null;
         transform.position = originPos;
-        spriteGO.transform.localScale = new(1, 1, 1);
+        spriteGO.transform.localScale = originScale;
         frontATKText.enabled = true;
         backATKText.enabled = true;
         nameText.enabled = true;
@@ -78,7 +81,7 @@ public class HandCardObject : MonoBehaviour
     {
         PlayerActionManager.instance.isDrag = false;
         transform.position = originPos;
-        spriteGO.transform.localScale = new(1, 1, 1);
+        spriteGO.transform.localScale = originScale;
         frontATKText.enabled = true;
         backATKText.enabled = true;
         nameText.enabled = true;
@@ -91,6 +94,7 @@ public class HandCardObject : MonoBehaviour
     private void Start()
     {
         originPos = transform.position;
+        originScale = spriteGO.transform.localScale;
         boxCollider = GetComponent<BoxCollider2D>();
         cardRenderer = spriteGO.GetComponent<SpriteRenderer>();
     }
@@ -109,7 +113,7 @@ public class HandCardObject : MonoBehaviour
 
         if (GameManager.instance.useCard == false && PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
-            spriteGO.transform.localScale = new(1.3f, 1.3f, 1.3f);
+            spriteGO.transform.localScale = 1.3f * originScale;
         }
     }
 
@@ -117,19 +121,19 @@ public class HandCardObject : MonoBehaviour
     {
         if (GameManager.instance.useCard == false && PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
-            spriteGO.transform.localScale = new(1, 1, 1);
+            spriteGO.transform.localScale = originScale;
         }
     }
 
     private void OnMouseDown()
     {
         //Please Input Card Click Sound Code
-        //카드 클릭 시 소리 재생하는 코드 넣어주세요
-        //
+        //移대뱶 ?대┃ ???뚮━ ?ъ깮?섎뒗 肄붾뱶 ?ｌ뼱二쇱꽭??
+        //SoundManager.instance.PlayEffSound(ClickSound);
         if (GameManager.instance.gamePhase == GamePhase.ActionPhase && GameManager.instance.useCard == false && GameManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManager.instance.isOpenDirection == false)
         {
             isDrag = true;
-            cardRenderer.color = new Color(1, 1, 1, 0);
+            cardRenderer.color = new Color(cardRenderer.color.r, cardRenderer.color.g, cardRenderer.color.b, 0);
             frontATKText.enabled = false;
             backATKText.enabled = false;
             nameText.enabled = false;

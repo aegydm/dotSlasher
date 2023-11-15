@@ -23,6 +23,7 @@ public class GetDamageEffect : CardEffect
             GameManager.instance.deck.RefreshEnemyGraveCount();
         }
         caster.cardData = null;
+        caster.playerID = -1;
         return;
     }
 }
