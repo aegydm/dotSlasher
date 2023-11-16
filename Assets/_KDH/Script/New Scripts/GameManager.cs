@@ -124,11 +124,11 @@ public class GameManager : MonoBehaviour
                 {
                     photonView.RPC("CallPlayerPhaseEnd", RpcTarget.Others);
                     nextPhase = gamePhase + 1;
-                    if(gamePhase == GamePhase.ActionPhase && enemyEnd == false)
+                    if (gamePhase == GamePhase.ActionPhase && enemyEnd == false)
                     {
                         startFirst = true;
                     }
-                    else if(gamePhase == GamePhase.ActionPhase && enemyEnd == true)
+                    else if (gamePhase == GamePhase.ActionPhase && enemyEnd == true)
                     {
                         startFirst = false;
                     }
@@ -356,7 +356,41 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        temp.canBattle = true;
+                        if (temp.lookingLeft)
+                        {
+                            if (temp.Prev == null || temp.Prev.isEmpty)
+                            {
+                                temp.canBattle = false;
+                            }
+                            else if (temp.Prev.playerID == temp.playerID)
+                            {
+                                temp.canBattle = false;
+                            }
+
+                            else
+                            {
+                                temp.canBattle = true;
+                            }
+                        }
+                        else
+                        {
+                            if (temp.Next == null || temp.Next.isEmpty)
+                            {
+                                temp.canBattle = false;
+                            }
+                            else if (temp.Next.playerID == temp.playerID)
+                            {
+                                temp.canBattle = false;
+                            }
+                            else
+                            {
+                                temp.canBattle = true;
+                            }
+                        }
+                        if (temp.cardData.frontDamage == 0)
+                        {
+                            temp.canBattle = false;
+                        }
                     }
                 }
                 else
@@ -491,6 +525,24 @@ public class GameManager : MonoBehaviour
                         temp.cardData = null;
                     }
                 }
+                else
+                {
+                    if(temp.playerID == int.Parse(playerID))
+                    {
+                        temp.cardData = CardDB.instance.FindCardFromID(temp.cardData.cardID);
+                        temp.RenderCard();
+                        temp.animator.Play("Breath");
+
+                    }
+                    else
+                    {
+                        int pid = temp.playerID;
+                        temp.cardData = CardDB.instance.FindCardFromID(temp.cardData.cardID);
+                        temp.playerID = pid;
+                        temp.RenderCard();
+                        temp.animator.Play("Breath");
+                    }
+                }
             }
             temp = temp.Next;
         }
@@ -539,7 +591,7 @@ public class GameManager : MonoBehaviour
     {
         //Please Input BGM Start Code
         //BGM 사운드 시작 코드 넣어주세요
-        SoundManager.instance.PlayBGMSound(BGM);
+        //SoundManager.instance.PlayBGMSound(BGM);
         deck.Shuffle();
         deck.Draw(5);
         SummonHero();
@@ -553,12 +605,14 @@ public class GameManager : MonoBehaviour
         if (startFirst)
         {
             FieldManager.instance.battleField.First.cardData = deck.myHero;
+            FieldManager.instance.battleField.First.RenderCard();
             photonView.RPC("CallSummonUnit", RpcTarget.Others, 0, false, false, deck.myHero.cardID, false, int.Parse(playerID));
         }
         else
         {
             FieldManager.instance.battleField.Last.cardData = deck.myHero;
             FieldManager.instance.battleField.Last.lookingLeft = true;
+            FieldManager.instance.battleField.Last.RenderCard();
             photonView.RPC("CallSummonUnit", RpcTarget.Others, 4, false, false, deck.myHero.cardID, true, int.Parse(playerID));
         }
     }
@@ -636,8 +690,8 @@ public class GameManager : MonoBehaviour
     {
         //Please Input Turn Start Sound Code
         //턴 시작시 나오는 소리 코드 넣어주세요
-        SoundManager.instance.PlayEffSound(TurnStartSound);
-        if (FieldManager.instance.FieldIsFull() && (gamePhase == GamePhase.ActionPhase || nextPhase == GamePhase.BattlePhase))
+        //SoundManager.instance.PlayEffSound(TurnStartSound);
+        if (FieldManager.instance.FieldIsFull() && (gamePhase == GamePhase.ActionPhase))
         {
             _canAct = false;
             playerEnd = true;
@@ -648,7 +702,11 @@ public class GameManager : MonoBehaviour
     {
         //Please Input Turn End Sound Code
         //턴 종료시 나오는 소리 코드 넣어주세요
-        SoundManager.instance.PlayEffSound(TurnEndSound);
+        //SoundManager.instance.PlayEffSound(TurnEndSound);
+        if (useCard == false)
+        {
+            PlayerActionManager.instance.CancelAll();
+        }
         Debug.LogError("TurnEnd");
         currentTurn++;
         photonView.RPC("CallPlayerTurnEnd", RpcTarget.Others);
@@ -777,10 +835,10 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     public void EnemyHandCardChange(int enemyHandCount)
     {
-        for(int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             //Debug.LogError("HandCardChange + " + enemyHandCount);
-            if(i < enemyHandCount)
+            if (i < enemyHandCount)
             {
                 enemyHandGO[i].SetActive(true);
             }
@@ -791,4 +849,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    public void EnemyHeroSkill1()
+    {
+        FieldCardObject temp = FieldManager.instance.battleField.First;
+        while (temp != null)
+        {
+            if (temp.cardData != null && temp.playerID.ToString() != GameManager.instance.playerID && temp.cardData.cardCategory == CardCategory.hero)
+            {
+                Debug.LogError("EnemySkill One Use");
+                ((Hero)temp.cardData).SkillUse(FieldManager.instance.battleField, temp);
+                return;
+            }
+            temp = temp.Next;
+        }
+    }
 }

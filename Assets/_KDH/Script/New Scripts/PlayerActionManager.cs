@@ -18,6 +18,7 @@ public class PlayerActionManager : MonoBehaviour
     [Header("좌우 방향을 정하는 용도의 캔버스")]
     public GameObject selectUI;
 
+    private bool skill1Use = false;
 
     public bool dirtyForInter
     {
@@ -199,5 +200,24 @@ public class PlayerActionManager : MonoBehaviour
         }
         handCardCount = count;
         return;
+    }
+
+    public void TestSkillActive()
+    {
+        FieldCardObject temp = FieldManager.instance.battleField.First;
+        while (temp != null)
+        {
+            if (temp.cardData != null && temp.playerID.ToString() == GameManager.instance.playerID && temp.cardData.cardCategory == CardCategory.hero && skill1Use == false)
+            {
+                if (GameManager.instance.gamePhase == GamePhase.ActionPhase && GameManager.instance.canAct)
+                {
+                    skill1Use = true;
+                    ((Hero)temp.cardData).SkillUse(FieldManager.instance.battleField, temp);
+                    GameManager.instance.photonView.RPC("EnemyHeroSkill1", Photon.Pun.RpcTarget.Others);
+                }
+                return;
+            }
+            temp = temp.Next;
+        }
     }
 }

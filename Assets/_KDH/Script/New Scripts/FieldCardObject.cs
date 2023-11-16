@@ -257,7 +257,7 @@ public class FieldCardObject : MonoBehaviour
         //Please Input Card Click Sound Code
         //카드 클릭 사운드 코드 넣어주세요
         //
-        SoundManager.instance.PlayEffSound(ClickSound);
+        //SoundManager.instance.PlayEffSound(ClickSound);
         if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
             FieldAttack();

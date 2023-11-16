@@ -29,7 +29,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 170574b85e79bc84182a84dc21cd86a0, type: 2}
     cardID: 110001
     cardName: "\uD669\uC601\uC6C501"
-    cardSprite: {fileID: 21300000, guid: de537fdbccd417440ac700a95868c548, type: 3}
+    cardSprite: {fileID: 21300000, guid: 8feaea2c0bd59bf4c9494e5a848c589e, type: 3}
     animator: Sprites/f1/f1_hero/f1_hero_01/f1_hero_01
     skill: 
     skillContents: '
@@ -81,7 +81,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111002
     cardName: "\uD669\uD558\uC218\uC77802"
-    cardSprite: {fileID: 21300000, guid: 323f59e1f1df0b54ab3e7c1c35c96835, type: 3}
+    cardSprite: {fileID: 21300000, guid: 32d0e542104ea5f4383d4f97250e6af7, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_002/f1_minion_002
     skill: "\uC2DC\uB108\uC9C02"
     skillContents: "\uC2DC\uB108\uC9C02\n2\uC785\uB2C8\uB2E4"
@@ -106,7 +106,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111003
     cardName: "\uD669\uD558\uC218\uC77803"
-    cardSprite: {fileID: 21300000, guid: 5c0c2774b879edd4e8a1b822497718a1, type: 3}
+    cardSprite: {fileID: 21300000, guid: 990d05a5ddc9286438903f1419952b55, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_003/f1_minion_003
     skill: "\uC2DC\uB108\uC9C03"
     skillContents: "\uC2DC\uB108\uC9C03\n\uC2DC\uB108\uC9C03"
@@ -156,7 +156,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111005
     cardName: "\uD669\uD558\uC218\uC77805"
-    cardSprite: {fileID: 21300000, guid: 5f18cb43b9541dd4bb01406c3402d85c, type: 3}
+    cardSprite: {fileID: 21300000, guid: 2d4b543f4dc0910449c26b3e2ced13c2, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_005/f1_minion_005
     skill: "\uC2DC\uB108\uC9C01"
     skillContents: "\uC2DC\uB108\uC9C01\n\uC2DC\uB108\uC9C01\uC785\uB2C8\uB2E4."
@@ -281,7 +281,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141005
     cardName: "\uC790\uD558\uC218\uC77805"
-    cardSprite: {fileID: 21300000, guid: 642236b631d892049aa2423fce911b3f, type: 3}
+    cardSprite: {fileID: 21300000, guid: 4c6dcc7ff7991ba40ad04d5d5cf7f4dc, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_005/f4_minion_005
     skill: "\uC2DC\uB108\uC9C02"
     skillContents: "\uC2DC\uB108\uC9C02\n2\uC785\uB2C8\uB2E4"
@@ -306,7 +306,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 171001
     cardName: "\uC911\uB9BD\uD558\uC218\uC77801"
-    cardSprite: {fileID: 21300000, guid: a4fbaff83569519439b70e66d1e6b8bf, type: 3}
+    cardSprite: {fileID: 21300000, guid: 46aa5cb81e767504ba442abf4057aeec, type: 3}
     animator: Sprites/f7/f7_minion/f7_minion_001/f7_minion_001
     skill: "\uC2DC\uB108\uC9C03"
     skillContents: "\uC2DC\uB108\uC9C03\n\uC2DC\uB108\uC9C03"
@@ -331,7 +331,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 171002
     cardName: "\uC911\uB9BD\uD558\uC218\uC77802"
-    cardSprite: {fileID: 21300000, guid: 7b5cd8c96b0325f40852866a1edd8a42, type: 3}
+    cardSprite: {fileID: 21300000, guid: d21e56f6bdf76f047abc77854668833f, type: 3}
     animator: Sprites/f7/f7_minion/f7_minion_002/f7_minion_002
     skill: "\uC2DC\uB108\uC9C04"
     skillContents: "\uC2DC\uB108\uC9C04\n4"
@@ -381,7 +381,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 171004
     cardName: "\uC911\uB9BD\uD558\uC218\uC77804"
-    cardSprite: {fileID: 21300000, guid: 57d438635f37a244eb503d90f7e6917e, type: 3}
+    cardSprite: {fileID: 21300000, guid: a205f1321057e0f40b323e5c2870b179, type: 3}
     animator: Sprites/f7/f7_minion/f7_minion_004/f7_minion_004
     skill: "\uC2DC\uB108\uC9C02"
     skillContents: "\uC2DC\uB108\uC9C02\n2\uC785\uB2C8\uB2E4"
@@ -431,7 +431,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111006
     cardName: "\uD669\uD558\uC218\uC77806"
-    cardSprite: {fileID: 21300000, guid: e84c432204761fe46b9d5e66d2a3558d, type: 3}
+    cardSprite: {fileID: 21300000, guid: 4673c1b7ead6cc4488b816f1e992ec79, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_006/f1_minion_006
     skill: "\uC2DC\uB108\uC9C04"
     skillContents: "\uC2DC\uB108\uC9C04\n4"
@@ -531,7 +531,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111010
     cardName: "\uD669\uD558\uC218\uC77810"
-    cardSprite: {fileID: 21300000, guid: c00057e4f1abded4bb0cb0aad7708b6e, type: 3}
+    cardSprite: {fileID: 21300000, guid: 1a723c585840177498e746b1e57c83b7, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_010/f1_minion_010
     skill: "\uC2DC\uB108\uC9C04"
     skillContents: "\uC2DC\uB108\uC9C04\n4"
@@ -581,7 +581,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111012
     cardName: "\uD669\uD558\uC218\uC77812"
-    cardSprite: {fileID: 21300000, guid: be65516e2d971974da4fd703407aefe1, type: 3}
+    cardSprite: {fileID: 21300000, guid: 25d00e40bcad0ca4b93812bb02d25841, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_012/f1_minion_012
     skill: "\uC2DC\uB108\uC9C02"
     skillContents: "\uC2DC\uB108\uC9C02\n2\uC785\uB2C8\uB2E4"
@@ -631,7 +631,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141007
     cardName: "\uC790\uD558\uC218\uC77807"
-    cardSprite: {fileID: 21300000, guid: d73122f28500a9e4b96f2f4adcae5a66, type: 3}
+    cardSprite: {fileID: 21300000, guid: f672f49574d4188418435b421163b9fd, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_007/f4_minion_007
     skill: "\uC2DC\uB108\uC9C04"
     skillContents: "\uC2DC\uB108\uC9C04\n4"

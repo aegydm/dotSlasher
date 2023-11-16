@@ -129,7 +129,7 @@ public class HandCardObject : MonoBehaviour
     {
         //Please Input Card Click Sound Code
         //移대뱶 ?대┃ ???뚮━ ?ъ깮?섎뒗 肄붾뱶 ?ｌ뼱二쇱꽭??
-        SoundManager.instance.PlayEffSound(ClickSound);
+        //SoundManager.instance.PlayEffSound(ClickSound);
         if (GameManager.instance.gamePhase == GamePhase.ActionPhase && GameManager.instance.useCard == false && GameManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManager.instance.isOpenDirection == false)
         {
             isDrag = true;

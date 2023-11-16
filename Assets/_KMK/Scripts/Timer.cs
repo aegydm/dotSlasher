@@ -11,13 +11,13 @@ public class Timer : MonoBehaviour
     private float baseTimer = 30.0f;
     private float runTime;
     private bool dirty = false;
-    IEnumerator timerCoroutine;
+    //IEnumerator timerCoroutine;
 
     private void Start()
     {
         GameManager.instance.CallTurnStart += PlayerTimer;
         GameManager.instance.CallTurnEnd += StopTimer;
-        timerCoroutine = TurnTimer();
+        //timerCoroutine = TurnTimer();
     }
 
 
@@ -30,24 +30,21 @@ public class Timer : MonoBehaviour
                 timerObj.SetActive(true);
                 baseTimer = 30.0f;
                 dirty = true;
-                StartCoroutine(timerCoroutine);
+                StartCoroutine(nameof(TurnTimer));
             }
         }
     }
 
     public void StopTimer()
     {
+        StopCoroutine(nameof(TurnTimer));
         timerObj.SetActive(false);
-        StopCoroutine(timerCoroutine);
         dirty = false;
         baseTimer = 30.0f;
     }
 
     private IEnumerator TurnTimer()
     {
-        timerObj.SetActive(true);
-        baseTimer = 30.0f;
-
         while (baseTimer > 0)
         {
             baseTimer -= Time.deltaTime;
@@ -58,7 +55,6 @@ public class Timer : MonoBehaviour
         }
 
         GameManager.instance.EndButton();
-        timerObj.SetActive(false);
-        dirty = false;
+        StopTimer();
     }
 }

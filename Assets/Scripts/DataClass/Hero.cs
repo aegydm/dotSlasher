@@ -56,6 +56,15 @@ public class Hero : Card
         tmp.attackProcessEffects = card.attackProcessEffects;
         tmp.getDamageEffects = card.getDamageEffects;
 
+        tmp.heroSkillEffect[0] = Resources.Load<CardEffect>("ScriptableObject/HeroSkills/HeroSkill1");
+
         return tmp;
+    }
+
+    public async void SkillUse(LinkedBattleField battleFieldInfo, FieldCardObject casterInfo)
+    {
+        List<CardEffect> skill1 = new List<CardEffect>();
+        skill1.Add(heroSkillEffect[0]);
+        await ActiveEffect(skill1, battleFieldInfo, casterInfo, enemyUnitInfo);
     }
 }
