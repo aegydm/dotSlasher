@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour
 {
-    [Header("메뉴 창")]
+    [Header("UI 메뉴")]
     public GameObject soundUIBackGround;
     public GameObject optionUIBackGround;
     public GameObject blank;
     public bool windowOn = false;
     bool soundWindowOn = false;
-    [Header("창 닫기")]
+    public Button button;
+    [Header("닫기 버튼")]
     public Button soundMenuCloseButton;
     public Button optionMenuCloseButton;
-    [Header("음량 슬라이더")]
+    [Header("볼륨 슬라이더")]
     public Slider mVol;
     public Slider bgmVol;
     public Slider effVol;
@@ -23,14 +24,14 @@ public class UIScript : MonoBehaviour
     public Toggle bgmToggle;
     public Toggle effToggle;
     [Header("오디오 소스")]
-    public AudioSource bgmPlayer;
-    public AudioSource effPlayer;
+    public AudioSource bgmSource;
+    public AudioSource efffSource;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-
+        UIConnect();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -61,47 +62,47 @@ public class UIScript : MonoBehaviour
 
     public void BGMVolChanger()
     {
-        if (mToggle.isOn)
+        if (!mToggle.isOn)
         {
-            if (bgmToggle.isOn)
+            if (!bgmToggle.isOn)
             {
-                bgmPlayer.volume = bgmVol.value * mVol.value;
+                bgmSource.volume = bgmVol.value * mVol.value;
             }
             else
             {
-                bgmPlayer.volume = 0;
+                bgmSource.volume = 0;
             }
         }
         else
         {
             mVol.value = 0;
-            bgmPlayer.volume = 0;
+            bgmSource.volume = 0;
         }
     }
 
     public void EffVolChanger()
     {
-        if (mToggle.isOn)
+        if (!mToggle.isOn)
         {
-            if (effToggle.isOn)
+            if (!effToggle.isOn)
             {
-                effPlayer.volume = effVol.value * mVol.value;
+                efffSource.volume = effVol.value * mVol.value;
             }
             else
             {
-                effPlayer.volume = 0;
+                efffSource.volume = 0;
             }
         }
         else
         {
             mVol.value = 0;
-            effPlayer.volume = 0;
+            efffSource.volume = 0;
         }
     }
 
     public void BgmPlay()
     {
-        bgmPlayer.Play();
+        bgmSource.Play();
     }
 
     public void SoundBoolChange(bool isOn)
@@ -125,6 +126,34 @@ public class UIScript : MonoBehaviour
         else
         {
             windowOn = true;
+        }
+    }
+
+    public void SoundUIOn()
+    {
+        if (!soundWindowOn)
+        {
+            soundUIBackGround.SetActive(true);
+            soundWindowOn = true;
+        }
+        else
+        {
+            soundUIBackGround.SetActive(false);
+            soundWindowOn = false;
+        }
+    }
+
+    public void UIConnect()
+    {
+        soundUIBackGround = GameObject.Find("soundUIBackGround");
+        if (soundUIBackGround != null)
+        {
+            button.onClick.AddListener(() => soundUIBackGround.SetActive(true));
+            soundMenuCloseButton = soundUIBackGround.GetComponentInChildren<Button>();
+            if (soundMenuCloseButton != null)
+            {
+                soundMenuCloseButton.onClick.AddListener(() => soundUIBackGround.SetActive(false));
+            }
         }
     }
 }
