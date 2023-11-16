@@ -5,126 +5,44 @@ using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour
 {
-    [Header("메뉴 창")]
+    [Header("UI 메뉴창")]
+    public GameObject optionWindow;
     public GameObject soundUIBackGround;
-    public GameObject optionUIBackGround;
-    public GameObject blank;
-    public bool windowOn = false;
-    bool soundWindowOn = false;
-    [Header("창 닫기")]
-    public Button soundMenuCloseButton;
-    public Button optionMenuCloseButton;
-    [Header("음량 슬라이더")]
-    public Slider mVol;
-    public Slider bgmVol;
-    public Slider effVol;
-    [Header("음소거 버튼")]
-    public Toggle mToggle;
-    public Toggle bgmToggle;
-    public Toggle effToggle;
-    [Header("오디오 소스")]
-    public AudioSource bgmPlayer;
-    public AudioSource effPlayer;
+    public Button button;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
+        soundUIBackGround = SoundManager.instance.soundWindow;
 
+        UIConnect();
     }
 
-    // Update is called once per frame
+    void Start()
+    { 
+    }
+
     void Update()
     {
-        BGMVolChanger();
-        EffVolChanger();
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyUp(KeyCode.Escape))
         {
-            if (windowOn)
+            if (optionWindow.activeSelf)
             {
-                if (soundWindowOn)
+                if(soundUIBackGround != null && soundUIBackGround.activeSelf)
                 {
-                    soundUIBackGround.SetActive(false);
-                    soundWindowOn = false;
+                    SoundManager.instance.SoundWindowOn();
                 }
-                soundUIBackGround.SetActive(false );
-                blank.SetActive(false);
-                windowOn = false;
-            }
-            else if(!windowOn)
-            {
-                blank.SetActive(true); 
-                windowOn = true;
-            }
-        }
-    }
-
-    public void BGMVolChanger()
-    {
-        if (mToggle.isOn)
-        {
-            if (bgmToggle.isOn)
-            {
-                bgmPlayer.volume = bgmVol.value * mVol.value;
+                optionWindow.SetActive(false);
             }
             else
             {
-                bgmPlayer.volume = 0;
+                optionWindow.SetActive(true);
             }
         }
-        else
-        {
-            mVol.value = 0;
-            bgmPlayer.volume = 0;
-        }
     }
 
-    public void EffVolChanger()
+    public void UIConnect()
     {
-        if (mToggle.isOn)
-        {
-            if (effToggle.isOn)
-            {
-                effPlayer.volume = effVol.value * mVol.value;
-            }
-            else
-            {
-                effPlayer.volume = 0;
-            }
-        }
-        else
-        {
-            mVol.value = 0;
-            effPlayer.volume = 0;
-        }
-    }
 
-    public void BgmPlay()
-    {
-        bgmPlayer.Play();
-    }
-
-    public void SoundBoolChange(bool isOn)
-    {
-        if (isOn)
-        {
-            isOn = false;
-        }
-        else
-        {
-            isOn = true;
-        }
-    }
-
-    public void OptionBoolChange()
-    {
-        if (windowOn)
-        {
-            windowOn = false;
-        }
-        else
-        {
-            windowOn = true;
-        }
+        button.onClick.AddListener(() => SoundManager.instance.SoundWindowOn());
     }
 }

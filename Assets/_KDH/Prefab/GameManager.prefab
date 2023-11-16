@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7729240129371499000
 MonoBehaviour:
@@ -75,10 +75,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useDeck: []
   originDeck: []
-  grave: []
-  enemyGrave: []
+  _enemyDeckCount: 30
+  _grave: []
+  _enemyGrave: []
   myHero:
     summonEffects: []
+    fieldChangeEffects: []
     attackStartEffects: []
     findEnemyEffects: []
     calculateDamageEffects: []
@@ -100,6 +102,9 @@ MonoBehaviour:
   _countOfDeck: 0
   sortedDeck: 
   deckCountUI: {fileID: 0}
+  enemyDeckCountUI: {fileID: 0}
+  graveCountUI: {fileID: 0}
+  enemyGraveCountUI: {fileID: 0}
 --- !u!114 &925205735803683637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +131,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0453ac7074338242920442a803bb45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyHandGO: []
+  isAlreadyAttack: 0
+  dirtySet: 0
+  battleDirtySet: 0
+  useCard: 0
   startFirst: 0
   isGameEnd: 0
   turnText: {fileID: 0}
@@ -134,10 +144,15 @@ MonoBehaviour:
   deck: {fileID: 3526511190851638278}
   damageSum: 0
   playerID: 
-  gamePhase: 0
+  _gamePhase: 0
+  nextPhase: 1
   personalColor: {fileID: 0}
   _playerEnd: 0
   _enemyEnd: 0
+  BGM: {fileID: 0}
+  TurnStartSound: {fileID: 0}
+  TurnEndSound: {fileID: 0}
+  playerLose: 0
 --- !u!114 &9118654934647822572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,14 +167,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPopUI: 0
   mulliganButton: {fileID: 0}
-  ExitButton: {fileID: 0}
+  exitButton: {fileID: 0}
   popUpUi: {fileID: 0}
   gridLayout: {fileID: 0}
   cardObject: {fileID: 4475879479727289877, guid: 568e038a52c5a5542b002e2228e76a1d,
     type: 3}
   deck: {fileID: 3526511190851638278}
+  cardSelectPopUI: {fileID: 0}
+  settingPopUI: {fileID: 0}
+  PopUpSound: {fileID: 0}
+  CloseSound: {fileID: 0}
+  WindowPopupSound: {fileID: 0}
   _selectCard:
     summonEffects: []
+    fieldChangeEffects: []
     attackStartEffects: []
     findEnemyEffects: []
     calculateDamageEffects: []
