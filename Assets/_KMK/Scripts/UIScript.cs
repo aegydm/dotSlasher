@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour
 {
-    [Header("메뉴 창")]
+    [Header("UI 메뉴")]
     public GameObject soundUIBackGround;
     public GameObject optionUIBackGround;
     public GameObject blank;
     public bool windowOn = false;
     bool soundWindowOn = false;
-    [Header("창 닫기")]
+    [Header("닫기 버튼")]
     public Button soundMenuCloseButton;
     public Button optionMenuCloseButton;
-    [Header("음량 슬라이더")]
+    [Header("볼륨 슬라이더")]
     public Slider mVol;
     public Slider bgmVol;
     public Slider effVol;
@@ -23,13 +23,24 @@ public class UIScript : MonoBehaviour
     public Toggle bgmToggle;
     public Toggle effToggle;
     [Header("오디오 소스")]
-    public AudioSource bgmPlayer;
-    public AudioSource effPlayer;
+    public AudioSource bgmSource;
+    public AudioSource efffSource;
+
+    private SoundManager soundManager;
+    private AudioSource[] audioSources;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
+    void Awake()
+    {
+        soundManager = FindObjectOfType<SoundManager>();
+        audioSources = soundManager.GetComponents<AudioSource>();
+    }
+
     void Start()
     {
-
+        bgmSource = audioSources[0];
+        efffSource = audioSources[1];
     }
 
     // Update is called once per frame
@@ -61,47 +72,47 @@ public class UIScript : MonoBehaviour
 
     public void BGMVolChanger()
     {
-        if (mToggle.isOn)
+        if (!mToggle.isOn)
         {
-            if (bgmToggle.isOn)
+            if (!bgmToggle.isOn)
             {
-                bgmPlayer.volume = bgmVol.value * mVol.value;
+                bgmSource.volume = bgmVol.value * mVol.value;
             }
             else
             {
-                bgmPlayer.volume = 0;
+                bgmSource.volume = 0;
             }
         }
         else
         {
             mVol.value = 0;
-            bgmPlayer.volume = 0;
+            bgmSource.volume = 0;
         }
     }
 
     public void EffVolChanger()
     {
-        if (mToggle.isOn)
+        if (!mToggle.isOn)
         {
-            if (effToggle.isOn)
+            if (!effToggle.isOn)
             {
-                effPlayer.volume = effVol.value * mVol.value;
+                efffSource.volume = effVol.value * mVol.value;
             }
             else
             {
-                effPlayer.volume = 0;
+                efffSource.volume = 0;
             }
         }
         else
         {
             mVol.value = 0;
-            effPlayer.volume = 0;
+            efffSource.volume = 0;
         }
     }
 
     public void BgmPlay()
     {
-        bgmPlayer.Play();
+        bgmSource.Play();
     }
 
     public void SoundBoolChange(bool isOn)

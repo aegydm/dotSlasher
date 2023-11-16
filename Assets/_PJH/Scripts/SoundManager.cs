@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-//using UnityEditor.PackageManager.UI;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance {  get; private set; }
 
-    [Header("음량 슬라이더")]
+    [Header("???쎗 ???????")]
     public Slider mVol;
     public Slider bgmVol;
     public Slider effVol;
-    [Header("음소거 버튼")]
+    [Header("???꺖椰?甕곌쑵??")]
     public Toggle mToggle;
     public Toggle bgmToggle;
     public Toggle effToggle;
