@@ -11,6 +11,7 @@ public class UIScript : MonoBehaviour
     public GameObject blank;
     public bool windowOn = false;
     bool soundWindowOn = false;
+    public Button button;
     [Header("닫기 버튼")]
     public Button soundMenuCloseButton;
     public Button optionMenuCloseButton;
@@ -25,6 +26,11 @@ public class UIScript : MonoBehaviour
     [Header("오디오 소스")]
     public AudioSource bgmSource;
     public AudioSource efffSource;
+
+    private void Awake()
+    {
+        UIConnect();
+    }
 
 
     // Update is called once per frame
@@ -134,6 +140,20 @@ public class UIScript : MonoBehaviour
         {
             soundUIBackGround.SetActive(false);
             soundWindowOn = false;
+        }
+    }
+
+    public void UIConnect()
+    {
+        soundUIBackGround = GameObject.Find("soundUIBackGround");
+        if (soundUIBackGround != null)
+        {
+            button.onClick.AddListener(() => soundUIBackGround.SetActive(true));
+            soundMenuCloseButton = soundUIBackGround.GetComponentInChildren<Button>();
+            if (soundMenuCloseButton != null)
+            {
+                soundMenuCloseButton.onClick.AddListener(() => soundUIBackGround.SetActive(false));
+            }
         }
     }
 }
