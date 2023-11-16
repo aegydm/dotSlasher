@@ -29,8 +29,7 @@ public class UIScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bgmPlayer.clip = SoundManager.instance.BGM;
-        effPlayer.clip = SoundManager.instance.effectSound;
+
     }
 
     // Update is called once per frame
@@ -54,7 +53,6 @@ public class UIScript : MonoBehaviour
             }
             else if(!windowOn)
             {
-                
                 blank.SetActive(true); 
                 windowOn = true;
             }

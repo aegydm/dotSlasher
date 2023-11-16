@@ -5,6 +5,7 @@ using CCGCard;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System;
 
 public class FieldCardObject : MonoBehaviour
 {
@@ -21,8 +22,11 @@ public class FieldCardObject : MonoBehaviour
                 _cardData = value;
                 isEmpty = true;
                 GetComponent<BoxCollider2D>().enabled = true;
-                //rightInter.SetActive(false);
                 ResetRender();
+                if (GameManager.instance.gamePhase != GamePhase.EndPhase)
+                {
+                    FieldManager.instance.CallFieldCardRemoved?.Invoke();
+                }
             }
             else if (cardData != value && value != null && value != new Card())
             {
@@ -51,22 +55,34 @@ public class FieldCardObject : MonoBehaviour
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
 
+    [Header("Sound")]
+    private AudioClip ClickSound;
     public void CheckInter()
     {
-        if (isEmpty == false && this == FieldManager.instance.battleField.First)
+        if (FieldManager.instance.FieldIsFull() == false)
         {
-            leftInter.SetActive(true);
+
+            if (isEmpty == false && this == FieldManager.instance.battleField.First)
+            {
+                leftInter.SetActive(true);
+            }
+            else
+            {
+                leftInter.SetActive(false);
+            }
+            if (isEmpty == false && (Next == null || Next.isEmpty == false))
+            {
+                rightInter.SetActive(true);
+            }
+            else
+            {
+                rightInter.SetActive(false);
+            }
+
         }
         else
         {
             leftInter.SetActive(false);
-        }
-        if (isEmpty == false && (Next == null || Next.isEmpty == false))
-        {
-            rightInter.SetActive(true);
-        }
-        else
-        {
             rightInter.SetActive(false);
         }
     }
@@ -83,8 +99,8 @@ public class FieldCardObject : MonoBehaviour
             {
                 cardSprite.flipX = value;
                 _lookingLeft = value;
-                frontATKText.text = _lookingLeft ? cardData.backDamage.ToString() : cardData.frontDamage.ToString();
-                backATKText.text = _lookingLeft ? cardData.frontDamage.ToString() : cardData.backDamage.ToString();
+                frontATKText.text = _lookingLeft ? (cardData.backDamage).ToString() : (cardData.frontDamage).ToString();
+                backATKText.text = _lookingLeft ? (cardData.frontDamage).ToString() : (cardData.backDamage).ToString();
             }
         }
     }
@@ -142,7 +158,7 @@ public class FieldCardObject : MonoBehaviour
                     }
                 }
             }
-            if (GameManager.instance.gamePhase == GamePhase.BattlePhase)
+            if (GameManager.instance.gamePhase == GamePhase.BattlePhase || GameManager.instance.nextPhase == GamePhase.ExecutionPhase)
             {
                 canBattleImage.color = canBattle ? Color.cyan : Color.white;
             }
@@ -179,12 +195,12 @@ public class FieldCardObject : MonoBehaviour
     public FieldCardObject Prev;
     public FieldCardObject Next;
 
-    private void RenderCard()
+    public void RenderCard()
     {
         cardSprite.sprite = cardData.cardSprite;
         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(cardData.animator);
-        frontATKText.text = _lookingLeft ? cardData.backDamage.ToString() : cardData.frontDamage.ToString();
-        backATKText.text = _lookingLeft ? cardData.frontDamage.ToString() : cardData.backDamage.ToString();
+        frontATKText.text = _lookingLeft ? (cardData.backDamage).ToString() : (cardData.frontDamage).ToString();
+        backATKText.text = _lookingLeft ? (cardData.frontDamage).ToString() : (cardData.backDamage).ToString();
     }
 
     private void ResetRender()
@@ -220,15 +236,33 @@ public class FieldCardObject : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //Please Input Card Click Sound Code
+        //카드 클릭 사운드 코드 넣어주세요
+        //
+        //SoundManager.instance.PlayEffSound(ClickSound);
         if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
-            if (canBattle && playerID == int.Parse(GameManager.instance.playerID))
-            {
-                GameManager.instance.photonView.RPC("AttackUnit", Photon.Pun.RpcTarget.All, FieldManager.instance.battleField.FindIndex(this));
-                //cardData.AttackStart(FieldManager.instance.battleField, this);
-                GameManager.instance.canAct = false;
-            }
+            FieldAttack();
         }
+    }
+
+    public void FieldAttack()
+    {
+        if (GameManager.instance.isAlreadyAttack == false && canBattle && playerID == int.Parse(GameManager.instance.playerID))
+        {
+            GameManager.instance.isAlreadyAttack = true;
+            GameManager.instance.photonView.RPC("AttackUnit", Photon.Pun.RpcTarget.All, FieldManager.instance.battleField.FindIndex(this));
+            Invoke("DelayTurnEnd", 7);
+        }
+    }
+
+    private void DelayTurnEnd()
+    {
+        Debug.LogError("DelayCanAttackFalse");
+        GameManager.instance.canAct = false;
+        Debug.LogError("DelayIsAttackFalse");
+        GameManager.instance.isAlreadyAttack = false;
+        Debug.LogError("DelayEnd");
     }
 
     public void ResetField()

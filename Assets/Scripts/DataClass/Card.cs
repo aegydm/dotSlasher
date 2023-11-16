@@ -32,6 +32,7 @@ namespace CCGCard
         #region 멤버 
         #region 효과 모음
         public List<CardEffect> summonEffects = new();
+        public List<CardEffect> fieldChangeEffects = new();
         public List<CardEffect> attackStartEffects = new();
         public List<CardEffect> findEnemyEffects = new();
         public List<CardEffect> calculateDamageEffects = new();
@@ -99,6 +100,12 @@ namespace CCGCard
             await ActiveEffect(summonEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
         }
 
+        public async void FieldChange(LinkedBattleField battleFieldInfo, FieldCardObject casterInfo)
+        {
+            Debug.Log("FieldChangeCall");
+            await ActiveEffect(fieldChangeEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
+        }
+
         public async void AttackStart(LinkedBattleField battleFieldInfo, FieldCardObject casterInfo)
         {
             await ActiveEffect(attackStartEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
@@ -137,6 +144,7 @@ namespace CCGCard
             tmp.backDamage = backDamage;
 
             tmp.summonEffects = summonEffects;
+            tmp.fieldChangeEffects = fieldChangeEffects;
             tmp.attackStartEffects = attackStartEffects;
             tmp.findEnemyEffects = findEnemyEffects;
             tmp.calculateDamageEffects = calculateDamageEffects;
