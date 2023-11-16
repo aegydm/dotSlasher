@@ -25,11 +25,15 @@ public class GameManager : MonoBehaviour
 
     public event Action CallTurnStart;
     public event Action CallTurnEnd;
+    public event Action CallPhaseStart;
 
     [SerializeField] GameObject[] enemyHandGO;
     public bool isAlreadyAttack = false;
     public bool dirtySet = false;
     public bool battleDirtySet = false;
+    public int enemyHandCount = 0;
+    public GameObject mySkill1GO;
+    public GameObject enemySkill1GO;
     public bool canAct
     {
         get
@@ -75,13 +79,16 @@ public class GameManager : MonoBehaviour
     public bool startFirst;
     public bool isGameEnd;
     [SerializeField] TMP_Text turnText;
+    [SerializeField] TMP_Text phaseText;
+    [SerializeField] GameObject myPass;
+    [SerializeField] GameObject enemyPass;
     [SerializeField] private bool _canAct;
     public PhotonView photonView;
     public Deck deck;
     private bool phaseTrigger;
 
     public int damageSum = 0;
-
+    public int enemyDamageSum = 0;
     public string playerID;
 
     public GamePhase gamePhase
@@ -122,6 +129,7 @@ public class GameManager : MonoBehaviour
 
                 if (playerEnd == false && value == true)
                 {
+                    myPass.SetActive(true);
                     photonView.RPC("CallPlayerPhaseEnd", RpcTarget.Others);
                     nextPhase = gamePhase + 1;
                     if (gamePhase == GamePhase.ActionPhase && enemyEnd == false)
@@ -177,14 +185,17 @@ public class GameManager : MonoBehaviour
             _currentTurn = value;
             if (dirtySet == false)
             {
-
                 if (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase)
                 {
-                    turnText.text = gamePhase.ToString() + " : " + (currentTurn + 1);
+                    turnText.text = "Turn : " + (currentTurn + 1).ToString();
                 }
-                else if (nextPhase == GamePhase.BattlePhase || nextPhase == GamePhase.ExecutionPhase)
+                else if (gamePhase == GamePhase.None && (nextPhase == GamePhase.BattlePhase || nextPhase == GamePhase.ExecutionPhase))
                 {
-                    turnText.text = (nextPhase - 1).ToString() + " : " + (currentTurn + 1);
+                    turnText.text = "Turn : " + (currentTurn + 1).ToString();
+                }
+                else
+                {
+                    turnText.text = null;
                 }
             }
         }
@@ -214,8 +225,13 @@ public class GameManager : MonoBehaviour
         Invoke("FirstTurnSetting", 3f);
         CallTurnStart += TurnStart;
         CallTurnEnd += TurnEnd;
+        CallPhaseStart += PhaseStart;
     }
 
+    private void PhaseStart()
+    {
+        phaseText.text = gamePhase.ToString();
+    }
 
     IEnumerator CheckPhaseEnd()
     {
@@ -239,14 +255,17 @@ public class GameManager : MonoBehaviour
                 }
                 yield return new WaitForSeconds(5);
                 _playerEnd = false;
+                myPass.SetActive(false);
                 _enemyEnd = false;
+                enemyPass.SetActive(false);
                 Debug.LogError(nextPhase);
                 gamePhase = nextPhase;
-                turnText.text = gamePhase.ToString();
+                CallPhaseStart?.Invoke();
+                //turnText.text = gamePhase.ToString();
                 Debug.LogError("Currnet Phase is " + gamePhase.ToString());
-                currentTurn = 0;
                 phaseTrigger = false;
                 dirtySet = false;
+                currentTurn = 0;
             }
         }
         yield return Time.deltaTime;
@@ -458,6 +477,7 @@ public class GameManager : MonoBehaviour
                             _gamePhase = GamePhase.BattlePhase;
                             Debug.Log("CheckMyUnitCanAttack PlayerEnd False");
                             _playerEnd = false;
+                            myPass.SetActive(false);
                         }
                         trigger = true;
                     }
@@ -467,6 +487,7 @@ public class GameManager : MonoBehaviour
                         {
                             Debug.Log("CheckMyUnitCanAttack EnemyEnd False");
                             _enemyEnd = false;
+                            enemyPass.SetActive(false);
                         }
                     }
                     myTemp = myTemp.Next;
@@ -527,7 +548,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    if(temp.playerID == int.Parse(playerID))
+                    if (temp.playerID == int.Parse(playerID))
                     {
                         temp.cardData = CardDB.instance.FindCardFromID(temp.cardData.cardID);
                         temp.RenderCard();
@@ -567,6 +588,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.selectCardChanged -= Discard;
         UIManager.Instance.ClosePopup();
         Debug.LogError("모든 카드를 버렸습니다.");
+        enemyDamageSum = 0;
         playerEnd = true;
     }
 
@@ -598,6 +620,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.StartMulligan();
         _gamePhase = GamePhase.DrawPhase;
         FieldManager.instance.CheckInterAll();
+        FieldManager.instance.additionalCount = 5;
     }
 
     private void SummonHero()
@@ -751,6 +774,7 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     public void CallPlayerPhaseEnd()
     {
+        enemyPass.SetActive(true);
         Debug.LogError("CallPlayerPhaseEnd");
         enemyEnd = true;
         if (playerEnd == false && (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase || nextPhase == GamePhase.ExecutionPhase))
@@ -787,6 +811,80 @@ public class GameManager : MonoBehaviour
         deck.enemyDeckCount = cardCount;
     }
 
+    public void CheckGameEnd()
+    {
+        if (gamePhase == GamePhase.ExecutionPhase)
+        {
+            if (deck.enemyDeckCount < enemyDamageSum)
+            {
+                if (deck.countOfDeck < damageSum)
+                {
+                    if (deck.enemyDeckCount - enemyDamageSum < deck.countOfDeck - damageSum)
+                    {
+                        Win();
+                    }
+                    else if (deck.enemyDeckCount - enemyDamageSum > deck.countOfDeck - damageSum)
+                    {
+                        Lose();
+                    }
+                    Draw();
+                }
+                else
+                {
+                    Win();
+                }
+            }
+            else
+            {
+                if (deck.countOfDeck < damageSum)
+                {
+                    Lose();
+                }
+                else
+                {
+
+                }
+            }
+        }
+        else if (gamePhase == GamePhase.DrawPhase)
+        {
+            if ((5 - enemyHandCount) > deck.enemyDeckCount)
+            {
+                if ((5 - PlayerActionManager.instance.handCardCount) > deck.countOfDeck)
+                {
+                    if ((5 - enemyHandCount) - deck.enemyDeckCount < (5 - PlayerActionManager.instance.handCardCount) - deck.countOfDeck)
+                    {
+                        Win();
+                    }
+                    else if ((5 - enemyHandCount) - deck.enemyDeckCount > (5 - PlayerActionManager.instance.handCardCount) - deck.countOfDeck)
+                    {
+                        Lose();
+                    }
+                    else
+                    {
+                        Draw();
+                    }
+                }
+                else
+                {
+                    Win();
+                }
+            }
+            else
+            {
+                if ((5 - PlayerActionManager.instance.handCardCount) > deck.countOfDeck)
+                {
+                    Lose();
+                }
+                else
+                {
+
+                }
+            }
+        }
+
+    }
+
     [PunRPC]
     public void CallPlayerWinOrLose(bool enemyLose)
     {
@@ -811,12 +909,21 @@ public class GameManager : MonoBehaviour
     {
         playerLose = false;
         StopAllCoroutines();
+        FieldCardObject temp = FieldManager.instance.battleField.First;
+        while (temp != null)
+        {
+            if (temp.cardData != null && temp.playerID != int.Parse(playerID) && temp.cardData.cardCategory == CardCategory.hero)
+            {
+                temp.animator.Play("Death");
+                break;
+            }
+            temp = temp.Next;
+        }
         if (UIManager.Instance.isPopUI)
         {
             UIManager.Instance.ClosePopup();
         }
         Debug.LogError("You Win");
-        Time.timeScale = 0;
     }
 
     public void Lose()
@@ -824,17 +931,38 @@ public class GameManager : MonoBehaviour
         playerLose = true;
         photonView.RPC("CallPlayerWin", RpcTarget.Others, playerLose);
         StopAllCoroutines();
+        FieldCardObject temp = FieldManager.instance.battleField.First;
+        while(temp != null)
+        {
+            if(temp.cardData != null && temp.playerID == int.Parse(playerID) && temp.cardData.cardCategory == CardCategory.hero)
+            {
+                temp.animator.Play("Death");
+                break;
+            }
+            temp = temp.Next;
+        }
         if (UIManager.Instance.isPopUI)
         {
             UIManager.Instance.ClosePopup();
         }
         Debug.LogError("You Lose");
+    }
+
+    public void Draw()
+    {
+        StopAllCoroutines();
+        if (UIManager.Instance.isPopUI)
+        {
+            UIManager.Instance.ClosePopup();
+        }
+        Debug.LogError("Game Draw");
         Time.timeScale = 0;
     }
 
     [PunRPC]
     public void EnemyHandCardChange(int enemyHandCount)
     {
+        this.enemyHandCount = enemyHandCount;
         for (int i = 0; i < 5; i++)
         {
             //Debug.LogError("HandCardChange + " + enemyHandCount);
@@ -859,6 +987,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.LogError("EnemySkill One Use");
                 ((Hero)temp.cardData).SkillUse(FieldManager.instance.battleField, temp);
+                enemySkill1GO.GetComponent<Image>().color = Color.gray;
                 return;
             }
             temp = temp.Next;

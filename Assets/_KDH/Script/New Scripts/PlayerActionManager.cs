@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CCGCard;
 using System;
+using UnityEngine.UI;
 
 public class PlayerActionManager : MonoBehaviour
 {
@@ -213,6 +214,7 @@ public class PlayerActionManager : MonoBehaviour
                 {
                     skill1Use = true;
                     ((Hero)temp.cardData).SkillUse(FieldManager.instance.battleField, temp);
+                    GameManager.instance.mySkill1GO.GetComponent<Image>().color = Color.gray;
                     GameManager.instance.photonView.RPC("EnemyHeroSkill1", Photon.Pun.RpcTarget.Others);
                 }
                 return;

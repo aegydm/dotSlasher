@@ -293,4 +293,14 @@ public class FieldCardObject : MonoBehaviour
         canBattle = false;
         attackChance = false;
     }
+
+    private void OnEnable()
+    {
+        FieldManager.instance.additionalCount--;
+    }
+
+    private void OnDisable()
+    {
+        FieldManager.instance.additionalCount++;
+    }
 }
