@@ -50,13 +50,13 @@ public class FieldUnity4 : FieldChangeEffect
         }
 
         temp = caster.Prev;
-        if (temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill == "시너지3")
+        if (temp != null && temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill == "시너지3")
         {
             temp = temp.Prev;
-            if (temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill == "시너지2")
+            if (temp != null && temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill == "시너지2")
             {
                 temp = temp.Prev;
-                if (temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill == "시너지1")
+                if (temp != null && temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill == "시너지1")
                 {
                     straight = true;
                 }
