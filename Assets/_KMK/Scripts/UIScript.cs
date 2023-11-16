@@ -26,22 +26,6 @@ public class UIScript : MonoBehaviour
     public AudioSource bgmSource;
     public AudioSource efffSource;
 
-    private SoundManager soundManager;
-    private AudioSource[] audioSources;
-    private AudioSource audioSource;
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-        soundManager = FindObjectOfType<SoundManager>();
-        audioSources = soundManager.GetComponents<AudioSource>();
-    }
-
-    void Start()
-    {
-        bgmSource = audioSources[0];
-        efffSource = audioSources[1];
-    }
 
     // Update is called once per frame
     void Update()
@@ -49,7 +33,7 @@ public class UIScript : MonoBehaviour
         BGMVolChanger();
         EffVolChanger();
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (optionUIBackGround !=null && Input.GetKeyDown(KeyCode.Escape))
         {
             if (windowOn)
             {
@@ -67,6 +51,11 @@ public class UIScript : MonoBehaviour
                 blank.SetActive(true); 
                 windowOn = true;
             }
+        }
+        else if (optionUIBackGround == null && Input.GetKeyDown(KeyCode.Escape))
+        {
+            //사운드 관련 UI를 끄고 키는 함수.
+            SoundUIOn();
         }
     }
 
@@ -136,6 +125,20 @@ public class UIScript : MonoBehaviour
         else
         {
             windowOn = true;
+        }
+    }
+
+    public void SoundUIOn()
+    {
+        if (!soundWindowOn)
+        {
+            soundUIBackGround.SetActive(true);
+            soundWindowOn = true;
+        }
+        else
+        {
+            soundUIBackGround.SetActive(false);
+            soundWindowOn = false;
         }
     }
 }
