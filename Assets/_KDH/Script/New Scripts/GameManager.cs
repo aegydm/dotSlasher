@@ -495,10 +495,10 @@ public class GameManager : MonoBehaviour
         CallTurnStart -= CheckMyUnitCanAttack;
         CallTurnEnd -= CheckCanBattle;
         CallTurnEnd -= CheckMyUnitCanAttack;
-        Debug.LogError("처리페이즈에 진입 했습니다.");
+        Debug.LogError("泥섎━?섏씠利덉뿉 吏꾩엯 ?덉뒿?덈떎.");
         if (damageSum == 0)
         {
-            Debug.LogError("모든 카드를 버렸습니다.");
+            Debug.LogError("紐⑤뱺 移대뱶瑜?踰꾨졇?듬땲??");
             playerEnd = true;
             return;
         }
@@ -555,7 +555,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DiscardByDamage()
     {
-        Debug.LogError($"{damageSum}장 버려야합니다.");
+        Debug.LogError($"{damageSum}??踰꾨젮?쇳빀?덈떎.");
         UIManager.Instance.PopupCard(deck.useDeck);
         UIManager.Instance.selectCardChanged += Discard;
         UIManager.Instance.exitButton.SetActive(false);
@@ -566,7 +566,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.exitButton.SetActive(true);
         UIManager.Instance.selectCardChanged -= Discard;
         UIManager.Instance.ClosePopup();
-        Debug.LogError("모든 카드를 버렸습니다.");
+        Debug.LogError("紐⑤뱺 移대뱶瑜?踰꾨졇?듬땲??");
         playerEnd = true;
     }
 
@@ -590,7 +590,7 @@ public class GameManager : MonoBehaviour
     public void FirstTurnSetting()
     {
         //Please Input BGM Start Code
-        //BGM 사운드 시작 코드 넣어주세요
+        //BGM ?ъ슫???쒖옉 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayBGMSound(BGM);
         deck.Shuffle();
         deck.Draw(5);
@@ -666,7 +666,7 @@ public class GameManager : MonoBehaviour
         {
             if (isAlreadyAttack == false && canAct)
             {
-                Debug.LogError("시간초과로 자동 공격 처리되었습니다.");
+                Debug.LogError("?쒓컙珥덇낵濡??먮룞 怨듦꺽 泥섎━?섏뿀?듬땲??");
                 FieldCardObject temp = FieldManager.instance.battleField.First;
                 while (temp != null)
                 {
@@ -689,7 +689,7 @@ public class GameManager : MonoBehaviour
     public void TurnStart()
     {
         //Please Input Turn Start Sound Code
-        //턴 시작시 나오는 소리 코드 넣어주세요
+        //???쒖옉???섏삤???뚮━ 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayEffSound(TurnStartSound);
         if (FieldManager.instance.FieldIsFull() && (gamePhase == GamePhase.ActionPhase))
         {
@@ -701,7 +701,7 @@ public class GameManager : MonoBehaviour
     public void TurnEnd()
     {
         //Please Input Turn End Sound Code
-        //턴 종료시 나오는 소리 코드 넣어주세요
+        //??醫낅즺???섏삤???뚮━ 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayEffSound(TurnEndSound);
         if (useCard == false)
         {

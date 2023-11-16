@@ -42,16 +42,16 @@ public class FieldCardObject : MonoBehaviour
         }
     }
 
-    [Header("필드에 들어있는 카드의 정보")]
+    [Header("?꾨뱶???ㅼ뼱?덈뒗 移대뱶???뺣낫")]
     [SerializeField] private Card _cardData;
-    [Header("필드가 비어있는지 체크하는 변수")]
+    [Header("?꾨뱶媛 鍮꾩뼱?덈뒗吏 泥댄겕?섎뒗 蹂??")]
     public bool isEmpty = true;
-    [Header("필드 전체 틀 스프라이트")]
+    [Header("?꾨뱶 ?꾩껜 ? ?ㅽ봽?쇱씠??")]
     [SerializeField] SpriteRenderer fieldSprite;
-    [Header("실제 카드의 스프라이트")]
+    [Header("?ㅼ젣 移대뱶???ㅽ봽?쇱씠??")]
     public SpriteRenderer cardSprite;
     public Animator animator;
-    [Header("카드의 공격력 표시용")]
+    [Header("移대뱶??怨듦꺽???쒖떆??")]
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
 
@@ -104,9 +104,9 @@ public class FieldCardObject : MonoBehaviour
             }
         }
     }
-    [Header("카드의 좌우")]
+    [Header("移대뱶??醫뚯슦")]
     [SerializeField] private bool _lookingLeft = false;
-    [Header("필드 소유자의 ID")]
+    [Header("?꾨뱶 ?뚯쑀?먯쓽 ID")]
     [SerializeField] private int _playerID;
 
     public int playerID
@@ -128,7 +128,7 @@ public class FieldCardObject : MonoBehaviour
             }
         }
     }
-    [Header("카드의 소유자 표시용 이미지")]
+    [Header("移대뱶???뚯쑀???쒖떆???대?吏")]
     public Image ownerColor;
 
     public bool canBattle
@@ -181,17 +181,17 @@ public class FieldCardObject : MonoBehaviour
         }
     }
 
-    [Header("해당 필드가 공격을 할 수 있는지 여부")]
+    [Header("?대떦 ?꾨뱶媛 怨듦꺽???????덈뒗吏 ?щ?")]
     [SerializeField] bool _canBattle = false;
-    [Header("해당 필드가 공격권을 가지고 있는지 여부")]
+    [Header("?대떦 ?꾨뱶媛 怨듦꺽沅뚯쓣 媛吏怨??덈뒗吏 ?щ?")]
     [SerializeField] private bool _attackChance;
-    [Header("공격 가능 여부 표시용 이미지")]
+    [Header("怨듦꺽 媛???щ? ?쒖떆???대?吏")]
     public Image canBattleImage;
-    [Header("좌측 끼어들기 용 - First일 때만 활성화 예정")]
+    [Header("醫뚯륫 ?쇱뼱?ㅺ린 ??- First???뚮쭔 ?쒖꽦???덉젙")]
     public GameObject leftInter;
-    [Header("우측 끼어들기 가능 영역 표시용")]
+    [Header("?곗륫 ?쇱뼱?ㅺ린 媛???곸뿭 ?쒖떆??")]
     public GameObject rightInter;
-    [Header("이전 칸과 다음 칸의 정보")]
+    [Header("?댁쟾 移멸낵 ?ㅼ쓬 移몄쓽 ?뺣낫")]
     public FieldCardObject Prev;
     public FieldCardObject Next;
 
@@ -255,7 +255,7 @@ public class FieldCardObject : MonoBehaviour
     private void OnMouseDown()
     {
         //Please Input Card Click Sound Code
-        //카드 클릭 사운드 코드 넣어주세요
+        //移대뱶 ?대┃ ?ъ슫??肄붾뱶 ?ｌ뼱二쇱꽭??
         //
         //SoundManager.instance.PlayEffSound(ClickSound);
         if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
