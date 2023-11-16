@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject gridLayout;
     [SerializeField] GameObject cardObject;
     [SerializeField] Deck deck;
+    [SerializeField] GameObject cardSelectPopUI;
+    [SerializeField] GameObject settingPopUI;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip PopUpSound;
@@ -30,7 +32,7 @@ public class UIManager : MonoBehaviour
         set
         {
             _selectCard = value;
-            if(_selectCard != null && _selectCard != new Card())
+            if (_selectCard != null && _selectCard != new Card())
             {
                 selectCardChanged?.Invoke(selectCard);
             }
@@ -89,7 +91,7 @@ public class UIManager : MonoBehaviour
         mulliganButton.SetActive(false);
         exitButton.SetActive(true);
         ClosePopup();
-        for(int i = 0; i < cardList.Count; i++)
+        for (int i = 0; i < cardList.Count; i++)
         {
             if (cardList[i].GetComponent<UICard>().isSelected)
             {
@@ -106,7 +108,7 @@ public class UIManager : MonoBehaviour
     {
         //Please Input UI On Sound Code
         //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
-        //SoundManager.instance.PlayEffSound(PopUpSound);
+        SoundManager.instance.PlayEffSound(PopUpSound);
         if (isPopUI == false)
         {
             popUpUi.SetActive(true);
@@ -125,7 +127,7 @@ public class UIManager : MonoBehaviour
     {
         //Please Input UI On Sound Code
         //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
-        //SoundManager.instance.PlayEffSound(PopUpSound);
+        SoundManager.instance.PlayEffSound(PopUpSound);
         Debug.Log("PopupCard");
         if (isPopUI == false)
         {
@@ -150,14 +152,14 @@ public class UIManager : MonoBehaviour
     {
         //Please Input UI Off Sound Code
         //UI ?????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
-        //SoundManager.instance.PlayEffSound(CloseSound);
+        SoundManager.instance.PlayEffSound(CloseSound);
         if (isPopUI)
         {
-            foreach(Transform child in gridLayout.transform)
+            foreach (Transform child in gridLayout.transform)
             {
                 Destroy(child.gameObject);
             }
-            isPopUI=false;
+            isPopUI = false;
             popUpUi.SetActive(false);
         }
     }
@@ -166,10 +168,22 @@ public class UIManager : MonoBehaviour
     {
         //Please Input UI On Sound Code
         //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
-        //SoundManager.instance.PlayEffSound(WindowPopupSound);
+        SoundManager.instance.PlayEffSound(WindowPopupSound);
         if (isPopUI == false)
         {
             isPopUI = true;
+            popUpUi.SetActive(true);
+            cardSelectPopUI.SetActive(false);
+            settingPopUI.SetActive(true);
         }
+    }
+
+    public void CloseSettingWindow()
+    {
+        SoundManager.instance.PlayEffSound(CloseSound);
+        isPopUI = false;
+        popUpUi.SetActive(false);
+        cardSelectPopUI.SetActive(true);
+        settingPopUI.SetActive(false);
     }
 }
