@@ -10,15 +10,11 @@ public class UIScript : MonoBehaviour
     public GameObject soundUIBackGround;
     public Button button;
 
-    private void Awake()
-    {
+    void Start()
+    { 
         soundUIBackGround = SoundManager.instance.soundWindow;
 
         UIConnect();
-    }
-
-    void Start()
-    { 
     }
 
     void Update()

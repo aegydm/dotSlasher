@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/1. RoomScene.unity
     guid: 118957b56113779469553d254c8f2525
   - enabled: 1
-    path: Assets/Scenes/GamePlayScene.unity
-    guid: 3c87c3d3709c8814f8059d4181a6c5b4
+    path: Assets/Scenes/SoundTest.unity
+    guid: 5b97ddf2126db9645ab2632c2a0a2d2a
   m_configObjects: {}
