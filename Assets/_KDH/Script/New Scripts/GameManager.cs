@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public event Action CallTurnStart;
     public event Action CallTurnEnd;
 
+    [SerializeField] GameObject[] enemyHandGO;
     public bool isAlreadyAttack = false;
     public bool dirtySet = false;
     public bool battleDirtySet = false;
@@ -123,6 +124,14 @@ public class GameManager : MonoBehaviour
                 {
                     photonView.RPC("CallPlayerPhaseEnd", RpcTarget.Others);
                     nextPhase = gamePhase + 1;
+                    if(gamePhase == GamePhase.ActionPhase && enemyEnd == false)
+                    {
+                        startFirst = true;
+                    }
+                    else if(gamePhase == GamePhase.ActionPhase && enemyEnd == true)
+                    {
+                        startFirst = false;
+                    }
                     if (gamePhase == GamePhase.EndPhase)
                     {
                         nextPhase = GamePhase.DrawPhase;
@@ -530,7 +539,7 @@ public class GameManager : MonoBehaviour
     {
         //Please Input BGM Start Code
         //BGM 사운드 시작 코드 넣어주세요
-        //SoundManager.instance.PlayBGMSound(BGM);
+        SoundManager.instance.PlayBGMSound(BGM);
         deck.Shuffle();
         deck.Draw(5);
         SummonHero();
@@ -627,11 +636,11 @@ public class GameManager : MonoBehaviour
     {
         //Please Input Turn Start Sound Code
         //턴 시작시 나오는 소리 코드 넣어주세요
-        //SoundManager.instance.PlayEffSound(TurnStartSound);
-        if (FieldManager.instance.FieldIsFull())
+        SoundManager.instance.PlayEffSound(TurnStartSound);
+        if (FieldManager.instance.FieldIsFull() && (gamePhase == GamePhase.ActionPhase || nextPhase == GamePhase.BattlePhase))
         {
+            _canAct = false;
             playerEnd = true;
-            canAct = false;
         }
     }
 
@@ -639,7 +648,7 @@ public class GameManager : MonoBehaviour
     {
         //Please Input Turn End Sound Code
         //턴 종료시 나오는 소리 코드 넣어주세요
-        //SoundManager.instance.PlayEffSound(TurnEndSound);
+        SoundManager.instance.PlayEffSound(TurnEndSound);
         Debug.LogError("TurnEnd");
         currentTurn++;
         photonView.RPC("CallPlayerTurnEnd", RpcTarget.Others);
@@ -714,6 +723,11 @@ public class GameManager : MonoBehaviour
         deck.RefreshEnemyGraveCount();
     }
 
+    [PunRPC]
+    public void EnemyDeckReduce(int cardCount)
+    {
+        deck.enemyDeckCount = cardCount;
+    }
 
     [PunRPC]
     public void CallPlayerWinOrLose(bool enemyLose)
@@ -758,6 +772,23 @@ public class GameManager : MonoBehaviour
         }
         Debug.LogError("You Lose");
         Time.timeScale = 0;
+    }
+
+    [PunRPC]
+    public void EnemyHandCardChange(int enemyHandCount)
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            //Debug.LogError("HandCardChange + " + enemyHandCount);
+            if(i < enemyHandCount)
+            {
+                enemyHandGO[i].SetActive(true);
+            }
+            else
+            {
+                enemyHandGO[i].SetActive(false);
+            }
+        }
     }
 
 }

@@ -59,7 +59,7 @@ public class FieldCardObject : MonoBehaviour
     private AudioClip ClickSound;
     public void CheckInter()
     {
-        if (FieldManager.instance.FieldIsFull() == false)
+        if (FieldManager.instance.FieldIsFull() == false && (FieldManager.instance.GetAdditionalField() != null))
         {
 
             if (isEmpty == false && this == FieldManager.instance.battleField.First)
@@ -201,6 +201,22 @@ public class FieldCardObject : MonoBehaviour
         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(cardData.animator);
         frontATKText.text = _lookingLeft ? (cardData.backDamage).ToString() : (cardData.frontDamage).ToString();
         backATKText.text = _lookingLeft ? (cardData.frontDamage).ToString() : (cardData.backDamage).ToString();
+        if(cardData.frontDamage != CardDB.instance.FindCardFromID(cardData.cardID).frontDamage)
+        {
+            frontATKText.color = Color.yellow;
+        }
+        else
+        {
+            frontATKText.color = Color.white;
+        }
+        if(cardData.backDamage != CardDB.instance.FindCardFromID(cardData.cardID).backDamage)
+        {
+            backATKText.color = Color.yellow;
+        }
+        else
+        {
+            backATKText.color = Color.white;
+        }
     }
 
     private void ResetRender()
@@ -209,6 +225,8 @@ public class FieldCardObject : MonoBehaviour
         cardSprite.sprite = null;
         frontATKText.text = string.Empty;
         backATKText.text = string.Empty;
+        frontATKText.color = Color.white;
+        backATKText.color = Color.white;
         playerID = -1;
     }
 
@@ -239,7 +257,7 @@ public class FieldCardObject : MonoBehaviour
         //Please Input Card Click Sound Code
         //카드 클릭 사운드 코드 넣어주세요
         //
-        //SoundManager.instance.PlayEffSound(ClickSound);
+        SoundManager.instance.PlayEffSound(ClickSound);
         if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
             FieldAttack();

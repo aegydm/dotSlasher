@@ -25,10 +25,13 @@ public class Timer : MonoBehaviour
     {
         if (dirty == false)
         {
-            timerObj.SetActive(true);
-            baseTimer = 30.0f;
-            dirty = true;
-            StartCoroutine(timerCoroutine);
+            if (GameManager.instance.canAct)
+            {
+                timerObj.SetActive(true);
+                baseTimer = 30.0f;
+                dirty = true;
+                StartCoroutine(timerCoroutine);
+            }
         }
     }
 
@@ -47,7 +50,6 @@ public class Timer : MonoBehaviour
 
         while (baseTimer > 0)
         {
-            Debug.Log(Time.deltaTime);
             baseTimer -= Time.deltaTime;
 
             timer.text = baseTimer.ToString("F0");

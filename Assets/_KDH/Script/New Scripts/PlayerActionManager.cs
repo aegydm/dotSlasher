@@ -180,6 +180,7 @@ public class PlayerActionManager : MonoBehaviour
             }
         }
         CountHandCard();
+        GameManager.instance.photonView.RPC("EnemyHandCardChange", Photon.Pun.RpcTarget.Others, handCardCount);
     }
 
     private void CountHandCard()

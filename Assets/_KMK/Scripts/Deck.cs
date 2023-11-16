@@ -11,6 +11,20 @@ public class Deck : MonoBehaviour
 {
     public List<Card> useDeck = new List<Card>();
     public List<Card> originDeck = new List<Card>();
+    public int enemyDeckCount
+    {
+        get
+        {
+            return _enemyDeckCount;
+        }
+        set
+        {
+            _enemyDeckCount = value;
+            enemyDeckCountUI.text = _enemyDeckCount.ToString();
+        }
+    }
+    [SerializeField] int _enemyDeckCount = 30;
+
     public List<Card> grave
     {
         get
@@ -98,9 +112,9 @@ public class Deck : MonoBehaviour
     [SerializeField] int _countOfDeck;
     [SerializeField] public List<int> sortedDeck;
     [SerializeField] TMP_Text deckCountUI;
+    [SerializeField] TMP_Text enemyDeckCountUI;
     [SerializeField] TMP_Text graveCountUI;
     [SerializeField] TMP_Text enemyGraveCountUI;
-
     public event Action OnDeckCountChanged;
     public event Action OnGraveCountChanged;
     public event Action OnEnemyGraveCountChanged;
@@ -337,6 +351,7 @@ public class Deck : MonoBehaviour
     public void RefreshDeckCount()
     {
         countOfDeck = useDeck.Count;
+        GameManager.instance.photonView.RPC("EnemyDeckReduce", RpcTarget.Others, countOfDeck);
     }
     public void RefreshGraveCount()
     {
@@ -345,7 +360,7 @@ public class Deck : MonoBehaviour
 
     public void RefreshEnemyGraveCount()
     {
-        countOfEnemyGrave = grave.Count;
+        countOfEnemyGrave = enemyGrave.Count;
     }
 
     public void SortDeck()
