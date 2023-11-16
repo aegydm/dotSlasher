@@ -33,7 +33,7 @@ public class UIScript : MonoBehaviour
         BGMVolChanger();
         EffVolChanger();
 
-        if (optionUIBackGround !=null && Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (windowOn)
             {
@@ -51,11 +51,6 @@ public class UIScript : MonoBehaviour
                 blank.SetActive(true); 
                 windowOn = true;
             }
-        }
-        else if (optionUIBackGround == null && Input.GetKeyDown(KeyCode.Escape))
-        {
-            //사운드 관련 UI를 끄고 키는 함수.
-            SoundUIOn();
         }
     }
 
