@@ -524,7 +524,8 @@ public class GameManager : MonoBehaviour
             playerEnd = true;
             return;
         }
-        StartCoroutine(DiscardByDamage());
+        FindObjectOfType<Timer>().PlayerTimer();
+        StartCoroutine(nameof(DiscardByDamage));
     }
 
     private void EndPhaseStart()
@@ -589,6 +590,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.selectCardChanged -= Discard;
         UIManager.Instance.ClosePopup();
         //Debug.LogError("모든 카드를 버렸습니다.");
+        FindObjectOfType<Timer>().StopTimer();
         enemyDamageSum = 0;
         playerEnd = true;
     }
@@ -623,6 +625,8 @@ public class GameManager : MonoBehaviour
         _gamePhase = GamePhase.DrawPhase;
         FieldManager.instance.CheckInterAll();
         FieldManager.instance.additionalCount = 5;
+        Debug.Log("Timer Call");
+        FindObjectOfType<Timer>().PlayerTimer();
     }
 
     private void SummonHero()
@@ -671,7 +675,11 @@ public class GameManager : MonoBehaviour
 
     public void EndButton()
     {
-        if (gamePhase == GamePhase.ActionPhase)
+        if (gamePhase == GamePhase.DrawPhase)
+        {
+            UIManager.Instance.EndMulligan();
+        }
+        else if (gamePhase == GamePhase.ActionPhase)
         {
             if (canAct && playerEnd == false && useCard)
             {
@@ -687,7 +695,7 @@ public class GameManager : MonoBehaviour
                 playerEnd = true;
             }
         }
-        if (gamePhase == GamePhase.BattlePhase)
+        else if (gamePhase == GamePhase.BattlePhase)
         {
             if (isAlreadyAttack == false && canAct)
             {
@@ -703,6 +711,22 @@ public class GameManager : MonoBehaviour
                     temp = temp.Next;
                 }
             }
+        }
+        else if (gamePhase == GamePhase.ExecutionPhase)
+        {
+            Debug.LogError("Time Limit Over. Discard Random");
+            while(damageSum > 0)
+            {
+                int randNum = UnityEngine.Random.Range(0, UIManager.Instance.uiCardList.Count);
+                UIManager.Instance.selectCard = UIManager.Instance.uiCardList[randNum].GetComponent<UICard>().cardData;
+            }
+            StopCoroutine(nameof(DiscardByDamage));
+            UIManager.Instance.exitButton.SetActive(true);
+            UIManager.Instance.selectCardChanged -= Discard;
+            UIManager.Instance.ClosePopup();
+            //Debug.LogError("모든 카드를 버렸습니다.");
+            enemyDamageSum = 0;
+            playerEnd = true;
         }
     }
 
