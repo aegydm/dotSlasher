@@ -38,14 +38,7 @@ public class SoundManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (soundWindow.activeSelf)
-            {
-                soundWindow.SetActive(false);
-            }
-            else
-            {
-                soundWindow.SetActive(true);
-            }
+            SoundWindowOn();
         }
         if (soundWindow.activeSelf)
         {
@@ -93,6 +86,19 @@ public class SoundManager : MonoBehaviour
             {
                 audioSource.Pause();
             }
+        }
+    }
+
+    //버튼으로 연결하여 작동 할 수 있게한다.
+    public void SoundWindowOn()
+    {
+        if (soundWindow.activeSelf)
+        {
+            soundWindow.SetActive(false);
+        }
+        else
+        {
+            soundWindow.SetActive(true);
         }
     }
 }
