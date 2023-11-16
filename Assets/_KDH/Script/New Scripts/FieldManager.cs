@@ -49,7 +49,7 @@ public class FieldManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("FieldManager is already exist.");
+            //Debug.LogError("FieldManager is already exist.");
             Destroy(gameObject);
         }
     }
@@ -185,8 +185,8 @@ public class FieldManager : MonoBehaviour
             CallSummonUnit?.Invoke();
             isOpenDirection = false;
             CheckInterAll();
-            Debug.LogError("SummonUnit");
-            Debug.LogError($"index is {index}, make is {make}, makeLeft is {makeLeft}, cardID is {cardID}, lookingLeft is {lookingLeft}, playerID is {int.Parse(GameManager.instance.playerID)}");
+            //Debug.LogError("SummonUnit");
+            //Debug.LogError($"index is {index}, make is {make}, makeLeft is {makeLeft}, cardID is {cardID}, lookingLeft is {lookingLeft}, playerID is {int.Parse(GameManager.instance.playerID)}");
             GameManager.instance.photonView.RPC("CallSummonUnit", RpcTarget.Others, index, make, makeLeft, cardID, lookingLeft, int.Parse(GameManager.instance.playerID));
             make = false;
             makeLeft = false;
@@ -206,8 +206,8 @@ public class FieldManager : MonoBehaviour
 
     public void SetCardToFieldForPun(int index, bool make, bool makeLeft, int cardID, bool lookingLeft, int playerID)
     {
-        Debug.LogError("CheckSummonUnit");
-        Debug.LogError($"index is {index}, make is {make}, makeLeft is {makeLeft}, cardID is {cardID}, lookingLeft is {lookingLeft}, playerID is {playerID}");
+        //Debug.LogError("CheckSummonUnit");
+        //Debug.LogError($"index is {index}, make is {make}, makeLeft is {makeLeft}, cardID is {cardID}, lookingLeft is {lookingLeft}, playerID is {playerID}");
         if (make)
         {
             if (makeLeft)

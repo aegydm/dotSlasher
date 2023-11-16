@@ -70,7 +70,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("UIManager??1媛쒕쭔 議댁옱?댁빞 ?⑸땲??");
+            //Debug.LogError("UIManager??1媛쒕쭔 議댁옱?댁빞 ?⑸땲??");
             Destroy(this);
         }
     }
@@ -118,7 +118,6 @@ public class UIManager : MonoBehaviour
             {
                 go = Instantiate(cardObject, gridLayout.transform);
                 go.GetComponent<UICard>().cardData = card;
-                go.GetComponent<Image>().sprite = go.GetComponent<SpriteRenderer>().sprite = card.cardSprite;
             }
         }
     }
@@ -140,7 +139,6 @@ public class UIManager : MonoBehaviour
                 go = Instantiate(cardObject, gridLayout.transform);
                 cardList.Add(go);
                 go.GetComponent<UICard>().cardData = card.cardData;
-                go.GetComponent<Image>().sprite = go.GetComponent<UICard>().spriteRenderer.sprite = card.cardSprite.sprite;
                 go.GetComponent<UICard>().handCardObject = card;
             }
             mulliganButton.SetActive(true);

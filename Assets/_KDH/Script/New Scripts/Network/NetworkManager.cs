@@ -92,7 +92,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if(GameManager.instance.isGameEnd == false)
             {
-                GameManager.instance.GameSet();
+                GameManager.instance.Win();
             }
         }
     }
