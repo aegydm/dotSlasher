@@ -6,10 +6,15 @@ using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour
 {
-    [Header("UI 메뉴창")]
+    [Header("UI Window")]
     public GameObject optionWindow;
     public GameObject soundUIBackGround;
     public Button button;
+
+    [Header("AudioClip")]
+    [SerializeField] AudioClip windowOpenSound;
+    [SerializeField] AudioClip windowCloseSound;
+
 
     void Start()
     { 
@@ -42,6 +47,8 @@ public class UIScript : MonoBehaviour
                     SoundManager.instance.SoundWindowSwich();
                 }
                 optionWindow.SetActive(false);
+
+                SoundManager.instance.PlayEffSound(windowCloseSound);
             }
         }
     }
@@ -51,6 +58,7 @@ public class UIScript : MonoBehaviour
         if(!optionWindow.activeSelf)
         {
             optionWindow.SetActive(true);
+            SoundManager.instance.PlayEffSound(windowOpenSound);
         }
         
     }

@@ -746,6 +746,8 @@ MonoBehaviour:
   effToggle: {fileID: 8875980508361463782}
   bgmAudio: {fileID: 2358518948969494668}
   effAudio: {fileID: 1018522578432038883}
+  windowOpenSound: {fileID: 8300000, guid: c12f4097b5373ad45a9178cbb16b28eb, type: 3}
+  windowCloseSound: {fileID: 8300000, guid: 0e9296f8503cb374dbc08fe2047e736d, type: 3}
   soundWindow: {fileID: 9030391129555840147}
 --- !u!82 &2358518948969494668
 AudioSource:

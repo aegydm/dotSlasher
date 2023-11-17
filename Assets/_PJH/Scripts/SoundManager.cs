@@ -9,17 +9,21 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance {  get; private set; }
 
-    [Header("사운드 슬라이드")]
+    [Header("?ъ슫???щ씪?대뱶")]
     public Slider mVol;
     public Slider bgmVol;
     public Slider effVol;
-    [Header("음소거 토글")]
+    [Header("?뚯냼嫄??좉?")]
     public Toggle mToggle;
     public Toggle bgmToggle;
     public Toggle effToggle;
     [Header("AudioSource")]
     public AudioSource bgmAudio;
     public AudioSource effAudio;
+
+    [Header("EffSounds")]
+    public AudioClip windowOpenSound;
+    public AudioClip windowCloseSound;
 
     public GameObject soundWindow;
 
@@ -131,16 +135,18 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    //soundUI 호출용 함수
+    //soundUI Open&Close
     public void SoundWindowSwich()
     {
         if (soundWindow.activeSelf)
         {
             soundWindow.SetActive(false);
+            SoundManager.instance.PlayEffSound(windowCloseSound);
         }
         else
         {
             soundWindow.SetActive(true);
+            SoundManager.instance.PlayEffSound(windowOpenSound);
         }
     }
 }
