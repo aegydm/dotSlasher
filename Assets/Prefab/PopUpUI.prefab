@@ -876,9 +876,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5664427156c4dad469d3c89367738739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionWindow: {fileID: 0}
+  optionWindow: {fileID: 7253746631397679637}
   soundUIBackGround: {fileID: 0}
-  button: {fileID: 0}
+  button: {fileID: 8277310862279819404}
 --- !u!1 &4301696532448831607
 GameObject:
   m_ObjectHideFlags: 0
