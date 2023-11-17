@@ -361,7 +361,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 170574b85e79bc84182a84dc21cd86a0, type: 2}
     cardID: 141000
     cardName: "\uC790\uC601\uC6C5"
-    cardSprite: {fileID: 21300000, guid: 404cbdc4639e8374688ff5a50c5ce141, type: 3}
+    cardSprite: {fileID: 21300000, guid: 0ea32316e14cd44408c460e2b9b448b0, type: 3}
     animator: Sprites/f4/f4_hero/f4_hero_01/f4_hero_01
     skill: 
     skillContents: "\uC545\uB9C8\uB97C \uBD80\uB9AC\uB294 \uC790\uC0C9\uC758 \uC601\uC6C5"
