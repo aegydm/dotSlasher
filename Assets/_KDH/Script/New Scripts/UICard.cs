@@ -32,13 +32,17 @@ public class UICard : MonoBehaviour
     public TMP_Text cardDescriptionTXT;
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
+    public UIScript script;
 
+    private void Start()
+    {
+        script = FindAnyObjectByType<UIScript>();
+    }
     private void OnMouseOver()
     {
-        if (isSelected == false)
+        if (isSelected == false && script.optionWindow.activeSelf == false)
         {
             backGroundRenderer.color = Color.red;
-
         }
     }
 
@@ -52,32 +56,36 @@ public class UICard : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (UIManager.Instance != null)
+        if (script.optionWindow.activeSelf == false)
         {
-            UIManager.Instance.selectObject = gameObject;
-            UIManager.Instance.selectCard = cardData;
-        }
-        else
-        {
-            DeckMaker.instance.selectObject = gameObject;
-            DeckMaker.instance.selectCard = cardData;
-        }
-        if (handCardObject != null)
-        {
-            isSelected = !isSelected;
-            if (isSelected)
+
+            if (UIManager.Instance != null)
             {
-                backGroundRenderer.color = Color.gray;
+                UIManager.Instance.selectObject = gameObject;
+                UIManager.Instance.selectCard = cardData;
             }
             else
             {
-                backGroundRenderer.color = Color.white;
+                DeckMaker.instance.selectObject = gameObject;
+                DeckMaker.instance.selectCard = cardData;
             }
-            Debug.Log(handCardObject.name + "is " + isSelected);
-        }
-        else if (DeckMaker.instance != null)
-        {
-            DeckMaker.instance.deck.Add(cardData);
+            if (handCardObject != null)
+            {
+                isSelected = !isSelected;
+                if (isSelected)
+                {
+                    backGroundRenderer.color = Color.gray;
+                }
+                else
+                {
+                    backGroundRenderer.color = Color.white;
+                }
+                Debug.Log(handCardObject.name + "is " + isSelected);
+            }
+            else if (DeckMaker.instance != null)
+            {
+                DeckMaker.instance.deck.Add(cardData);
+            }
         }
     }
 }
