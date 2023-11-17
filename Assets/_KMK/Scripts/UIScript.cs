@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,21 +24,25 @@ public class UIScript : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyUp(KeyCode.Escape))
+        UIOpen();
+    }
+
+    private void UIOpen()
+    {
+
+        if (optionWindow.activeSelf)
         {
-            if (optionWindow.activeSelf)
+            if (soundUIBackGround != null && soundUIBackGround.activeSelf)
             {
-                if(soundUIBackGround != null && soundUIBackGround.activeSelf)
-                {
-                    SoundManager.instance.SoundWindowOn();
-                }
-                optionWindow.SetActive(false);
+                SoundManager.instance.SoundWindowOn();
             }
-            else
-            {
-                optionWindow.SetActive(true);
-            }
+            optionWindow.SetActive(false);
         }
+        else
+        {
+            optionWindow.SetActive(true);
+        }
+        
     }
 
     public void UIConnect()
