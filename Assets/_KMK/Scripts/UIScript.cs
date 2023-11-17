@@ -10,33 +10,34 @@ public class UIScript : MonoBehaviour
     public GameObject soundUIBackGround;
     public Button button;
 
-    private void Awake()
-    {
+    void Start()
+    { 
         soundUIBackGround = SoundManager.instance.soundWindow;
 
         UIConnect();
-    }
-
-    void Start()
-    { 
     }
 
     void Update()
     {
         if(Input.GetKeyUp(KeyCode.Escape))
         {
-            if (optionWindow.activeSelf)
+            PopSoundWindow();
+        }
+    }
+
+    public void PopSoundWindow()
+    {
+        if (optionWindow.activeSelf)
+        {
+            if (soundUIBackGround != null && soundUIBackGround.activeSelf)
             {
-                if(soundUIBackGround != null && soundUIBackGround.activeSelf)
-                {
-                    SoundManager.instance.SoundWindowOn();
-                }
-                optionWindow.SetActive(false);
+                SoundManager.instance.SoundWindowOn();
             }
-            else
-            {
-                optionWindow.SetActive(true);
-            }
+            optionWindow.SetActive(false);
+        }
+        else
+        {
+            optionWindow.SetActive(true);
         }
     }
 

@@ -41,8 +41,8 @@ public class SoundManager : MonoBehaviour
     {
         BGMVolChanger();
         EffVolChanger();
-        
     }
+
     public void BGMVolChanger()
     {
         if (!mToggle.isOn)

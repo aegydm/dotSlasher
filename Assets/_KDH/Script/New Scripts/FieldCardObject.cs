@@ -296,11 +296,19 @@ public class FieldCardObject : MonoBehaviour
 
     private void OnEnable()
     {
+        if(FieldManager.instance != null)
+        {
+
         FieldManager.instance.additionalCount--;
+        }
     }
 
     private void OnDisable()
     {
+        if(FieldManager.instance != null)
+        {
+
         FieldManager.instance.additionalCount++;
+        }
     }
 }
