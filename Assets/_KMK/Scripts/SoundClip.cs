@@ -9,7 +9,7 @@ public class SoundClip : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SoundManager.instance.PlayBGMSound(bgm);
+        //SoundManager.instance.PlayBGMSound(bgm);
     }
 
     // Update is called once per frame

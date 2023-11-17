@@ -267,14 +267,18 @@ public class FieldCardObject : MonoBehaviour
         else
         {
             frontATKText.color = Color.white;
-            gemAddText.text = string.Empty;
-            gemAddGO.SetActive(false);
-            gemMultiText.text = string.Empty;
-            gemMultiGO.SetActive(false);
-            rankAddText.text = string.Empty;
-            rankAddGO.SetActive(false);
-            rankMultiText.text = string.Empty;
-            rankMultiGO.SetActive(false);
+            if (frontATKText.text != "0")
+            {
+
+                gemAddText.text = string.Empty;
+                gemAddGO.SetActive(false);
+                gemMultiText.text = string.Empty;
+                gemMultiGO.SetActive(false);
+                rankAddText.text = string.Empty;
+                rankAddGO.SetActive(false);
+                rankMultiText.text = string.Empty;
+                rankMultiGO.SetActive(false);
+            }
         }
         if (cardData.backDamage != CardDB.instance.FindCardFromID(cardData.cardID).backDamage)
         {
@@ -283,6 +287,17 @@ public class FieldCardObject : MonoBehaviour
         else
         {
             backATKText.color = Color.white;
+            if (backATKText.text != "0")
+            {
+                gemAddText.text = string.Empty;
+                gemAddGO.SetActive(false);
+                gemMultiText.text = string.Empty;
+                gemMultiGO.SetActive(false);
+                rankAddText.text = string.Empty;
+                rankAddGO.SetActive(false);
+                rankMultiText.text = string.Empty;
+                rankMultiGO.SetActive(false);
+            }
         }
     }
 
@@ -371,7 +386,7 @@ public class FieldCardObject : MonoBehaviour
 
     private void OnEnable()
     {
-        if (GameManager.instance != null && FieldManager.instance!=null && GameManager.instance.isStart)
+        if (GameManager.instance != null && FieldManager.instance != null && GameManager.instance.isStart)
         {
             FieldManager.instance.additionalCount--;
         }

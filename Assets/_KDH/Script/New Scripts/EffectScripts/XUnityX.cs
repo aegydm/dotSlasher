@@ -109,6 +109,7 @@ public class XUnityX : FieldChangeEffect
                 {
                     gemStraightCount++;
                     gemList.Add(int.Parse(temp.cardData.skill[1].ToString()));
+                    Debug.LogError(caster + "\nGemStraight : " + gemStraightCount+"\n"+temp+"\nAddNumber: " + int.Parse(temp.cardData.skill[1].ToString()));
                 }
                 else
                 {
@@ -123,12 +124,14 @@ public class XUnityX : FieldChangeEffect
                 {
                     gemStraightCount++;
                     gemList.Add(int.Parse(temp.cardData.skill[1].ToString()));
+                    Debug.LogError(caster + "\nGemStraight : " + gemStraightCount + "\n" + temp + "\nAddNumber: " + int.Parse(temp.cardData.skill[1].ToString()));
                 }
                 else
                 {
                     break;
                 }
             }
+
             if (gemStraightCount >= 4)
             {
                 gemLargeStraight = true;
@@ -186,7 +189,7 @@ public class XUnityX : FieldChangeEffect
             }
             temp = temp.Next;
         }
-
+        Debug.LogError(caster + " : " + rankStraightCount);
         if (rankStraightCount >= 4)
         {
             rankLargeStraight = true;
