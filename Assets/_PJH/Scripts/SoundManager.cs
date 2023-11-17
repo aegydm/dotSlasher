@@ -116,7 +116,7 @@ public class SoundManager : MonoBehaviour
     }
 
     //soundUI 호출용 함수
-    public void SoundWindowOn()
+    public void SoundWindowSwich()
     {
         if (soundWindow.activeSelf)
         {

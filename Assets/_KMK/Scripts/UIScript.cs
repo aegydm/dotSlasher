@@ -24,21 +24,27 @@ public class UIScript : MonoBehaviour
 
     void Update()
     {
-        UIOpen();
+        UIClose();
+    }
+
+    private void UIClose()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (optionWindow.activeSelf)
+            {
+                if (soundUIBackGround.activeSelf)
+                {
+                    SoundManager.instance.SoundWindowSwich();
+                }
+                optionWindow.SetActive(false);
+            }
+        }
     }
 
     private void UIOpen()
-    {
-
-        if (optionWindow.activeSelf)
-        {
-            if (soundUIBackGround != null && soundUIBackGround.activeSelf)
-            {
-                SoundManager.instance.SoundWindowOn();
-            }
-            optionWindow.SetActive(false);
-        }
-        else
+    {       
+        if(!optionWindow.activeSelf)
         {
             optionWindow.SetActive(true);
         }
@@ -48,6 +54,6 @@ public class UIScript : MonoBehaviour
     public void UIConnect()
     {
 
-        button.onClick.AddListener(() => SoundManager.instance.SoundWindowOn());
+        button.onClick.AddListener(() => SoundManager.instance.SoundWindowSwich());
     }
 }
