@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.PackageManager.UI;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -41,25 +41,33 @@ public class SoundManager : MonoBehaviour
     {
         BGMVolChanger();
         EffVolChanger();
+        
     }
-
     public void BGMVolChanger()
     {
         if (!mToggle.isOn)
         {
+            bgmAudio.mute = false;
+
             if (!bgmToggle.isOn)
             {
                 bgmAudio.volume = bgmVol.value * mVol.value;
             }
             else
             {
-                bgmAudio.volume = 0;
+                if (bgmAudio.mute == false)
+                {
+                    bgmAudio.mute = true;
+                }
+                else if (bgmAudio.mute == true)
+                {
+                    bgmAudio.mute = false;
+                }
             }
         }
         else
         {
-            mVol.value = 0;
-            bgmAudio.volume = 0;
+            bgmAudio.mute = true;
         }
     }
 
@@ -67,19 +75,27 @@ public class SoundManager : MonoBehaviour
     {
         if (!mToggle.isOn)
         {
+            effAudio.mute = false;
+
             if (!effToggle.isOn)
             {
                 effAudio.volume = effVol.value * mVol.value;
             }
             else
             {
-                effAudio.volume = 0;
+                if (effAudio.mute == false)
+                {
+                    effAudio.mute = true;
+                }
+                else if (effAudio.mute == true)
+                {
+                    effAudio.mute = false;
+                }
             }
         }
         else
         {
-            mVol.value = 0;
-            effAudio.volume = 0;
+            effAudio.mute = true;
         }
     }
 
