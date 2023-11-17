@@ -138,10 +138,12 @@ public class GameManager : MonoBehaviour
                     if (gamePhase == GamePhase.ActionPhase && enemyEnd == false)
                     {
                         startFirst = true;
+                        Debug.LogError("StartFirst");
                     }
                     else if (gamePhase == GamePhase.ActionPhase && enemyEnd == true)
                     {
                         startFirst = false;
+                        Debug.LogError("STartLAST");
                     }
                     if (gamePhase == GamePhase.EndPhase)
                     {
@@ -629,7 +631,7 @@ public class GameManager : MonoBehaviour
         _gamePhase = GamePhase.DrawPhase;
         FieldManager.instance.CheckInterAll();
         FieldManager.instance.additionalCount = 5;
-        Debug.Log("Timer Call");
+        //Debug.Log("Timer Call");
         FindObjectOfType<Timer>().PlayerTimer();
     }
 
@@ -747,9 +749,9 @@ public class GameManager : MonoBehaviour
         if (FieldManager.instance.FieldIsFull() && (gamePhase == GamePhase.ActionPhase))
         {
             _canAct = false;
-            startFirst = false;
             GetComponent<Timer>().StopTimer();
             playerEnd = true;
+            startFirst = false;
         }
     }
 

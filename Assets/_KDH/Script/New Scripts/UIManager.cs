@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
 
     public void StartMulligan()
     {
-        Debug.Log("StartMulligan");
+        //Debug.Log("StartMulligan");
         PopupCard(PlayerActionManager.instance.handCardObjectArray);
         exitButton.SetActive(false);
     }
@@ -111,7 +111,6 @@ public class UIManager : MonoBehaviour
     public void PopupCard(List<Card> cardList)
     {
         //Please Input UI On Sound Code
-        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayEffSound(PopUpSound);
         if (isPopUI == false)
         {
@@ -130,9 +129,8 @@ public class UIManager : MonoBehaviour
     public void PopupCard(HandCardObject[] handList)
     {
         //Please Input UI On Sound Code
-        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayEffSound(PopUpSound);
-        Debug.Log("PopupCard");
+        //Debug.Log("PopupCard");
         if (isPopUI == false)
         {
             popUpUi.SetActive(true);
@@ -155,7 +153,6 @@ public class UIManager : MonoBehaviour
     public void ClosePopup()
     {
         //Please Input UI Off Sound Code
-        //UI ?????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayEffSound(CloseSound);
         if (isPopUI)
         {
@@ -172,7 +169,6 @@ public class UIManager : MonoBehaviour
     public void PopupSettingWindow()
     {
         //Please Input UI On Sound Code
-        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayEffSound(WindowPopupSound);
         if (isPopUI == false)
         {

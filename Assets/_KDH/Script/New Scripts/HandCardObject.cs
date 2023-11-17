@@ -35,22 +35,25 @@ public class HandCardObject : MonoBehaviour
         }
     }
 
-    [Header("移대뱶 ?뺣낫")]
+    [Header("Show Card Data")]
     [SerializeField] Card _cardData;
-    [Header("移대뱶 ?꾩껜 ? ?ㅽ봽?쇱씠??")]
+    [Header("Input SpriteGO")]
     public GameObject spriteGO;
     private SpriteRenderer cardRenderer;
-    [Header("?ㅼ젣 移대뱶???ㅽ봽?쇱씠??")]
+    [Header("Input Card Sprite")]
     public SpriteRenderer cardSprite;
     public Animator animator;
-    [Header("移대뱶??怨듦꺽???쒖떆??")]
+    [Header("Input Attack Texts")]
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
-    [Header("移대뱶???대쫫怨??ㅻ챸??")]
+    [Header("Input Name and Explain Text")]
     public TMP_Text nameText;
     public TMP_Text explainText;
-    [Header("移대뱶媛 鍮꾩뼱?덈뒗吏 泥댄겕?섎뒗 蹂??")]
+    [Header("Show Is Empty")]
     public bool isEmpty = true;
+    [Header("Input Gem And Rank")]
+    public SpriteRenderer gemSprite;
+    public TMP_Text rankText;
     [Header("Sound")]
     private AudioClip ClickSound;
 
@@ -72,6 +75,8 @@ public class HandCardObject : MonoBehaviour
         backATKText.enabled = true;
         nameText.enabled = true;
         explainText.enabled = true;
+        gemSprite.enabled = true;
+        rankText.enabled = true;
         cardRenderer.color = new Color(1, 1, 1, 1);
         isDrag = false;
         boxCollider.enabled = true;
@@ -86,6 +91,8 @@ public class HandCardObject : MonoBehaviour
         backATKText.enabled = true;
         nameText.enabled = true;
         explainText.enabled = true;
+        gemSprite.enabled = true;
+        rankText.enabled = true;
         cardRenderer.color = new Color(1, 1, 1, 1);
         isDrag = false;
         boxCollider.enabled = true;
@@ -114,6 +121,7 @@ public class HandCardObject : MonoBehaviour
         if (GameManager.instance.useCard == false && PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
             spriteGO.transform.localScale = 1.3f * originScale;
+            spriteGO.transform.position -= new Vector3(0, 0, 0.5f);
         }
     }
 
@@ -122,13 +130,13 @@ public class HandCardObject : MonoBehaviour
         if (GameManager.instance.useCard == false && PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
             spriteGO.transform.localScale = originScale;
+            spriteGO.transform.position += new Vector3(0, 0, 0.5f);
         }
     }
 
     private void OnMouseDown()
     {
         //Please Input Card Click Sound Code
-        //移대뱶 ?대┃ ???뚮━ ?ъ깮?섎뒗 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayEffSound(ClickSound);
         if (GameManager.instance.gamePhase == GamePhase.ActionPhase && GameManager.instance.useCard == false && GameManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManager.instance.isOpenDirection == false)
         {
@@ -138,6 +146,8 @@ public class HandCardObject : MonoBehaviour
             backATKText.enabled = false;
             nameText.enabled = false;
             explainText.enabled = false;
+            gemSprite.enabled = false;
+            rankText.enabled = false;
             PlayerActionManager.instance.isDrag = true;
             PlayerActionManager.instance.dragCardGO = this;
             boxCollider.enabled = false;
@@ -186,6 +196,50 @@ public class HandCardObject : MonoBehaviour
         backATKText.text = cardData.backDamage.ToString();
         nameText.text = cardData.cardName;
         explainText.text = cardData.skillContents;
+        if (cardData.skill != string.Empty)
+        {
+            switch (cardData.skill[0].ToString())
+            {
+                case "1":
+                    gemSprite.color = Color.red;
+                    break;
+                case "2":
+                    gemSprite.color = Color.green;
+                    break;
+                case "3":
+                    gemSprite.color = Color.yellow;
+                    break;
+                case "4":
+                    gemSprite.color = Color.cyan;
+                    break;
+                case "5":
+                    gemSprite.color = Color.white;
+                    break;
+            }
+            switch (cardData.skill[1].ToString())
+            {
+                case "1":
+                    rankText.text = "Ⅰ";
+                    break;
+                case "2":
+                    rankText.text = "Ⅱ";
+                    break;
+                case "3":
+                    rankText.text = "Ⅲ";
+                    break;
+                case "4":
+                    rankText.text = "Ⅳ";
+                    break;
+                case "5":
+                    rankText.text = "Ⅴ";
+                    break;
+            }
+        }
+        else
+        {
+            gemSprite.color = Color.black;
+            rankText.text = string.Empty;
+        }
     }
 
     private void ResetRender()
@@ -196,5 +250,7 @@ public class HandCardObject : MonoBehaviour
         backATKText.text = string.Empty;
         nameText.text = string.Empty;
         explainText.text = string.Empty;
+        gemSprite.color = Color.black;
+        rankText.text = string.Empty;
     }
 }

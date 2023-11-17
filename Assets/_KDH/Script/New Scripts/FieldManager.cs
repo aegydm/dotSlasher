@@ -68,14 +68,14 @@ public class FieldManager : MonoBehaviour
 
     private void FieldChangeEffects()
     {
-        Debug.Log("CallFieldChange");
+        //Debug.Log("CallFieldChange");
         FieldCardObject temp = battleField.First;
         while (temp != null)
         {
-            Debug.Log("Test1");
+            //Debug.Log("Test1");
             if (temp.cardData != null && temp.cardData.cardID != 0)
             {
-                Debug.Log("Test2");
+                //Debug.Log("Test2");
                 temp.cardData.FieldChange(battleField, temp);
             }
             temp = temp.Next;
@@ -141,7 +141,7 @@ public class FieldManager : MonoBehaviour
 
     public void CheckInterAll()
     {
-        Debug.Log("CHECKINTER");
+        //Debug.Log("CHECKINTER");
         FieldCardObject tmp = battleField.First;
         while (tmp != null)
         {
@@ -152,7 +152,7 @@ public class FieldManager : MonoBehaviour
 
     public void SelectDirection(bool lookingLeft)
     {
-        Debug.Log(lookingLeft);
+        //Debug.Log(lookingLeft);
         if (isOpenDirection)
         {
             PlayerActionManager.instance.field.cardData = PlayerActionManager.instance.dragCardGO.cardData;
@@ -257,7 +257,7 @@ public class FieldManager : MonoBehaviour
             battleField[index].cardData = CardDB.instance.FindCardFromID(cardID);
             battleField[index].lookingLeft = lookingLeft;
             battleField[index].playerID = playerID;
-            Debug.Log($"Original Field : {battleField[index]},{index} + Card is : {battleField[index].cardData.cardName}");
+            //Debug.Log($"Original Field : {battleField[index]},{index} + Card is : {battleField[index].cardData.cardName}");
         }
         battleField[index].cardData.Summon(battleField, battleField[index]);
         CallSummonUnit?.Invoke();

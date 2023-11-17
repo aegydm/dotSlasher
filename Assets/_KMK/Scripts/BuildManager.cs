@@ -78,7 +78,7 @@ public class BuildManager : MonoBehaviour
                 loadDeck = (List<int>)binaryFormatter.Deserialize(rs);
             }
 
-            Debug.Log(loadDeck.ToString());
+            //Debug.Log(loadDeck.ToString());
             trigger = true;
         }
         catch (Exception e)
@@ -95,7 +95,7 @@ public class BuildManager : MonoBehaviour
             Debug.Log(e);
         }
 
-        print(loadDeck.Count);
+        //print(loadDeck.Count);
 
         List<Card> tmpDeck = new();
 

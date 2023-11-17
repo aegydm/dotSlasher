@@ -102,7 +102,7 @@ namespace CCGCard
 
         public async void FieldChange(LinkedBattleField battleFieldInfo, FieldCardObject casterInfo)
         {
-            Debug.Log("FieldChangeCall");
+            //Debug.Log("FieldChangeCall");
             await ActiveEffect(fieldChangeEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
         }
 

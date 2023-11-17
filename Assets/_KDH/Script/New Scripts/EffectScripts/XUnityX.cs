@@ -17,6 +17,7 @@ public class XUnityX : FieldChangeEffect
         bool rankSmallStraight = false;
         bool rankLargeStraight = false;
 
+        #region gemAdd
         FieldCardObject temp = caster.Prev;
         while (temp != null)
         {
@@ -51,7 +52,9 @@ public class XUnityX : FieldChangeEffect
             }
             temp = temp.Next;
         }
+        #endregion
 
+        #region rankAdd
         temp = caster.Prev;
         while (temp != null)
         {
@@ -86,84 +89,94 @@ public class XUnityX : FieldChangeEffect
             }
             temp = temp.Next;
         }
+        #endregion
 
         #region Gem Straight
-        int gemTemp = gem;
-        int gemStraightCount = 0;
         gemSmallStraight = false;
         gemLargeStraight = false;
         temp = caster;
-        while (gemTemp > 1)
+        for (int i = 0; i < 5; i++)
         {
-            temp = temp.Prev;
-            gemTemp--;
-            if (temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill != string.Empty && int.Parse(temp.cardData.skill[0].ToString()) == gemTemp)
+            int gemTemp = gem;
+            int gemStraightCount = 0;
+            List<int> gemList = new List<int>();
+            gemList.Add(gem);
+            temp = caster;
+            for (int j = i; j < 4; j++)
             {
-                gemStraightCount++;
+                temp = temp.Next;
+                if (temp != null && temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill != string.Empty && !gemList.Contains(int.Parse(temp.cardData.skill[0].ToString())))
+                {
+                    gemStraightCount++;
+                    gemList.Add(int.Parse(temp.cardData.skill[1].ToString()));
+                }
+                else
+                {
+                    break;
+                }
+            }
+            temp = caster;
+            for (int k = 4 - i; k < 4; k++)
+            {
+                temp = temp.Prev;
+                if (temp != null && temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill != string.Empty && !gemList.Contains(int.Parse(temp.cardData.skill[0].ToString())))
+                {
+                    gemStraightCount++;
+                    gemList.Add(int.Parse(temp.cardData.skill[1].ToString()));
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (gemStraightCount >= 4)
+            {
+                gemLargeStraight = true;
+                break;
+            }
+            else if (gemStraightCount >= 2)
+            {
+                gemLargeStraight = false;
+                gemSmallStraight = true;
             }
             else
             {
-                break;
-            }
-        }
-        temp = caster;
-        gemTemp = gem;
-        while (gemTemp < 5)
-        {
-            temp = temp.Next;
-            gemTemp++;
-            if (temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill != string.Empty && int.Parse(temp.cardData.skill[0].ToString()) == gemTemp)
-            {
-                gemStraightCount++;
-            }
-            else
-            {
-                break;
             }
         }
 
-        if (gemStraightCount > 4)
-        {
-            gemLargeStraight = true;
-        }
-        else if (gemStraightCount > 2)
-        {
-            gemLargeStraight = false;
-            gemSmallStraight = true;
-        }
-        else
-        {
-            gemLargeStraight = false;
-            gemSmallStraight = false;
-        }
         #endregion
 
         #region Rank Straight
-        int rankTemp = gem;
-        int rankStraightCount = 0;
         rankSmallStraight = false;
         rankLargeStraight = false;
         temp = caster;
-        while (rankTemp > 1)
+        int rankTemp = rank;
+        int rankStraightCount = 0;
+        temp = caster.Prev;
+        for (int i = rankTemp - 1; i >= 1; i--)
         {
+            if (temp == null)
+            {
+                break;
+            }
+            else if (temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill != string.Empty && int.Parse(temp.cardData.skill[1].ToString()) == i)
+            {
+                rankStraightCount++;
+            }
+            else
+            {
+                break;
+            }
             temp = temp.Prev;
-            rankTemp--;
-            if (temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill != string.Empty && int.Parse(temp.cardData.skill[1].ToString()) == rankTemp)
-            {
-                rankStraightCount++;
-            }
-            else
-            {
-                break;
-            }
         }
-        temp = caster;
-        rankTemp = gem;
-        while (rankTemp < 5)
+        temp = caster.Next;
+        for (int i = rankTemp + 1; i <= 5; i++)
         {
-            temp = temp.Next;
-            rankTemp++;
-            if (temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill != string.Empty && int.Parse(temp.cardData.skill[1].ToString()) == rankTemp)
+            if (temp == null)
+            {
+                break;
+            }
+            else if (temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill != string.Empty && int.Parse(temp.cardData.skill[1].ToString()) == i)
             {
                 rankStraightCount++;
             }
@@ -171,47 +184,89 @@ public class XUnityX : FieldChangeEffect
             {
                 break;
             }
+            temp = temp.Next;
         }
 
-        if (rankStraightCount > 4)
+        if (rankStraightCount >= 4)
         {
             rankLargeStraight = true;
         }
-        else if (rankStraightCount > 2)
+        else if (rankStraightCount >= 2)
         {
             rankLargeStraight = false;
             rankSmallStraight = true;
         }
         else
         {
-            rankLargeStraight = false;
-            rankSmallStraight = false;
         }
+
         #endregion
+
 
         if (caster.cardData != null)
         {
             caster.cardData.frontDamage = CardDB.instance.FindCardFromID(caster.cardData.cardID).frontDamage + gemCount + rankCount;
             caster.cardData.backDamage = CardDB.instance.FindCardFromID(caster.cardData.cardID).backDamage + gemCount + rankCount;
-            if(gemLargeStraight)
+            if (gemCount > 0)
+            {
+                //Debug.Log(gemCount);
+                caster.gemAddGO.SetActive(true);
+                caster.gemAddText.text = "+" + gemCount;
+            }
+            else
+            {
+                caster.gemAddGO.SetActive(false);
+                caster.gemAddText.text = string.Empty;
+
+            }
+            if (rankCount > 0)
+            {
+                //Debug.Log(rankCount);
+                caster.rankAddGO.SetActive(true);
+                caster.rankAddText.text = "+" + rankCount;
+            }
+            else
+            {
+                caster.rankAddGO.SetActive(false);
+                caster.rankAddText.text = string.Empty;
+            }
+            if (gemLargeStraight)
             {
                 caster.cardData.frontDamage *= 3;
                 caster.cardData.backDamage *= 3;
+                caster.gemMultiGO.SetActive(true);
+                caster.gemMultiText.text = "X3";
             }
-            else if(gemSmallStraight)
+            else if (gemSmallStraight)
             {
                 caster.cardData.frontDamage *= 2;
                 caster.cardData.backDamage *= 2;
+                caster.gemMultiGO.SetActive(true);
+                caster.gemMultiText.text = "X2";
+            }
+            else
+            {
+                caster.gemMultiGO.SetActive(false);
+                caster.gemMultiText.text = string.Empty;
             }
             if (rankLargeStraight)
             {
                 caster.cardData.frontDamage *= 3;
                 caster.cardData.backDamage *= 3;
+                caster.rankMultiGO.SetActive(true);
+                caster.rankMultiText.text = "X3";
             }
             else if (rankSmallStraight)
             {
                 caster.cardData.frontDamage *= 2;
                 caster.cardData.backDamage *= 2;
+                caster.rankMultiGO.SetActive(true);
+                caster.rankMultiText.text = "X2";
+            }
+            else
+            {
+                caster.rankMultiGO.SetActive(false);
+                caster.rankMultiText.text = string.Empty;
             }
             caster.RenderCard();
         }

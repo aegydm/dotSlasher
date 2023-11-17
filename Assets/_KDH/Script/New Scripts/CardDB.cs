@@ -54,7 +54,7 @@ public class CardDB : ScriptableObject
                 else
                 {
                     Card outCard = Hero.ChangeToHero(data);
-                    Debug.Log(outCard is Hero);
+                    //Debug.Log(outCard is Hero);
                     return outCard;
                 }
             }

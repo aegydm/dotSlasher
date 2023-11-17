@@ -18,9 +18,53 @@ public class UICard : MonoBehaviour
             _cardData = value;
             spriteRenderer.sprite = cardData.cardSprite;
             cardNameTXT.text = cardData.cardName;
-            cardDescriptionTXT.text = cardData.skill + "\n" + cardData.skillContents;
+            cardDescriptionTXT.text = cardData.skillContents;
             frontATKText.text = cardData.frontDamage.ToString();
             backATKText.text = cardData.backDamage.ToString();
+            if (cardData.skill != string.Empty)
+            {
+                switch (cardData.skill[0].ToString())
+                {
+                    case "1":
+                        gemImage.color = Color.red;
+                        break;
+                    case "2":
+                        gemImage.color = Color.green;
+                        break;
+                    case "3":
+                        gemImage.color = Color.yellow;
+                        break;
+                    case "4":
+                        gemImage.color = Color.cyan;
+                        break;
+                    case "5":
+                        gemImage.color = Color.white;
+                        break;
+                }
+                switch (cardData.skill[1].ToString())
+                {
+                    case "1":
+                        rankText.text = "Ⅰ";
+                        break;
+                    case "2":
+                        rankText.text = "Ⅱ";
+                        break;
+                    case "3":
+                        rankText.text = "Ⅲ";
+                        break;
+                    case "4":
+                        rankText.text = "Ⅳ";
+                        break;
+                    case "5":
+                        rankText.text = "Ⅴ";
+                        break;
+                }
+            }
+            else
+            {
+                gemImage.color = Color.black;
+                rankText.text = string.Empty;
+            }
         }
     }
     [SerializeField] Card _cardData;
@@ -33,6 +77,9 @@ public class UICard : MonoBehaviour
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
     public UIScript script;
+
+    public Image gemImage;
+    public TMP_Text rankText;
 
     private void Start()
     {

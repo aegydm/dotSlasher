@@ -54,6 +54,19 @@ public class FieldCardObject : MonoBehaviour
     [Header("Input Front, Back Attack TMP_TEXT")]
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
+    [Header("Input Gem Image and Rank Text")]
+    public Image gemImage;
+    public TMP_Text rankText;
+
+    public GameObject gemAddGO;
+    public GameObject gemMultiGO;
+    public GameObject rankAddGO;
+    public GameObject rankMultiGO;
+
+    public TMP_Text gemAddText;
+    public TMP_Text gemMultiText;
+    public TMP_Text rankAddText;
+    public TMP_Text rankMultiText;
 
     [Header("Sound")]
     private AudioClip ClickSound;
@@ -182,17 +195,17 @@ public class FieldCardObject : MonoBehaviour
         }
     }
 
-    [Header("?대떦 ?꾨뱶媛 怨듦꺽???????덈뒗吏 ?щ?")]
+    [Header("For show Can Battle")]
     [SerializeField] bool _canBattle = false;
-    [Header("?대떦 ?꾨뱶媛 怨듦꺽沅뚯쓣 媛吏怨??덈뒗吏 ?щ?")]
+    [Header("For show Has Attack Chance")]
     [SerializeField] private bool _attackChance;
-    [Header("怨듦꺽 媛???щ? ?쒖떆???대?吏")]
+    [Header("Input Battle Image")]
     public Image canBattleImage;
-    [Header("醫뚯륫 ?쇱뼱?ㅺ린 ??- First???뚮쭔 ?쒖꽦???덉젙")]
+    [Header("Input Left InterField")]
     public GameObject leftInter;
-    [Header("?곗륫 ?쇱뼱?ㅺ린 媛???곸뿭 ?쒖떆??")]
+    [Header("Input Right InterField")]
     public GameObject rightInter;
-    [Header("?댁쟾 移멸낵 ?ㅼ쓬 移몄쓽 ?뺣낫")]
+    [Header("For Show Prev and Next Tile")]
     public FieldCardObject Prev;
     public FieldCardObject Next;
 
@@ -202,6 +215,51 @@ public class FieldCardObject : MonoBehaviour
         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(cardData.animator);
         frontATKText.text = _lookingLeft ? (cardData.backDamage).ToString() : (cardData.frontDamage).ToString();
         backATKText.text = _lookingLeft ? (cardData.frontDamage).ToString() : (cardData.backDamage).ToString();
+        if (cardData.skill != string.Empty)
+        {
+            switch (cardData.skill[0].ToString())
+            {
+                case "1":
+                    gemImage.color = Color.red;
+                    break;
+                case "2":
+                    gemImage.color = Color.green;
+                    break;
+                case "3":
+                    gemImage.color = Color.yellow;
+                    break;
+                case "4":
+                    gemImage.color = Color.cyan;
+                    break;
+                case "5":
+                    gemImage.color = Color.white;
+                    break;
+            }
+            switch (cardData.skill[1].ToString())
+            {
+                case "1":
+                    rankText.text = "Ⅰ";
+                    break;
+                case "2":
+                    rankText.text = "Ⅱ";
+                    break;
+                case "3":
+                    rankText.text = "Ⅲ";
+                    break;
+                case "4":
+                    rankText.text = "Ⅳ";
+                    break;
+                case "5":
+                    rankText.text = "Ⅴ";
+                    break;
+            }
+        }
+        else
+        {
+            gemImage.color = Color.black;
+            rankText.text = string.Empty;
+        }
+
         if (cardData.frontDamage != CardDB.instance.FindCardFromID(cardData.cardID).frontDamage)
         {
             frontATKText.color = Color.yellow;
@@ -209,6 +267,14 @@ public class FieldCardObject : MonoBehaviour
         else
         {
             frontATKText.color = Color.white;
+            gemAddText.text = string.Empty;
+            gemAddGO.SetActive(false);
+            gemMultiText.text = string.Empty;
+            gemMultiGO.SetActive(false);
+            rankAddText.text = string.Empty;
+            rankAddGO.SetActive(false);
+            rankMultiText.text = string.Empty;
+            rankMultiGO.SetActive(false);
         }
         if (cardData.backDamage != CardDB.instance.FindCardFromID(cardData.cardID).backDamage)
         {
@@ -228,6 +294,16 @@ public class FieldCardObject : MonoBehaviour
         backATKText.text = string.Empty;
         frontATKText.color = Color.white;
         backATKText.color = Color.white;
+        gemAddText.text = string.Empty;
+        gemAddText.gameObject.SetActive(false);
+        gemMultiText.text = string.Empty;
+        gemMultiText.gameObject.SetActive(false);
+        rankAddText.text = string.Empty;
+        rankAddText.gameObject.SetActive(false);
+        rankMultiText.text = string.Empty;
+        rankMultiText.gameObject.SetActive(false);
+        gemImage.color = Color.black;
+        rankText.text = string.Empty;
         playerID = -1;
     }
 
@@ -256,8 +332,6 @@ public class FieldCardObject : MonoBehaviour
     private void OnMouseDown()
     {
         //Please Input Card Click Sound Code
-        //移대뱶 ?대┃ ?ъ슫??肄붾뱶 ?ｌ뼱二쇱꽭??
-        //
         //SoundManager.instance.PlayEffSound(ClickSound);
         if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {

@@ -68,9 +68,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             {
                 deckName = "1";
             }
-            Debug.LogError(dropdown.value);
-            Debug.LogError("Load" + deckName);
-            Debug.Log(deckName);
+            //Debug.Log(deckName);
             SceneManager.LoadScene(1);
             PhotonNetwork.JoinRandomRoom();
         }

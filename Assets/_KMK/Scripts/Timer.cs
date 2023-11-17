@@ -22,10 +22,10 @@ public class Timer : MonoBehaviour
 
     public void PlayerTimer()
     {
-        Debug.Log("Callback Timer");
+        //Debug.Log("Callback Timer");
         if (dirty == false)
         {
-            Debug.Log("Start Timer");
+            //Debug.Log("Start Timer");
             if (GameManager.instance.canAct || GameManager.instance.gamePhase == GamePhase.DrawPhase || GameManager.instance.gamePhase == GamePhase.ExecutionPhase)
             {
                 timerObj.SetActive(true);

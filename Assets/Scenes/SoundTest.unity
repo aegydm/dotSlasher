@@ -137,6 +137,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2073814410}
+    - target: {fileID: 2199028885879720660, guid: 4b9806260693af7448f97839c29f9258,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.21
+      objectReference: {fileID: 0}
     - target: {fileID: 6106346475909383187, guid: 4b9806260693af7448f97839c29f9258,
         type: 3}
       propertyPath: m_RootOrder
@@ -1790,6 +1795,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2073814410}
+    - target: {fileID: 2199028885879720660, guid: 4b9806260693af7448f97839c29f9258,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.21
+      objectReference: {fileID: 0}
     - target: {fileID: 6106346475909383187, guid: 4b9806260693af7448f97839c29f9258,
         type: 3}
       propertyPath: m_RootOrder
@@ -2368,6 +2378,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2073814410}
+    - target: {fileID: 2199028885879720660, guid: 4b9806260693af7448f97839c29f9258,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.21
+      objectReference: {fileID: 0}
     - target: {fileID: 6106346475909383187, guid: 4b9806260693af7448f97839c29f9258,
         type: 3}
       propertyPath: m_RootOrder
@@ -4564,6 +4579,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2073814410}
+    - target: {fileID: 2199028885879720660, guid: 4b9806260693af7448f97839c29f9258,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.21
+      objectReference: {fileID: 0}
     - target: {fileID: 6106346475909383187, guid: 4b9806260693af7448f97839c29f9258,
         type: 3}
       propertyPath: m_RootOrder
@@ -8259,6 +8279,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2073814410}
+    - target: {fileID: 2199028885879720660, guid: 4b9806260693af7448f97839c29f9258,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.21
+      objectReference: {fileID: 0}
     - target: {fileID: 4441928187067601655, guid: 4b9806260693af7448f97839c29f9258,
         type: 3}
       propertyPath: m_PresetInfoIsWorld
