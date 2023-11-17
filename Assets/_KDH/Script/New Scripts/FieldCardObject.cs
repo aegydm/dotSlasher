@@ -42,16 +42,16 @@ public class FieldCardObject : MonoBehaviour
         }
     }
 
-    [Header("?꾨뱶???ㅼ뼱?덈뒗 移대뱶???뺣낫")]
+    [Header("For show Card Data")]
     [SerializeField] private Card _cardData;
-    [Header("?꾨뱶媛 鍮꾩뼱?덈뒗吏 泥댄겕?섎뒗 蹂??")]
+    [Header("For check is empty")]
     public bool isEmpty = true;
-    [Header("?꾨뱶 ?꾩껜 ? ?ㅽ봽?쇱씠??")]
+    [Header("Input FIeld Sprite")]
     [SerializeField] SpriteRenderer fieldSprite;
-    [Header("?ㅼ젣 移대뱶???ㅽ봽?쇱씠??")]
+    [Header("Input Unit Sprite")]
     public SpriteRenderer cardSprite;
     public Animator animator;
-    [Header("移대뱶??怨듦꺽???쒖떆??")]
+    [Header("Input Front, Back Attack TMP_TEXT")]
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
 
@@ -104,9 +104,9 @@ public class FieldCardObject : MonoBehaviour
             }
         }
     }
-    [Header("移대뱶??醫뚯슦")]
+    [Header("For Check looking left")]
     [SerializeField] private bool _lookingLeft = false;
-    [Header("?꾨뱶 ?뚯쑀?먯쓽 ID")]
+    [Header("For Check Player ID")]
     [SerializeField] private int _playerID;
 
     public int playerID
@@ -120,15 +120,16 @@ public class FieldCardObject : MonoBehaviour
             _playerID = value;
             if (playerID != -1)
             {
-                ownerColor.color = new Color(255 - (255 * playerID), 255 * playerID, 0);
+                ownerColor.color = new Color(255 - (255 * playerID), 255 * playerID, 0, 1);
             }
             else
             {
                 ownerColor.color = Color.white;
+                ownerColor.color = new Color(ownerColor.color.r, ownerColor.color.g, ownerColor.color.b, 0);
             }
         }
     }
-    [Header("移대뱶???뚯쑀???쒖떆???대?吏")]
+    [Header("For show Owner Color")]
     public Image ownerColor;
 
     public bool canBattle

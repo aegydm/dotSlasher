@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     public int enemyHandCount = 0;
     public GameObject mySkill1GO;
     public GameObject enemySkill1GO;
+    public GameObject turnEndGO;
+
     public bool canAct
     {
         get
@@ -283,6 +285,7 @@ public class GameManager : MonoBehaviour
                 Invoke("ActionPhaseStart", 3);
                 break;
             case GamePhase.BattlePhase:
+                turnEndGO.SetActive(false);
                 Invoke("BattlePhaseStart", 3);
                 break;
             case GamePhase.ExecutionPhase:
@@ -306,6 +309,7 @@ public class GameManager : MonoBehaviour
 
     private void ActionPhaseStart()
     {
+        turnEndGO.SetActive(true);
         if (startFirst)
         {
             _canAct = true;

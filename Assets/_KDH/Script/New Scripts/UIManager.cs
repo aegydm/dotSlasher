@@ -85,6 +85,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("StartMulligan");
         PopupCard(PlayerActionManager.instance.handCardObjectArray);
+        exitButton.SetActive(false);
     }
 
     public void EndMulligan()
