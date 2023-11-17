@@ -5,24 +5,24 @@ using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour
 {
-    [Header("메뉴 창")]
+    [Header("硫붾돱 李?")]
     public GameObject soundUIBackGround;
     public GameObject optionUIBackGround;
     public GameObject blank;
     public bool windowOn = false;
     bool soundWindowOn = false;
-    [Header("창 닫기")]
+    [Header("李??リ린")]
     public Button soundMenuCloseButton;
     public Button optionMenuCloseButton;
-    [Header("음량 슬라이더")]
+    [Header("?뚮웾 ?щ씪?대뜑")]
     public Slider mVol;
     public Slider bgmVol;
     public Slider effVol;
-    [Header("음소거 버튼")]
+    [Header("?뚯냼嫄?踰꾪듉")]
     public Toggle mToggle;
     public Toggle bgmToggle;
     public Toggle effToggle;
-    [Header("오디오 소스")]
+    [Header("?ㅻ뵒???뚯뒪")]
     public AudioSource bgmPlayer;
     public AudioSource effPlayer;
 

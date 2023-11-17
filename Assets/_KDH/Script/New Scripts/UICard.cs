@@ -53,9 +53,13 @@ public class UICard : MonoBehaviour
             }
             Debug.Log(handCardObject.name + "is " + isSelected);
         }
-        else if(DeckMaker.instance != null)
+        else if (DeckMaker.instance != null)
         {
             DeckMaker.instance.deck.Add(cardData);
+            if (BuildManager.instance != null)
+            {
+                BuildManager.instance.deck = DeckMaker.instance.deck;
+            }
         }
     }
 }

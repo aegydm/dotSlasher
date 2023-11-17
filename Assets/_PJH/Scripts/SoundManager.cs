@@ -9,18 +9,19 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance {  get; private set; }
 
-    [Header("?뚮웾 ?щ씪?대뜑")]
+    [Header("?????????????")]
     public Slider mVol;
     public Slider bgmVol;
     public Slider effVol;
-    [Header("?뚯냼嫄?踰꾪듉")]
+    [Header("???爰뽪ㅀ??뺢퀗???")]
     public Toggle mToggle;
     public Toggle bgmToggle;
     public Toggle effToggle;
 
     public GameObject soundWindow;
 
-    AudioSource audioSource;
+    [SerializeField] AudioSource BGMAudioSource;
+    [SerializeField] AudioSource EffAudioSource;
 
     private void Awake()
     {
@@ -34,7 +35,6 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -69,16 +69,16 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBGMSound(AudioClip clip)
     {
-        audioSource.clip = clip;
-        audioSource.volume = mVol.value * bgmVol.value;
-        audioSource.Play();
+        BGMAudioSource.clip = clip;
+        BGMAudioSource.volume = mVol.value * bgmVol.value;
+        BGMAudioSource.Play();
     }
 
     public void PlayEffSound(AudioClip clip)
     {
-        audioSource.clip = clip;
-        audioSource.volume = mVol.value * effVol.value;
-        audioSource.Play();
+        EffAudioSource.clip = clip;
+        EffAudioSource.volume = mVol.value * effVol.value;
+        EffAudioSource.Play();
     }
 
     public void PauseSound()

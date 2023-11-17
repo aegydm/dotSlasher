@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("UIManager??1媛쒕쭔 議댁옱?댁빞 ?⑸땲??");
+            Debug.LogError("UIManager??1揶쏆뮆彛?鈺곕똻???곷튊 ??몃빍??");
             Destroy(this);
         }
     }
@@ -105,7 +105,7 @@ public class UIManager : MonoBehaviour
     public void PopupCard(List<Card> cardList)
     {
         //Please Input UI On Sound Code
-        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
+        //UI ??????롫뮉 ???봺 ??源??꾨뗀諭??節뚮선雅뚯눘苑??
         //SoundManager.instance.PlayEffSound(PopUpSound);
         if (isPopUI == false)
         {
@@ -124,7 +124,7 @@ public class UIManager : MonoBehaviour
     public void PopupCard(HandCardObject[] handList)
     {
         //Please Input UI On Sound Code
-        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
+        //UI ??????롫뮉 ???봺 ??源??꾨뗀諭??節뚮선雅뚯눘苑??
         //SoundManager.instance.PlayEffSound(PopUpSound);
         Debug.Log("PopupCard");
         if (isPopUI == false)
@@ -149,7 +149,7 @@ public class UIManager : MonoBehaviour
     public void ClosePopup()
     {
         //Please Input UI Off Sound Code
-        //UI ?????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
+        //UI ??????롫뮉 ???봺 ??源??꾨뗀諭??節뚮선雅뚯눘苑??
         //SoundManager.instance.PlayEffSound(CloseSound);
         if (isPopUI)
         {
@@ -165,7 +165,7 @@ public class UIManager : MonoBehaviour
     public void PopupSettingWindow()
     {
         //Please Input UI On Sound Code
-        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
+        //UI ??????롫뮉 ???봺 ??源??꾨뗀諭??節뚮선雅뚯눘苑??
         //SoundManager.instance.PlayEffSound(WindowPopupSound);
         if (isPopUI == false)
         {

@@ -35,21 +35,21 @@ public class HandCardObject : MonoBehaviour
         }
     }
 
-    [Header("移대뱶 ?뺣낫")]
+    [Header("燁삳?諭??類ｋ궖")]
     [SerializeField] Card _cardData;
-    [Header("移대뱶 ?꾩껜 ? ?ㅽ봽?쇱씠??")]
+    [Header("燁삳?諭??袁⑷퍥 ?? ??쎈늄??깆뵠??")]
     public GameObject spriteGO;
     private SpriteRenderer cardRenderer;
-    [Header("?ㅼ젣 移대뱶???ㅽ봽?쇱씠??")]
+    [Header("??쇱젫 燁삳?諭????쎈늄??깆뵠??")]
     public SpriteRenderer cardSprite;
     public Animator animator;
-    [Header("移대뱶??怨듦꺽???쒖떆??")]
+    [Header("燁삳?諭???⑤벀爰????뽯뻻??")]
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
-    [Header("移대뱶???대쫫怨??ㅻ챸??")]
+    [Header("燁삳?諭????已ユ???살구??")]
     public TMP_Text nameText;
     public TMP_Text explainText;
-    [Header("移대뱶媛 鍮꾩뼱?덈뒗吏 泥댄겕?섎뒗 蹂??")]
+    [Header("燁삳?諭뜹첎? ??쑴堉??덈뮉筌왖 筌ｋ똾寃??롫뮉 癰궰??")]
     public bool isEmpty = true;
     [Header("Sound")]
     private AudioClip ClickSound;
@@ -60,7 +60,7 @@ public class HandCardObject : MonoBehaviour
     private Vector3 originScale;
 
     /// <summary>
-    /// ?쒕옒洹?以?痍⑥냼?섎뒗 肄붾뱶
+    /// ??뺤삋域?餓??띯뫁???롫뮉 ?꾨뗀諭?
     /// </summary>
     public void CancelDrag()
     {
@@ -128,7 +128,7 @@ public class HandCardObject : MonoBehaviour
     private void OnMouseDown()
     {
         //Please Input Card Click Sound Code
-        //移대뱶 ?대┃ ???뚮━ ?ъ깮?섎뒗 肄붾뱶 ?ｌ뼱二쇱꽭??
+        //燁삳?諭??????????봺 ??源??롫뮉 ?꾨뗀諭??節뚮선雅뚯눘苑??
         //SoundManager.instance.PlayEffSound(ClickSound);
         if (GameManager.instance.gamePhase == GamePhase.ActionPhase && GameManager.instance.useCard == false && GameManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManager.instance.isOpenDirection == false)
         {

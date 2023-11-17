@@ -3,7 +3,11 @@ guid: b6088c9f73bf6344ca02c956a52e4e70
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - SelectedSavedDeck: {instanceID: 0}
+  - gridLayout: {instanceID: 0}
+  - textObject: {fileID: 3776966680668018513, guid: 93752c85f807afd40b986323ebd70074,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
