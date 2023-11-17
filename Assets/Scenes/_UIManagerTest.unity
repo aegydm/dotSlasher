@@ -1717,12 +1717,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPopUI: 0
+  cardList: []
+  uiCardList: []
+  mulliganButton: {fileID: 0}
+  exitButton: {fileID: 0}
   popUpUi: {fileID: 766878409}
   gridLayout: {fileID: 713620009}
   cardObject: {fileID: 4475879479727289877, guid: 568e038a52c5a5542b002e2228e76a1d,
     type: 3}
+  deck: {fileID: 0}
+  cardSelectPopUI: {fileID: 0}
+  settingPopUI: {fileID: 0}
+  PopUpSound: {fileID: 8300000, guid: c12f4097b5373ad45a9178cbb16b28eb, type: 3}
+  CloseSound: {fileID: 8300000, guid: 0e9296f8503cb374dbc08fe2047e736d, type: 3}
+  WindowPopupSound: {fileID: 8300000, guid: 67ca349483ac70240bad8a1c2b25690a, type: 3}
   _selectCard:
     summonEffects: []
+    fieldChangeEffects: []
     attackStartEffects: []
     findEnemyEffects: []
     calculateDamageEffects: []
