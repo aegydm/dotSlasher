@@ -106,33 +106,18 @@ public class CardDB : ScriptableObject
             card.backDamage = int.Parse(dicList[i]["B_Atk"].ToString());
             card.animator = ("Sprites/" + dicList[i]["faction"].ToString() + "/" + dicList[i]["faction"].ToString() + "_" + dicList[i]["type"].ToString() + "/" + dicList[i]["sprite"].ToString() + "/" + dicList[i]["sprite"].ToString());
             card.cardSprite = Resources.Load<Sprite>("Sprites/" + dicList[i]["faction"].ToString() + "/" + dicList[i]["faction"].ToString() + "_" + dicList[i]["type"].ToString() + "/" + dicList[i]["sprite"].ToString() + "/" + dicList[i]["sprite"].ToString());
-            card.skill = dicList[i]["skill"].ToString();
-            card.skillContents = dicList[i]["skill"].ToString() + "\n" + dicList[i]["skillContents"].ToString();
+            card.skill = dicList[i]["gem"].ToString() + dicList[i]["rank"].ToString();
+            card.skillContents = dicList[i]["text"].ToString();
             card.summonEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/SummonEffect"));
             card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/FieldChangeEffect"));
             card.attackStartEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/AttackStartEffect"));
             card.findEnemyEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/FindEnemyEffect"));
             card.calculateDamageEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/CalculateDamageEffect"));
             card.attackProcessEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Base/AttackProcessEffect"));
-            if(card.skill == "시너지1") 
+            if(card.skill != string.Empty)
             {
                 card.fieldChangeEffects.Clear();
-                card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Effects/FieldUnity1"));
-            }
-            else if (card.skill == "시너지2")
-            {
-                card.fieldChangeEffects.Clear();
-                card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Effects/FieldUnity2"));
-            }
-            else if (card.skill == "시너지3")
-            {
-                card.fieldChangeEffects.Clear();
-                card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Effects/FieldUnity3"));
-            }
-            else if (card.skill == "시너지4")
-            {
-                card.fieldChangeEffects.Clear();
-                card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Effects/FieldUnity4"));
+                card.fieldChangeEffects.Add(Resources.Load<CardEffect>("ScriptableObject/Effects/" + card.skill[0] + "Unity" + card.skill[1]));
             }
             cards.Add(card);
         }

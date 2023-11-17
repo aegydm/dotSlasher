@@ -961,7 +961,7 @@ public class GameManager : MonoBehaviour
     public void Lose()
     {
         playerLose = true;
-        photonView.RPC("CallPlayerWin", RpcTarget.Others, playerLose);
+        photonView.RPC("CallPlayerWinOrLose", RpcTarget.Others, playerLose);
         StopAllCoroutines();
         FieldCardObject temp = FieldManager.instance.battleField.First;
         while (temp != null)

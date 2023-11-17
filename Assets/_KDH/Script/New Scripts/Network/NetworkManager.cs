@@ -55,7 +55,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected)
         {
-            deckName = dropdown.options[dropdown.value].text;
+            if (dropdown.value == 0)
+            {
+
+                deckName = "F1_Demo";
+            }
+            else if (dropdown.value == 1)
+            {
+                deckName = "F4_Demo";
+            }
+            else
+            {
+                deckName = "1";
+            }
+            Debug.LogError(dropdown.value);
+            Debug.LogError("Load" + deckName);
             Debug.Log(deckName);
             SceneManager.LoadScene(1);
             PhotonNetwork.JoinRandomRoom();
