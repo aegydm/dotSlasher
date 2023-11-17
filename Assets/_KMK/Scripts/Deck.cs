@@ -296,7 +296,8 @@ public class Deck : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("손패가 가득 찼습니다.");
+                    Debug.Log("손패가 가득 찼습니다.");
+                    break;
                 }
             }
             else

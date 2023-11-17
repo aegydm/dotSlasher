@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public bool isAlreadyAttack = false;
     public bool dirtySet = false;
     public bool battleDirtySet = false;
+    public bool isStart = false;
     public int enemyHandCount = 0;
     public GameObject mySkill1GO;
     public GameObject enemySkill1GO;
@@ -52,13 +53,13 @@ public class GameManager : MonoBehaviour
                     }
                     if (value)
                     {
-                        Debug.LogError("CallTurnStart");
+                        //Debug.LogError("CallTurnStart");
                         CallTurnStart?.Invoke();
                         useCard = false;
                     }
                     else
                     {
-                        Debug.LogError("CallTurnEnd");
+                        //Debug.LogError("CallTurnEnd");
                         CallTurnEnd?.Invoke();
                     }
                     if (canAct)
@@ -69,7 +70,7 @@ public class GameManager : MonoBehaviour
                     {
                         turnText.color = Color.white;
                     }
-                    Debug.LogError($"CanAct is : {canAct}");
+                    //Debug.LogError($"CanAct is : {canAct}");
                 }
             }
         }
@@ -152,7 +153,7 @@ public class GameManager : MonoBehaviour
                 _playerEnd = value;
                 StartCoroutine(CheckPhaseEnd());
             }
-            Debug.LogError($"PlayerEnd is : {playerEnd}, Call CheckPhaseEnd");
+            //Debug.LogError($"PlayerEnd is : {playerEnd}, Call CheckPhaseEnd");
         }
     }
 
@@ -165,10 +166,10 @@ public class GameManager : MonoBehaviour
         set
         {
             _enemyEnd = value;
-            Debug.LogError($"EnemyEnd is : {enemyEnd}");
+            //Debug.LogError($"EnemyEnd is : {enemyEnd}");
             if (gamePhase == GamePhase.None)
             {
-                Debug.LogError("EnemyEnd! Call CheckPhaseEnd");
+                //Debug.LogError("EnemyEnd! Call CheckPhaseEnd");
                 StartCoroutine(CheckPhaseEnd());
             }
         }
@@ -220,7 +221,7 @@ public class GameManager : MonoBehaviour
     {
         NetworkManager.instance.SetPlayerID();
         startFirst = NetworkManager.instance.first;
-        Debug.LogError(startFirst);
+        //Debug.LogError(startFirst);
         personalColor.color = new Color(255 - (255 * int.Parse(playerID)), 255 * int.Parse(playerID), 0);
         Invoke("FirstTurnSetting", 3f);
         CallTurnStart += TurnStart;
@@ -235,7 +236,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator CheckPhaseEnd()
     {
-        Debug.LogError($"PlayerEnd is : {playerEnd}, EnemyEnd is : {enemyEnd}");
+        //Debug.LogError($"PlayerEnd is : {playerEnd}, EnemyEnd is : {enemyEnd}");
         if (playerEnd && enemyEnd)
         {
             if (dirtySet == false)
@@ -258,11 +259,11 @@ public class GameManager : MonoBehaviour
                 myPass.SetActive(false);
                 _enemyEnd = false;
                 enemyPass.SetActive(false);
-                Debug.LogError(nextPhase);
+                //Debug.LogError(nextPhase);
                 gamePhase = nextPhase;
                 CallPhaseStart?.Invoke();
                 //turnText.text = gamePhase.ToString();
-                Debug.LogError("Currnet Phase is " + gamePhase.ToString());
+                //Debug.LogError("Currnet Phase is " + gamePhase.ToString());
                 phaseTrigger = false;
                 dirtySet = false;
                 currentTurn = 0;
@@ -291,7 +292,7 @@ public class GameManager : MonoBehaviour
                 Invoke("EndPhaseStart", 3);
                 break;
             default:
-                Debug.LogError("Error is Occur in Phase Change");
+                //Debug.LogError("Error is Occur in Phase Change");
                 break;
         }
     }
@@ -321,7 +322,7 @@ public class GameManager : MonoBehaviour
 
     private void BattlePhaseStart()
     {
-        Debug.LogError("BattlePhaseStart");
+        //Debug.LogError("BattlePhaseStart");
         FieldCardObject temp = FieldManager.instance.battleField.First;
         while (temp != null)
         {
@@ -334,7 +335,7 @@ public class GameManager : MonoBehaviour
         if (startFirst)
         {
             _canAct = true;
-            Debug.LogError("canAct is true!");
+            //Debug.LogError("canAct is true!");
             turnText.color = personalColor.color;
             CallTurnStart?.Invoke();
             currentTurn = 0;
@@ -342,7 +343,7 @@ public class GameManager : MonoBehaviour
         else
         {
             _canAct = false;
-            Debug.LogError("canAct is false!");
+            //Debug.LogError("canAct is false!");
             turnText.color = Color.white;
         }
         //CallTurnEnd -= TurnEnd;
@@ -357,7 +358,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckCanBattle()
     {
-        Debug.LogError("CheckCanBattle");
+        //Debug.LogError("CheckCanBattle");
         FieldCardObject temp = FieldManager.instance.battleField.First;
         while (temp != null)
         {
@@ -460,22 +461,22 @@ public class GameManager : MonoBehaviour
         if (battleDirtySet == false)
         {
             battleDirtySet = true;
-            Debug.LogError("CheckMUCA");
+            //Debug.LogError("CheckMUCA");
             bool trigger = false;
             if (gamePhase == GamePhase.BattlePhase || nextPhase == GamePhase.ExecutionPhase)
             {
-                Debug.LogError("CheckMyUnitCanAttack");
+                //Debug.LogError("CheckMyUnitCanAttack");
                 FieldCardObject myTemp = FieldManager.instance.battleField.First;
                 while (myTemp != null)
                 {
                     if ((myTemp.playerID == int.Parse(playerID)) && myTemp.canBattle)
                     {
-                        Debug.LogError($"{myTemp} Can Attack!");
+                        //Debug.LogError($"{myTemp} Can Attack!");
                         if (playerEnd)
                         {
-                            Debug.LogError("CheckMUCA GamePhase RollBack");
+                            //Debug.LogError("CheckMUCA GamePhase RollBack");
                             _gamePhase = GamePhase.BattlePhase;
-                            Debug.Log("CheckMyUnitCanAttack PlayerEnd False");
+                            //Debug.Log("CheckMyUnitCanAttack PlayerEnd False");
                             _playerEnd = false;
                             myPass.SetActive(false);
                         }
@@ -485,7 +486,7 @@ public class GameManager : MonoBehaviour
                     {
                         if (enemyEnd)
                         {
-                            Debug.Log("CheckMyUnitCanAttack EnemyEnd False");
+                            //Debug.Log("CheckMyUnitCanAttack EnemyEnd False");
                             _enemyEnd = false;
                             enemyPass.SetActive(false);
                         }
@@ -516,14 +517,15 @@ public class GameManager : MonoBehaviour
         CallTurnStart -= CheckMyUnitCanAttack;
         CallTurnEnd -= CheckCanBattle;
         CallTurnEnd -= CheckMyUnitCanAttack;
-        Debug.LogError("처리페이즈에 진입 했습니다.");
+        //Debug.LogError("처리페이즈에 진입 했습니다.");
         if (damageSum == 0)
         {
-            Debug.LogError("모든 카드를 버렸습니다.");
+            //Debug.LogError("모든 카드를 버렸습니다.");
             playerEnd = true;
             return;
         }
-        StartCoroutine(DiscardByDamage());
+        FindObjectOfType<Timer>().PlayerTimer();
+        StartCoroutine(nameof(DiscardByDamage));
     }
 
     private void EndPhaseStart()
@@ -576,7 +578,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DiscardByDamage()
     {
-        Debug.LogError($"{damageSum}장 버려야합니다.");
+        //Debug.LogError($"{damageSum}장 버려야합니다.");
         UIManager.Instance.PopupCard(deck.useDeck);
         UIManager.Instance.selectCardChanged += Discard;
         UIManager.Instance.exitButton.SetActive(false);
@@ -587,7 +589,8 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.exitButton.SetActive(true);
         UIManager.Instance.selectCardChanged -= Discard;
         UIManager.Instance.ClosePopup();
-        Debug.LogError("모든 카드를 버렸습니다.");
+        //Debug.LogError("모든 카드를 버렸습니다.");
+        FindObjectOfType<Timer>().StopTimer();
         enemyDamageSum = 0;
         playerEnd = true;
     }
@@ -614,6 +617,7 @@ public class GameManager : MonoBehaviour
         //Please Input BGM Start Code
         //BGM 사운드 시작 코드 넣어주세요
         //SoundManager.instance.PlayBGMSound(BGM);
+        isStart = true;
         deck.Shuffle();
         deck.Draw(5);
         SummonHero();
@@ -621,6 +625,8 @@ public class GameManager : MonoBehaviour
         _gamePhase = GamePhase.DrawPhase;
         FieldManager.instance.CheckInterAll();
         FieldManager.instance.additionalCount = 5;
+        Debug.Log("Timer Call");
+        FindObjectOfType<Timer>().PlayerTimer();
     }
 
     private void SummonHero()
@@ -654,7 +660,7 @@ public class GameManager : MonoBehaviour
     {
         if (animator == null)
         {
-            Debug.LogError("null animator error");
+            //Debug.LogError("null animator error");
             return;
         }
         while (animator != null && animator.runtimeAnimatorController != null && !animator.GetCurrentAnimatorStateInfo(0).IsName(aniName))
@@ -669,7 +675,11 @@ public class GameManager : MonoBehaviour
 
     public void EndButton()
     {
-        if (gamePhase == GamePhase.ActionPhase)
+        if (gamePhase == GamePhase.DrawPhase)
+        {
+            UIManager.Instance.EndMulligan();
+        }
+        else if (gamePhase == GamePhase.ActionPhase)
         {
             if (canAct && playerEnd == false && useCard)
             {
@@ -685,11 +695,11 @@ public class GameManager : MonoBehaviour
                 playerEnd = true;
             }
         }
-        if (gamePhase == GamePhase.BattlePhase)
+        else if (gamePhase == GamePhase.BattlePhase)
         {
             if (isAlreadyAttack == false && canAct)
             {
-                Debug.LogError("시간초과로 자동 공격 처리되었습니다.");
+                //Debug.LogError("시간초과로 자동 공격 처리되었습니다.");
                 FieldCardObject temp = FieldManager.instance.battleField.First;
                 while (temp != null)
                 {
@@ -701,6 +711,22 @@ public class GameManager : MonoBehaviour
                     temp = temp.Next;
                 }
             }
+        }
+        else if (gamePhase == GamePhase.ExecutionPhase)
+        {
+            Debug.LogError("Time Limit Over. Discard Random");
+            while(damageSum > 0)
+            {
+                int randNum = UnityEngine.Random.Range(0, UIManager.Instance.uiCardList.Count);
+                UIManager.Instance.selectCard = UIManager.Instance.uiCardList[randNum].GetComponent<UICard>().cardData;
+            }
+            StopCoroutine(nameof(DiscardByDamage));
+            UIManager.Instance.exitButton.SetActive(true);
+            UIManager.Instance.selectCardChanged -= Discard;
+            UIManager.Instance.ClosePopup();
+            //Debug.LogError("모든 카드를 버렸습니다.");
+            enemyDamageSum = 0;
+            playerEnd = true;
         }
     }
 
@@ -717,6 +743,8 @@ public class GameManager : MonoBehaviour
         if (FieldManager.instance.FieldIsFull() && (gamePhase == GamePhase.ActionPhase))
         {
             _canAct = false;
+            startFirst = false;
+            GetComponent<Timer>().StopTimer();
             playerEnd = true;
         }
     }
@@ -730,7 +758,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerActionManager.instance.CancelAll();
         }
-        Debug.LogError("TurnEnd");
+        //Debug.LogError("TurnEnd");
         currentTurn++;
         photonView.RPC("CallPlayerTurnEnd", RpcTarget.Others);
     }
@@ -739,7 +767,7 @@ public class GameManager : MonoBehaviour
     public void CallPlayerTurnEnd()
     {
         currentTurn++;
-        Debug.LogError("CallPlayerTurnEnd");
+        //Debug.LogError("CallPlayerTurnEnd");
         if (playerEnd)
         {
             if (enemyEnd == false)
@@ -775,7 +803,7 @@ public class GameManager : MonoBehaviour
     public void CallPlayerPhaseEnd()
     {
         enemyPass.SetActive(true);
-        Debug.LogError("CallPlayerPhaseEnd");
+        //Debug.LogError("CallPlayerPhaseEnd");
         enemyEnd = true;
         if (playerEnd == false && (gamePhase == GamePhase.ActionPhase || gamePhase == GamePhase.BattlePhase || nextPhase == GamePhase.ExecutionPhase))
         {
@@ -789,7 +817,7 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     public void CallSummonUnit(int index, bool make, bool makeLeft, int cardID, bool lookingLeft, int playerID)
     {
-        Debug.LogError("CallSummonUnit");
+        //Debug.LogError("CallSummonUnit");
         FieldManager.instance.SetCardToFieldForPun(index, make, makeLeft, cardID, lookingLeft, playerID);
     }
     [PunRPC]
@@ -923,7 +951,7 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.ClosePopup();
         }
-        Debug.LogError("You Win");
+        //Debug.LogError("You Win");
     }
 
     public void Lose()
@@ -932,9 +960,9 @@ public class GameManager : MonoBehaviour
         photonView.RPC("CallPlayerWin", RpcTarget.Others, playerLose);
         StopAllCoroutines();
         FieldCardObject temp = FieldManager.instance.battleField.First;
-        while(temp != null)
+        while (temp != null)
         {
-            if(temp.cardData != null && temp.playerID == int.Parse(playerID) && temp.cardData.cardCategory == CardCategory.hero)
+            if (temp.cardData != null && temp.playerID == int.Parse(playerID) && temp.cardData.cardCategory == CardCategory.hero)
             {
                 temp.animator.Play("Death");
                 break;
@@ -945,7 +973,7 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.ClosePopup();
         }
-        Debug.LogError("You Lose");
+        //Debug.LogError("You Lose");
     }
 
     public void Draw()
@@ -955,7 +983,7 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.ClosePopup();
         }
-        Debug.LogError("Game Draw");
+        //Debug.LogError("Game Draw");
         Time.timeScale = 0;
     }
 
@@ -985,7 +1013,7 @@ public class GameManager : MonoBehaviour
         {
             if (temp.cardData != null && temp.playerID.ToString() != GameManager.instance.playerID && temp.cardData.cardCategory == CardCategory.hero)
             {
-                Debug.LogError("EnemySkill One Use");
+                //Debug.LogError("EnemySkill One Use");
                 ((Hero)temp.cardData).SkillUse(FieldManager.instance.battleField, temp);
                 enemySkill1GO.GetComponent<Image>().color = Color.gray;
                 return;
