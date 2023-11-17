@@ -2,23 +2,37 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FieldManager : MonoBehaviour
 {
     public static FieldManager instance;
     public LinkedBattleField battleField;
-    [Header("Field???봔筌뤴뫀? ?節뚮선雅뚯눘苑??")]
+    [Header("Field Parent Object (not using)")]
     public GameObject parentField;
-    [Header("?λ뜃由??袁⑤굡 5揶쏆뮆? ?節뚮선雅뚯눘苑??")]
+    [Header("Please Input Start Field Objects")]
     public List<FieldCardObject> startFieldList;
-    [Header("?곕떽? ??밴쉐???袁⑤굡???節뚮선雅뚯눘苑??")]
+    [Header("Please Input Additional Field Objects")]
     public List<FieldCardObject> additionalFieldList = new();
-    [Header("獄쎻뫚堉???쇱젟 筌?뗀苡??쇱벥 ?臾먮짗 ?醫듢?㎗?꾧쾿??")]
+    [Header("For Check Open Direction")]
     public bool isOpenDirection = false;
 
     public PhotonView photonView;
-
+    [SerializeField] TMP_Text additionalUI;
+    public int additionalCount
+    {
+        get
+        {
+            return _additionalCount;
+        }
+        set
+        {
+            _additionalCount = value;
+            additionalUI.text = value + " / 5";
+        }
+    }
+    [SerializeField] int _additionalCount = 5;
     public bool make = false;
     public bool makeLeft = false;
     public Action CallSummonUnit;
@@ -35,7 +49,7 @@ public class FieldManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("FieldManager is already exist.");
+            //Debug.LogError("FieldManager is already exist.");
             Destroy(gameObject);
         }
     }
@@ -56,10 +70,10 @@ public class FieldManager : MonoBehaviour
     {
         Debug.Log("CallFieldChange");
         FieldCardObject temp = battleField.First;
-        while(temp != null)
+        while (temp != null)
         {
             Debug.Log("Test1");
-            if(temp.cardData != null && temp.cardData.cardID != 0)
+            if (temp.cardData != null && temp.cardData.cardID != 0)
             {
                 Debug.Log("Test2");
                 temp.cardData.FieldChange(battleField, temp);
@@ -171,8 +185,8 @@ public class FieldManager : MonoBehaviour
             CallSummonUnit?.Invoke();
             isOpenDirection = false;
             CheckInterAll();
-            Debug.LogError("SummonUnit");
-            Debug.LogError($"index is {index}, make is {make}, makeLeft is {makeLeft}, cardID is {cardID}, lookingLeft is {lookingLeft}, playerID is {int.Parse(GameManager.instance.playerID)}");
+            //Debug.LogError("SummonUnit");
+            //Debug.LogError($"index is {index}, make is {make}, makeLeft is {makeLeft}, cardID is {cardID}, lookingLeft is {lookingLeft}, playerID is {int.Parse(GameManager.instance.playerID)}");
             GameManager.instance.photonView.RPC("CallSummonUnit", RpcTarget.Others, index, make, makeLeft, cardID, lookingLeft, int.Parse(GameManager.instance.playerID));
             make = false;
             makeLeft = false;
@@ -192,8 +206,8 @@ public class FieldManager : MonoBehaviour
 
     public void SetCardToFieldForPun(int index, bool make, bool makeLeft, int cardID, bool lookingLeft, int playerID)
     {
-        Debug.LogError("CheckSummonUnit");
-        Debug.LogError($"index is {index}, make is {make}, makeLeft is {makeLeft}, cardID is {cardID}, lookingLeft is {lookingLeft}, playerID is {playerID}");
+        //Debug.LogError("CheckSummonUnit");
+        //Debug.LogError($"index is {index}, make is {make}, makeLeft is {makeLeft}, cardID is {cardID}, lookingLeft is {lookingLeft}, playerID is {playerID}");
         if (make)
         {
             if (makeLeft)

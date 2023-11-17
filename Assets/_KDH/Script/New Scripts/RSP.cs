@@ -186,9 +186,9 @@ public class RSP : MonoBehaviour
     {
         if (trigger)
         {
+            resultText.text = "You Choose Rock";
             myHand = Hand.Rock;
             trigger = false;
-            resultText.text = "You Choose Rock";
         }
     }
 
@@ -196,9 +196,9 @@ public class RSP : MonoBehaviour
     {
         if (trigger)
         {
+            resultText.text = "You Choose Scissor";
             myHand = Hand.Scissor;
             trigger = false;
-            resultText.text = "You Choose Scissor";
         }
     }
 
@@ -206,9 +206,9 @@ public class RSP : MonoBehaviour
     {
         if (trigger)
         {
+            resultText.text = "You Choose Paper";
             myHand = Hand.Paper;
             trigger = false;
-            resultText.text = "You Choose Paper";
         }
     }
 

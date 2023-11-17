@@ -31,6 +31,7 @@ public class CalculateDamageEffect : CardEffect
                     if (targets[i].cardData.cardCategory == CardCategory.hero)
                     {
                         targets[i].cardData.GetDamage(targets[i], attackPower);
+                        GameManager.instance.enemyDamageSum += attackPower;
                         if (targets[i].lookingLeft == caster.lookingLeft)
                         {
                             targets[i].lookingLeft = !targets[i].lookingLeft;

@@ -20,12 +20,13 @@ public class Timer : MonoBehaviour
         //timerCoroutine = TurnTimer();
     }
 
-
     public void PlayerTimer()
     {
+        Debug.Log("Callback Timer");
         if (dirty == false)
         {
-            if (GameManager.instance.canAct)
+            Debug.Log("Start Timer");
+            if (GameManager.instance.canAct || GameManager.instance.gamePhase == GamePhase.DrawPhase || GameManager.instance.gamePhase == GamePhase.ExecutionPhase)
             {
                 timerObj.SetActive(true);
                 baseTimer = 30.0f;

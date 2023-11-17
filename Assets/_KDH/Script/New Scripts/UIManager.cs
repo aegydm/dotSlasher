@@ -9,7 +9,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public bool isPopUI = false;
-    List<GameObject> cardList = new();
+    public List<GameObject> cardList = new();
+    public List<GameObject> uiCardList = new();
     [SerializeField] GameObject mulliganButton;
     public GameObject exitButton;
     [SerializeField] GameObject popUpUi;
@@ -70,7 +71,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("UIManager??1媛쒕쭔 議댁옱?댁빞 ?⑸땲??");
+            //Debug.LogError("UIManager??1媛쒕쭔 議댁옱?댁빞 ?⑸땲??");
             Destroy(this);
         }
     }
@@ -101,7 +102,9 @@ public class UIManager : MonoBehaviour
                 Destroy(cardList[i]);
             }
         }
+        FindObjectOfType<Timer>().StopTimer();
         GameManager.instance.playerEnd = true;
+        uiCardList.Clear();
     }
 
     public void PopupCard(List<Card> cardList)
@@ -118,7 +121,7 @@ public class UIManager : MonoBehaviour
             {
                 go = Instantiate(cardObject, gridLayout.transform);
                 go.GetComponent<UICard>().cardData = card;
-                go.GetComponent<Image>().sprite = go.GetComponent<SpriteRenderer>().sprite = card.cardSprite;
+                uiCardList.Add(go);
             }
         }
     }
@@ -140,8 +143,8 @@ public class UIManager : MonoBehaviour
                 go = Instantiate(cardObject, gridLayout.transform);
                 cardList.Add(go);
                 go.GetComponent<UICard>().cardData = card.cardData;
-                go.GetComponent<Image>().sprite = go.GetComponent<UICard>().spriteRenderer.sprite = card.cardSprite.sprite;
                 go.GetComponent<UICard>().handCardObject = card;
+                uiCardList.Add(go);
             }
             mulliganButton.SetActive(true);
             exitButton.SetActive(false);
@@ -161,6 +164,7 @@ public class UIManager : MonoBehaviour
             }
             isPopUI = false;
             popUpUi.SetActive(false);
+            uiCardList.Clear();
         }
     }
 

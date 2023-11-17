@@ -201,7 +201,7 @@ public class FieldCardObject : MonoBehaviour
         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(cardData.animator);
         frontATKText.text = _lookingLeft ? (cardData.backDamage).ToString() : (cardData.frontDamage).ToString();
         backATKText.text = _lookingLeft ? (cardData.frontDamage).ToString() : (cardData.backDamage).ToString();
-        if(cardData.frontDamage != CardDB.instance.FindCardFromID(cardData.cardID).frontDamage)
+        if (cardData.frontDamage != CardDB.instance.FindCardFromID(cardData.cardID).frontDamage)
         {
             frontATKText.color = Color.yellow;
         }
@@ -209,7 +209,7 @@ public class FieldCardObject : MonoBehaviour
         {
             frontATKText.color = Color.white;
         }
-        if(cardData.backDamage != CardDB.instance.FindCardFromID(cardData.cardID).backDamage)
+        if (cardData.backDamage != CardDB.instance.FindCardFromID(cardData.cardID).backDamage)
         {
             backATKText.color = Color.yellow;
         }
@@ -276,11 +276,11 @@ public class FieldCardObject : MonoBehaviour
 
     private void DelayTurnEnd()
     {
-        Debug.LogError("DelayCanAttackFalse");
+        //Debug.LogError("DelayCanAttackFalse");
         GameManager.instance.canAct = false;
-        Debug.LogError("DelayIsAttackFalse");
+        //Debug.LogError("DelayIsAttackFalse");
         GameManager.instance.isAlreadyAttack = false;
-        Debug.LogError("DelayEnd");
+        //Debug.LogError("DelayEnd");
     }
 
     public void ResetField()
@@ -292,5 +292,21 @@ public class FieldCardObject : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = true;
         canBattle = false;
         attackChance = false;
+    }
+
+    private void OnEnable()
+    {
+        if (GameManager.instance != null && FieldManager.instance!=null && GameManager.instance.isStart)
+        {
+            FieldManager.instance.additionalCount--;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.instance != null && FieldManager.instance != null && GameManager.instance.isStart)
+        {
+            FieldManager.instance.additionalCount++;
+        }
     }
 }

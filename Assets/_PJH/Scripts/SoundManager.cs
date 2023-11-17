@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager.UI;
+//using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -41,8 +41,8 @@ public class SoundManager : MonoBehaviour
     {
         BGMVolChanger();
         EffVolChanger();
-        
     }
+
     public void BGMVolChanger()
     {
         if (!mToggle.isOn)

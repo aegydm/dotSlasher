@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CCGCard;
 using System;
+using UnityEngine.UI;
 
 public class PlayerActionManager : MonoBehaviour
 {
@@ -60,7 +61,7 @@ public class PlayerActionManager : MonoBehaviour
             instance = this;
         else
         {
-            Debug.LogError("PlayerActionManager is already exist.");
+            //Debug.LogError("PlayerActionManager is already exist.");
             Destroy(gameObject);
         }
     }
@@ -125,7 +126,7 @@ public class PlayerActionManager : MonoBehaviour
     {
         if (handCardObject == null)
         {
-            Debug.LogError("RemoveHandCard에는 null을 넣을 수 없습니다.");
+            //Debug.LogError("RemoveHandCard에는 null을 넣을 수 없습니다.");
             return false;
         }
         for (int i = 0; i < handCardObjectArray.Length; i++)
@@ -144,7 +145,7 @@ public class PlayerActionManager : MonoBehaviour
     {
         if (card == null || card == new Card())
         {
-            Debug.LogError("RemoveHandCard에는 null을 넣을 수 없습니다.");
+            //Debug.LogError("RemoveHandCard에는 null을 넣을 수 없습니다.");
             return false;
         }
         for (int i = 0; i < handCardObjectArray.Length; i++)
@@ -213,6 +214,7 @@ public class PlayerActionManager : MonoBehaviour
                 {
                     skill1Use = true;
                     ((Hero)temp.cardData).SkillUse(FieldManager.instance.battleField, temp);
+                    GameManager.instance.mySkill1GO.GetComponent<Image>().color = Color.gray;
                     GameManager.instance.photonView.RPC("EnemyHeroSkill1", Photon.Pun.RpcTarget.Others);
                 }
                 return;

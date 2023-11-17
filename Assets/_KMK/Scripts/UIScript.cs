@@ -11,15 +11,11 @@ public class UIScript : MonoBehaviour
     public GameObject soundUIBackGround;
     public Button button;
 
-    private void Awake()
-    {
+    void Start()
+    { 
         soundUIBackGround = SoundManager.instance.soundWindow;
 
         UIConnect();
-    }
-
-    void Start()
-    { 
     }
 
     void Update()
@@ -31,7 +27,15 @@ public class UIScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (optionWindow.activeSelf)
+            PopSoundWindow();
+        }
+    }
+
+    public void PopSoundWindow()
+    {
+        if (optionWindow.activeSelf)
+        {
+            if (soundUIBackGround != null && soundUIBackGround.activeSelf)
             {
                 if (soundUIBackGround.activeSelf)
                 {
