@@ -35,7 +35,7 @@ public class BuildManager : MonoBehaviour
         get { return _SelectedSavedDeck; }
         set
         {
-            if(value == null)
+            if (value == null)
             {
                 _SelectedSavedDeck = null;
                 deck = null;
@@ -48,7 +48,7 @@ public class BuildManager : MonoBehaviour
             }
             else
             {
-                if(_SelectedSavedDeck != value)
+                if (_SelectedSavedDeck != value)
                 {
                     _SelectedSavedDeck = value;
                     foreach (GameObject text in texts)
@@ -93,12 +93,12 @@ public class BuildManager : MonoBehaviour
 
     private void Start()
     {
-        LoadAll();
+        
     }
 
     public void Update()
     {
-        
+
     }
 
     private void SetPathByDeckName(string deckName)
@@ -110,10 +110,9 @@ public class BuildManager : MonoBehaviour
     public void Save(string deckName)
     {
         SetPathByDeckName(deckName);
-        //List<Card>???????몃뱥????ID???????ル뒌????List<ID>???????곕츥???????????耀붾굝??????癲ル슢?????????μ떜媛?걫???
         //
         List<int> myDeck = new List<int>();
-        for(int i = 0; i < deck.Count; i++)
+        for (int i = 0; i < deck.Count; i++)
         {
             myDeck.Add(deck[i].cardID);
         }
@@ -128,7 +127,7 @@ public class BuildManager : MonoBehaviour
         if (IsDeckFull()) return;
         Debug.Log("Save Start");
         SavedDeck newDeck;
-        if(SelectedSavedDeck == null)
+        if (SelectedSavedDeck == null)
         {
             newDeck = EnableEmptyDeck();
             SelectedSavedDeck = newDeck;
@@ -145,7 +144,6 @@ public class BuildManager : MonoBehaviour
         }
         string deckName = SelectedSavedDeck.deckName;
         SetPathByDeckName(deckName);
-        //List<Card>???????몃뱥????ID???????ル뒌????List<ID>???????곕츥???????????耀붾굝??????癲ル슢?????????μ떜媛?걫???
         //
         List<int> myDeck = new List<int>();
         for (int i = 0; i < deck.Count; i++)
@@ -179,14 +177,21 @@ public class BuildManager : MonoBehaviour
         if (SelectedSavedDeck == null) return;
         string deckName = SelectedSavedDeck.deckName;
         ResetSelection();
-        if (File.Exists($"Assets/{deckName}.data"))
+        if (deckName == "1" || deckName == "2")
         {
-            File.Delete($"Assets/{deckName}.data");
-            Debug.Log("File is Deleted");
+            return;
         }
         else
         {
-            Debug.Log("File doesn't exist");
+            if (File.Exists($"Assets/{deckName}.data"))
+            {
+                File.Delete($"Assets/{deckName}.data");
+                Debug.Log("File is Deleted");
+            }
+            else
+            {
+                Debug.Log("File doesn't exist");
+            }
         }
     }
 
@@ -206,7 +211,7 @@ public class BuildManager : MonoBehaviour
     public void LoadAll()
     {
         int i = 1;
-        foreach(SavedDeck deck in saveDecks)
+        foreach (SavedDeck deck in saveDecks)
         {
             if (File.Exists($"Assets/{i}.data"))
             {
@@ -244,17 +249,12 @@ public class BuildManager : MonoBehaviour
             }
             Save("1");
             trigger = true;
-            //????????????獄쏅챶留덌┼???猿녿퉲??????????袁④뎬???????諛몃마????
-            //trigger = false;
             Debug.Log(e);
         }
 
-        //print(loadDeck.Count);
-
         List<Card> tmpDeck = new();
 
-        //List<int>??List<Card>???????곕츥?????轅붽틓??????됰뾼??????μ떜媛?걫???
-        foreach(var data in loadDeck)
+        foreach (var data in loadDeck)
         {
             tmpDeck.Add(CardDB.instance.FindCardFromID(data));
         }
@@ -268,7 +268,7 @@ public class BuildManager : MonoBehaviour
     }
 
     public bool Load(string deckName, out List<Card> inputDeck)
-    {   
+    {
         SetPathByDeckName(deckName);
         inputDeck = deck = LoadData(path);
         return trigger;
@@ -285,7 +285,7 @@ public class BuildManager : MonoBehaviour
             }
             texts.Clear();
         }
-        foreach(Card card in deck)
+        foreach (Card card in deck)
         {
             GameObject GO;
             GO = Instantiate(textObject, gridLayout.transform);
@@ -297,9 +297,9 @@ public class BuildManager : MonoBehaviour
 
     public SavedDeck EnableEmptyDeck()
     {
-        foreach(SavedDeck deck in saveDecks)
+        foreach (SavedDeck deck in saveDecks)
         {
-            if(deck.gameObject.activeSelf == false)
+            if (deck.gameObject.activeSelf == false)
             {
                 deck.gameObject.SetActive(true);
                 return deck;
@@ -310,7 +310,7 @@ public class BuildManager : MonoBehaviour
 
     public void ResetSelection()
     {
-        for(int i = 0; i< texts.Count; i++)
+        for (int i = 0; i < texts.Count; i++)
         {
             Destroy(texts[i]);
         }
@@ -327,53 +327,13 @@ public class BuildManager : MonoBehaviour
 
     bool DeckExists(string deckName)
     {
-        foreach(SavedDeck deck in saveDecks.Where(deck => deck.gameObject.activeSelf))
+        foreach (SavedDeck deck in saveDecks.Where(deck => deck.gameObject.activeSelf))
         {
-            if(deck.deckName == deckName)
+            if (deck.deckName == deckName)
             {
                 return true;
             }
         }
         return false;
     }
-
-    //void AddCard(RaycastHit hit, Ray ray)
-    //{
-    //    GameObject clickedObject = hit.collider.gameObject;
-
-    //    clickedCard = gameObject.GetComponent<Card>();
-
-    //    int cardID = clickedCard.cardID;
-
-    //    int count = myDeck.Count(item => item == cardID);
-
-    //    if (count <= 2)
-    //    {
-    //        myDeck.Add(cardID);
-    //    }
-    //    else
-    //    {
-    //        print("?????몃뱥???????猷몃??? ?????????????????????????ル뒌???耀붾굝????? ?????????????곸죩");
-    //    }
-    //}
-
-    //void RemoveCard(RaycastHit hit, Ray ray)
-    //{
-    //    GameObject clickedObject = hit.collider.gameObject;
-
-    //    clickedCard = gameObject.GetComponent<Card>();
-
-    //    int cardID = clickedCard.cardID;
-
-    //    int count = myDeck.Count(item => item == cardID);
-
-    //    if (count >= 0)
-    //    {
-    //        myDeck.Remove(cardID);
-    //    }
-    //    else
-    //    {
-    //        print("??????????????몃뱥???????猷몃??? ????⑥ル??????? ?????????????곸죩");
-    //    }
-    //}
 }

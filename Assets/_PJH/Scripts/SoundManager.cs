@@ -9,113 +9,156 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance {  get; private set; }
 
-    [Header("사운드 슬라이드")]
-    public Slider mVol;
-    public Slider bgmVol;
-    public Slider effVol;
-    [Header("음소거 토글")]
-    public Toggle mToggle;
-    public Toggle bgmToggle;
-    public Toggle effToggle;
+
+    float masterVol = 0.5f;
+    float bgmVol = 1;
+    float effVol = 1;
+    bool masterMute;
+    bool bgmMute;
+    bool effMute;
     [Header("AudioSource")]
     public AudioSource bgmAudio;
     public AudioSource effAudio;
+    [Header("-------------")]
+    [Header("Sound Clips")]
+    [Header("-------------")]
 
-    public GameObject soundWindow;
+    [Header("  BGM")]
+    public AudioClip mainBGM;
+    public AudioClip deckBGM;
+    public AudioClip matchBGM;
+    public AudioClip gameBGM;
 
-    [SerializeField] AudioSource BGMAudioSource;
-    [SerializeField] AudioSource EffAudioSource;
+    [Header("  Deck Sounds")]
+    public AudioClip addCard;
+    public AudioClip removeCard;
+    public AudioClip deckComplete;
+    public AudioClip deckError;
+    public AudioClip deckButton;
+
+    [Header("  RSP Sounds")]
+    public AudioClip handSelect;
+    public AudioClip victoryRSP;
+    public AudioClip loseRSP;
+    public AudioClip gameStart;
+
+    [Header("  Game Sounds")]
+    public AudioClip turnStart;
+    public AudioClip phaseStart;
+    public AudioClip victoryGame;
+    public AudioClip cardDraw;
+    public AudioClip battleStart;
+
+    [Header("  UI Sounds")]
+    public AudioClip buttonClick;
+    public AudioClip mouseClick;
 
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Debug.LogError("FieldManager is already exist.");
+            Debug.LogError("SoundManager is already exist.");
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
     }
 
-    void Update()
+    private void Start()
     {
+        PlayBGMSound(mainBGM);
+        EffVolChanger();
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            PlayEffSound(mouseClick);
+        }
+    }
+
+    public void MasterMute(bool mute)
+    {
+        masterMute = mute;
         BGMVolChanger();
         EffVolChanger();
-        
     }
+
+    public void BGMMute(bool mute)
+    {
+        bgmMute = mute;
+        BGMVolChanger();
+    }
+
+    public void EffMute(bool mute)
+    {
+        effMute = mute;
+        EffVolChanger();
+    }
+
+    public void MasterVolume(float volume)
+    {
+        masterVol = volume;
+        BGMVolChanger();
+        EffVolChanger();
+    }
+
+    public void BGMVolume(float volume)
+    {
+        bgmVol = volume;
+        BGMVolChanger();
+    }
+
+    public void EffVolume(float volume)
+    {
+        effVol = volume;
+        EffVolChanger();
+    }
+
+
+
     public void BGMVolChanger()
     {
-        if (!mToggle.isOn)
-        {
-            bgmAudio.mute = false;
-
-            if (!bgmToggle.isOn)
-            {
-                bgmAudio.volume = bgmVol.value * mVol.value;
-            }
-            else
-            {
-                if (bgmAudio.mute == false)
-                {
-                    bgmAudio.mute = true;
-                }
-                else if (bgmAudio.mute == true)
-                {
-                    bgmAudio.mute = false;
-                }
-            }
-        }
-        else
+        if(masterMute || bgmMute)
         {
             bgmAudio.mute = true;
         }
+        else
+        {
+            bgmAudio.mute = false;
+        }
+
+        bgmAudio.volume = masterVol * bgmVol;
     }
 
     public void EffVolChanger()
     {
-        if (!mToggle.isOn)
-        {
-            effAudio.mute = false;
-
-            if (!effToggle.isOn)
-            {
-                effAudio.volume = effVol.value * mVol.value;
-            }
-            else
-            {
-                if (effAudio.mute == false)
-                {
-                    effAudio.mute = true;
-                }
-                else if (effAudio.mute == true)
-                {
-                    effAudio.mute = false;
-                }
-            }
-
-        }
-        else
+        if (masterMute || effMute)
         {
             effAudio.mute = true;
         }
+        else
+        {
+            effAudio.mute = false;
+        }
+
+        effAudio.volume = masterVol * effVol;
     }
 
     public void PlayBGMSound(AudioClip clip)
     {
-        BGMAudioSource.clip = clip;
-        BGMAudioSource.volume = mVol.value * bgmVol.value;
-        BGMAudioSource.Play();
+        bgmAudio.clip = clip;
+        BGMVolChanger();
+        bgmAudio.Play();
     }
 
     public void PlayEffSound(AudioClip clip)
     {
-
-        EffAudioSource.clip = clip;
-        EffAudioSource.volume = mVol.value * effVol.value;
-        EffAudioSource.Play();
+        effAudio.PlayOneShot(clip);
     }
 
     public void PauseSound()
@@ -127,19 +170,6 @@ public class SoundManager : MonoBehaviour
             {
                 audioSource.Pause();
             }
-        }
-    }
-
-    //soundUI 호출용 함수
-    public void SoundWindowSwich()
-    {
-        if (soundWindow.activeSelf)
-        {
-            soundWindow.SetActive(false);
-        }
-        else
-        {
-            soundWindow.SetActive(true);
         }
     }
 }

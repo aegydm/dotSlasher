@@ -44,19 +44,19 @@ public class UICard : MonoBehaviour
                 switch (cardData.skill[1].ToString())
                 {
                     case "1":
-                        rankText.text = "¥°";
+                        rankText.text = "â… ";
                         break;
                     case "2":
-                        rankText.text = "¥±";
+                        rankText.text = "â…¡";
                         break;
                     case "3":
-                        rankText.text = "¥²";
+                        rankText.text = "â…¢";
                         break;
                     case "4":
-                        rankText.text = "¥³";
+                        rankText.text = "â…£";
                         break;
                     case "5":
-                        rankText.text = "¥´";
+                        rankText.text = "â…¤";
                         break;
                 }
             }
@@ -76,18 +76,13 @@ public class UICard : MonoBehaviour
     public TMP_Text cardDescriptionTXT;
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
-    public UIScript script;
 
     public Image gemImage;
     public TMP_Text rankText;
 
-    private void Start()
-    {
-        script = FindAnyObjectByType<UIScript>();
-    }
     private void OnMouseOver()
     {
-        if (isSelected == false && script.optionWindow.activeSelf == false)
+        if (isSelected == false && (UIManager.Instance.settingPopUI.activeSelf == false || UIManager.Instance.gameSettingPopUI.activeSelf == false))
         {
             backGroundRenderer.color = Color.red;
         }
@@ -103,7 +98,7 @@ public class UICard : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (script.optionWindow.activeSelf == false)
+        if ((UIManager.Instance.settingPopUI.activeSelf == false || UIManager.Instance.gameSettingPopUI.activeSelf == false))
         {
 
             if (UIManager.Instance != null)

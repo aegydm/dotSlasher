@@ -4,6 +4,8 @@ using UnityEngine;
 using CCGCard;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,19 +13,30 @@ public class UIManager : MonoBehaviour
     public bool isPopUI = false;
     public List<GameObject> cardList = new();
     public List<GameObject> uiCardList = new();
-    [SerializeField] GameObject mulliganButton;
+    public GameObject mulliganButton;
     public GameObject exitButton;
-    [SerializeField] GameObject popUpUi;
-    [SerializeField] GameObject gridLayout;
-    [SerializeField] GameObject cardObject;
-    [SerializeField] Deck deck;
-    [SerializeField] GameObject cardSelectPopUI;
-    [SerializeField] GameObject settingPopUI;
-
+    public GameObject popUpUi;
+    public GameObject gridLayout;
+    public GameObject cardObject;
+    public Deck deck;
+    public GameObject cardSelectPopUI;
+    public GameObject settingPopUI;
+    public GameObject gameSettingPopUI;
+    public GameObject soundPopUI;
     [Header("Sounds")]
-    [SerializeField] private AudioClip PopUpSound;
-    [SerializeField] private AudioClip CloseSound;
-    [SerializeField] private AudioClip WindowPopupSound;
+    [SerializeField] Toggle masterToggle;
+    [SerializeField] Slider masterSlider;
+    [SerializeField] Toggle BGMToggle;
+    [SerializeField] Slider BGMSlider;
+    [SerializeField] Toggle effToggle;
+    [SerializeField] Slider effSlider;
+    [SerializeField] GameObject endUI;
+    public TMP_Text endText;
+
+    //[SerializeField] private AudioClip PopUpSound;
+    //[SerializeField] private AudioClip CloseSound;
+    //[SerializeField] private AudioClip WindowPopupSound;
+
     public Card selectCard
     {
         get
@@ -39,6 +52,7 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+
     public event Action<Card> selectCardChanged;
 
     [SerializeField] private Card _selectCard = null;
@@ -69,6 +83,7 @@ public class UIManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -170,11 +185,12 @@ public class UIManager : MonoBehaviour
     {
         //Please Input UI On Sound Code
         //SoundManager.instance.PlayEffSound(WindowPopupSound);
-        if (isPopUI == false)
+        if (SceneManager.GetActiveScene().name == "MainGame")
         {
-            isPopUI = true;
-            popUpUi.SetActive(true);
-            cardSelectPopUI.SetActive(false);
+            gameSettingPopUI.SetActive(true);
+        }
+        else
+        {
             settingPopUI.SetActive(true);
         }
     }
@@ -182,9 +198,48 @@ public class UIManager : MonoBehaviour
     public void CloseSettingWindow()
     {
         //SoundManager.instance.PlayEffSound(CloseSound);
-        isPopUI = false;
-        popUpUi.SetActive(false);
-        cardSelectPopUI.SetActive(true);
-        settingPopUI.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "MainGame")
+        {
+            gameSettingPopUI.SetActive(false);
+        }
+        else
+        {
+            settingPopUI.SetActive(false);
+        }
+    }
+
+    public void PopupSoundWindow()
+    {
+        soundPopUI.SetActive(true);
+    }
+
+    public void CloseSoundWindow()
+    {
+        soundPopUI.SetActive(false);
+    }
+
+    public void SoundSetting()
+    {
+        SoundManager.instance.MasterMute(masterToggle.isOn);
+        SoundManager.instance.MasterVolume(masterSlider.value);
+        SoundManager.instance.BGMMute(BGMToggle.isOn);
+        SoundManager.instance.BGMVolume(BGMSlider.value);
+        SoundManager.instance.EffMute(effToggle.isOn);
+        SoundManager.instance.EffVolume(effSlider.value);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void TurnOnEndUI()
+    {
+        endUI.SetActive(true);
+    }
+
+    public void TurnOffEndUI()
+    {
+        endUI.SetActive(false);
     }
 }

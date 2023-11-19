@@ -304,6 +304,7 @@ public class GameManager : MonoBehaviour
 
     private void StartPhaseSetting()
     {
+        SoundManager.instance.PlayEffSound(SoundManager.instance.phaseStart);
         CheckGameEnd();
         switch (gamePhase)
         {
@@ -355,7 +356,7 @@ public class GameManager : MonoBehaviour
 
     private void BattlePhaseStart()
     {
-        //Debug.LogError("BattlePhaseStart");
+        SoundManager.instance.PlayEffSound(SoundManager.instance.battleStart);
         FieldCardObject temp = FieldManager.instance.battleField.First;
         while (temp != null)
         {
@@ -550,10 +551,10 @@ public class GameManager : MonoBehaviour
         CallTurnStart -= CheckMyUnitCanAttack;
         CallTurnEnd -= CheckCanBattle;
         CallTurnEnd -= CheckMyUnitCanAttack;
-        //Debug.LogError("처리페이즈에 진입 했습니다.");
+
         if (damageSum == 0)
         {
-            //Debug.LogError("모든 카드를 버렸습니다.");
+
             playerEnd = true;
             return;
         }
@@ -769,11 +770,9 @@ public class GameManager : MonoBehaviour
 
     public void TurnStart()
     {
-        //Please Input Turn Start Sound Code
-        //턴 시작시 나오는 소리 코드 넣어주세요
-        //SoundManager.instance.PlayEffSound(TurnStartSound);
         if (FieldManager.instance.FieldIsFull() && (gamePhase == GamePhase.ActionPhase))
         {
+            SoundManager.instance.PlayEffSound(SoundManager.instance.turnStart);
             _canAct = false;
             GetComponent<Timer>().StopTimer();
             playerEnd = true;
@@ -783,9 +782,6 @@ public class GameManager : MonoBehaviour
 
     public void TurnEnd()
     {
-        //Please Input Turn End Sound Code
-        //턴 종료시 나오는 소리 코드 넣어주세요
-        //SoundManager.instance.PlayEffSound(TurnEndSound);
         if (useCard == false)
         {
             PlayerActionManager.instance.CancelAll();
@@ -971,6 +967,7 @@ public class GameManager : MonoBehaviour
 
     public void Win()
     {
+        SoundManager.instance.PlayEffSound(SoundManager.instance.victoryGame);
         playerLose = false;
         StopAllCoroutines();
         FieldCardObject temp = FieldManager.instance.battleField.First;
@@ -987,7 +984,9 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.ClosePopup();
         }
-        Debug.LogError("You Win");
+        //Debug.LogError("You Win");
+        UIManager.Instance.endText.text = "You Win!";
+        UIManager.Instance.TurnOnEndUI();
         Time.timeScale = 0;
     }
 
@@ -1010,7 +1009,9 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.ClosePopup();
         }
-        Debug.LogError("You Lose");
+        //Debug.LogError("You Lose");
+        UIManager.Instance.endText.text = "You Lose";
+        UIManager.Instance.TurnOnEndUI();
         Time.timeScale = 0;
     }
 
@@ -1021,7 +1022,9 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.ClosePopup();
         }
-        Debug.LogError("Game Draw");
+        //Debug.LogError("Game Draw");
+        UIManager.Instance.endText.text = "Draw!";
+        UIManager.Instance.TurnOnEndUI();
         Time.timeScale = 0;
     }
 

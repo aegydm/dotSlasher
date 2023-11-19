@@ -137,10 +137,10 @@ public class Deck : MonoBehaviour
         OnGraveCountChanged += RenderGraveCount;
         OnEnemyGraveCountChanged = null;
         OnEnemyGraveCountChanged += RenderEnemyGraveCount;
-        //if (BuildManager.instance.Load(BuildManager.instance.deckName, out originDeck) == false)
+
         if (NetworkManager.instance != null)
         {
-            if (BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
+            if (DeckManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
             {
                 Debug.Log("Fail to Load Deck");
                 //GameManager.instance.Lose();
@@ -166,7 +166,7 @@ public class Deck : MonoBehaviour
         {
             if (deckName == "")
             {
-                if (BuildManager.instance.Load("1", out originDeck) == false)
+                if (DeckManager.instance.Load("1", out originDeck) == false)
                 {
                     Debug.Log("Fail to Load Deck");
                     //GameManager.instance.Lose();
@@ -186,7 +186,7 @@ public class Deck : MonoBehaviour
             }
             else
             {
-                if (BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
+                if (DeckManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
                 {
                     Debug.Log("Fail to Load Deck");
                     //GameManager.instance.Lose();
@@ -210,7 +210,7 @@ public class Deck : MonoBehaviour
         {
             if (deckName == "")
             {
-                if (BuildManager.instance.Load(BuildManager.instance.deckName, out originDeck) == false)
+                if (DeckManager.instance.Load(DeckManager.instance.deckName, out originDeck) == false)
                 {
                     Debug.Log("Fail to Load Deck");
                     //GameManager.instance.Lose();
@@ -231,7 +231,7 @@ public class Deck : MonoBehaviour
             else
             {
 
-                if (BuildManager.instance.Load(deckName, out originDeck) == false)
+                if (DeckManager.instance.Load(deckName, out originDeck) == false)
                 {
                     Debug.Log("Fail to Load Deck");
                     //GameManager.instance.Lose();
@@ -315,12 +315,13 @@ public class Deck : MonoBehaviour
             {
                 if (PlayerActionManager.instance.AddHandCard(useDeck[0]))
                 {
+                    SoundManager.instance.PlayEffSound(SoundManager.instance.cardDraw);
                     useDeck.Remove(useDeck[0]);
                     //GameManager.instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
                 }
                 else
                 {
-                    Debug.Log("?먰뙣媛 媛??李쇱뒿?덈떎.");
+
                     break;
                 }
             }
@@ -331,7 +332,7 @@ public class Deck : MonoBehaviour
                     //GameManager.instance.Lose();
                 }
                 Debug.Log(countOfDeck);
-                Debug.Log("?깆씠 鍮꾩뿀?듬땲??");
+
                 GameManager.instance.Lose();
             }
             RefreshDeckCount();
@@ -368,7 +369,6 @@ public class Deck : MonoBehaviour
                 return true;
             }
         }
-        Debug.LogError($"?깆뿉??{card.cardName} 移대뱶瑜?吏?곗? 紐삵뻽?듬땲?? ?깆뿉 ?대떦 移대뱶媛 議댁옱?섎뒗吏 ?뺤씤?댁＜??떆??");
         RefreshDeckCount();
         return false;
     }

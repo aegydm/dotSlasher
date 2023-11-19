@@ -40,7 +40,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom == false)
         {
+            userCount.gameObject.SetActive(true);
             userCount.text = PhotonNetwork.CountOfPlayers.ToString();
+        }
+        else
+        {
+            userCount.gameObject.SetActive(false);
         }
     }
 
@@ -55,21 +60,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected)
         {
-            if (dropdown.value == 0)
-            {
-
-                deckName = "F1_Demo";
-            }
-            else if (dropdown.value == 1)
-            {
-                deckName = "F4_Demo";
-            }
-            else
-            {
                 deckName = "1";
+            //else if (dropdown.value == 1)
+            {
+            //    deckName = "F4_Demo";
+            }
+            //else
+            {
+            //    deckName = "1";
             }
             //Debug.Log(deckName);
-            SceneManager.LoadScene(1);
             PhotonNetwork.JoinRandomRoom();
         }
     }
@@ -109,6 +109,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void Leave()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
@@ -127,11 +132,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void StartGame(bool first)
     {
         this.first = first;
-        Invoke("GameLoad", 5);
-    }
-
-    public void GameLoad()
-    {
-        SceneManager.LoadScene(2);
+        SceneLoadManager.LoadScene("MainGame");
     }
 }

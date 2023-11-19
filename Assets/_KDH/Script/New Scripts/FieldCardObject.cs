@@ -68,9 +68,6 @@ public class FieldCardObject : MonoBehaviour
     public TMP_Text rankAddText;
     public TMP_Text rankMultiText;
 
-    [Header("Sound")]
-    public AudioClip ClickSound;
-
     public void CheckInter()
     {
         if (FieldManager.instance.FieldIsFull() == false && (FieldManager.instance.GetAdditionalField() != null))
@@ -399,7 +396,6 @@ public class FieldCardObject : MonoBehaviour
     private void OnMouseDown()
     {
         //Please Input Card Click Sound Code
-        SoundManager.instance.PlayEffSound(ClickSound);
         if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
             FieldAttack();

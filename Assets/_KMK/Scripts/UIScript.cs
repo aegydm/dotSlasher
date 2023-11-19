@@ -16,6 +16,7 @@ public class UIScript : MonoBehaviour
     [Header("Button")]
     public Button soundMenuCloseButton;
     public Button optionMenuCloseButton;
+    public Button soundWindowSwitchButton;
     [Header("Slider")]
     public Slider mVol;
     public Slider bgmVol;
@@ -30,7 +31,6 @@ public class UIScript : MonoBehaviour
 
     void Start()
     { 
-        soundUIBackGround = SoundManager.instance.soundWindow;
 
         UIConnect();
     }
@@ -56,7 +56,7 @@ public class UIScript : MonoBehaviour
             {
                 if (soundUIBackGround.activeSelf)
                 {
-                    SoundManager.instance.SoundWindowSwich();
+                    //SoundManager.instance.SoundWindowSwich();
                 }
                 optionWindow.SetActive(false);
             }
@@ -75,6 +75,6 @@ public class UIScript : MonoBehaviour
     public void UIConnect()
     {
 
-        button.onClick.AddListener(() => SoundManager.instance.SoundWindowSwich());
+        //soundWindowSwitchButton.onClick.AddListener(() => SoundManager.instance.SoundWindowSwich());
     }
 }

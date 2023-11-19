@@ -8,15 +8,15 @@ using UnityEngine.UI;
 public class PlayerActionManager : MonoBehaviour
 {
     public static PlayerActionManager instance;
-    [Header("?쒕옒洹?以묒씤吏 泥댄겕??蹂??")]
+
     public bool isDrag;
-    [Header("?쒕옒洹?以묒씤 ?ㅻ툕?앺듃")]
+
     public HandCardObject dragCardGO;
-    [Header("?꾩옱 留덉슦?ㅻ? ?щ젮???꾨뱶???뺣낫")]
+
     public FieldCardObject field;
-    [Header("?먰뙣 ?ㅻ툕?앺듃瑜?5媛??ｌ뼱二쇱꽭??")]
+
     public HandCardObject[] handCardObjectArray = new HandCardObject[5];
-    [Header("醫뚯슦 諛⑺뼢???뺥븯???⑸룄??罹붾쾭??")]
+
     public GameObject selectUI;
 
     private bool skill1Use = false;
@@ -53,7 +53,7 @@ public class PlayerActionManager : MonoBehaviour
         }
     }
 
-    [Header("?꾩옱 ?먰뙣???덈뒗 移대뱶????")]
+
     public int _handCardCount;
     private void Awake()
     {
@@ -126,7 +126,7 @@ public class PlayerActionManager : MonoBehaviour
     {
         if (handCardObject == null)
         {
-            //Debug.LogError("RemoveHandCard?먮뒗 null???ｌ쓣 ???놁뒿?덈떎.");
+
             return false;
         }
         for (int i = 0; i < handCardObjectArray.Length; i++)
@@ -145,7 +145,7 @@ public class PlayerActionManager : MonoBehaviour
     {
         if (card == null || card == new Card())
         {
-            //Debug.LogError("RemoveHandCard?먮뒗 null???ｌ쓣 ???놁뒿?덈떎.");
+
             return false;
         }
         for (int i = 0; i < handCardObjectArray.Length; i++)

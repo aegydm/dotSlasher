@@ -6,12 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/0. StartScene.unity
+    path: Assets/Scenes/Title.unity
+    guid: 6ccd577aef21cb74c93875a85c8e5c20
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
     guid: ff8fe787b056370458e9e841a39da6f7
   - enabled: 1
-    path: Assets/Scenes/1. RoomScene.unity
+    path: Assets/Scenes/MatchMaking.unity
     guid: 118957b56113779469553d254c8f2525
   - enabled: 1
-    path: Assets/Scenes/SoundTest.unity
+    path: Assets/Scenes/MainGame.unity
     guid: 5b97ddf2126db9645ab2632c2a0a2d2a
+  - enabled: 1
+    path: Assets/Scenes/DeckBuild.unity
+    guid: 4fd94e79948e78349af3a501687d5b18
   m_configObjects: {}
