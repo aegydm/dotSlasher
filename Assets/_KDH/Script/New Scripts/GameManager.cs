@@ -731,7 +731,7 @@ public class GameManager : MonoBehaviour
         {
             if (isAlreadyAttack == false && canAct)
             {
-                //Debug.LogError("시간초과로 자동 공격 처리되었습니다.");
+                //Debug.LogError("");
                 FieldCardObject temp = FieldManager.instance.battleField.First;
                 while (temp != null)
                 {

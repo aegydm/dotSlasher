@@ -44,19 +44,19 @@ public class UICard : MonoBehaviour
                 switch (cardData.skill[1].ToString())
                 {
                     case "1":
-                        rankText.text = "â… ";
+                        rankText.text = "¥°";
                         break;
                     case "2":
-                        rankText.text = "â…¡";
+                        rankText.text = "¥±";
                         break;
                     case "3":
-                        rankText.text = "â…¢";
+                        rankText.text = "¥²";
                         break;
                     case "4":
-                        rankText.text = "â…£";
+                        rankText.text = "¥³";
                         break;
                     case "5":
-                        rankText.text = "â…¤";
+                        rankText.text = "¥´";
                         break;
                 }
             }
@@ -134,5 +134,9 @@ public class UICard : MonoBehaviour
                 DeckMaker.instance.deck.Add(cardData);
             }
         }
+            if (BuildManager.instance != null)
+            {
+                BuildManager.instance.deck = DeckMaker.instance.deck;
+            }
     }
 }

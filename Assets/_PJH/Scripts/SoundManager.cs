@@ -23,6 +23,9 @@ public class SoundManager : MonoBehaviour
 
     public GameObject soundWindow;
 
+    [SerializeField] AudioSource BGMAudioSource;
+    [SerializeField] AudioSource EffAudioSource;
+
     private void Awake()
     {
         if (instance == null)
@@ -92,6 +95,7 @@ public class SoundManager : MonoBehaviour
                     effAudio.mute = false;
                 }
             }
+
         }
         else
         {
@@ -101,22 +105,17 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBGMSound(AudioClip clip)
     {
-        GameObject soundObject = new GameObject("BGM");
-        AudioSource audioSource = soundObject.AddComponent<AudioSource>();
-        audioSource.clip = clip;
-        audioSource.volume = mVol.value * bgmVol.value;
-        audioSource.Play();
-        Destroy(soundObject, clip.length);
+        BGMAudioSource.clip = clip;
+        BGMAudioSource.volume = mVol.value * bgmVol.value;
+        BGMAudioSource.Play();
     }
 
     public void PlayEffSound(AudioClip clip)
     {
-        GameObject soundObject = new GameObject("Effect");
-        AudioSource audioSource = soundObject.AddComponent<AudioSource>();
-        audioSource.clip = clip;
-        audioSource.volume = mVol.value * effVol.value;
-        audioSource.Play();
-        Destroy(soundObject, clip.length);
+
+        EffAudioSource.clip = clip;
+        EffAudioSource.volume = mVol.value * effVol.value;
+        EffAudioSource.Play();
     }
 
     public void PauseSound()
