@@ -259,45 +259,96 @@ public class FieldCardObject : MonoBehaviour
             gemImage.color = Color.black;
             rankText.text = string.Empty;
         }
-
-        if (cardData.frontDamage != CardDB.instance.FindCardFromID(cardData.cardID).frontDamage)
+        if (cardData != null)
         {
-            frontATKText.color = Color.yellow;
+            if (cardData.frontDamage != CardDB.instance.FindCardFromID(cardData.cardID).frontDamage)
+            {
+                if (!lookingLeft)
+                {
+
+                    frontATKText.color = Color.yellow;
+                }
+                else
+                {
+                    backATKText.color = Color.yellow;
+                }
+            }
+            else
+            {
+                if (cardData.frontDamage != 0)
+                {
+                    //frontATKText.color = Color.white;
+                    //backATKText.color = Color.white;
+                    gemAddText.text = string.Empty;
+                    gemAddGO.SetActive(false);
+                    gemMultiText.text = string.Empty;
+                    gemMultiGO.SetActive(false);
+                    rankAddText.text = string.Empty;
+                    rankAddGO.SetActive(false);
+                    rankMultiText.text = string.Empty;
+                    rankMultiGO.SetActive(false);
+                }
+                else
+                {
+                    if (!lookingLeft)
+                    {
+                        frontATKText.color = Color.white;
+                    }
+                    else
+                    {
+                        backATKText.color = Color.white;
+                    }
+                }
+            }
+            if (cardData.backDamage != CardDB.instance.FindCardFromID(cardData.cardID).backDamage)
+            {
+                if (!lookingLeft)
+                {
+                    backATKText.color = Color.yellow;
+                }
+                else
+                {
+                    frontATKText.color = Color.yellow;
+                }
+            }
+            else
+            {
+                if (cardData.backDamage != 0)
+                {
+                    //frontATKText.color = Color.white;
+                    //backATKText.color = Color.white;
+                    gemAddText.text = string.Empty;
+                    gemAddGO.SetActive(false);
+                    gemMultiText.text = string.Empty;
+                    gemMultiGO.SetActive(false);
+                    rankAddText.text = string.Empty;
+                    rankAddGO.SetActive(false);
+                    rankMultiText.text = string.Empty;
+                    rankMultiGO.SetActive(false);
+                }
+                else
+                {
+                    if (!lookingLeft)
+                    {
+                        backATKText.color = Color.white;
+                    }
+                    else
+                    {
+                        frontATKText.color = Color.white;
+                    }
+                }
+            }
         }
         else
         {
-            frontATKText.color = Color.white;
-            if (frontATKText.text != "0")
-            {
-
-                gemAddText.text = string.Empty;
-                gemAddGO.SetActive(false);
-                gemMultiText.text = string.Empty;
-                gemMultiGO.SetActive(false);
-                rankAddText.text = string.Empty;
-                rankAddGO.SetActive(false);
-                rankMultiText.text = string.Empty;
-                rankMultiGO.SetActive(false);
-            }
-        }
-        if (cardData.backDamage != CardDB.instance.FindCardFromID(cardData.cardID).backDamage)
-        {
-            backATKText.color = Color.yellow;
-        }
-        else
-        {
-            backATKText.color = Color.white;
-            if (backATKText.text != "0")
-            {
-                gemAddText.text = string.Empty;
-                gemAddGO.SetActive(false);
-                gemMultiText.text = string.Empty;
-                gemMultiGO.SetActive(false);
-                rankAddText.text = string.Empty;
-                rankAddGO.SetActive(false);
-                rankMultiText.text = string.Empty;
-                rankMultiGO.SetActive(false);
-            }
+            gemAddText.text = string.Empty;
+            gemAddGO.SetActive(false);
+            gemMultiText.text = string.Empty;
+            gemMultiGO.SetActive(false);
+            rankAddText.text = string.Empty;
+            rankAddGO.SetActive(false);
+            rankMultiText.text = string.Empty;
+            rankMultiGO.SetActive(false);
         }
     }
 
@@ -310,13 +361,13 @@ public class FieldCardObject : MonoBehaviour
         frontATKText.color = Color.white;
         backATKText.color = Color.white;
         gemAddText.text = string.Empty;
-        gemAddText.gameObject.SetActive(false);
+        gemAddGO.SetActive(false);
         gemMultiText.text = string.Empty;
-        gemMultiText.gameObject.SetActive(false);
+        gemMultiGO.SetActive(false);
         rankAddText.text = string.Empty;
-        rankAddText.gameObject.SetActive(false);
+        rankAddGO.SetActive(false);
         rankMultiText.text = string.Empty;
-        rankMultiText.gameObject.SetActive(false);
+        rankMultiGO.SetActive(false);
         gemImage.color = Color.black;
         rankText.text = string.Empty;
         playerID = -1;

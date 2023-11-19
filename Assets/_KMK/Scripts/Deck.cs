@@ -21,6 +21,15 @@ public class Deck : MonoBehaviour
         {
             _enemyDeckCount = value;
             enemyDeckCountUI.text = _enemyDeckCount.ToString();
+            if(GameManager.instance.enemyDamageSum > 0)
+            {
+                enemyDeckCountUI.text += " - " + GameManager.instance.enemyDamageSum;
+                enemyDeckCountUI.color = Color.red;
+            }
+            else
+            {
+                enemyDeckCountUI.color = Color.white;
+            }
         }
     }
     [SerializeField] int _enemyDeckCount = 30;
@@ -243,9 +252,24 @@ public class Deck : MonoBehaviour
         }
     }
 
+    public void RenderDeck()
+    {
+        RenderDeckCount();
+        enemyDeckCount = enemyDeckCount;
+    }
+
     void RenderDeckCount()
     {
         deckCountUI.text = countOfDeck.ToString();
+        if (GameManager.instance.damageSum > 0)
+        {
+            deckCountUI.text += " - " + GameManager.instance.damageSum;
+            deckCountUI.color = Color.red;
+        }
+        else
+        {
+            deckCountUI.color = Color.white;
+        }
     }
 
     void RenderGraveCount()

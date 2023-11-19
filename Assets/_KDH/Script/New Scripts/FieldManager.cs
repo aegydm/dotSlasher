@@ -101,7 +101,7 @@ public class FieldManager : MonoBehaviour
             startFieldList[i].gameObject.transform.position = (i - ((startFieldList.Count - 1) / 2)) * CARDDISTANCE + new Vector3(0, 2.12f, 0);
             startFieldList[i].ResetField();
         }
-        CallSummonUnit = null;
+        CallFieldCardChange = null;
     }
 
     public FieldCardObject GetAdditionalField()

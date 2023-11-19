@@ -108,8 +108,8 @@ public class XUnityX : FieldChangeEffect
                 if (temp != null && temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill != string.Empty && !gemList.Contains(int.Parse(temp.cardData.skill[0].ToString())))
                 {
                     gemStraightCount++;
-                    gemList.Add(int.Parse(temp.cardData.skill[1].ToString()));
-                    Debug.LogError(caster + "\nGemStraight : " + gemStraightCount+"\n"+temp+"\nAddNumber: " + int.Parse(temp.cardData.skill[1].ToString()));
+                    gemList.Add(int.Parse(temp.cardData.skill[0].ToString()));
+                    //Debug.Log("Caster : " + caster + "\nGem Count: " + gemStraightCount+"\nAdd Field : "+temp+"\nAddNumber: " + int.Parse(temp.cardData.skill[0].ToString()));
                 }
                 else
                 {
@@ -123,15 +123,15 @@ public class XUnityX : FieldChangeEffect
                 if (temp != null && temp.cardData != null && temp.cardData.cardID != 0 && temp.cardData.skill != string.Empty && !gemList.Contains(int.Parse(temp.cardData.skill[0].ToString())))
                 {
                     gemStraightCount++;
-                    gemList.Add(int.Parse(temp.cardData.skill[1].ToString()));
-                    Debug.LogError(caster + "\nGemStraight : " + gemStraightCount + "\n" + temp + "\nAddNumber: " + int.Parse(temp.cardData.skill[1].ToString()));
+                    gemList.Add(int.Parse(temp.cardData.skill[0].ToString()));
+                    //Debug.Log("Caster : " + caster + "\nGem Count: " + gemStraightCount + "\nAdd Field : " + temp + "\nAddNumber: " + int.Parse(temp.cardData.skill[0].ToString()));
                 }
                 else
                 {
                     break;
                 }
             }
-
+            //Debug.Log("Count is : " + gemStraightCount);
             if (gemStraightCount >= 4)
             {
                 gemLargeStraight = true;
@@ -189,7 +189,6 @@ public class XUnityX : FieldChangeEffect
             }
             temp = temp.Next;
         }
-        Debug.LogError(caster + " : " + rankStraightCount);
         if (rankStraightCount >= 4)
         {
             rankLargeStraight = true;
@@ -256,6 +255,7 @@ public class XUnityX : FieldChangeEffect
             {
                 caster.cardData.frontDamage *= 3;
                 caster.cardData.backDamage *= 3;
+                //Debug.Log("On1");
                 caster.rankMultiGO.SetActive(true);
                 caster.rankMultiText.text = "X3";
             }
@@ -263,11 +263,13 @@ public class XUnityX : FieldChangeEffect
             {
                 caster.cardData.frontDamage *= 2;
                 caster.cardData.backDamage *= 2;
+                //Debug.Log("On2");
                 caster.rankMultiGO.SetActive(true);
                 caster.rankMultiText.text = "X2";
             }
             else
             {
+                //Debug.Log(1);
                 caster.rankMultiGO.SetActive(false);
                 caster.rankMultiText.text = string.Empty;
             }

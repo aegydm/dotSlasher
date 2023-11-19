@@ -90,8 +90,34 @@ public class GameManager : MonoBehaviour
     public Deck deck;
     private bool phaseTrigger;
 
-    public int damageSum = 0;
-    public int enemyDamageSum = 0;
+    public int damageSum
+    {
+        get
+        {
+            return _damageSum;
+        }
+        set
+        {
+            _damageSum = value;
+            deck.RenderDeck();
+        }
+    }
+
+    private int _damageSum = 0;
+    public int enemyDamageSum
+    {
+        get
+        {
+            return _enemyDamageSum;
+        }
+        set
+        {
+            //Debug.LogError(value);
+            _enemyDamageSum = value;
+            deck.RenderDeck();
+        }
+    }
+    private int _enemyDamageSum = 0;
     public string playerID;
 
     public GamePhase gamePhase
@@ -138,12 +164,12 @@ public class GameManager : MonoBehaviour
                     if (gamePhase == GamePhase.ActionPhase && enemyEnd == false)
                     {
                         startFirst = true;
-                        Debug.LogError("StartFirst");
+                        //Debug.LogError("StartFirst");
                     }
                     else if (gamePhase == GamePhase.ActionPhase && enemyEnd == true)
                     {
                         startFirst = false;
-                        Debug.LogError("STartLAST");
+                        //Debug.LogError("STartLAST");
                     }
                     if (gamePhase == GamePhase.EndPhase)
                     {
@@ -278,6 +304,7 @@ public class GameManager : MonoBehaviour
 
     private void StartPhaseSetting()
     {
+        CheckGameEnd();
         switch (gamePhase)
         {
             case GamePhase.DrawPhase:
@@ -597,7 +624,6 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ClosePopup();
         //Debug.LogError("모든 카드를 버렸습니다.");
         FindObjectOfType<Timer>().StopTimer();
-        enemyDamageSum = 0;
         playerEnd = true;
     }
 
@@ -731,7 +757,7 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.selectCardChanged -= Discard;
             UIManager.Instance.ClosePopup();
             //Debug.LogError("모든 카드를 버렸습니다.");
-            enemyDamageSum = 0;
+            //enemyDamageSum = 0;
             playerEnd = true;
         }
     }
@@ -842,6 +868,10 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     public void EnemyDeckReduce(int cardCount)
     {
+        if(gamePhase == GamePhase.ExecutionPhase || nextPhase == GamePhase.EndPhase)
+        {
+            enemyDamageSum--;
+        }
         deck.enemyDeckCount = cardCount;
     }
 
@@ -957,7 +987,8 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.ClosePopup();
         }
-        //Debug.LogError("You Win");
+        Debug.LogError("You Win");
+        Time.timeScale = 0;
     }
 
     public void Lose()
@@ -979,7 +1010,8 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.ClosePopup();
         }
-        //Debug.LogError("You Lose");
+        Debug.LogError("You Lose");
+        Time.timeScale = 0;
     }
 
     public void Draw()
@@ -989,7 +1021,7 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.ClosePopup();
         }
-        //Debug.LogError("Game Draw");
+        Debug.LogError("Game Draw");
         Time.timeScale = 0;
     }
 

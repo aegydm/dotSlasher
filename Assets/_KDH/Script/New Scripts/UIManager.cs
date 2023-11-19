@@ -59,6 +59,7 @@ public class UIManager : MonoBehaviour
 
     public void RemoveSelectObject()
     {
+        uiCardList.Remove(selectObject);
         Destroy(selectObject);
         selectCard = null;
     }
@@ -71,7 +72,6 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            //Debug.LogError("UIManager??1媛쒕쭔 議댁옱?댁빞 ?⑸땲??");
             Destroy(this);
         }
     }
