@@ -8,15 +8,15 @@ using UnityEngine.UI;
 public class PlayerActionManager : MonoBehaviour
 {
     public static PlayerActionManager instance;
-    [Header("드래그 중인지 체크용 변수")]
+    [Header("?쒕옒洹?以묒씤吏 泥댄겕??蹂??")]
     public bool isDrag;
-    [Header("드래그 중인 오브젝트")]
+    [Header("?쒕옒洹?以묒씤 ?ㅻ툕?앺듃")]
     public HandCardObject dragCardGO;
-    [Header("현재 마우스를 올려둔 필드의 정보")]
+    [Header("?꾩옱 留덉슦?ㅻ? ?щ젮???꾨뱶???뺣낫")]
     public FieldCardObject field;
-    [Header("손패 오브젝트를 5개 넣어주세요")]
+    [Header("?먰뙣 ?ㅻ툕?앺듃瑜?5媛??ｌ뼱二쇱꽭??")]
     public HandCardObject[] handCardObjectArray = new HandCardObject[5];
-    [Header("좌우 방향을 정하는 용도의 캔버스")]
+    [Header("醫뚯슦 諛⑺뼢???뺥븯???⑸룄??罹붾쾭??")]
     public GameObject selectUI;
 
     private bool skill1Use = false;
@@ -53,7 +53,7 @@ public class PlayerActionManager : MonoBehaviour
         }
     }
 
-    [Header("현재 손패에 있는 카드의 수")]
+    [Header("?꾩옱 ?먰뙣???덈뒗 移대뱶????")]
     public int _handCardCount;
     private void Awake()
     {
@@ -126,7 +126,7 @@ public class PlayerActionManager : MonoBehaviour
     {
         if (handCardObject == null)
         {
-            //Debug.LogError("RemoveHandCard에는 null을 넣을 수 없습니다.");
+            //Debug.LogError("RemoveHandCard?먮뒗 null???ｌ쓣 ???놁뒿?덈떎.");
             return false;
         }
         for (int i = 0; i < handCardObjectArray.Length; i++)
@@ -145,7 +145,7 @@ public class PlayerActionManager : MonoBehaviour
     {
         if (card == null || card == new Card())
         {
-            //Debug.LogError("RemoveHandCard에는 null을 넣을 수 없습니다.");
+            //Debug.LogError("RemoveHandCard?먮뒗 null???ｌ쓣 ???놁뒿?덈떎.");
             return false;
         }
         for (int i = 0; i < handCardObjectArray.Length; i++)

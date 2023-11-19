@@ -947,6 +947,7 @@ MonoBehaviour:
   isEmpty: 1
   gemSprite: {fileID: 1680106967817280609}
   rankText: {fileID: 5864507045367511663}
+  ClickSound: {fileID: 0}
 --- !u!61 &7205743602214788393
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -55,7 +55,7 @@ public class HandCardObject : MonoBehaviour
     public SpriteRenderer gemSprite;
     public TMP_Text rankText;
     [Header("Sound")]
-    private AudioClip ClickSound;
+    public AudioClip ClickSound;
 
     private BoxCollider2D boxCollider;
     private Vector3 originPos;
@@ -63,7 +63,7 @@ public class HandCardObject : MonoBehaviour
     private Vector3 originScale;
 
     /// <summary>
-    /// ?쒕옒洹?以?痍⑥냼?섎뒗 肄붾뱶
+    /// ??뺤삋域?餓??띯뫁???롫뮉 ?꾨뗀諭?
     /// </summary>
     public void CancelDrag()
     {
@@ -137,7 +137,7 @@ public class HandCardObject : MonoBehaviour
     private void OnMouseDown()
     {
         //Please Input Card Click Sound Code
-        //SoundManager.instance.PlayEffSound(ClickSound);
+        SoundManager.instance.PlayEffSound(ClickSound);
         if (GameManager.instance.gamePhase == GamePhase.ActionPhase && GameManager.instance.useCard == false && GameManager.instance.canAct && UIManager.Instance.isPopUI == false && FieldManager.instance.isOpenDirection == false)
         {
             isDrag = true;
@@ -219,19 +219,19 @@ public class HandCardObject : MonoBehaviour
             switch (cardData.skill[1].ToString())
             {
                 case "1":
-                    rankText.text = "Ⅰ";
+                    rankText.text = "1";
                     break;
                 case "2":
-                    rankText.text = "Ⅱ";
+                    rankText.text = "2";
                     break;
                 case "3":
-                    rankText.text = "Ⅲ";
+                    rankText.text = "3";
                     break;
                 case "4":
-                    rankText.text = "Ⅳ";
+                    rankText.text = "4";
                     break;
                 case "5":
-                    rankText.text = "Ⅴ";
+                    rankText.text = "5";
                     break;
             }
         }

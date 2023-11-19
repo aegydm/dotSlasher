@@ -69,7 +69,8 @@ public class FieldCardObject : MonoBehaviour
     public TMP_Text rankMultiText;
 
     [Header("Sound")]
-    private AudioClip ClickSound;
+    public AudioClip ClickSound;
+
     public void CheckInter()
     {
         if (FieldManager.instance.FieldIsFull() == false && (FieldManager.instance.GetAdditionalField() != null))
@@ -199,7 +200,7 @@ public class FieldCardObject : MonoBehaviour
     [SerializeField] bool _canBattle = false;
     [Header("For show Has Attack Chance")]
     [SerializeField] private bool _attackChance;
-    [Header("Input Battle Image")]
+    [Header("Input Battle Image?")]
     public Image canBattleImage;
     [Header("Input Left InterField")]
     public GameObject leftInter;
@@ -238,19 +239,19 @@ public class FieldCardObject : MonoBehaviour
             switch (cardData.skill[1].ToString())
             {
                 case "1":
-                    rankText.text = "Ⅰ";
+                    rankText.text = "1";
                     break;
                 case "2":
-                    rankText.text = "Ⅱ";
+                    rankText.text = "2";
                     break;
                 case "3":
-                    rankText.text = "Ⅲ";
+                    rankText.text = "3";
                     break;
                 case "4":
-                    rankText.text = "Ⅳ";
+                    rankText.text = "4";
                     break;
                 case "5":
-                    rankText.text = "Ⅴ";
+                    rankText.text = "5";
                     break;
             }
         }
@@ -347,7 +348,7 @@ public class FieldCardObject : MonoBehaviour
     private void OnMouseDown()
     {
         //Please Input Card Click Sound Code
-        //SoundManager.instance.PlayEffSound(ClickSound);
+        SoundManager.instance.PlayEffSound(ClickSound);
         if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
             FieldAttack();

@@ -2378,6 +2378,8 @@ MonoBehaviour:
   - {fileID: 472047311}
   isOpenDirection: 0
   photonView: {fileID: 0}
+  additionalUI: {fileID: 0}
+  _additionalCount: 5
   make: 0
   makeLeft: 0
 --- !u!1 &1145161855
@@ -4143,6 +4145,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: FieldCardObject (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7546640666454565840, guid: dc18f992936dbd24b936ae2fc82d5412,
+        type: 3}
+      propertyPath: isEmpty
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7546640666454565840, guid: dc18f992936dbd24b936ae2fc82d5412,
+        type: 3}
+      propertyPath: ClickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c12f4097b5373ad45a9178cbb16b28eb, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5600,6 +5612,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2073814410}
+    - target: {fileID: 3136945906371600229, guid: 4b9806260693af7448f97839c29f9258,
+        type: 3}
+      propertyPath: ClickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c12f4097b5373ad45a9178cbb16b28eb, type: 3}
     - target: {fileID: 4441928187067601655, guid: 4b9806260693af7448f97839c29f9258,
         type: 3}
       propertyPath: m_PresetInfoIsWorld

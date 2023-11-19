@@ -44,19 +44,19 @@ public class UICard : MonoBehaviour
                 switch (cardData.skill[1].ToString())
                 {
                     case "1":
-                        rankText.text = "Ⅰ";
+                        rankText.text = "1";
                         break;
                     case "2":
-                        rankText.text = "Ⅱ";
+                        rankText.text = "2";
                         break;
                     case "3":
-                        rankText.text = "Ⅲ";
+                        rankText.text = "3";
                         break;
                     case "4":
-                        rankText.text = "Ⅳ";
+                        rankText.text = "4";
                         break;
                     case "5":
-                        rankText.text = "Ⅴ";
+                        rankText.text = "5";
                         break;
                 }
             }

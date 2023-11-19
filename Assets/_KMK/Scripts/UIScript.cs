@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour
 {
-    [Header("UI 메뉴창")]
+    [Header("UiWindow")]
     public GameObject optionWindow;
     public GameObject soundUIBackGround;
     public Button button;
