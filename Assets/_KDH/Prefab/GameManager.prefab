@@ -135,23 +135,38 @@ MonoBehaviour:
   isAlreadyAttack: 0
   dirtySet: 0
   battleDirtySet: 0
+  isStart: 0
+  enemyHandCount: 0
+  mySkill1GO: {fileID: 0}
+  enemySkill1GO: {fileID: 0}
+  turnEndGO: {fileID: 0}
   useCard: 0
   startFirst: 0
   isGameEnd: 0
   turnText: {fileID: 0}
+  phaseText: {fileID: 0}
+  myPass: {fileID: 0}
+  enemyPass: {fileID: 0}
   _canAct: 0
   photonView: {fileID: 6030278600457075863}
   deck: {fileID: 3526511190851638278}
   damageSum: 0
+  enemyDamageSum: 0
   playerID: 
   _gamePhase: 0
   nextPhase: 1
   personalColor: {fileID: 0}
   _playerEnd: 0
   _enemyEnd: 0
-  BGM: {fileID: 0}
-  TurnStartSound: {fileID: 0}
-  TurnEndSound: {fileID: 0}
+  BGM: {fileID: 8300000, guid: 6043f79f6a44a5c4e89491192cc6ed56, type: 3}
+  TurnStartSound: {fileID: 8300000, guid: cf923d58d5662154086452efe252328d, type: 3}
+  TurnEndSound: {fileID: 8300000, guid: 42dd30e27eb56ec4caddd51bcac00e5a, type: 3}
+  DrawSound: {fileID: 8300000, guid: 67ca349483ac70240bad8a1c2b25690a, type: 3}
+  FirstTurnSound: {fileID: 8300000, guid: c429be717d4b058458d137e778464ff4, type: 3}
+  BattlePhaseStartSound: {fileID: 8300000, guid: 659632d4cc2f07f42a7f91a7f882f509,
+    type: 3}
+  BPhaseStart: {fileID: 8300000, guid: f741243f30b61cc408ed29eddb232222, type: 3}
+  BPhaseEnd: {fileID: 8300000, guid: 03f115ab63650af4093696fa86f872fa, type: 3}
   playerLose: 0
 --- !u!114 &9118654934647822572
 MonoBehaviour:
@@ -166,6 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPopUI: 0
+  cardList: []
+  uiCardList: []
   mulliganButton: {fileID: 0}
   exitButton: {fileID: 0}
   popUpUi: {fileID: 0}
@@ -175,9 +192,9 @@ MonoBehaviour:
   deck: {fileID: 3526511190851638278}
   cardSelectPopUI: {fileID: 0}
   settingPopUI: {fileID: 0}
-  PopUpSound: {fileID: 0}
-  CloseSound: {fileID: 0}
-  WindowPopupSound: {fileID: 0}
+  PopUpSound: {fileID: 8300000, guid: c12f4097b5373ad45a9178cbb16b28eb, type: 3}
+  CloseSound: {fileID: 8300000, guid: 0e9296f8503cb374dbc08fe2047e736d, type: 3}
+  WindowPopupSound: {fileID: 8300000, guid: 1dcb215ef226a504cbf4af95a2f20139, type: 3}
   _selectCard:
     summonEffects: []
     fieldChangeEffects: []

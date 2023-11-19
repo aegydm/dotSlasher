@@ -283,7 +283,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 덱의 카드를 섞는 카드
+    /// ?깆쓽 移대뱶瑜??욌뒗 移대뱶
     /// </summary>
     public void Shuffle()
     {
@@ -301,9 +301,9 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// int의 값 만큼 덱에서 카드를 뽑는 카드
-    /// 현재 손패가 가득 찰 경우 에러코드를 보내도록 설계되어있음
-    /// 덱이 0장이고 손패에 빈 자리가 있을 경우
+    /// int??媛?留뚰겮 ?깆뿉??移대뱶瑜?戮묐뒗 移대뱶
+    /// ?꾩옱 ?먰뙣媛 媛??李?寃쎌슦 ?먮윭肄붾뱶瑜?蹂대궡?꾨줉 ?ㅺ퀎?섏뼱?덉쓬
+    /// ?깆씠 0?μ씠怨??먰뙣??鍮??먮━媛 ?덉쓣 寃쎌슦
     /// </summary>
     /// <param name="drawCard"></param>
     public void Draw(int drawCard)
@@ -320,7 +320,7 @@ public class Deck : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("손패가 가득 찼습니다.");
+                    Debug.Log("?먰뙣媛 媛??李쇱뒿?덈떎.");
                     break;
                 }
             }
@@ -331,7 +331,7 @@ public class Deck : MonoBehaviour
                     //GameManager.instance.Lose();
                 }
                 Debug.Log(countOfDeck);
-                Debug.Log("덱이 비었습니다.");
+                Debug.Log("?깆씠 鍮꾩뿀?듬땲??");
                 GameManager.instance.Lose();
             }
             RefreshDeckCount();
@@ -339,7 +339,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 덱에 특정 카드를 넣는 기능
+    /// ?깆뿉 ?뱀젙 移대뱶瑜??ｋ뒗 湲곕뒫
     /// </summary>
     /// <param name="card"></param>
     public void Refill(Card card)
@@ -351,7 +351,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 덱에서 특정 카드를 지우는 기능
+    /// ?깆뿉???뱀젙 移대뱶瑜?吏?곕뒗 湲곕뒫
     /// </summary>
     /// <param name="card"></param>
     /// <returns></returns>
@@ -368,7 +368,7 @@ public class Deck : MonoBehaviour
                 return true;
             }
         }
-        Debug.LogError($"덱에서 {card.cardName} 카드를 지우지 못했습니다. 덱에 해당 카드가 존재하는지 확인해주십시오.");
+        Debug.LogError($"?깆뿉??{card.cardName} 移대뱶瑜?吏?곗? 紐삵뻽?듬땲?? ?깆뿉 ?대떦 移대뱶媛 議댁옱?섎뒗吏 ?뺤씤?댁＜??떆??");
         RefreshDeckCount();
         return false;
     }
