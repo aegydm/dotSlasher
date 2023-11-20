@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using TMPro;
+//using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
 {
@@ -246,5 +247,13 @@ public class UIManager : MonoBehaviour
     public void TurnOffEndUI()
     {
         endUI.SetActive(false);
+    }
+
+    public void Surrender()
+    {
+        if(GameManager.instance != null)
+        {
+            GameManager.instance.Lose();
+        }
     }
 }

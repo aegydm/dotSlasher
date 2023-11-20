@@ -1422,6 +1422,21 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2595547270320801906, guid: 9645d7e8fcfc14f488cdb0636e6d797f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 870617758}
+    - target: {fileID: 2595547270320801906, guid: 9645d7e8fcfc14f488cdb0636e6d797f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Surrender
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595547270320801906, guid: 9645d7e8fcfc14f488cdb0636e6d797f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4755581585480743285, guid: 9645d7e8fcfc14f488cdb0636e6d797f,
         type: 3}
       propertyPath: m_Pivot.x
