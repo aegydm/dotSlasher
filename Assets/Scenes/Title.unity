@@ -1987,6 +1987,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2171326849356345792, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1707
+      objectReference: {fileID: 0}
+    - target: {fileID: 2171326849356345792, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 24.5
       objectReference: {fileID: 0}
@@ -2487,7 +2492,7 @@ MonoBehaviour:
   userCount: {fileID: 1713878278}
   first: 0
   dropdown: {fileID: 0}
-  deckName: 
+  deckName: 1
 --- !u!1 &1948663649
 GameObject:
   m_ObjectHideFlags: 0

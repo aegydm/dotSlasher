@@ -130,7 +130,7 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111004
-    cardName: "\uADF8\uB79C\uB4DC\uB9C8\uC2A4\uD130"
+    cardName: "\uADF8\uB79C\uB4DC \uB9C8\uC2A4\uD130"
     cardSprite: {fileID: 21300000, guid: cb2f83cdc510c3a4a8698b517cbaaf7e, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_004/f1_minion_004
     skill: 44
@@ -156,7 +156,7 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111005
-    cardName: "\uCC54\uD53C\uC5B8 "
+    cardName: "\uCC54\uD53C\uC5B8"
     cardSprite: {fileID: 21300000, guid: 2d4b543f4dc0910449c26b3e2ced13c2, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_005/f1_minion_005
     skill: 55
@@ -258,7 +258,7 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111009
-    cardName: "\uBABD\uD06C "
+    cardName: "\uBABD\uD06C"
     cardSprite: {fileID: 21300000, guid: 52335f978dbe6db42ade3f072e9f6498, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_009/f1_minion_009
     skill: 44
@@ -311,8 +311,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111011
     cardName: "\uBC31\uAE30\uC0AC"
-    cardSprite: {fileID: 21300000, guid: 52335f978dbe6db42ade3f072e9f6498, type: 3}
-    animator: Sprites/f1/f1_minion/f1_minion_009/f1_minion_009
+    cardSprite: {fileID: 21300000, guid: 8a3fb19745ac1b14fa94b7cceefbdf8d, type: 3}
+    animator: Sprites/f1/f1_minion/f1_minion_011/f1_minion_011
     skill: 11
     skillContents: "\uBA85\uC608\uB97C \uC704\uD574 \uC2F8\uC6B0\uB294 \uAC80\uC0AC"
     cost: 0
@@ -335,9 +335,9 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111012
-    cardName: "\uB77C\uC774\uD2B8\uB77C\uC774\uC5B8"
-    cardSprite: {fileID: 21300000, guid: 1a723c585840177498e746b1e57c83b7, type: 3}
-    animator: Sprites/f1/f1_minion/f1_minion_010/f1_minion_010
+    cardName: "\uB77C\uC774\uD2B8 \uB77C\uC774\uC5B8"
+    cardSprite: {fileID: 21300000, guid: 25d00e40bcad0ca4b93812bb02d25841, type: 3}
+    animator: Sprites/f1/f1_minion/f1_minion_012/f1_minion_012
     skill: 22
     skillContents: "\uBE5B\uC758 \uD798\uC744 \uAC00\uC9C4 \uC131\uC218"
     cost: 0
@@ -385,7 +385,7 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141001
-    cardName: "\uC790\uC774\uC5B8\uD2B8 \uCE90\uD130\uD544\uB7EC"
+    cardName: "\uC790\uC774\uC5B8\uD2B8 \uC714"
     cardSprite: {fileID: 21300000, guid: 4a72e632a050f2242be764eebf39aa29, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_001/f4_minion_001
     skill: 11
@@ -540,7 +540,7 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141007
-    cardName: "\uB2E4\uD06C \uC18C\uC11C\uB7EC"
+    cardName: "\uB2E4\uD06C\uC18C\uC11C\uB7EC"
     cardSprite: {fileID: 21300000, guid: f672f49574d4188418435b421163b9fd, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_007/f4_minion_007
     skill: 22
@@ -565,7 +565,7 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141008
-    cardName: "\uCC98\uD615\uC778 "
+    cardName: "\uCC98\uD615\uC778"
     cardSprite: {fileID: 21300000, guid: 813c430cbe3233f48b7086269897f357, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_008/f4_minion_008
     skill: 33
@@ -642,7 +642,7 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141011
-    cardName: "\uB370\uBAAC \uC2A4\uCF5C\uD53C\uC624"
+    cardName: "\uB370\uBAAC\uC2A4\uCF5C\uD53C\uC624"
     cardSprite: {fileID: 21300000, guid: 0162e05d4bba2964bbc994a6203bfbe9, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_011/f4_minion_011
     skill: 11
@@ -823,7 +823,7 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 171007
-    cardName: "\uBD88\uACFC \uC5BC\uC74C\uC758 \uC2EC\uD310\uC790"
+    cardName: "\uC30D\uC775\uC758 \uC2EC\uD310\uC790"
     cardSprite: {fileID: 21300000, guid: 72efaf4666cdc784288cc0bebb43a8c0, type: 3}
     animator: Sprites/f7/f7_minion/f7_minion_007/f7_minion_007
     skill: 24
