@@ -12,7 +12,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public static NetworkManager instance;
     public TMP_Text userCount;
     public bool first;
-    [SerializeField] TMP_Dropdown dropdown;
     public string deckName = "1";
 
     private void Awake()
