@@ -8,6 +8,7 @@ using System.IO;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
 
 [System.Serializable]
 public class BuildManager : MonoBehaviour
@@ -44,6 +45,7 @@ public class BuildManager : MonoBehaviour
             if (_SelectedSavedDeck == null)
             {
                 _SelectedSavedDeck = value;
+                selectedObject = value.gameObject;
                 deck = _SelectedSavedDeck.deck;
             }
             else
@@ -57,11 +59,13 @@ public class BuildManager : MonoBehaviour
                     }
                     texts.Clear();
                     deck = _SelectedSavedDeck.deck;
+                    selectedObject = value.gameObject;
                 }
             }
         }
     }
     private SavedDeck _SelectedSavedDeck;
+    private GameObject selectedObject;
 
     public GameObject gridLayout;
 
@@ -93,7 +97,7 @@ public class BuildManager : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     public void Update()
@@ -154,6 +158,8 @@ public class BuildManager : MonoBehaviour
         OnSave(myDeck);
         DeckMaker.instance.ErasePanel();
         DeckMaker.instance.isDeckMaking = false;
+        DeckMaker.instance.selectingUI.SetActive(true);
+        DeckMaker.instance.editingUI.SetActive(false);
         //LoadData(path);
     }
 
@@ -183,28 +189,53 @@ public class BuildManager : MonoBehaviour
         }
         else
         {
+#if UNITY_EDITOR
             if (File.Exists($"Assets/{deckName}.data"))
             {
                 File.Delete($"Assets/{deckName}.data");
                 Debug.Log("File is Deleted");
             }
+#endif
+#if UNITY_STANDALONE_WIN
+            if (File.Exists($"{Application.dataPath}/{deckName}.data"))
+            {
+                File.Delete($"{Application.dataPath}/{deckName}.data");
+                Debug.Log("File is Deleted");
+            }
+#endif
             else
             {
                 Debug.Log("File doesn't exist");
             }
         }
+        selectedObject.SetActive(false);
+        LoadAll();
     }
 
     public void Delete(string deckName)
     {
-        if (File.Exists(deckName))
+        if (deckName != "1" && deckName != "2")
         {
-            File.Delete(deckName);
-            Debug.Log("File is Deleted");
-        }
-        else
-        {
-            Debug.Log("File doesn't exist");
+#if UNITY_EDITOR
+            if (File.Exists(deckName))
+            {
+
+                File.Delete(deckName);
+                Debug.Log("File is Deleted");
+            }
+#endif
+#if UNITY_STANDALONE_WIN
+            if (File.Exists($"{Application.dataPath}/{deckName}.data"))
+            {
+
+                File.Delete($"{Application.dataPath}/{deckName}.data");
+                Debug.Log("File is Deleted");
+            }
+#endif
+            else
+            {
+                Debug.Log("File doesn't exist");
+            }
         }
     }
 
@@ -213,15 +244,25 @@ public class BuildManager : MonoBehaviour
         int i = 1;
         foreach (SavedDeck deck in saveDecks)
         {
+#if UNITY_EDITOR
             if (File.Exists($"Assets/{i}.data"))
-            {
-                if (!DeckExists(i.ToString()))
+#endif
+#if UNITY_STANDALONE_WIN
+                if (File.Exists($"{Application.dataPath}/{i}.data"))
+#endif
                 {
-                    deck.gameObject.SetActive(true);
+                    if (!DeckExists(i.ToString()))
+                    {
+                        deck.gameObject.SetActive(true);
+                    }
+#if UNITY_EDITOR
+                    deck.deck = LoadData($"Assets/{i}.data");
+#endif
+#if UNITY_STANDALONE_WIN
+                    deck.deck = LoadData($"{Application.dataPath}/{i}.data");
+#endif
+                    deck.deckName = i.ToString();
                 }
-                deck.deck = LoadData($"Assets/{i}.data");
-                deck.deckName = i.ToString();
-            }
             i++;
         }
     }
@@ -325,7 +366,7 @@ public class BuildManager : MonoBehaviour
         return count == FULL_DECK_COUNT;
     }
 
-    bool DeckExists(string deckName)
+    public bool DeckExists(string deckName)
     {
         foreach (SavedDeck deck in saveDecks.Where(deck => deck.gameObject.activeSelf))
         {

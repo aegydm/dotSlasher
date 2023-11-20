@@ -10,13 +10,13 @@ public class SceneLoad : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void LoadDeckBuildingScene()
@@ -26,8 +26,21 @@ public class SceneLoad : MonoBehaviour
 
     public void LoadLobbyScene()
     {
-        StartCoroutine(LoadSceneAsync());
+        if (BuildManager.instance.SelectedSavedDeck != null)
+        {
+            if (BuildManager.instance.SelectedSavedDeck.deck.Count != 31)
+            {
+                Debug.LogError("카드가 부족합니다.");
+            }
+            else
+            {
+
+                NetworkManager.instance.deckName = BuildManager.instance.SelectedSavedDeck.name;
+                SceneLoadManager.LoadScene("Main");
+            }
+        }
     }
+
     IEnumerator LoadSceneAsync()
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LobbyScene", LoadSceneMode.Additive);

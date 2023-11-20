@@ -126,12 +126,16 @@ public class UICard : MonoBehaviour
             }
             else if (DeckMaker.instance != null)
             {
-                DeckMaker.instance.deck.Add(cardData);
+                if (DeckMaker.instance.deck.Count < 31)
+                {
+
+                    DeckMaker.instance.deck.Add(cardData);
+                }
             }
         }
-            if (BuildManager.instance != null)
-            {
-                BuildManager.instance.deck = DeckMaker.instance.deck;
-            }
+        if (BuildManager.instance != null)
+        {
+            BuildManager.instance.deck = DeckMaker.instance.deck;
+        }
     }
 }

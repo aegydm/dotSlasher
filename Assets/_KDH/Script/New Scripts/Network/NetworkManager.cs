@@ -13,7 +13,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public TMP_Text userCount;
     public bool first;
     [SerializeField] TMP_Dropdown dropdown;
-    public string deckName;
+    public string deckName = "1";
 
     private void Awake()
     {

@@ -2,6 +2,7 @@ using CCGCard;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,8 +12,10 @@ public class DeckMaker : MonoBehaviour
     [Header("-----")]
     public List<Card> deck;
 
+    public GameObject heroSelect;
     public GameObject gridLayout;
     public GameObject cardObject;
+    public GameObject popUI;
     public Card selectCard
     {
         get
@@ -51,8 +54,8 @@ public class DeckMaker : MonoBehaviour
 
     private GameObject _selectObject = null;
 
-    [SerializeField] private GameObject selectingUI;
-    [SerializeField] private GameObject editingUI;
+    [SerializeField] public GameObject selectingUI;
+    [SerializeField] public GameObject editingUI;
 
     private void Awake()
     {
@@ -71,16 +74,36 @@ public class DeckMaker : MonoBehaviour
             if (panel.activeSelf == false)
                 panel.SetActive(true);
         }
-        if(deck == new List<Card>() || deck == null)
+        if (deck == new List<Card>() || deck == null)
         {
             deck = new();
         }
         GameObject go;
         foreach (Card card in CardDB.instance.cards)
         {
-            go = Instantiate(cardObject, gridLayout.transform);
-            go.GetComponent<UICard>().cardData = card;
-            go.GetComponent<UICard>().spriteRenderer.sprite = card.cardSprite;
+            if (card.cardCategory != CardCategory.hero)
+            {
+                if (deck != null && deck[0].cardColor == CardType.f1)
+                {
+                    if (card.cardColor != CardType.f4)
+                    {
+
+                        go = Instantiate(cardObject, gridLayout.transform);
+                        go.GetComponent<UICard>().cardData = card;
+                        go.GetComponent<UICard>().spriteRenderer.sprite = card.cardSprite;
+                    }
+                }
+                else if (deck != null && deck[0].cardColor == CardType.f4)
+                {
+                    if (card.cardColor != CardType.f1)
+                    {
+
+                        go = Instantiate(cardObject, gridLayout.transform);
+                        go.GetComponent<UICard>().cardData = card;
+                        go.GetComponent<UICard>().spriteRenderer.sprite = card.cardSprite;
+                    }
+                }
+            }
         }
     }
 
@@ -103,12 +126,71 @@ public class DeckMaker : MonoBehaviour
 
     public void NewDeckMaking()
     {
+        heroSelect.SetActive(true);
         isDeckMaking = true;
         BuildManager.instance.ResetSelection();
         deck = new();
-        LoadCardFromDB();
+        //LoadCardFromDB();
         selectingUI.SetActive(false);
         editingUI.SetActive(true);
+    }
+
+    public void LoadCardFromDBF1()
+    {
+        if (panel != null)
+        {
+            if (panel.activeSelf == false)
+                panel.SetActive(true);
+        }
+        if (deck == new List<Card>() || deck == null)
+        {
+            deck = new();
+        }
+        GameObject go;
+        foreach (Card card in CardDB.instance.cards)
+        {
+            if (card.cardCategory != CardCategory.hero && card.cardColor != CardType.f4)
+            {
+                go = Instantiate(cardObject, gridLayout.transform);
+                go.GetComponent<UICard>().cardData = card;
+                go.GetComponent<UICard>().spriteRenderer.sprite = card.cardSprite;
+            }
+        }
+        deck.Add(CardDB.instance.FindCardFromID(111000));
+        if (BuildManager.instance != null)
+        {
+            BuildManager.instance.deck = deck;
+        }
+        heroSelect.SetActive(false);
+    }
+
+    public void LoadCardFromDBF4()
+    {
+        if (panel != null)
+        {
+            if (panel.activeSelf == false)
+                panel.SetActive(true);
+        }
+        if (deck == new List<Card>() || deck == null)
+        {
+            deck = new();
+        }
+        GameObject go;
+        foreach (Card card in CardDB.instance.cards)
+        {
+            if (card.cardCategory != CardCategory.hero && card.cardColor != CardType.f1)
+            {
+                go = Instantiate(cardObject, gridLayout.transform);
+                go.GetComponent<UICard>().cardData = card;
+                go.GetComponent<UICard>().spriteRenderer.sprite = card.cardSprite;
+            }
+        }
+        deck.Add(CardDB.instance.FindCardFromID(141000));
+        if (BuildManager.instance != null)
+        {
+            BuildManager.instance.deck = deck;
+        }
+        heroSelect.SetActive(false);
     }
 
     public void SavedDeckMaking()
@@ -125,6 +207,18 @@ public class DeckMaker : MonoBehaviour
     {
         isDeckMaking = false;
         ErasePanel();
+#if UNITY_EDITOR
+        if (BuildManager.instance.SelectedSavedDeck != null && System.IO.File.Exists($"Assets/" + BuildManager.instance.SelectedSavedDeck.name + ".data"))
+#endif
+#if UNITY_STANDALONE_WIN
+            if (BuildManager.instance.SelectedSavedDeck != null && System.IO.File.Exists($"{Application.dataPath}/{BuildManager.instance.SelectedSavedDeck.name}.data"))
+#endif
+            {
+                if (BuildManager.instance.DeckExists(BuildManager.instance.SelectedSavedDeck.name))
+                {
+                    BuildManager.instance.Delete();
+                }
+            }
         BuildManager.instance.ResetSelection();
         selectingUI.SetActive(true);
         editingUI.SetActive(false);

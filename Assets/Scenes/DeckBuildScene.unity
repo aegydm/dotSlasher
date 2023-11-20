@@ -442,6 +442,7 @@ MonoBehaviour:
   gridLayout: {fileID: 253739613}
   cardObject: {fileID: 4475879479727289877, guid: 568e038a52c5a5542b002e2228e76a1d,
     type: 3}
+  panel: {fileID: 0}
   _selectCard:
     summonEffects: []
     fieldChangeEffects: []
@@ -461,6 +462,9 @@ MonoBehaviour:
     cardCategory: 0
     frontDamage: -1
     backDamage: -1
+  isDeckMaking: 0
+  selectingUI: {fileID: 0}
+  editingUI: {fileID: 0}
 --- !u!1001 &253739612
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -503,6 +507,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -279
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919264129343270990, guid: 1fd2b106ef9baa041af0319e664f9b2e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5687115605534665026, guid: 1fd2b106ef9baa041af0319e664f9b2e,
         type: 3}
@@ -894,8 +903,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6088c9f73bf6344ca02c956a52e4e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deck: []
+  _deck: []
   deckName: 
+  gridLayout: {fileID: 0}
+  textObject: {fileID: 0}
+  saveDecks: []
 --- !u!4 &1512216291
 Transform:
   m_ObjectHideFlags: 0
