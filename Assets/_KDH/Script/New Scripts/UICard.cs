@@ -3,20 +3,88 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CCGCard;
+using TMPro;
 
 public class UICard : MonoBehaviour
 {
-    public Card cardData;
+    public Card cardData
+    {
+        get
+        {
+            return _cardData;
+        }
+        set
+        {
+            _cardData = value;
+            spriteRenderer.sprite = cardData.cardSprite;
+            cardNameTXT.text = cardData.cardName;
+            cardDescriptionTXT.text = cardData.skillContents;
+            frontATKText.text = cardData.frontDamage.ToString();
+            backATKText.text = cardData.backDamage.ToString();
+            if (cardData.skill != string.Empty)
+            {
+                switch (cardData.skill[0].ToString())
+                {
+                    case "1":
+                        gemImage.color = Color.red;
+                        break;
+                    case "2":
+                        gemImage.color = Color.green;
+                        break;
+                    case "3":
+                        gemImage.color = Color.yellow;
+                        break;
+                    case "4":
+                        gemImage.color = Color.cyan;
+                        break;
+                    case "5":
+                        gemImage.color = Color.white;
+                        break;
+                }
+                switch (cardData.skill[1].ToString())
+                {
+                    case "1":
+                        rankText.text = "Ⅰ";
+                        break;
+                    case "2":
+                        rankText.text = "Ⅱ";
+                        break;
+                    case "3":
+                        rankText.text = "Ⅲ";
+                        break;
+                    case "4":
+                        rankText.text = "Ⅳ";
+                        break;
+                    case "5":
+                        rankText.text = "Ⅴ";
+                        break;
+                }
+            }
+            else
+            {
+                gemImage.color = Color.black;
+                rankText.text = string.Empty;
+            }
+        }
+    }
+    [SerializeField] Card _cardData;
     public HandCardObject handCardObject = null;
     public bool isSelected = false;
-    public SpriteRenderer spriteRenderer;
+    public Image backGroundRenderer;
+    public Image spriteRenderer;
+    public TMP_Text cardNameTXT;
+    public TMP_Text cardDescriptionTXT;
+    public TMP_Text frontATKText;
+    public TMP_Text backATKText;
+
+    public Image gemImage;
+    public TMP_Text rankText;
 
     private void OnMouseOver()
     {
-        if (isSelected == false)
+        if (isSelected == false && (UIManager.Instance.settingPopUI.activeSelf == false || UIManager.Instance.gameSettingPopUI.activeSelf == false))
         {
-            GetComponent<Image>().color = Color.red;
-
+            backGroundRenderer.color = Color.red;
         }
     }
 
@@ -24,38 +92,46 @@ public class UICard : MonoBehaviour
     {
         if (isSelected == false)
         {
-            GetComponent<Image>().color = Color.white;
+            backGroundRenderer.color = Color.white;
         }
     }
 
     private void OnMouseDown()
     {
-        if (UIManager.Instance != null)
+        if ((UIManager.Instance.settingPopUI.activeSelf == false || UIManager.Instance.gameSettingPopUI.activeSelf == false))
         {
-            UIManager.Instance.selectObject = gameObject;
-            UIManager.Instance.selectCard = cardData;
-        }
-        else
-        {
-            DeckMaker.instance.selectObject = gameObject;
-            DeckMaker.instance.selectCard = cardData;
-        }
-        if (handCardObject != null)
-        {
-            isSelected = !isSelected;
-            if (isSelected)
+
+            if (UIManager.Instance != null)
             {
-                GetComponent<Image>().color = Color.gray;
+                UIManager.Instance.selectObject = gameObject;
+                UIManager.Instance.selectCard = cardData;
             }
             else
             {
-                GetComponent<Image>().color = Color.white;
+                DeckMaker.instance.selectObject = gameObject;
+                DeckMaker.instance.selectCard = cardData;
             }
-            Debug.Log(handCardObject.name + "is " + isSelected);
+            if (handCardObject != null)
+            {
+                isSelected = !isSelected;
+                if (isSelected)
+                {
+                    backGroundRenderer.color = Color.gray;
+                }
+                else
+                {
+                    backGroundRenderer.color = Color.white;
+                }
+                Debug.Log(handCardObject.name + "is " + isSelected);
+            }
+            else if (DeckMaker.instance != null)
+            {
+                DeckMaker.instance.deck.Add(cardData);
+            }
         }
-        else if(DeckMaker.instance != null)
-        {
-            DeckMaker.instance.deck.Add(cardData);
-        }
+            if (BuildManager.instance != null)
+            {
+                BuildManager.instance.deck = DeckMaker.instance.deck;
+            }
     }
 }

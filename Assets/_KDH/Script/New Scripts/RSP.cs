@@ -186,9 +186,10 @@ public class RSP : MonoBehaviour
     {
         if (trigger)
         {
+            SoundManager.instance.PlayEffSound(SoundManager.instance.handSelect);
+            resultText.text = "You Choose Rock";
             myHand = Hand.Rock;
             trigger = false;
-            resultText.text = "You Choose Rock";
         }
     }
 
@@ -196,9 +197,10 @@ public class RSP : MonoBehaviour
     {
         if (trigger)
         {
+            SoundManager.instance.PlayEffSound(SoundManager.instance.handSelect);
+            resultText.text = "You Choose Scissor";
             myHand = Hand.Scissor;
             trigger = false;
-            resultText.text = "You Choose Scissor";
         }
     }
 
@@ -206,9 +208,10 @@ public class RSP : MonoBehaviour
     {
         if (trigger)
         {
+            SoundManager.instance.PlayEffSound(SoundManager.instance.handSelect);
+            resultText.text = "You Choose Paper";
             myHand = Hand.Paper;
             trigger = false;
-            resultText.text = "You Choose Paper";
         }
     }
 
@@ -220,6 +223,7 @@ public class RSP : MonoBehaviour
             button.gameObject.SetActive(true);
         }
         chooseText.text = "You Win! Select";
+        SoundManager.instance.PlayEffSound(SoundManager.instance.victoryRSP);
     }
 
     public void Lose()
@@ -227,10 +231,12 @@ public class RSP : MonoBehaviour
         choose.SetActive(true);
         chooseText.gameObject.SetActive(true);
         chooseText.text = "You Lose. Wait...";
+        SoundManager.instance.PlayEffSound(SoundManager.instance.loseRSP);
     }
 
     public void StartFirst()
     {
+        SoundManager.instance.PlayEffSound(SoundManager.instance.gameStart);
         startFirst = true;
         match.photonView.RPC("SetFirst", RpcTarget.Others, false);
         foreach (var button in buttons)
@@ -239,11 +245,12 @@ public class RSP : MonoBehaviour
         }
         chooseText.gameObject.SetActive(true);
         chooseText.text = "Start First";
-        NetworkManager.instance.StartGame(RSP.instance.startFirst);
+        NetworkManager.instance.StartGame(startFirst);
     }
 
     public void StartLast()
     {
+        SoundManager.instance.PlayEffSound(SoundManager.instance.gameStart);
         startFirst = false;
         match.photonView.RPC("SetFirst", RpcTarget.Others, true);
         foreach (var button in buttons)
@@ -252,7 +259,7 @@ public class RSP : MonoBehaviour
         }
         chooseText.gameObject.SetActive(true);
         chooseText.text = "Start Last";
-        NetworkManager.instance.StartGame(RSP.instance.startFirst);
+        NetworkManager.instance.StartGame(startFirst);
         Instantiate(gameObject, Vector3.zero, Quaternion.identity);
     }
 }

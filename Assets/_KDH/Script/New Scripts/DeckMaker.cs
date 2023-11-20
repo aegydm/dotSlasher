@@ -8,9 +8,9 @@ using UnityEngine.UI;
 public class DeckMaker : MonoBehaviour
 {
     public static DeckMaker instance;
-    [Header("현재 나의 덱 입니다. DB에서 불러오면 빈칸, 덱에서 불러오면 덱으로 나옵니다.")]
+    [Header("-----")]
     public List<Card> deck;
-    
+
     public GameObject gridLayout;
     public GameObject cardObject;
     public Card selectCard
@@ -29,9 +29,13 @@ public class DeckMaker : MonoBehaviour
         }
     }
 
+    public GameObject panel;
+
     public event Action<Card> selectCardChanged;
 
     [SerializeField] private Card _selectCard = null;
+
+    [HideInInspector] public bool isDeckMaking = false;
 
     public GameObject selectObject
     {
@@ -47,16 +51,49 @@ public class DeckMaker : MonoBehaviour
 
     private GameObject _selectObject = null;
 
+    [SerializeField] private GameObject selectingUI;
+    [SerializeField] private GameObject editingUI;
+
     private void Awake()
     {
         instance = this;
     }
 
+    private void Start()
+    {
+
+    }
+
     public void LoadCardFromDB()
     {
-        deck = new();
+        if (panel != null)
+        {
+            if (panel.activeSelf == false)
+                panel.SetActive(true);
+        }
+        if(deck == new List<Card>() || deck == null)
+        {
+            deck = new();
+        }
         GameObject go;
         foreach (Card card in CardDB.instance.cards)
+        {
+            go = Instantiate(cardObject, gridLayout.transform);
+            go.GetComponent<UICard>().cardData = card;
+            go.GetComponent<UICard>().spriteRenderer.sprite = card.cardSprite;
+        }
+    }
+
+    public void LoadCardFromDeck(List<Card> cards)
+    {
+        if (panel != null)
+        {
+            if (panel.activeSelf == false)
+                panel.SetActive(true);
+        }
+        deck = cards;
+        GameObject go;
+        foreach (Card card in cards)
         {
             go = Instantiate(cardObject, gridLayout.transform);
             go.GetComponent<UICard>().cardData = card;
@@ -64,15 +101,46 @@ public class DeckMaker : MonoBehaviour
         }
     }
 
-    public void LoadCardFromDeck(List<Card> cards)
+    public void NewDeckMaking()
     {
-        deck = cards;
-        GameObject go;
-        foreach (Card card in CardDB.instance.cards)
+        isDeckMaking = true;
+        BuildManager.instance.ResetSelection();
+        deck = new();
+        LoadCardFromDB();
+        selectingUI.SetActive(false);
+        editingUI.SetActive(true);
+    }
+
+    public void SavedDeckMaking()
+    {
+        if (BuildManager.instance.SelectedSavedDeck == null) return;
+        isDeckMaking = true;
+        deck = BuildManager.instance.deck;
+        LoadCardFromDB();
+        selectingUI.SetActive(false);
+        editingUI.SetActive(true);
+    }
+
+    public void CancelDeckMaking()
+    {
+        isDeckMaking = false;
+        ErasePanel();
+        BuildManager.instance.ResetSelection();
+        selectingUI.SetActive(true);
+        editingUI.SetActive(false);
+    }
+
+    public void ErasePanel()
+    {
+        if (panel != null)
         {
-            go = Instantiate(cardObject, gridLayout.transform);
-            go.GetComponent<UICard>().cardData = card;
-            go.GetComponent<Image>().sprite = go.GetComponent<SpriteRenderer>().sprite = card.cardSprite;
+            UICard[] UICards = panel.GetComponentsInChildren<UICard>();
+            for (int i = 0; i < UICards.Length; i++)
+            {
+                Destroy(UICards[i].gameObject);
+            }
+            if (panel.activeSelf)
+                panel.SetActive(false);
         }
     }
 }

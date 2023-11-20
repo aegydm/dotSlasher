@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager.UI;
+//using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,79 +9,156 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance {  get; private set; }
 
-    [Header("음량 슬라이더")]
-    public Slider mVol;
-    public Slider bgmVol;
-    public Slider effVol;
-    [Header("음소거 버튼")]
-    public Toggle mToggle;
-    public Toggle bgmToggle;
-    public Toggle effToggle;
 
-    public GameObject soundWindow;
+    float masterVol = 0.5f;
+    float bgmVol = 1;
+    float effVol = 1;
+    bool masterMute;
+    bool bgmMute;
+    bool effMute;
+    [Header("AudioSource")]
+    public AudioSource bgmAudio;
+    public AudioSource effAudio;
+    [Header("-------------")]
+    [Header("Sound Clips")]
+    [Header("-------------")]
+
+    [Header("  BGM")]
+    public AudioClip mainBGM;
+    public AudioClip deckBGM;
+    public AudioClip matchBGM;
+    public AudioClip gameBGM;
+
+    [Header("  Deck Sounds")]
+    public AudioClip addCard;
+    public AudioClip removeCard;
+    public AudioClip deckComplete;
+    public AudioClip deckError;
+    public AudioClip deckButton;
+
+    [Header("  RSP Sounds")]
+    public AudioClip handSelect;
+    public AudioClip victoryRSP;
+    public AudioClip loseRSP;
+    public AudioClip gameStart;
+
+    [Header("  Game Sounds")]
+    public AudioClip turnStart;
+    public AudioClip phaseStart;
+    public AudioClip victoryGame;
+    public AudioClip cardDraw;
+    public AudioClip battleStart;
+
+    [Header("  UI Sounds")]
+    public AudioClip buttonClick;
+    public AudioClip mouseClick;
 
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Debug.LogError("FieldManager is already exist.");
+            Debug.LogError("SoundManager is already exist.");
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
     }
 
-    void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        PlayBGMSound(mainBGM);
+        EffVolChanger();
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            if (soundWindow.activeSelf)
-            {
-                soundWindow.SetActive(false);
-            }
-            else
-            {
-                soundWindow.SetActive(true);
-            }
+            PlayEffSound(mouseClick);
         }
-        if (soundWindow.activeSelf)
+    }
+
+    public void MasterMute(bool mute)
+    {
+        masterMute = mute;
+        BGMVolChanger();
+        EffVolChanger();
+    }
+
+    public void BGMMute(bool mute)
+    {
+        bgmMute = mute;
+        BGMVolChanger();
+    }
+
+    public void EffMute(bool mute)
+    {
+        effMute = mute;
+        EffVolChanger();
+    }
+
+    public void MasterVolume(float volume)
+    {
+        masterVol = volume;
+        BGMVolChanger();
+        EffVolChanger();
+    }
+
+    public void BGMVolume(float volume)
+    {
+        bgmVol = volume;
+        BGMVolChanger();
+    }
+
+    public void EffVolume(float volume)
+    {
+        effVol = volume;
+        EffVolChanger();
+    }
+
+
+
+    public void BGMVolChanger()
+    {
+        if(masterMute || bgmMute)
         {
-            if (mToggle.isOn == false)
-            {
-                mVol.value = 0;
-            }
-            if (bgmToggle.isOn == false)
-            {
-                bgmVol.value = 0;
-            }
-            if (effToggle.isOn == false)
-            {
-                effVol.value = 0;
-            }
+            bgmAudio.mute = true;
         }
+        else
+        {
+            bgmAudio.mute = false;
+        }
+
+        bgmAudio.volume = masterVol * bgmVol;
+    }
+
+    public void EffVolChanger()
+    {
+        if (masterMute || effMute)
+        {
+            effAudio.mute = true;
+        }
+        else
+        {
+            effAudio.mute = false;
+        }
+
+        effAudio.volume = masterVol * effVol;
     }
 
     public void PlayBGMSound(AudioClip clip)
     {
-        GameObject soundObject = new GameObject("BGM");
-        AudioSource audioSource = soundObject.AddComponent<AudioSource>();
-        audioSource.clip = clip;
-        audioSource.volume = mVol.value * bgmVol.value;
-        audioSource.Play();
-        Destroy(soundObject, clip.length);
+        bgmAudio.clip = clip;
+        BGMVolChanger();
+        bgmAudio.Play();
     }
 
     public void PlayEffSound(AudioClip clip)
     {
-        GameObject soundObject = new GameObject("Effect");
-        AudioSource audioSource = soundObject.AddComponent<AudioSource>();
-        audioSource.clip = clip;
-        audioSource.volume = mVol.value * effVol.value;
-        audioSource.Play();
-        Destroy(soundObject, clip.length);
+        effAudio.PlayOneShot(clip);
     }
 
     public void PauseSound()

@@ -11,6 +11,29 @@ public class Deck : MonoBehaviour
 {
     public List<Card> useDeck = new List<Card>();
     public List<Card> originDeck = new List<Card>();
+    public int enemyDeckCount
+    {
+        get
+        {
+            return _enemyDeckCount;
+        }
+        set
+        {
+            _enemyDeckCount = value;
+            enemyDeckCountUI.text = _enemyDeckCount.ToString();
+            if(GameManager.instance.enemyDamageSum > 0)
+            {
+                enemyDeckCountUI.text += " - " + GameManager.instance.enemyDamageSum;
+                enemyDeckCountUI.color = Color.red;
+            }
+            else
+            {
+                enemyDeckCountUI.color = Color.white;
+            }
+        }
+    }
+    [SerializeField] int _enemyDeckCount = 30;
+
     public List<Card> grave
     {
         get
@@ -98,9 +121,9 @@ public class Deck : MonoBehaviour
     [SerializeField] int _countOfDeck;
     [SerializeField] public List<int> sortedDeck;
     [SerializeField] TMP_Text deckCountUI;
+    [SerializeField] TMP_Text enemyDeckCountUI;
     [SerializeField] TMP_Text graveCountUI;
     [SerializeField] TMP_Text enemyGraveCountUI;
-
     public event Action OnDeckCountChanged;
     public event Action OnGraveCountChanged;
     public event Action OnEnemyGraveCountChanged;
@@ -114,10 +137,10 @@ public class Deck : MonoBehaviour
         OnGraveCountChanged += RenderGraveCount;
         OnEnemyGraveCountChanged = null;
         OnEnemyGraveCountChanged += RenderEnemyGraveCount;
-        //if (BuildManager.instance.Load(BuildManager.instance.deckName, out originDeck) == false)
+
         if (NetworkManager.instance != null)
         {
-            if (BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
+            if (DeckManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
             {
                 Debug.Log("Fail to Load Deck");
                 //GameManager.instance.Lose();
@@ -143,7 +166,7 @@ public class Deck : MonoBehaviour
         {
             if (deckName == "")
             {
-                if (BuildManager.instance.Load("1", out originDeck) == false)
+                if (DeckManager.instance.Load("1", out originDeck) == false)
                 {
                     Debug.Log("Fail to Load Deck");
                     //GameManager.instance.Lose();
@@ -163,7 +186,7 @@ public class Deck : MonoBehaviour
             }
             else
             {
-                if (BuildManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
+                if (DeckManager.instance.Load(NetworkManager.instance.deckName, out originDeck) == false)
                 {
                     Debug.Log("Fail to Load Deck");
                     //GameManager.instance.Lose();
@@ -187,7 +210,7 @@ public class Deck : MonoBehaviour
         {
             if (deckName == "")
             {
-                if (BuildManager.instance.Load(BuildManager.instance.deckName, out originDeck) == false)
+                if (DeckManager.instance.Load(DeckManager.instance.deckName, out originDeck) == false)
                 {
                     Debug.Log("Fail to Load Deck");
                     //GameManager.instance.Lose();
@@ -208,7 +231,7 @@ public class Deck : MonoBehaviour
             else
             {
 
-                if (BuildManager.instance.Load(deckName, out originDeck) == false)
+                if (DeckManager.instance.Load(deckName, out originDeck) == false)
                 {
                     Debug.Log("Fail to Load Deck");
                     //GameManager.instance.Lose();
@@ -229,9 +252,24 @@ public class Deck : MonoBehaviour
         }
     }
 
+    public void RenderDeck()
+    {
+        RenderDeckCount();
+        enemyDeckCount = enemyDeckCount;
+    }
+
     void RenderDeckCount()
     {
         deckCountUI.text = countOfDeck.ToString();
+        if (GameManager.instance.damageSum > 0)
+        {
+            deckCountUI.text += " - " + GameManager.instance.damageSum;
+            deckCountUI.color = Color.red;
+        }
+        else
+        {
+            deckCountUI.color = Color.white;
+        }
     }
 
     void RenderGraveCount()
@@ -245,7 +283,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 덱의 카드를 섞는 카드
+    /// ?깆쓽 移대뱶瑜??욌뒗 移대뱶
     /// </summary>
     public void Shuffle()
     {
@@ -263,9 +301,9 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// int의 값 만큼 덱에서 카드를 뽑는 카드
-    /// 현재 손패가 가득 찰 경우 에러코드를 보내도록 설계되어있음
-    /// 덱이 0장이고 손패에 빈 자리가 있을 경우
+    /// int??媛?留뚰겮 ?깆뿉??移대뱶瑜?戮묐뒗 移대뱶
+    /// ?꾩옱 ?먰뙣媛 媛??李?寃쎌슦 ?먮윭肄붾뱶瑜?蹂대궡?꾨줉 ?ㅺ퀎?섏뼱?덉쓬
+    /// ?깆씠 0?μ씠怨??먰뙣??鍮??먮━媛 ?덉쓣 寃쎌슦
     /// </summary>
     /// <param name="drawCard"></param>
     public void Draw(int drawCard)
@@ -277,12 +315,14 @@ public class Deck : MonoBehaviour
             {
                 if (PlayerActionManager.instance.AddHandCard(useDeck[0]))
                 {
+                    SoundManager.instance.PlayEffSound(SoundManager.instance.cardDraw);
                     useDeck.Remove(useDeck[0]);
                     //GameManager.instance.photonView.RPC("EnemyCardChange", RpcTarget.Others, HandManager.Instance.GetHandCardNum());
                 }
                 else
                 {
-                    Debug.LogError("손패가 가득 찼습니다.");
+
+                    break;
                 }
             }
             else
@@ -292,7 +332,7 @@ public class Deck : MonoBehaviour
                     //GameManager.instance.Lose();
                 }
                 Debug.Log(countOfDeck);
-                Debug.Log("덱이 비었습니다.");
+
                 GameManager.instance.Lose();
             }
             RefreshDeckCount();
@@ -300,7 +340,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 덱에 특정 카드를 넣는 기능
+    /// ?깆뿉 ?뱀젙 移대뱶瑜??ｋ뒗 湲곕뒫
     /// </summary>
     /// <param name="card"></param>
     public void Refill(Card card)
@@ -312,7 +352,7 @@ public class Deck : MonoBehaviour
     }
 
     /// <summary>
-    /// 덱에서 특정 카드를 지우는 기능
+    /// ?깆뿉???뱀젙 移대뱶瑜?吏?곕뒗 湲곕뒫
     /// </summary>
     /// <param name="card"></param>
     /// <returns></returns>
@@ -329,7 +369,6 @@ public class Deck : MonoBehaviour
                 return true;
             }
         }
-        Debug.LogError($"덱에서 {card.cardName} 카드를 지우지 못했습니다. 덱에 해당 카드가 존재하는지 확인해주십시오.");
         RefreshDeckCount();
         return false;
     }
@@ -337,6 +376,7 @@ public class Deck : MonoBehaviour
     public void RefreshDeckCount()
     {
         countOfDeck = useDeck.Count;
+        GameManager.instance.photonView.RPC("EnemyDeckReduce", RpcTarget.Others, countOfDeck);
     }
     public void RefreshGraveCount()
     {
@@ -345,7 +385,7 @@ public class Deck : MonoBehaviour
 
     public void RefreshEnemyGraveCount()
     {
-        countOfEnemyGrave = grave.Count;
+        countOfEnemyGrave = enemyGrave.Count;
     }
 
     public void SortDeck()

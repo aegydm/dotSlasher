@@ -4,23 +4,39 @@ using UnityEngine;
 using CCGCard;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public bool isPopUI = false;
-    List<GameObject> cardList = new();
-    [SerializeField] GameObject mulliganButton;
+    public List<GameObject> cardList = new();
+    public List<GameObject> uiCardList = new();
+    public GameObject mulliganButton;
     public GameObject exitButton;
-    [SerializeField] GameObject popUpUi;
-    [SerializeField] GameObject gridLayout;
-    [SerializeField] GameObject cardObject;
-    [SerializeField] Deck deck;
-
+    public GameObject popUpUi;
+    public GameObject gridLayout;
+    public GameObject cardObject;
+    public Deck deck;
+    public GameObject cardSelectPopUI;
+    public GameObject settingPopUI;
+    public GameObject gameSettingPopUI;
+    public GameObject soundPopUI;
     [Header("Sounds")]
-    [SerializeField] private AudioClip PopUpSound;
-    [SerializeField] private AudioClip CloseSound;
-    [SerializeField] private AudioClip WindowPopupSound;
+    [SerializeField] Toggle masterToggle;
+    [SerializeField] Slider masterSlider;
+    [SerializeField] Toggle BGMToggle;
+    [SerializeField] Slider BGMSlider;
+    [SerializeField] Toggle effToggle;
+    [SerializeField] Slider effSlider;
+    [SerializeField] GameObject endUI;
+    public TMP_Text endText;
+
+    //[SerializeField] private AudioClip PopUpSound;
+    //[SerializeField] private AudioClip CloseSound;
+    //[SerializeField] private AudioClip WindowPopupSound;
+
     public Card selectCard
     {
         get
@@ -30,12 +46,13 @@ public class UIManager : MonoBehaviour
         set
         {
             _selectCard = value;
-            if(_selectCard != null && _selectCard != new Card())
+            if (_selectCard != null && _selectCard != new Card())
             {
                 selectCardChanged?.Invoke(selectCard);
             }
         }
     }
+
     public event Action<Card> selectCardChanged;
 
     [SerializeField] private Card _selectCard = null;
@@ -56,6 +73,7 @@ public class UIManager : MonoBehaviour
 
     public void RemoveSelectObject()
     {
+        uiCardList.Remove(selectObject);
         Destroy(selectObject);
         selectCard = null;
     }
@@ -65,10 +83,10 @@ public class UIManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Debug.LogError("UIManager??1媛쒕쭔 議댁옱?댁빞 ?⑸땲??");
             Destroy(this);
         }
     }
@@ -80,8 +98,9 @@ public class UIManager : MonoBehaviour
 
     public void StartMulligan()
     {
-        Debug.Log("StartMulligan");
+        //Debug.Log("StartMulligan");
         PopupCard(PlayerActionManager.instance.handCardObjectArray);
+        exitButton.SetActive(false);
     }
 
     public void EndMulligan()
@@ -89,7 +108,7 @@ public class UIManager : MonoBehaviour
         mulliganButton.SetActive(false);
         exitButton.SetActive(true);
         ClosePopup();
-        for(int i = 0; i < cardList.Count; i++)
+        for (int i = 0; i < cardList.Count; i++)
         {
             if (cardList[i].GetComponent<UICard>().isSelected)
             {
@@ -99,13 +118,14 @@ public class UIManager : MonoBehaviour
                 Destroy(cardList[i]);
             }
         }
+        FindObjectOfType<Timer>().StopTimer();
         GameManager.instance.playerEnd = true;
+        uiCardList.Clear();
     }
 
     public void PopupCard(List<Card> cardList)
     {
         //Please Input UI On Sound Code
-        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayEffSound(PopUpSound);
         if (isPopUI == false)
         {
@@ -116,7 +136,7 @@ public class UIManager : MonoBehaviour
             {
                 go = Instantiate(cardObject, gridLayout.transform);
                 go.GetComponent<UICard>().cardData = card;
-                go.GetComponent<Image>().sprite = go.GetComponent<SpriteRenderer>().sprite = card.cardSprite;
+                uiCardList.Add(go);
             }
         }
     }
@@ -124,9 +144,8 @@ public class UIManager : MonoBehaviour
     public void PopupCard(HandCardObject[] handList)
     {
         //Please Input UI On Sound Code
-        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayEffSound(PopUpSound);
-        Debug.Log("PopupCard");
+        //Debug.Log("PopupCard");
         if (isPopUI == false)
         {
             popUpUi.SetActive(true);
@@ -138,8 +157,8 @@ public class UIManager : MonoBehaviour
                 go = Instantiate(cardObject, gridLayout.transform);
                 cardList.Add(go);
                 go.GetComponent<UICard>().cardData = card.cardData;
-                go.GetComponent<Image>().sprite = go.GetComponent<UICard>().spriteRenderer.sprite = card.cardSprite.sprite;
                 go.GetComponent<UICard>().handCardObject = card;
+                uiCardList.Add(go);
             }
             mulliganButton.SetActive(true);
             exitButton.SetActive(false);
@@ -149,27 +168,78 @@ public class UIManager : MonoBehaviour
     public void ClosePopup()
     {
         //Please Input UI Off Sound Code
-        //UI ?????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayEffSound(CloseSound);
         if (isPopUI)
         {
-            foreach(Transform child in gridLayout.transform)
+            foreach (Transform child in gridLayout.transform)
             {
                 Destroy(child.gameObject);
             }
-            isPopUI=false;
+            isPopUI = false;
             popUpUi.SetActive(false);
+            uiCardList.Clear();
         }
     }
 
     public void PopupSettingWindow()
     {
         //Please Input UI On Sound Code
-        //UI 耳????섎뒗 ?뚮━ ?ъ깮 肄붾뱶 ?ｌ뼱二쇱꽭??
         //SoundManager.instance.PlayEffSound(WindowPopupSound);
-        if (isPopUI == false)
+        if (SceneManager.GetActiveScene().name == "MainGame")
         {
-            isPopUI = true;
+            gameSettingPopUI.SetActive(true);
         }
+        else
+        {
+            settingPopUI.SetActive(true);
+        }
+    }
+
+    public void CloseSettingWindow()
+    {
+        //SoundManager.instance.PlayEffSound(CloseSound);
+        if (SceneManager.GetActiveScene().name == "MainGame")
+        {
+            gameSettingPopUI.SetActive(false);
+        }
+        else
+        {
+            settingPopUI.SetActive(false);
+        }
+    }
+
+    public void PopupSoundWindow()
+    {
+        soundPopUI.SetActive(true);
+    }
+
+    public void CloseSoundWindow()
+    {
+        soundPopUI.SetActive(false);
+    }
+
+    public void SoundSetting()
+    {
+        SoundManager.instance.MasterMute(masterToggle.isOn);
+        SoundManager.instance.MasterVolume(masterSlider.value);
+        SoundManager.instance.BGMMute(BGMToggle.isOn);
+        SoundManager.instance.BGMVolume(BGMSlider.value);
+        SoundManager.instance.EffMute(effToggle.isOn);
+        SoundManager.instance.EffVolume(effSlider.value);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void TurnOnEndUI()
+    {
+        endUI.SetActive(true);
+    }
+
+    public void TurnOffEndUI()
+    {
+        endUI.SetActive(false);
     }
 }

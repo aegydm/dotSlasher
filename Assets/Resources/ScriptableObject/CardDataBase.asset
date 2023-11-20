@@ -27,14 +27,12 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
     getDamageEffects:
     - {fileID: 11400000, guid: 170574b85e79bc84182a84dc21cd86a0, type: 2}
-    cardID: 110001
-    cardName: "\uD669\uC601\uC6C501"
-    cardSprite: {fileID: 21300000, guid: de537fdbccd417440ac700a95868c548, type: 3}
+    cardID: 111000
+    cardName: "\uD669\uC601\uC6C5"
+    cardSprite: {fileID: 21300000, guid: 8feaea2c0bd59bf4c9494e5a848c589e, type: 3}
     animator: Sprites/f1/f1_hero/f1_hero_01/f1_hero_01
     skill: 
-    skillContents: '
-
-'
+    skillContents: "\uAE30\uC0AC\uB97C \uC9C0\uD718\uD558\uB294 \uD669\uC0C9 \uC601\uC6C5"
     cost: 0
     cardColor: 0
     cardCategory: 1
@@ -43,7 +41,7 @@ MonoBehaviour:
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: df483d6081355204ebf00c85097280cd, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -55,20 +53,21 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111001
-    cardName: "\uD669\uD558\uC218\uC77801"
+    cardName: "\uB300\uC2E0\uAD00"
     cardSprite: {fileID: 21300000, guid: 5043c0525e1664342aa205bb84593fae, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_001/f1_minion_001
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 11
+    skillContents: "\uBE5B\uC758 \uB9C8\uB825\uC73C\uB85C \uAE30\uC801\uC744 \uC77C\uC73C\uD0A4\uB294
+      \uC2E0\uAD00"
     cost: 0
     cardColor: 0
     cardCategory: 0
-    frontDamage: 5
-    backDamage: 1
+    frontDamage: 3
+    backDamage: 10
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 09d7fc75cdd2e224b81ed52ba90ea70f, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -80,20 +79,21 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111002
-    cardName: "\uD669\uD558\uC218\uC77802"
-    cardSprite: {fileID: 21300000, guid: 323f59e1f1df0b54ab3e7c1c35c96835, type: 3}
+    cardName: "\uCF64\uBC43 \uD0C0\uC774\uAC70"
+    cardSprite: {fileID: 21300000, guid: a13cb1b135bd7ee48a97360c879d143f, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_002/f1_minion_002
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 22
+    skillContents: "\uB9C8\uB825\uC744 \uB2E4\uB8E8\uB3C4\uB85D \uD6C8\uB828\uB41C
+      \uC131\uC218"
     cost: 0
     cardColor: 0
     cardCategory: 0
-    frontDamage: 4
-    backDamage: 2
+    frontDamage: 7
+    backDamage: 3
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 26c5181d046af0e4a9bb8f968f29da07, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -105,11 +105,11 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111003
-    cardName: "\uD669\uD558\uC218\uC77803"
-    cardSprite: {fileID: 21300000, guid: 5c0c2774b879edd4e8a1b822497718a1, type: 3}
+    cardName: "\uBC1C\uD0A4\uB9AC"
+    cardSprite: {fileID: 21300000, guid: 990d05a5ddc9286438903f1419952b55, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_003/f1_minion_003
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 33
+    skillContents: "\uC804\uC7A5\uC744 \uCD95\uBCF5\uD558\uB294 \uCC9C\uC0AC"
     cost: 0
     cardColor: 0
     cardCategory: 0
@@ -118,7 +118,7 @@ MonoBehaviour:
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 926add7d3b7e39a45b4a09511546968b, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -130,20 +130,21 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111004
-    cardName: "\uD669\uD558\uC218\uC77804"
+    cardName: "\uADF8\uB79C\uB4DC\uB9C8\uC2A4\uD130"
     cardSprite: {fileID: 21300000, guid: cb2f83cdc510c3a4a8698b517cbaaf7e, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_004/f1_minion_004
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 44
+    skillContents: "\uC624\uB7AB\uB3D9\uC548 \uCF5C\uB85C\uC138\uC6C0\uC744 \uC9C0\uBC30\uD55C
+      \uC601\uC6C5"
     cost: 0
     cardColor: 0
     cardCategory: 0
-    frontDamage: 2
-    backDamage: 4
+    frontDamage: 12
+    backDamage: 7
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 4eaac9e6c83823f4381c137cdc3e991f, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -155,270 +156,20 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111005
-    cardName: "\uD669\uD558\uC218\uC77805"
-    cardSprite: {fileID: 21300000, guid: 5f18cb43b9541dd4bb01406c3402d85c, type: 3}
+    cardName: "\uCC54\uD53C\uC5B8 "
+    cardSprite: {fileID: 21300000, guid: 2d4b543f4dc0910449c26b3e2ced13c2, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_005/f1_minion_005
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 55
+    skillContents: "\uCF5C\uB85C\uC138\uC6C0\uC758 \uC0C8\uB85C\uC6B4 \uB3C4\uC804\uC790"
     cost: 0
     cardColor: 0
     cardCategory: 0
-    frontDamage: 1
+    frontDamage: 8
     backDamage: 5
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
-    attackStartEffects:
-    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
-    findEnemyEffects:
-    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
-    calculateDamageEffects:
-    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
-    attackProcessEffects:
-    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
-    getDamageEffects:
-    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
-    cardID: 141001
-    cardName: "\uC790\uD558\uC218\uC77801"
-    cardSprite: {fileID: 21300000, guid: 4a72e632a050f2242be764eebf39aa29, type: 3}
-    animator: Sprites/f4/f4_minion/f4_minion_001/f4_minion_001
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
-    cost: 0
-    cardColor: 3
-    cardCategory: 0
-    frontDamage: 5
-    backDamage: 1
-  - summonEffects:
-    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
-    fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
-    attackStartEffects:
-    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
-    findEnemyEffects:
-    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
-    calculateDamageEffects:
-    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
-    attackProcessEffects:
-    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
-    getDamageEffects:
-    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
-    cardID: 141002
-    cardName: "\uC790\uD558\uC218\uC77802"
-    cardSprite: {fileID: 21300000, guid: 88a4ce3d9b126f4408b9011dc72dfb0c, type: 3}
-    animator: Sprites/f4/f4_minion/f4_minion_002/f4_minion_002
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
-    cost: 0
-    cardColor: 3
-    cardCategory: 0
-    frontDamage: 4
-    backDamage: 2
-  - summonEffects:
-    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
-    fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
-    attackStartEffects:
-    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
-    findEnemyEffects:
-    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
-    calculateDamageEffects:
-    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
-    attackProcessEffects:
-    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
-    getDamageEffects:
-    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
-    cardID: 141003
-    cardName: "\uC790\uD558\uC218\uC77803"
-    cardSprite: {fileID: 21300000, guid: f2641c6206d89ce4ea05c30920d17391, type: 3}
-    animator: Sprites/f4/f4_minion/f4_minion_003/f4_minion_003
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
-    cost: 0
-    cardColor: 3
-    cardCategory: 0
-    frontDamage: 3
-    backDamage: 3
-  - summonEffects:
-    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
-    fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
-    attackStartEffects:
-    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
-    findEnemyEffects:
-    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
-    calculateDamageEffects:
-    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
-    attackProcessEffects:
-    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
-    getDamageEffects:
-    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
-    cardID: 141004
-    cardName: "\uC790\uD558\uC218\uC77804"
-    cardSprite: {fileID: 21300000, guid: fe9f03eb05feb6b48a8322c66f64cd10, type: 3}
-    animator: Sprites/f4/f4_minion/f4_minion_004/f4_minion_004
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
-    cost: 0
-    cardColor: 3
-    cardCategory: 0
-    frontDamage: 2
-    backDamage: 4
-  - summonEffects:
-    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
-    fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
-    attackStartEffects:
-    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
-    findEnemyEffects:
-    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
-    calculateDamageEffects:
-    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
-    attackProcessEffects:
-    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
-    getDamageEffects:
-    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
-    cardID: 141005
-    cardName: "\uC790\uD558\uC218\uC77805"
-    cardSprite: {fileID: 21300000, guid: 642236b631d892049aa2423fce911b3f, type: 3}
-    animator: Sprites/f4/f4_minion/f4_minion_005/f4_minion_005
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
-    cost: 0
-    cardColor: 3
-    cardCategory: 0
-    frontDamage: 1
-    backDamage: 5
-  - summonEffects:
-    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
-    fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
-    attackStartEffects:
-    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
-    findEnemyEffects:
-    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
-    calculateDamageEffects:
-    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
-    attackProcessEffects:
-    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
-    getDamageEffects:
-    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
-    cardID: 171001
-    cardName: "\uC911\uB9BD\uD558\uC218\uC77801"
-    cardSprite: {fileID: 21300000, guid: a4fbaff83569519439b70e66d1e6b8bf, type: 3}
-    animator: Sprites/f7/f7_minion/f7_minion_001/f7_minion_001
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
-    cost: 0
-    cardColor: 6
-    cardCategory: 0
-    frontDamage: 5
-    backDamage: 1
-  - summonEffects:
-    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
-    fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
-    attackStartEffects:
-    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
-    findEnemyEffects:
-    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
-    calculateDamageEffects:
-    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
-    attackProcessEffects:
-    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
-    getDamageEffects:
-    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
-    cardID: 171002
-    cardName: "\uC911\uB9BD\uD558\uC218\uC77802"
-    cardSprite: {fileID: 21300000, guid: 7b5cd8c96b0325f40852866a1edd8a42, type: 3}
-    animator: Sprites/f7/f7_minion/f7_minion_002/f7_minion_002
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
-    cost: 0
-    cardColor: 6
-    cardCategory: 0
-    frontDamage: 4
-    backDamage: 2
-  - summonEffects:
-    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
-    fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
-    attackStartEffects:
-    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
-    findEnemyEffects:
-    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
-    calculateDamageEffects:
-    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
-    attackProcessEffects:
-    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
-    getDamageEffects:
-    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
-    cardID: 171003
-    cardName: "\uC911\uB9BD\uD558\uC218\uC77803"
-    cardSprite: {fileID: 21300000, guid: 504c44df9b54bfd40b49703bb351bf53, type: 3}
-    animator: Sprites/f7/f7_minion/f7_minion_003/f7_minion_003
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
-    cost: 0
-    cardColor: 6
-    cardCategory: 0
-    frontDamage: 3
-    backDamage: 3
-  - summonEffects:
-    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
-    fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
-    attackStartEffects:
-    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
-    findEnemyEffects:
-    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
-    calculateDamageEffects:
-    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
-    attackProcessEffects:
-    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
-    getDamageEffects:
-    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
-    cardID: 171004
-    cardName: "\uC911\uB9BD\uD558\uC218\uC77804"
-    cardSprite: {fileID: 21300000, guid: 57d438635f37a244eb503d90f7e6917e, type: 3}
-    animator: Sprites/f7/f7_minion/f7_minion_004/f7_minion_004
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
-    cost: 0
-    cardColor: 6
-    cardCategory: 0
-    frontDamage: 2
-    backDamage: 4
-  - summonEffects:
-    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
-    fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
-    attackStartEffects:
-    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
-    findEnemyEffects:
-    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
-    calculateDamageEffects:
-    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
-    attackProcessEffects:
-    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
-    getDamageEffects:
-    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
-    cardID: 171005
-    cardName: "\uC911\uB9BD\uD558\uC218\uC77805"
-    cardSprite: {fileID: 21300000, guid: cf688176513880e41b090854f47d21b6, type: 3}
-    animator: Sprites/f7/f7_minion/f7_minion_005/f7_minion_005
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
-    cost: 0
-    cardColor: 6
-    cardCategory: 0
-    frontDamage: 1
-    backDamage: 5
-  - summonEffects:
-    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
-    fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: df483d6081355204ebf00c85097280cd, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -430,20 +181,21 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111006
-    cardName: "\uD669\uD558\uC218\uC77806"
-    cardSprite: {fileID: 21300000, guid: e84c432204761fe46b9d5e66d2a3558d, type: 3}
+    cardName: "\uB77C\uC774\uD2B8 \uCE90\uC2A4\uD130"
+    cardSprite: {fileID: 21300000, guid: 4673c1b7ead6cc4488b816f1e992ec79, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_006/f1_minion_006
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 11
+    skillContents: "\uBE5B\uC744 \uBFDC\uC5B4\uB0B4\uB294 \uB9C8\uBC95\uC744 \uB2E4\uB8E8\uB294
+      \uC790"
     cost: 0
     cardColor: 0
     cardCategory: 0
-    frontDamage: 1
-    backDamage: 7
+    frontDamage: 4
+    backDamage: 8
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 09d7fc75cdd2e224b81ed52ba90ea70f, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -455,20 +207,21 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111007
-    cardName: "\uD669\uD558\uC218\uC77807"
+    cardName: "\uAC00\uB514\uC5B8"
     cardSprite: {fileID: 21300000, guid: 7a581add17a6dda4b993dd40b6119923, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_007/f1_minion_007
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 22
+    skillContents: "\uCE68\uC785\uC790\uB97C \uD30C\uAD34\uD558\uB3C4\uB85D \uB9CC\uB4E4\uC5B4\uC9C4
+      \uACE0\uB300\uBCD1\uAE30"
     cost: 0
     cardColor: 0
     cardCategory: 0
-    frontDamage: 2
-    backDamage: 6
+    frontDamage: 8
+    backDamage: 8
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 26c5181d046af0e4a9bb8f968f29da07, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -480,20 +233,20 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111008
-    cardName: "\uD669\uD558\uC218\uC77808"
+    cardName: "\uC544\uCCD0"
     cardSprite: {fileID: 21300000, guid: 24a526c77da7a42469f5dddcaa975e1a, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_008/f1_minion_008
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 33
+    skillContents: "\uBE5B\uC758 \uD654\uC0B4\uC744 \uC3D8\uB294 \uAD81\uC0AC"
     cost: 0
     cardColor: 0
     cardCategory: 0
-    frontDamage: 3
+    frontDamage: 4
     backDamage: 5
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 926add7d3b7e39a45b4a09511546968b, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -505,20 +258,21 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111009
-    cardName: "\uD669\uD558\uC218\uC77809"
+    cardName: "\uBABD\uD06C "
     cardSprite: {fileID: 21300000, guid: 52335f978dbe6db42ade3f072e9f6498, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_009/f1_minion_009
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 44
+    skillContents: "\uC8FC\uBA39\uC5D0 \uBE5B\uC758 \uD798\uC744 \uB2F4\uC544 \uC2F8\uC6B0\uB294
+      \uD22C\uC0AC"
     cost: 0
     cardColor: 0
     cardCategory: 0
-    frontDamage: 4
-    backDamage: 4
+    frontDamage: 3
+    backDamage: 8
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 4eaac9e6c83823f4381c137cdc3e991f, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -530,20 +284,21 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111010
-    cardName: "\uD669\uD558\uC218\uC77810"
-    cardSprite: {fileID: 21300000, guid: c00057e4f1abded4bb0cb0aad7708b6e, type: 3}
+    cardName: "\uC2A4\uD53C\uC5B4\uB9E8"
+    cardSprite: {fileID: 21300000, guid: 1a723c585840177498e746b1e57c83b7, type: 3}
     animator: Sprites/f1/f1_minion/f1_minion_010/f1_minion_010
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 55
+    skillContents: "\uCD5C\uC804\uBC29\uC5D0\uC11C \uC801\uC9C4\uC744 \uB737\uC5B4\uB0B4\uB294
+      \uCC3D\uC220\uC0AC"
     cost: 0
     cardColor: 0
     cardCategory: 0
-    frontDamage: 5
-    backDamage: 3
+    frontDamage: 9
+    backDamage: 0
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: df483d6081355204ebf00c85097280cd, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -555,20 +310,20 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111011
-    cardName: "\uD669\uD558\uC218\uC77811"
-    cardSprite: {fileID: 21300000, guid: 8a3fb19745ac1b14fa94b7cceefbdf8d, type: 3}
-    animator: Sprites/f1/f1_minion/f1_minion_011/f1_minion_011
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    cardName: "\uBC31\uAE30\uC0AC"
+    cardSprite: {fileID: 21300000, guid: 52335f978dbe6db42ade3f072e9f6498, type: 3}
+    animator: Sprites/f1/f1_minion/f1_minion_009/f1_minion_009
+    skill: 11
+    skillContents: "\uBA85\uC608\uB97C \uC704\uD574 \uC2F8\uC6B0\uB294 \uAC80\uC0AC"
     cost: 0
     cardColor: 0
     cardCategory: 0
-    frontDamage: 6
-    backDamage: 2
+    frontDamage: 7
+    backDamage: 5
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 09d7fc75cdd2e224b81ed52ba90ea70f, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -580,20 +335,174 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 111012
-    cardName: "\uD669\uD558\uC218\uC77812"
-    cardSprite: {fileID: 21300000, guid: be65516e2d971974da4fd703407aefe1, type: 3}
-    animator: Sprites/f1/f1_minion/f1_minion_012/f1_minion_012
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    cardName: "\uB77C\uC774\uD2B8\uB77C\uC774\uC5B8"
+    cardSprite: {fileID: 21300000, guid: 1a723c585840177498e746b1e57c83b7, type: 3}
+    animator: Sprites/f1/f1_minion/f1_minion_010/f1_minion_010
+    skill: 22
+    skillContents: "\uBE5B\uC758 \uD798\uC744 \uAC00\uC9C4 \uC131\uC218"
     cost: 0
     cardColor: 0
     cardCategory: 0
-    frontDamage: 7
-    backDamage: 1
+    frontDamage: 3
+    backDamage: 8
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 296b84aa8c8cc344eb7c75035f0ae917, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 170574b85e79bc84182a84dc21cd86a0, type: 2}
+    cardID: 141000
+    cardName: "\uC790\uC601\uC6C5"
+    cardSprite: {fileID: 21300000, guid: 0ea32316e14cd44408c460e2b9b448b0, type: 3}
+    animator: Sprites/f4/f4_hero/f4_hero_01/f4_hero_01
+    skill: 
+    skillContents: "\uC545\uB9C8\uB97C \uBD80\uB9AC\uB294 \uC790\uC0C9\uC758 \uC601\uC6C5"
+    cost: 0
+    cardColor: 3
+    cardCategory: 1
+    frontDamage: 0
+    backDamage: 0
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    fieldChangeEffects:
+    - {fileID: 11400000, guid: df483d6081355204ebf00c85097280cd, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardID: 141001
+    cardName: "\uC790\uC774\uC5B8\uD2B8 \uCE90\uD130\uD544\uB7EC"
+    cardSprite: {fileID: 21300000, guid: 4a72e632a050f2242be764eebf39aa29, type: 3}
+    animator: Sprites/f4/f4_minion/f4_minion_001/f4_minion_001
+    skill: 11
+    skillContents: "\uC601\uD63C\uC744 \uBE68\uC544\uBA39\uB294 \uAC70\uB300\uD55C
+      \uAE30\uC0DD\uCDA9"
+    cost: 0
+    cardColor: 3
+    cardCategory: 0
+    frontDamage: 2
+    backDamage: 7
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    fieldChangeEffects:
+    - {fileID: 11400000, guid: 09d7fc75cdd2e224b81ed52ba90ea70f, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardID: 141002
+    cardName: "\uB370\uBAAC \uB85C\uB4DC"
+    cardSprite: {fileID: 21300000, guid: 88a4ce3d9b126f4408b9011dc72dfb0c, type: 3}
+    animator: Sprites/f4/f4_minion/f4_minion_002/f4_minion_002
+    skill: 22
+    skillContents: "\uC545\uB9C8\uC758 \uC815\uC810\uC5D0 \uB3C4\uB2EC\uD55C \uC790"
+    cost: 0
+    cardColor: 3
+    cardCategory: 0
+    frontDamage: 10
+    backDamage: 10
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    fieldChangeEffects:
+    - {fileID: 11400000, guid: 26c5181d046af0e4a9bb8f968f29da07, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardID: 141003
+    cardName: "\uB9C8\uACC4\uC758 \uB0A8\uC791"
+    cardSprite: {fileID: 21300000, guid: f2641c6206d89ce4ea05c30920d17391, type: 3}
+    animator: Sprites/f4/f4_minion/f4_minion_003/f4_minion_003
+    skill: 33
+    skillContents: "\uD558\uAE09 \uB9C8\uC871\uC744 \uBD80\uB9AC\uB294 \uB9C8\uACC4\uC758
+      \uADC0\uC871\uB4E4"
+    cost: 0
+    cardColor: 3
+    cardCategory: 0
+    frontDamage: 3
+    backDamage: 8
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    fieldChangeEffects:
+    - {fileID: 11400000, guid: 926add7d3b7e39a45b4a09511546968b, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardID: 141004
+    cardName: "\uC2B9\uCC9C\uC790"
+    cardSprite: {fileID: 21300000, guid: fe9f03eb05feb6b48a8322c66f64cd10, type: 3}
+    animator: Sprites/f4/f4_minion/f4_minion_004/f4_minion_004
+    skill: 44
+    skillContents: "\uC545\uB9C8\uB97C \uC22D\uBC30\uD558\uB294 \uC545\uB9C8\uAD50\uC758
+      \uACE0\uC704\uC0AC\uC81C"
+    cost: 0
+    cardColor: 3
+    cardCategory: 0
+    frontDamage: 9
+    backDamage: 0
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    fieldChangeEffects:
+    - {fileID: 11400000, guid: 4eaac9e6c83823f4381c137cdc3e991f, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardID: 141005
+    cardName: "\uD63C\uB3C8\uC758 \uC735\uD569\uCCB4"
+    cardSprite: {fileID: 21300000, guid: 4c6dcc7ff7991ba40ad04d5d5cf7f4dc, type: 3}
+    animator: Sprites/f4/f4_minion/f4_minion_005/f4_minion_005
+    skill: 55
+    skillContents: "\uC5EC\uB7EC \uC0DD\uBA85\uCCB4\uAC00 \uBAA8\uC5EC\uC11C \uB9CC\uB4E4\uC5B4\uC9C4
+      \uB054\uCC0D\uD55C \uAD34\uC218"
+    cost: 0
+    cardColor: 3
+    cardCategory: 0
+    frontDamage: 7
+    backDamage: 2
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    fieldChangeEffects:
+    - {fileID: 11400000, guid: df483d6081355204ebf00c85097280cd, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -605,20 +514,21 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141006
-    cardName: "\uC790\uD558\uC218\uC77806"
+    cardName: "\uBCA0\uD5E4\uBAA8\uC2A4"
     cardSprite: {fileID: 21300000, guid: 1e12252ed44cfa34d856c6a61d247014, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_006/f4_minion_006
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 11
+    skillContents: "\uAC70\uB300\uD55C \uC721\uC2E0\uC73C\uB85C \uB545\uC744 \uB36E\uB294
+      \uC545\uB9C8"
     cost: 0
     cardColor: 3
     cardCategory: 0
-    frontDamage: 1
-    backDamage: 6
+    frontDamage: 4
+    backDamage: 13
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 09d7fc75cdd2e224b81ed52ba90ea70f, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -630,20 +540,20 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141007
-    cardName: "\uC790\uD558\uC218\uC77807"
-    cardSprite: {fileID: 21300000, guid: d73122f28500a9e4b96f2f4adcae5a66, type: 3}
+    cardName: "\uB2E4\uD06C \uC18C\uC11C\uB7EC"
+    cardSprite: {fileID: 21300000, guid: f672f49574d4188418435b421163b9fd, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_007/f4_minion_007
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 22
+    skillContents: "\uC5B4\uB460\uC5D0 \uBAB8\uC774 \uC7A0\uC2DD\uB41C \uB300\uB9C8\uB3C4\uC0AC"
     cost: 0
     cardColor: 3
     cardCategory: 0
-    frontDamage: 2
+    frontDamage: 8
     backDamage: 5
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 26c5181d046af0e4a9bb8f968f29da07, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -655,20 +565,21 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141008
-    cardName: "\uC790\uD558\uC218\uC77808"
+    cardName: "\uCC98\uD615\uC778 "
     cardSprite: {fileID: 21300000, guid: 813c430cbe3233f48b7086269897f357, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_008/f4_minion_008
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 33
+    skillContents: "\uAC70\uB300\uD55C \uB3C4\uB07C\uB85C \uBAA9\uC228\uC744 \uAC70\uB450\uB294\uAC83\uC744
+      \uC990\uAE30\uB294 \uC545\uB9C8"
     cost: 0
     cardColor: 3
     cardCategory: 0
-    frontDamage: 3
-    backDamage: 4
+    frontDamage: 5
+    backDamage: 2
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 926add7d3b7e39a45b4a09511546968b, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -680,20 +591,21 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141009
-    cardName: "\uC790\uD558\uC218\uC77809"
+    cardName: "\uD751\uAE30\uC0AC"
     cardSprite: {fileID: 21300000, guid: 824acf432608eb145ad6108fc7af3c54, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_009/f4_minion_009
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 44
+    skillContents: "\uB370\uBAAC \uB85C\uB4DC\uC758 \uBA85\uB839\uC5D0 \uC808\uB300
+      \uBCF5\uC885\uD558\uB294 \uC545\uB9C8"
     cost: 0
     cardColor: 3
     cardCategory: 0
-    frontDamage: 4
+    frontDamage: 8
     backDamage: 3
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 4eaac9e6c83823f4381c137cdc3e991f, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -705,20 +617,20 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141010
-    cardName: "\uC790\uD558\uC218\uC77810"
+    cardName: "\uB124\uD06C\uB85C\uBA58\uC11C"
     cardSprite: {fileID: 21300000, guid: 6db3308c5aad51141928c3984adbc6a4, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_010/f4_minion_010
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 55
+    skillContents: "\uC545\uB839\uC744 \uB2E4\uB8E8\uB294 \uD751\uB9C8\uB3C4\uC0AC"
     cost: 0
     cardColor: 3
     cardCategory: 0
-    frontDamage: 5
-    backDamage: 2
+    frontDamage: 6
+    backDamage: 6
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: df483d6081355204ebf00c85097280cd, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -730,20 +642,150 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 141011
-    cardName: "\uC790\uD558\uC218\uC77811"
+    cardName: "\uB370\uBAAC \uC2A4\uCF5C\uD53C\uC624"
     cardSprite: {fileID: 21300000, guid: 0162e05d4bba2964bbc994a6203bfbe9, type: 3}
     animator: Sprites/f4/f4_minion/f4_minion_011/f4_minion_011
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 11
+    skillContents: "\uB9C8\uACC4\uC758 \uB3C5\uC744 \uCC14\uB7EC\uB123\uB294 \uC804\uAC08"
     cost: 0
     cardColor: 3
     cardCategory: 0
-    frontDamage: 6
-    backDamage: 1
+    frontDamage: 3
+    backDamage: 5
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 04493c52d11afbc418e5421d2b0543e1, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardID: 171001
+    cardName: "\uBA54\uCE74\uB178\uC774\uB4DC \uD14C\uB7EC"
+    cardSprite: {fileID: 21300000, guid: 46aa5cb81e767504ba442abf4057aeec, type: 3}
+    animator: Sprites/f7/f7_minion/f7_minion_001/f7_minion_001
+    skill: 13
+    skillContents: "\uC804\uC7A5\uC744 \uC735\uB2E8\uD3ED\uACA9\uD558\uB294 \uAC15\uCCA0\uC758
+      \uC9C0\uBC30\uC790"
+    cost: 0
+    cardColor: 6
+    cardCategory: 0
+    frontDamage: 11
+    backDamage: 5
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    fieldChangeEffects:
+    - {fileID: 11400000, guid: 0d6da3c2b87a70d48889b083b3b3093d, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardID: 171002
+    cardName: "\uC774\uCC28\uC6D0\uC758 \uBC29\uBB38\uC790"
+    cardSprite: {fileID: 21300000, guid: d21e56f6bdf76f047abc77854668833f, type: 3}
+    animator: Sprites/f7/f7_minion/f7_minion_002/f7_minion_002
+    skill: 24
+    skillContents: "\uCC28\uC6D0\uC744 \uAC08\uB77C \uC6B0\uC8FC\uB108\uBA38\uB97C
+      \uC5F4 \uC218 \uC788\uB294 \uCD08\uC6D4\uC801 \uC874\uC7AC"
+    cost: 0
+    cardColor: 6
+    cardCategory: 0
+    frontDamage: 15
+    backDamage: 0
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    fieldChangeEffects:
+    - {fileID: 11400000, guid: d66b39c60eef13944857e9c56ab99b38, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardID: 171003
+    cardName: "\uD14C\uD2B8\uB77C \uBE14\uB798\uC2A4\uD130"
+    cardSprite: {fileID: 21300000, guid: 504c44df9b54bfd40b49703bb351bf53, type: 3}
+    animator: Sprites/f7/f7_minion/f7_minion_003/f7_minion_003
+    skill: 35
+    skillContents: "\uB85C\uC2A4\uD2B8 \uD14C\uD06C\uB180\uB85C\uC9C0\uB85C \uB9CC\uB4E4\uC5B4\uC9C4
+      \uD734\uBA38\uB85C\uC774\uB4DC"
+    cost: 0
+    cardColor: 6
+    cardCategory: 0
+    frontDamage: 5
+    backDamage: 11
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    fieldChangeEffects:
+    - {fileID: 11400000, guid: 9701b149749affc42aa75ce8e652bdbc, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardID: 171004
+    cardName: "\uBF08 \uBD84\uC1C4\uC790"
+    cardSprite: {fileID: 21300000, guid: a205f1321057e0f40b323e5c2870b179, type: 3}
+    animator: Sprites/f7/f7_minion/f7_minion_004/f7_minion_004
+    skill: 41
+    skillContents: "\uD328\uC790\uB97C \uBB35\uC0AC\uBC1C \uB0B4\uB294\uB370\uC5D0
+      \uD76C\uC5F4\uC744 \uB290\uB07C\uB294 \uC804\uD22C\uAD11"
+    cost: 0
+    cardColor: 6
+    cardCategory: 0
+    frontDamage: 6
+    backDamage: 2
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    fieldChangeEffects:
+    - {fileID: 11400000, guid: e89f6f718b8caac439ba5e6a96761225, type: 2}
+    attackStartEffects:
+    - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
+    findEnemyEffects:
+    - {fileID: 11400000, guid: 91727aedc369221448d497347e608218, type: 2}
+    calculateDamageEffects:
+    - {fileID: 11400000, guid: ebd1f20a9beac1140b82f2a974e92dd9, type: 2}
+    attackProcessEffects:
+    - {fileID: 11400000, guid: 3aa25a00c09776545a3cc5b3526f207b, type: 2}
+    getDamageEffects:
+    - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
+    cardID: 171005
+    cardName: "\uC2E0\uC804\uC758 \uC218\uD638\uC790"
+    cardSprite: {fileID: 21300000, guid: cf688176513880e41b090854f47d21b6, type: 3}
+    animator: Sprites/f7/f7_minion/f7_minion_005/f7_minion_005
+    skill: 52
+    skillContents: "\uACE0\uB300 \uC2E0\uC804\uC744 \uC218\uD638\uD558\uB3C4\uB85D
+      \uACC4\uC57D\uB41C \uCC3D\uC758 \uB2EC\uC778"
+    cost: 0
+    cardColor: 6
+    cardCategory: 0
+    frontDamage: 1
+    backDamage: 8
+  - summonEffects:
+    - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
+    fieldChangeEffects:
+    - {fileID: 11400000, guid: 04493c52d11afbc418e5421d2b0543e1, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -755,20 +797,21 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 171006
-    cardName: "\uC911\uB9BD\uD558\uC218\uC77806"
+    cardName: "\uCDA4\uCD94\uB294 \uCE7C"
     cardSprite: {fileID: 21300000, guid: dfde653c43c708f49a9dc82d1f03d6e5, type: 3}
     animator: Sprites/f7/f7_minion/f7_minion_006/f7_minion_006
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 13
+    skillContents: "\uC8FC\uC778\uC5C6\uC774 \uD5C8\uACF5\uC744 \uB5A0\uB3C4\uB294
+      \uADC0\uC2E0\uB4E4\uB9B0 \uBB34\uAE30"
     cost: 0
     cardColor: 6
     cardCategory: 0
-    frontDamage: 5
-    backDamage: 5
+    frontDamage: 8
+    backDamage: 1
   - summonEffects:
     - {fileID: 11400000, guid: da09a561b7dcf194baa55475921ea179, type: 2}
     fieldChangeEffects:
-    - {fileID: 11400000, guid: 17d5325a835de8e4d82f2daab9a1ea07, type: 2}
+    - {fileID: 11400000, guid: 0d6da3c2b87a70d48889b083b3b3093d, type: 2}
     attackStartEffects:
     - {fileID: 11400000, guid: 855ddbcceb49d0e42a202cd13f9d17b5, type: 2}
     findEnemyEffects:
@@ -780,13 +823,14 @@ MonoBehaviour:
     getDamageEffects:
     - {fileID: 11400000, guid: 4122eebc5fa66cd4fa551d5e91933418, type: 2}
     cardID: 171007
-    cardName: "\uC911\uB9BD\uD558\uC218\uC77807"
+    cardName: "\uBD88\uACFC \uC5BC\uC74C\uC758 \uC2EC\uD310\uC790"
     cardSprite: {fileID: 21300000, guid: 72efaf4666cdc784288cc0bebb43a8c0, type: 3}
     animator: Sprites/f7/f7_minion/f7_minion_007/f7_minion_007
-    skill: "\uACB0\uC18D"
-    skillContents: "\uACB0\uC18D\n\uC774\uAC83\uC740 \uACB0\uC18D"
+    skill: 24
+    skillContents: "\uBD88\uACFC \uC5BC\uC74C\uC758 \uADE0\uD615\uC744 \uC774\uB8E8\uBA70
+      \uC874\uC7AC\uD558\uB294 \uC815\uB839"
     cost: 0
     cardColor: 6
     cardCategory: 0
-    frontDamage: 8
-    backDamage: 8
+    frontDamage: 7
+    backDamage: 7

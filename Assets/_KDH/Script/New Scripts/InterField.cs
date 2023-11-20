@@ -150,9 +150,9 @@ public class InterField : MonoBehaviour
         //Debug.Log(" " + (PlayerActionManager.instance.dirtyForInter == true));
         if (trigger == true && (PlayerActionManager.instance.isDrag || FieldManager.instance.isOpenDirection) && additionalGO != null && PlayerActionManager.instance.dirtyForInter == true)
         {
-            Debug.Log("CANCELNormal2");
+            //Debug.Log("CANCELNormal2");
             interLine.SetActive(true);
-            Debug.Log(interLine.activeSelf);
+            //Debug.Log(interLine.activeSelf);
             PlayerActionManager.instance.dirtyForInter = false;
             PlayerActionManager.instance.field.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             trigger = false;

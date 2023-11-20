@@ -39,7 +39,7 @@ namespace CCGCard
         public List<CardEffect> attackProcessEffects = new();
         public List<CardEffect> getDamageEffects = new();
         #endregion
-        List<FieldCardObject> enemyUnitInfo = new List<FieldCardObject>();
+        protected List<FieldCardObject> enemyUnitInfo = new List<FieldCardObject>();
         public int cardID;
         public string cardName;
         public Sprite cardSprite;
@@ -86,7 +86,7 @@ namespace CCGCard
 
         #region 순차적 처리
 
-        private async Task ActiveEffect(List<CardEffect> cardEffects, LinkedBattleField battleFieldInfo, FieldCardObject casterInfo, List<FieldCardObject> targetInfos)
+        protected async Task ActiveEffect(List<CardEffect> cardEffects, LinkedBattleField battleFieldInfo, FieldCardObject casterInfo, List<FieldCardObject> targetInfos)
         {
             for (int i = 0; i < cardEffects.Count; i++)
             {
@@ -102,7 +102,7 @@ namespace CCGCard
 
         public async void FieldChange(LinkedBattleField battleFieldInfo, FieldCardObject casterInfo)
         {
-            Debug.Log("FieldChangeCall");
+            //Debug.Log("FieldChangeCall");
             await ActiveEffect(fieldChangeEffects, battleFieldInfo, casterInfo, enemyUnitInfo);
         }
 

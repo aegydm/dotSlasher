@@ -42,24 +42,35 @@ public class FieldCardObject : MonoBehaviour
         }
     }
 
-    [Header("필드에 들어있는 카드의 정보")]
+    [Header("For show Card Data")]
     [SerializeField] private Card _cardData;
-    [Header("필드가 비어있는지 체크하는 변수")]
+    [Header("For check is empty")]
     public bool isEmpty = true;
-    [Header("필드 전체 틀 스프라이트")]
+    [Header("Input FIeld Sprite")]
     [SerializeField] SpriteRenderer fieldSprite;
-    [Header("실제 카드의 스프라이트")]
+    [Header("Input Unit Sprite")]
     public SpriteRenderer cardSprite;
     public Animator animator;
-    [Header("카드의 공격력 표시용")]
+    [Header("Input Front, Back Attack TMP_TEXT")]
     public TMP_Text frontATKText;
     public TMP_Text backATKText;
+    [Header("Input Gem Image and Rank Text")]
+    public Image gemImage;
+    public TMP_Text rankText;
 
-    [Header("Sound")]
-    private AudioClip ClickSound;
+    public GameObject gemAddGO;
+    public GameObject gemMultiGO;
+    public GameObject rankAddGO;
+    public GameObject rankMultiGO;
+
+    public TMP_Text gemAddText;
+    public TMP_Text gemMultiText;
+    public TMP_Text rankAddText;
+    public TMP_Text rankMultiText;
+
     public void CheckInter()
     {
-        if (FieldManager.instance.FieldIsFull() == false)
+        if (FieldManager.instance.FieldIsFull() == false && (FieldManager.instance.GetAdditionalField() != null))
         {
 
             if (isEmpty == false && this == FieldManager.instance.battleField.First)
@@ -104,9 +115,9 @@ public class FieldCardObject : MonoBehaviour
             }
         }
     }
-    [Header("카드의 좌우")]
+    [Header("For Check looking left")]
     [SerializeField] private bool _lookingLeft = false;
-    [Header("필드 소유자의 ID")]
+    [Header("For Check Player ID")]
     [SerializeField] private int _playerID;
 
     public int playerID
@@ -120,15 +131,16 @@ public class FieldCardObject : MonoBehaviour
             _playerID = value;
             if (playerID != -1)
             {
-                ownerColor.color = new Color(255 - (255 * playerID), 255 * playerID, 0);
+                ownerColor.color = new Color(255 - (255 * playerID), 255 * playerID, 0, 1);
             }
             else
             {
                 ownerColor.color = Color.white;
+                ownerColor.color = new Color(ownerColor.color.r, ownerColor.color.g, ownerColor.color.b, 0);
             }
         }
     }
-    [Header("카드의 소유자 표시용 이미지")]
+    [Header("For show Owner Color")]
     public Image ownerColor;
 
     public bool canBattle
@@ -181,17 +193,17 @@ public class FieldCardObject : MonoBehaviour
         }
     }
 
-    [Header("해당 필드가 공격을 할 수 있는지 여부")]
+    [Header("For show Can Battle")]
     [SerializeField] bool _canBattle = false;
-    [Header("해당 필드가 공격권을 가지고 있는지 여부")]
+    [Header("For show Has Attack Chance")]
     [SerializeField] private bool _attackChance;
-    [Header("공격 가능 여부 표시용 이미지")]
+    [Header("Input Battle Image?")]
     public Image canBattleImage;
-    [Header("좌측 끼어들기 용 - First일 때만 활성화 예정")]
+    [Header("Input Left InterField")]
     public GameObject leftInter;
-    [Header("우측 끼어들기 가능 영역 표시용")]
+    [Header("Input Right InterField")]
     public GameObject rightInter;
-    [Header("이전 칸과 다음 칸의 정보")]
+    [Header("For Show Prev and Next Tile")]
     public FieldCardObject Prev;
     public FieldCardObject Next;
 
@@ -201,6 +213,141 @@ public class FieldCardObject : MonoBehaviour
         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(cardData.animator);
         frontATKText.text = _lookingLeft ? (cardData.backDamage).ToString() : (cardData.frontDamage).ToString();
         backATKText.text = _lookingLeft ? (cardData.frontDamage).ToString() : (cardData.backDamage).ToString();
+        if (cardData.skill != string.Empty)
+        {
+            switch (cardData.skill[0].ToString())
+            {
+                case "1":
+                    gemImage.color = Color.red;
+                    break;
+                case "2":
+                    gemImage.color = Color.green;
+                    break;
+                case "3":
+                    gemImage.color = Color.yellow;
+                    break;
+                case "4":
+                    gemImage.color = Color.cyan;
+                    break;
+                case "5":
+                    gemImage.color = Color.white;
+                    break;
+            }
+            switch (cardData.skill[1].ToString())
+            {
+                case "1":
+                    rankText.text = "I";
+                    break;
+                case "2":
+                    rankText.text = "II";
+                    break;
+                case "3":
+                    rankText.text = "III";
+                    break;
+                case "4":
+                    rankText.text = "IV";
+                    break;
+                case "5":
+                    rankText.text = "V";
+                    break;
+            }
+        }
+        else
+        {
+            gemImage.color = Color.black;
+            rankText.text = string.Empty;
+        }
+        if (cardData != null)
+        {
+            if (cardData.frontDamage != CardDB.instance.FindCardFromID(cardData.cardID).frontDamage)
+            {
+                if (!lookingLeft)
+                {
+
+                    frontATKText.color = Color.yellow;
+                }
+                else
+                {
+                    backATKText.color = Color.yellow;
+                }
+            }
+            else
+            {
+                if (cardData.frontDamage != 0)
+                {
+                    //frontATKText.color = Color.white;
+                    //backATKText.color = Color.white;
+                    gemAddText.text = string.Empty;
+                    gemAddGO.SetActive(false);
+                    gemMultiText.text = string.Empty;
+                    gemMultiGO.SetActive(false);
+                    rankAddText.text = string.Empty;
+                    rankAddGO.SetActive(false);
+                    rankMultiText.text = string.Empty;
+                    rankMultiGO.SetActive(false);
+                }
+                else
+                {
+                    if (!lookingLeft)
+                    {
+                        frontATKText.color = Color.white;
+                    }
+                    else
+                    {
+                        backATKText.color = Color.white;
+                    }
+                }
+            }
+            if (cardData.backDamage != CardDB.instance.FindCardFromID(cardData.cardID).backDamage)
+            {
+                if (!lookingLeft)
+                {
+                    backATKText.color = Color.yellow;
+                }
+                else
+                {
+                    frontATKText.color = Color.yellow;
+                }
+            }
+            else
+            {
+                if (cardData.backDamage != 0)
+                {
+                    //frontATKText.color = Color.white;
+                    //backATKText.color = Color.white;
+                    gemAddText.text = string.Empty;
+                    gemAddGO.SetActive(false);
+                    gemMultiText.text = string.Empty;
+                    gemMultiGO.SetActive(false);
+                    rankAddText.text = string.Empty;
+                    rankAddGO.SetActive(false);
+                    rankMultiText.text = string.Empty;
+                    rankMultiGO.SetActive(false);
+                }
+                else
+                {
+                    if (!lookingLeft)
+                    {
+                        backATKText.color = Color.white;
+                    }
+                    else
+                    {
+                        frontATKText.color = Color.white;
+                    }
+                }
+            }
+        }
+        else
+        {
+            gemAddText.text = string.Empty;
+            gemAddGO.SetActive(false);
+            gemMultiText.text = string.Empty;
+            gemMultiGO.SetActive(false);
+            rankAddText.text = string.Empty;
+            rankAddGO.SetActive(false);
+            rankMultiText.text = string.Empty;
+            rankMultiGO.SetActive(false);
+        }
     }
 
     private void ResetRender()
@@ -209,6 +356,18 @@ public class FieldCardObject : MonoBehaviour
         cardSprite.sprite = null;
         frontATKText.text = string.Empty;
         backATKText.text = string.Empty;
+        frontATKText.color = Color.white;
+        backATKText.color = Color.white;
+        gemAddText.text = string.Empty;
+        gemAddGO.SetActive(false);
+        gemMultiText.text = string.Empty;
+        gemMultiGO.SetActive(false);
+        rankAddText.text = string.Empty;
+        rankAddGO.SetActive(false);
+        rankMultiText.text = string.Empty;
+        rankMultiGO.SetActive(false);
+        gemImage.color = Color.black;
+        rankText.text = string.Empty;
         playerID = -1;
     }
 
@@ -237,9 +396,6 @@ public class FieldCardObject : MonoBehaviour
     private void OnMouseDown()
     {
         //Please Input Card Click Sound Code
-        //카드 클릭 사운드 코드 넣어주세요
-        //
-        //SoundManager.instance.PlayEffSound(ClickSound);
         if (cardData != null && cardData.cardID != 0 && attackChance && GameManager.instance.gamePhase == GamePhase.BattlePhase && GameManager.instance.canAct && UIManager.Instance.isPopUI == false)
         {
             FieldAttack();
@@ -258,11 +414,11 @@ public class FieldCardObject : MonoBehaviour
 
     private void DelayTurnEnd()
     {
-        Debug.LogError("DelayCanAttackFalse");
+        //Debug.LogError("DelayCanAttackFalse");
         GameManager.instance.canAct = false;
-        Debug.LogError("DelayIsAttackFalse");
+        //Debug.LogError("DelayIsAttackFalse");
         GameManager.instance.isAlreadyAttack = false;
-        Debug.LogError("DelayEnd");
+        //Debug.LogError("DelayEnd");
     }
 
     public void ResetField()
@@ -274,5 +430,21 @@ public class FieldCardObject : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = true;
         canBattle = false;
         attackChance = false;
+    }
+
+    private void OnEnable()
+    {
+        if (GameManager.instance != null && FieldManager.instance != null && GameManager.instance.isStart)
+        {
+            FieldManager.instance.additionalCount--;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.instance != null && FieldManager.instance != null && GameManager.instance.isStart)
+        {
+            FieldManager.instance.additionalCount++;
+        }
     }
 }
