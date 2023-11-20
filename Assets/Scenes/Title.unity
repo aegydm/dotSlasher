@@ -1059,7 +1059,7 @@ MonoBehaviour:
   gridLayout: {fileID: 0}
   cardObject: {fileID: 0}
   deck: {fileID: 0}
-  cardSelectPopUI: {fileID: 0}
+  cardSelectPopUI: {fileID: 982925702}
   settingPopUI: {fileID: 1509085974}
   gameSettingPopUI: {fileID: 1359364242}
   soundPopUI: {fileID: 4703734945081017551}
@@ -1069,7 +1069,7 @@ MonoBehaviour:
   BGMSlider: {fileID: 6371700660725194699}
   effToggle: {fileID: 5132049546302193594}
   effSlider: {fileID: 1843544983723542410}
-  endUI: {fileID: 0}
+  endUI: {fileID: 982925702}
   endText: {fileID: 96428033}
   _selectCard:
     summonEffects: []

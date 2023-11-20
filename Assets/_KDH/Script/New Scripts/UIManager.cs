@@ -235,6 +235,11 @@ public class UIManager : MonoBehaviour
 
     public void TurnOnEndUI()
     {
+        Invoke("DelayTurnOnEndUI", 3);
+    }
+
+    public void DelayTurnOnEndUI() 
+    {
         endUI.SetActive(true);
     }
 

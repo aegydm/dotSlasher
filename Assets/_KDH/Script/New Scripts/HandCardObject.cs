@@ -63,13 +63,15 @@ public class HandCardObject : MonoBehaviour
     private Vector3 originScale;
 
     /// <summary>
-    /// ??類ㅼ굥??繞????쳛???濡ル츎 ?袁⑤?獄?
     /// </summary>
     public void CancelDrag()
     {
+        Debug.Log("Cancel");
         PlayerActionManager.instance.isDrag = false;
         PlayerActionManager.instance.dragCardGO = null;
         transform.position = originPos;
+        spriteGO.transform.position = originPos;
+        Debug.Log(transform.position);
         spriteGO.transform.localScale = originScale;
         frontATKText.enabled = true;
         backATKText.enabled = true;
@@ -86,6 +88,8 @@ public class HandCardObject : MonoBehaviour
     {
         PlayerActionManager.instance.isDrag = false;
         transform.position = originPos;
+        spriteGO.transform.position = originPos;
+        Debug.Log(transform.position);
         spriteGO.transform.localScale = originScale;
         frontATKText.enabled = true;
         backATKText.enabled = true;
@@ -120,8 +124,10 @@ public class HandCardObject : MonoBehaviour
 
         if (GameManager.instance.useCard == false && PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
+            Debug.Log("Enter");
             spriteGO.transform.localScale = 1.3f * originScale;
-            spriteGO.transform.position -= new Vector3(0, 0, 0.5f);
+            spriteGO.transform.position = originPos - new Vector3(0, -0.5f, 0.5f);
+            Debug.Log(transform.position);
         }
     }
 
@@ -129,8 +135,10 @@ public class HandCardObject : MonoBehaviour
     {
         if (GameManager.instance.useCard == false && PlayerActionManager.instance.isDrag == false && UIManager.Instance.isPopUI == false)
         {
+            Debug.Log("Exit");
             spriteGO.transform.localScale = originScale;
-            spriteGO.transform.position += new Vector3(0, 0, 0.5f);
+            spriteGO.transform.position = originPos;
+            Debug.Log(transform.position);
         }
     }
 

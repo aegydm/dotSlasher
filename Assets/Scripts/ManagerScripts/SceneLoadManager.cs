@@ -55,8 +55,11 @@ public class SceneLoadManager : MonoBehaviourPunCallbacks
     public override void OnConnected()
     {
         base.OnConnected();
-        isConnected = true;
-        isConnectText.gameObject.SetActive(true);
+        if (SceneManager.GetActiveScene().name == "Title")
+        {
+            isConnected = true;
+            isConnectText.gameObject.SetActive(true);
+        }
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -165,16 +168,16 @@ public class SceneLoadManager : MonoBehaviourPunCallbacks
             SoundManager.instance.PlayBGMSound(SoundManager.instance.matchBGM);
             NetworkManager.instance.CreateAndJoinRoom();
         }
-        else if(scene.name == "DeckBuild")
+        else if (scene.name == "DeckBuild")
         {
             SoundManager.instance.PlayBGMSound(SoundManager.instance.deckBGM);
         }
-        else if(scene.name == "MainGame")
+        else if (scene.name == "MainGame")
         {
             SoundManager.instance.PlayBGMSound(SoundManager.instance.gameBGM);
         }
 
-        if(scene.name == "DeckBuild")
+        if (scene.name == "DeckBuild")
         {
             BuildManager.instance.LoadAll();
         }

@@ -60,7 +60,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected)
         {
-                deckName = "1";
             //else if (dropdown.value == 1)
             {
             //    deckName = "F4_Demo";
@@ -117,9 +116,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-        SceneManager.LoadScene(0);
-        userCount = FindObjectOfType<TMP_Text>();
-        dropdown = FindObjectOfType<TMP_Dropdown>();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
