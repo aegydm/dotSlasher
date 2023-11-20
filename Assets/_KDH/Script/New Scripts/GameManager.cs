@@ -985,9 +985,9 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.ClosePopup();
         }
         //Debug.LogError("You Win");
-        UIManager.Instance.endText.text = "You Win!";
         UIManager.Instance.TurnOnEndUI();
-        Time.timeScale = 0;
+        UIManager.Instance.endText.text = "You Win!";
+        //Time.timeScale = 0;
     }
 
     public void Lose()
@@ -1010,9 +1010,9 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.ClosePopup();
         }
         //Debug.LogError("You Lose");
-        UIManager.Instance.endText.text = "You Lose";
         UIManager.Instance.TurnOnEndUI();
-        Time.timeScale = 0;
+        UIManager.Instance.endText.text = "You Lose";
+        //Time.timeScale = 0;
     }
 
     public void Draw()
@@ -1023,8 +1023,8 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.ClosePopup();
         }
         //Debug.LogError("Game Draw");
-        UIManager.Instance.endText.text = "Draw!";
         UIManager.Instance.TurnOnEndUI();
+        UIManager.Instance.endText.text = "Draw!";
         Time.timeScale = 0;
     }
 

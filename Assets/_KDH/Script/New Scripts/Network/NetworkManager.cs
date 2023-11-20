@@ -12,7 +12,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public static NetworkManager instance;
     public TMP_Text userCount;
     public bool first;
-    [SerializeField] TMP_Dropdown dropdown;
     public string deckName = "1";
 
     private void Awake()
@@ -60,7 +59,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected)
         {
-                deckName = "1";
             //else if (dropdown.value == 1)
             {
             //    deckName = "F4_Demo";
@@ -117,9 +115,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-        SceneManager.LoadScene(0);
-        userCount = FindObjectOfType<TMP_Text>();
-        dropdown = FindObjectOfType<TMP_Dropdown>();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)

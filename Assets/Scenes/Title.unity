@@ -1059,7 +1059,7 @@ MonoBehaviour:
   gridLayout: {fileID: 0}
   cardObject: {fileID: 0}
   deck: {fileID: 0}
-  cardSelectPopUI: {fileID: 0}
+  cardSelectPopUI: {fileID: 982925702}
   settingPopUI: {fileID: 1509085974}
   gameSettingPopUI: {fileID: 1359364242}
   soundPopUI: {fileID: 4703734945081017551}
@@ -1069,7 +1069,7 @@ MonoBehaviour:
   BGMSlider: {fileID: 6371700660725194699}
   effToggle: {fileID: 5132049546302193594}
   effSlider: {fileID: 1843544983723542410}
-  endUI: {fileID: 0}
+  endUI: {fileID: 982925702}
   endText: {fileID: 96428033}
   _selectCard:
     summonEffects: []
@@ -1421,6 +1421,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595547270320801906, guid: 9645d7e8fcfc14f488cdb0636e6d797f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 870617758}
+    - target: {fileID: 2595547270320801906, guid: 9645d7e8fcfc14f488cdb0636e6d797f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Surrender
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595547270320801906, guid: 9645d7e8fcfc14f488cdb0636e6d797f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4755581585480743285, guid: 9645d7e8fcfc14f488cdb0636e6d797f,
         type: 3}
@@ -2097,7 +2112,7 @@ PrefabInstance:
     - target: {fileID: 2790156057946777759, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3009490323039077961, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
@@ -2202,7 +2217,7 @@ PrefabInstance:
     - target: {fileID: 4432886072273148014, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4675179425593401055, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
@@ -2607,7 +2622,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userCount: {fileID: 1713878278}
   first: 0
-  dropdown: {fileID: 0}
   deckName: 1
 --- !u!1 &1948663649
 GameObject:

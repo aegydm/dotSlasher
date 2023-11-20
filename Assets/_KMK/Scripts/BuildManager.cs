@@ -128,39 +128,51 @@ public class BuildManager : MonoBehaviour
 
     public void Save()
     {
-        if (IsDeckFull()) return;
-        Debug.Log("Save Start");
-        SavedDeck newDeck;
-        if (SelectedSavedDeck == null)
+        if (deck.Count == 31)
         {
-            newDeck = EnableEmptyDeck();
-            SelectedSavedDeck = newDeck;
-            SelectedSavedDeck.deck = DeckMaker.instance.deck;
+            Debug.LogError(deck.Count);
+            if (IsDeckFull()) return;
+            Debug.Log("Save Start");
+            SavedDeck newDeck;
+            if (SelectedSavedDeck == null)
+            {
+                Debug.Log("123123");
+                newDeck = EnableEmptyDeck();
+                newDeck.deck = DeckMaker.instance.deck;
+                SelectedSavedDeck = newDeck;
+                //SelectedSavedDeck.deck = DeckMaker.instance.deck;
+            }
+            else
+            {
+                if (!DeckExists(SelectedSavedDeck.deckName))
+                {
+                    Debug.Log("1111");
+                    newDeck = EnableEmptyDeck();
+                    SelectedSavedDeck = newDeck;
+                    SelectedSavedDeck.deck = DeckMaker.instance.deck;
+                }
+            }
+            string deckName = SelectedSavedDeck.deckName;
+            SetPathByDeckName(deckName);
+            //
+            List<int> myDeck = new List<int>();
+            Debug.LogError(deck.Count);
+            for (int i = 0; i < deck.Count; i++)
+            {
+                myDeck.Add(deck[i].cardID);
+            }
+
+            OnSave(myDeck);
+            DeckMaker.instance.ErasePanel();
+            DeckMaker.instance.isDeckMaking = false;
+            DeckMaker.instance.selectingUI.SetActive(true);
+            DeckMaker.instance.editingUI.SetActive(false);
+            //LoadData(path);
         }
         else
         {
-            if (!DeckExists(SelectedSavedDeck.deckName))
-            {
-                newDeck = EnableEmptyDeck();
-                SelectedSavedDeck = newDeck;
-                SelectedSavedDeck.deck = DeckMaker.instance.deck;
-            }
+            Debug.LogError("Deck card Must be 31");
         }
-        string deckName = SelectedSavedDeck.deckName;
-        SetPathByDeckName(deckName);
-        //
-        List<int> myDeck = new List<int>();
-        for (int i = 0; i < deck.Count; i++)
-        {
-            myDeck.Add(deck[i].cardID);
-        }
-
-        OnSave(myDeck);
-        DeckMaker.instance.ErasePanel();
-        DeckMaker.instance.isDeckMaking = false;
-        DeckMaker.instance.selectingUI.SetActive(true);
-        DeckMaker.instance.editingUI.SetActive(false);
-        //LoadData(path);
     }
 
     private void OnSave(List<int> dataFrame)

@@ -9,7 +9,7 @@ public class MainScene : MonoBehaviour
 
     private void Start()
     {
-        deckNameText.text = NetworkManager.instance.deckName;
+        deckNameText.text = "Deck : " + NetworkManager.instance.deckName;
     }
 
     public void LoadDeckScene()
