@@ -275,8 +275,8 @@ public class FieldCardObject : MonoBehaviour
             {
                 if (cardData.frontDamage != 0)
                 {
-                    //frontATKText.color = Color.white;
-                    //backATKText.color = Color.white;
+                    frontATKText.color = Color.white;
+                    backATKText.color = Color.white;
                     gemAddText.text = string.Empty;
                     gemAddGO.SetActive(false);
                     gemMultiText.text = string.Empty;
@@ -313,8 +313,8 @@ public class FieldCardObject : MonoBehaviour
             {
                 if (cardData.backDamage != 0)
                 {
-                    //frontATKText.color = Color.white;
-                    //backATKText.color = Color.white;
+                    frontATKText.color = Color.white;
+                    backATKText.color = Color.white;
                     gemAddText.text = string.Empty;
                     gemAddGO.SetActive(false);
                     gemMultiText.text = string.Empty;
