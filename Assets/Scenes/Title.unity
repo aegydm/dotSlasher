@@ -1960,6 +1960,23 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 976595948728515798, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: d70f107fdaec7c744bd018e5989c9100,
+        type: 2}
+    - target: {fileID: 976595948728515798, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3040052265649474799, guid: d70f107fdaec7c744bd018e5989c9100,
+        type: 2}
+    - target: {fileID: 976595948728515798, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1580010890153666766, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1984,6 +2001,38 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.x
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702900954221248224, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702900954221248224, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 75ebefa99f612a14c94bbdcf55b016cb,
+        type: 2}
+    - target: {fileID: 1702900954221248224, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702900954221248224, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702900954221248224, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2217748659058888786, guid: 75ebefa99f612a14c94bbdcf55b016cb,
+        type: 2}
+    - target: {fileID: 1702900954221248224, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2171326849356345792, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
@@ -2048,7 +2097,7 @@ PrefabInstance:
     - target: {fileID: 2790156057946777759, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3009490323039077961, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
@@ -2150,6 +2199,17 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 4432886072273148014, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4675179425593401055, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5c3e64fe20030084993eba25aa7fef49,
+        type: 3}
     - target: {fileID: 5093938917416628015, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2179,6 +2239,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LoadingUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5738825180190504372, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_Value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6095453335288285410, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
@@ -2330,6 +2395,31 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 7982052770337606218, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8064034258694340643, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8064034258694340643, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8064034258694340643, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8064034258694340643, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8694831376297062956, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2344,6 +2434,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.x
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8716904198468635445, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: afe66e3c5b1bb54409c6d12565377708,
+        type: 3}
+    - target: {fileID: 8718529748916648008, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9030126479279503144, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
@@ -2387,7 +2488,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9069091377452868513, guid: eaceae936f202c844afb5c2c98f54338,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9069091377452868513, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9069091377452868513, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9069091377452868513, guid: eaceae936f202c844afb5c2c98f54338,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -2504,6 +2620,7 @@ GameObject:
   - component: {fileID: 1948663650}
   - component: {fileID: 1948663652}
   - component: {fileID: 1948663651}
+  - component: {fileID: 1948663653}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2629,6 +2746,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1948663649}
   m_CullTransparentMesh: 1
+--- !u!114 &1948663653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948663649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1988654523
 GameObject:
   m_ObjectHideFlags: 0
