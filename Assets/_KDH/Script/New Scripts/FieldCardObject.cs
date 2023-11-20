@@ -236,19 +236,19 @@ public class FieldCardObject : MonoBehaviour
             switch (cardData.skill[1].ToString())
             {
                 case "1":
-                    rankText.text = "1";
+                    rankText.text = "I";
                     break;
                 case "2":
-                    rankText.text = "2";
+                    rankText.text = "II";
                     break;
                 case "3":
-                    rankText.text = "3";
+                    rankText.text = "III";
                     break;
                 case "4":
-                    rankText.text = "4";
+                    rankText.text = "IV";
                     break;
                 case "5":
-                    rankText.text = "5";
+                    rankText.text = "V";
                     break;
             }
         }
