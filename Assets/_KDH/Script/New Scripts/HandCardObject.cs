@@ -63,7 +63,7 @@ public class HandCardObject : MonoBehaviour
     private Vector3 originScale;
 
     /// <summary>
-    /// ??類ㅼ굥??繞????쳛???濡ル츎 ?袁⑤?獄?
+    /// ??筌먦끉援??濚????爾???嚥▲꺂痢??熬곣뫀???
     /// </summary>
     public void CancelDrag()
     {
@@ -219,19 +219,19 @@ public class HandCardObject : MonoBehaviour
             switch (cardData.skill[1].ToString())
             {
                 case "1":
-                    rankText.text = "I";
+                    rankText.text = "Ⅰ";
                     break;
                 case "2":
-                    rankText.text = "II";
+                    rankText.text = "Ⅱ";
                     break;
                 case "3":
-                    rankText.text = "III";
+                    rankText.text = "Ⅲ";
                     break;
                 case "4":
-                    rankText.text = "IV";
+                    rankText.text = "Ⅳ";
                     break;
                 case "5":
-                    rankText.text = "V";
+                    rankText.text = "Ⅴ";
                     break;
             }
         }
